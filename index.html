@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebDesks - WFH OS</title>
+    
+    <!-- SEO & Metadata -->
+    <title>WebDesks | Privacy-First WFH Operating System</title>
+    <meta name="description" content="WebDesks is a secure, browser-based productivity suite for remote workers. Includes PDF tools, Pomodoro timer, whiteboard, and password generator. Runs 100% offline with no downloads.">
+    <meta name="keywords" content="wfh tools, remote work dashboard, browser os, online whiteboard, pdf merger, pomodoro timer, secure productivity, no install tools">
+    <meta name="author" content="WebDesks">
+    
+    <!-- Social / Open Graph -->
+    <meta property="og:title" content="WebDesks - The Privacy-First WFH OS">
+    <meta property="og:description" content="All your essential remote work tools in one tab. No downloads, no sign-ups, runs 100% locally.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webdesks.app">
+    <meta property="og:image" content="https://webdesks.app/og-image.png"> <!-- Placeholder for your OG image -->
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -14,20 +28,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* CORE UI */
-        body { font-family: 'Inter', sans-serif; }
+        /* CORE UI & ANIMATIONS */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            /* Liquid Gradient Background */
+            background: linear-gradient(-45deg, #e0e7ff, #f3e8ff, #dbeafe, #f0f9ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        .dark body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #172554, #020617);
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* GLASSMORPHISM UTILITY */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        .dark .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        /* SCROLLBARS */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
-        .dark ::-webkit-scrollbar-thumb { background-color: #475569; }
+        ::-webkit-scrollbar-thumb { background-color: rgba(156, 163, 175, 0.5); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background-color: rgba(156, 163, 175, 0.8); }
 
         /* THEMES & ANIMATIONS */
         .theme-retro { font-family: 'Share Tech Mono', monospace; color: #10b981; text-shadow: 0 0 10px rgba(16,185,129,0.5); }
         .theme-cyber { font-family: 'Orbitron', sans-serif; color: #f43f5e; text-shadow: 0 0 15px rgba(244,63,94,0.6); }
         .theme-modern { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -2px; }
         .timer-font { font-variant-numeric: tabular-nums; }
-        .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
-        .dark .glass-panel { background: rgba(30, 41, 59, 0.9); }
         
         @keyframes breathe {
             0%, 100% { transform: scale(1); opacity: 0.8; }
@@ -41,89 +84,92 @@
         tailwind.config = { darkMode: 'class' }
     </script>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 h-screen flex overflow-hidden transition-colors duration-300">
+<body class="text-gray-800 dark:text-gray-100 h-screen flex overflow-hidden transition-colors duration-300">
 
-    <!-- SIDEBAR -->
-    <aside class="w-16 lg:w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col flex-shrink-0 z-30 transition-all duration-300 overflow-y-auto">
-        <div class="h-16 flex items-center justify-center lg:justify-start lg:px-6 border-b border-gray-100 dark:border-gray-700 shrink-0">
-            <div class="bg-indigo-600 p-2 rounded-lg shadow-lg shadow-indigo-200 dark:shadow-none">
+    <!-- FLOATING GLASS SIDEBAR -->
+    <aside class="w-16 lg:w-64 glass-panel m-2 lg:m-4 rounded-2xl flex flex-col flex-shrink-0 z-30 transition-all duration-300 overflow-y-auto border-r-0">
+        <div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 shrink-0 border-b border-gray-200/30 dark:border-gray-700/30">
+            <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
                 <i data-lucide="layers" class="w-6 h-6 text-white"></i>
             </div>
-            <h1 class="hidden lg:block font-bold text-xl ml-3 tracking-tight">WebDesks</h1>
+            <div class="ml-3 hidden lg:block">
+                <h1 class="font-bold text-xl tracking-tight">WebDesks</h1>
+                <p class="text-[10px] uppercase font-bold text-indigo-500 tracking-widest">OS v5.1</p>
+            </div>
         </div>
         
         <nav class="flex-1 p-2 lg:p-4 space-y-1">
             <!-- GROUP: WORKSPACE -->
-            <div class="px-2 mb-2 mt-4 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden lg:block">Workspace</div>
+            <div class="px-2 mb-2 mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Workspace</div>
             
-            <button onclick="switchTab('notepad')" id="btn-notepad" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="file-text" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('notepad')" id="btn-notepad" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="file-text" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Scratchpad</span>
             </button>
-            <button onclick="switchTab('tasks')" id="btn-tasks" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="check-square" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('tasks')" id="btn-tasks" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="check-square" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Tasks</span>
             </button>
-            <button onclick="switchTab('whiteboard')" id="btn-whiteboard" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="pen-tool" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('whiteboard')" id="btn-whiteboard" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="pen-tool" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Whiteboard</span>
             </button>
-            <button onclick="switchTab('canned')" id="btn-canned" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="message-square" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('canned')" id="btn-canned" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="message-square" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Quick Replies</span>
             </button>
             
             <!-- GROUP: FOCUS -->
-            <div class="px-2 mb-2 mt-6 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden lg:block">Focus</div>
+            <div class="px-2 mb-2 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Focus</div>
 
-            <button onclick="switchTab('clock')" id="btn-clock" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="watch" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('clock')" id="btn-clock" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="watch" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Desk Clock</span>
             </button>
-            <button onclick="switchTab('timer')" id="btn-timer" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="timer" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('timer')" id="btn-timer" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="timer" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Pomodoro</span>
             </button>
-            <button onclick="switchTab('audio')" id="btn-audio" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="headphones" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('audio')" id="btn-audio" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="headphones" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Sound Studio</span>
             </button>
-            <button onclick="switchTab('breathing')" id="btn-breathing" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="wind" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('breathing')" id="btn-breathing" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="wind" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Wellness</span>
             </button>
 
             <!-- GROUP: UTILITIES -->
-            <div class="px-2 mb-2 mt-6 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden lg:block">Utilities</div>
+            <div class="px-2 mb-2 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Utilities</div>
             
-            <button onclick="switchTab('zones')" id="btn-zones" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="globe" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('zones')" id="btn-zones" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="globe" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Time Zones</span>
             </button>
-            <button onclick="switchTab('text')" id="btn-text" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="type" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('text')" id="btn-text" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="type" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Text Studio</span>
             </button>
-            <button onclick="switchTab('pdf')" id="btn-pdf" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="file-stack" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('pdf')" id="btn-pdf" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="file-stack" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">PDF Merger</span>
             </button>
-            <button onclick="switchTab('calc')" id="btn-calc" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="calendar-days" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('calc')" id="btn-calc" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="calendar-days" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Date Calc</span>
             </button>
-            <button onclick="switchTab('password')" id="btn-password" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="lock" class="w-5 h-5 group-hover:text-indigo-600"></i>
+            <button onclick="switchTab('password')" id="btn-password" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="lock" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Password Gen</span>
             </button>
-            <button onclick="switchTab('onair')" id="btn-onair" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="radio" class="w-5 h-5 group-hover:text-red-600"></i>
+            <button onclick="switchTab('onair')" id="btn-onair" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400">
+                <i data-lucide="radio" class="w-5 h-5 group-hover:text-red-600 transition-colors"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">On Air Sign</span>
             </button>
         </nav>
 
-        <div class="p-4 border-t border-gray-100 dark:border-gray-700 flex justify-center lg:justify-start">
-            <button onclick="toggleTheme()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+        <div class="p-4 border-t border-gray-200/30 dark:border-gray-700/30 flex justify-center lg:justify-start">
+            <button onclick="toggleTheme()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 hover:text-indigo-600 transition-all">
                 <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
                 <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
             </button>
@@ -131,131 +177,134 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 relative overflow-hidden">
+    <main class="flex-1 relative overflow-hidden p-2 lg:p-4 pl-0">
         
         <!-- 1. NOTEPAD -->
-        <div id="tab-notepad" class="tab-content absolute inset-0 p-6 flex flex-col hidden">
-            <div class="bg-white dark:bg-gray-800 flex-1 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
-                <textarea id="scratchpad" class="w-full h-full p-8 text-lg bg-transparent text-gray-700 dark:text-gray-200 resize-none focus:outline-none placeholder-gray-300 dark:placeholder-gray-600" placeholder="Type here... Auto-saves locally." spellcheck="false"></textarea>
+        <div id="tab-notepad" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden">
+            <div class="glass-panel flex-1 rounded-2xl overflow-hidden flex flex-col shadow-xl">
+                <textarea id="scratchpad" class="w-full h-full p-8 text-lg bg-transparent text-gray-700 dark:text-gray-200 resize-none focus:outline-none placeholder-gray-400/50 dark:placeholder-gray-500/50" placeholder="Type here... Auto-saves locally." spellcheck="false"></textarea>
             </div>
         </div>
 
         <!-- 2. TASKS -->
-        <div id="tab-tasks" class="tab-content absolute inset-0 p-6 flex flex-col hidden overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-4">Tasks</h2>
-            <div class="max-w-3xl w-full mx-auto">
-                <div class="flex gap-2 mb-6">
-                    <input type="text" id="task-input" class="flex-1 p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add task..." onkeypress="if(event.key === 'Enter') addTask()">
-                    <button onclick="addTask()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 rounded-lg font-medium">Add</button>
+        <div id="tab-tasks" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden overflow-y-auto">
+            <div class="max-w-4xl w-full mx-auto pt-8">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Tasks</h2>
+                <div class="glass-panel p-2 rounded-2xl mb-6 flex gap-2">
+                    <input type="text" id="task-input" class="flex-1 p-4 bg-transparent focus:outline-none placeholder-gray-500" placeholder="Add a new task..." onkeypress="if(event.key === 'Enter') addTask()">
+                    <button onclick="addTask()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 rounded-xl font-medium shadow-lg shadow-indigo-500/30 transition-all hover:scale-105 active:scale-95">Add</button>
                 </div>
-                <ul id="task-list" class="space-y-2"></ul>
+                <ul id="task-list" class="space-y-3"></ul>
             </div>
         </div>
 
-        <!-- 3. WHITEBOARD (NEW) -->
-        <div id="tab-whiteboard" class="tab-content absolute inset-0 p-6 flex flex-col hidden">
-            <div class="flex justify-between items-center mb-4">
+        <!-- 3. WHITEBOARD -->
+        <div id="tab-whiteboard" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden">
+            <div class="flex justify-between items-center mb-4 px-2">
                 <h2 class="text-2xl font-bold">Quick Sketch</h2>
-                <div class="flex gap-2">
-                    <button onclick="clearCanvas()" class="text-gray-500 hover:text-red-500 text-sm font-medium px-3 py-1">Clear</button>
-                    <button onclick="copyCanvas()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">Copy to Clipboard</button>
+                <div class="glass-panel p-1 rounded-lg flex gap-2">
+                    <button onclick="clearCanvas()" class="text-gray-500 hover:text-red-500 text-xs font-bold px-4 py-2 uppercase tracking-wide">Clear</button>
+                    <button onclick="copyCanvas()" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wide hover:bg-indigo-700 shadow-md">Copy to Clipboard</button>
                 </div>
             </div>
-            <div class="bg-white flex-1 rounded-xl shadow-sm border border-gray-200 overflow-hidden relative cursor-crosshair touch-none">
+            <div class="glass-panel flex-1 rounded-2xl overflow-hidden relative cursor-crosshair touch-none shadow-xl">
                 <canvas id="wb-canvas" class="w-full h-full block"></canvas>
             </div>
-            <p class="text-center text-xs text-gray-400 mt-2">Draw to explain • Click Copy • Paste in Slack/Teams</p>
+            <p class="text-center text-xs text-gray-500 mt-2 font-mono opacity-70">Draw to explain • Click Copy • Paste in Slack/Teams</p>
         </div>
 
-        <!-- 4. CANNED RESPONSES (NEW) -->
-        <div id="tab-canned" class="tab-content absolute inset-0 p-6 flex flex-col hidden overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-2">Canned Responses</h2>
-            <p class="text-gray-500 mb-6">Click a button to copy the text to your clipboard.</p>
-            <div id="canned-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- 4. CANNED RESPONSES -->
+        <div id="tab-canned" class="tab-content absolute inset-0 p-2 lg:p-8 flex flex-col hidden overflow-y-auto">
+            <h2 class="text-3xl font-bold mb-2">Quick Replies</h2>
+            <p class="text-gray-500 mb-8 opacity-80">Tap any card to copy text to clipboard.</p>
+            
+            <div id="canned-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Injected via JS -->
             </div>
-            <div class="mt-8 p-6 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-600">
-                <h3 class="font-bold text-sm mb-4 uppercase text-gray-400">Add New Response</h3>
-                <div class="flex flex-col gap-3">
-                    <input id="canned-title" placeholder="Button Label (e.g. 'Ack Email')" class="p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent">
-                    <textarea id="canned-content" placeholder="The text to copy..." class="p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent h-24"></textarea>
-                    <button onclick="addCanned()" class="bg-gray-900 dark:bg-gray-700 text-white py-2 rounded-lg font-medium">Create Button</button>
+            
+            <div class="mt-12 glass-panel p-8 rounded-3xl border-dashed border-2 border-indigo-200/50 dark:border-indigo-800/50">
+                <h3 class="font-bold text-xs mb-6 uppercase tracking-widest text-indigo-500">Create New Response</h3>
+                <div class="flex flex-col gap-4">
+                    <input id="canned-title" placeholder="Button Label (e.g. 'Ack Email')" class="p-4 rounded-xl bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
+                    <textarea id="canned-content" placeholder="The text to copy..." class="p-4 rounded-xl bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-700 h-32 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"></textarea>
+                    <button onclick="addCanned()" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity">Create Button</button>
                 </div>
             </div>
         </div>
 
         <!-- 5. CLOCK -->
-        <div id="tab-clock" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden bg-gray-100 dark:bg-gray-900 transition-colors">
-            <div id="clock-container" class="text-center p-12">
-                <div id="live-clock" class="text-9xl font-bold mb-2 theme-modern transition-all">12:00:00</div>
-                <div id="live-date" class="text-xl opacity-60 font-medium uppercase tracking-widest">Monday, Jan 1</div>
+        <div id="tab-clock" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
+            <div id="clock-container" class="text-center p-12 transition-all duration-500 hover:scale-105">
+                <div id="live-clock" class="text-[12vw] leading-none font-bold mb-2 theme-modern transition-all drop-shadow-2xl">12:00:00</div>
+                <div id="live-date" class="text-2xl opacity-60 font-medium uppercase tracking-[0.5em]">Monday, Jan 1</div>
             </div>
-            <div class="mt-8 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 flex flex-col gap-4 w-full max-w-sm glass-panel">
-                <div class="flex gap-2 justify-center">
-                    <button onclick="setClockTheme('modern')" class="px-3 py-1 text-xs bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300">Modern</button>
-                    <button onclick="setClockTheme('retro')" class="px-3 py-1 text-xs bg-gray-900 text-green-400 rounded hover:opacity-80">Retro</button>
-                    <button onclick="setClockTheme('cyber')" class="px-3 py-1 text-xs bg-gray-900 text-red-500 rounded hover:opacity-80">Cyber</button>
+            <div class="mt-8 glass-panel p-6 rounded-3xl shadow-2xl flex flex-col gap-4 w-full max-w-sm">
+                <div class="flex gap-2 justify-center bg-gray-100/50 dark:bg-gray-800/50 p-1 rounded-xl">
+                    <button onclick="setClockTheme('modern')" class="flex-1 py-2 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-gray-700 shadow-sm transition-all">Modern</button>
+                    <button onclick="setClockTheme('retro')" class="flex-1 py-2 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-gray-700 shadow-sm transition-all text-green-600">Retro</button>
+                    <button onclick="setClockTheme('cyber')" class="flex-1 py-2 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-gray-700 shadow-sm transition-all text-red-500">Cyber</button>
                 </div>
                 <div class="flex gap-2">
-                    <input type="time" id="alarm-input" class="flex-1 p-2 rounded bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 text-sm">
-                    <button onclick="setAlarm()" class="bg-indigo-600 text-white px-4 text-sm rounded hover:bg-indigo-700">Set</button>
+                    <input type="time" id="alarm-input" class="flex-1 p-3 rounded-xl bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-700 text-sm outline-none">
+                    <button onclick="setAlarm()" class="bg-indigo-600 text-white px-6 text-sm font-bold rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">Set</button>
                 </div>
-                <p id="alarm-status" class="text-center text-xs text-indigo-500 h-4"></p>
+                <p id="alarm-status" class="text-center text-xs font-bold text-indigo-500 h-4 uppercase tracking-wide"></p>
             </div>
         </div>
 
         <!-- 6. TIMER -->
         <div id="tab-timer" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-12 w-full max-w-md text-center">
-                <div class="mb-8">
-                    <span id="timer-display" class="timer-font text-8xl font-bold dark:text-white">25:00</span>
-                    <p id="timer-mode" class="text-indigo-500 font-medium mt-2 uppercase tracking-wide text-sm">Focus Time</p>
+            <div class="glass-panel rounded-[3rem] shadow-2xl p-12 w-full max-w-md text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-indigo-500"></div>
+                <div class="mb-10">
+                    <span id="timer-display" class="timer-font text-8xl font-bold dark:text-white drop-shadow-md">25:00</span>
+                    <p id="timer-mode" class="text-indigo-500 font-bold mt-2 uppercase tracking-[0.3em] text-xs">Focus Time</p>
                 </div>
-                <button onclick="toggleTimer()" id="btn-toggle" class="bg-indigo-600 hover:bg-indigo-700 text-white w-full py-4 rounded-xl font-bold text-lg mb-4 flex justify-center items-center gap-2">
-                    <i data-lucide="play" class="w-5 h-5 fill-current"></i> Start
+                <button onclick="toggleTimer()" id="btn-toggle" class="bg-indigo-600 hover:bg-indigo-700 text-white w-full py-5 rounded-2xl font-bold text-xl mb-6 flex justify-center items-center gap-3 shadow-xl shadow-indigo-500/40 transition-transform active:scale-95">
+                    <i data-lucide="play" class="w-6 h-6 fill-current"></i> Start Focus
                 </button>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setMode(25, 'Focus')" class="py-2 text-xs font-bold uppercase bg-gray-100 dark:bg-gray-700 rounded-lg">25m</button>
-                    <button onclick="setMode(5, 'Short')" class="py-2 text-xs font-bold uppercase bg-gray-100 dark:bg-gray-700 rounded-lg">5m</button>
-                    <button onclick="setMode(15, 'Long')" class="py-2 text-xs font-bold uppercase bg-gray-100 dark:bg-gray-700 rounded-lg">15m</button>
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="setMode(25, 'Focus')" class="py-3 text-xs font-bold uppercase bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">25m</button>
+                    <button onclick="setMode(5, 'Short')" class="py-3 text-xs font-bold uppercase bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">5m</button>
+                    <button onclick="setMode(15, 'Long')" class="py-3 text-xs font-bold uppercase bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">15m</button>
                 </div>
             </div>
         </div>
 
         <!-- 7. AUDIO -->
         <div id="tab-audio" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 max-w-2xl w-full">
-                <h2 class="text-2xl font-bold mb-6 text-center">Focus Audio</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-between cursor-pointer hover:border-indigo-500 transition-colors" onclick="toggleNoise('brown')">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-indigo-100 dark:bg-indigo-900 p-3 rounded-full"><i data-lucide="waves" class="w-6 h-6 text-indigo-600 dark:text-indigo-400"></i></div>
-                            <div><h3 class="font-bold">Deep Focus</h3><p class="text-xs text-gray-500">Brown Noise</p></div>
+            <div class="glass-panel rounded-3xl shadow-2xl p-8 max-w-2xl w-full">
+                <h2 class="text-2xl font-bold mb-8 text-center">Focus Audio</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-black/20 rounded-2xl flex items-center justify-between cursor-pointer hover:border-indigo-500 transition-all hover:scale-[1.02]" onclick="toggleNoise('brown')">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-indigo-100 dark:bg-indigo-900 p-4 rounded-full text-indigo-600 dark:text-indigo-400"><i data-lucide="waves" class="w-6 h-6"></i></div>
+                            <div><h3 class="font-bold">Deep Focus</h3><p class="text-xs text-gray-500 uppercase tracking-wide">Brown Noise</p></div>
                         </div>
                         <div id="status-brown" class="text-xs font-bold text-gray-400">OFF</div>
                     </div>
-                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-between cursor-pointer hover:border-pink-500 transition-colors" onclick="toggleNoise('pink')">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-pink-100 dark:bg-pink-900 p-3 rounded-full"><i data-lucide="cloud-rain" class="w-6 h-6 text-pink-600 dark:text-pink-400"></i></div>
-                            <div><h3 class="font-bold">Rainfall</h3><p class="text-xs text-gray-500">Pink Noise</p></div>
+                    <div class="p-6 border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-black/20 rounded-2xl flex items-center justify-between cursor-pointer hover:border-pink-500 transition-all hover:scale-[1.02]" onclick="toggleNoise('pink')">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-pink-100 dark:bg-pink-900 p-4 rounded-full text-pink-600 dark:text-pink-400"><i data-lucide="cloud-rain" class="w-6 h-6"></i></div>
+                            <div><h3 class="font-bold">Rainfall</h3><p class="text-xs text-gray-500 uppercase tracking-wide">Pink Noise</p></div>
                         </div>
                         <div id="status-pink" class="text-xs font-bold text-gray-400">OFF</div>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <input type="range" min="0" max="1" step="0.01" value="0.5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" oninput="setVolume(this.value)">
+                <div class="mt-10 px-4">
+                    <input type="range" min="0" max="1" step="0.01" value="0.5" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-indigo-600" oninput="setVolume(this.value)">
                 </div>
             </div>
         </div>
 
-        <!-- 8. TIME ZONES (NEW) -->
+        <!-- 8. TIME ZONES -->
         <div id="tab-zones" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="max-w-2xl w-full bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+            <div class="max-w-2xl w-full glass-panel p-8 rounded-3xl shadow-xl">
                 <h2 class="text-2xl font-bold mb-6">Global Meeting Planner</h2>
-                <div class="mb-8">
-                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Drag to adjust time (Your Time)</label>
-                    <input type="range" id="zone-slider" min="0" max="1440" step="15" value="720" class="w-full h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer" oninput="updateZones(this.value)">
-                    <p id="zone-display" class="text-center font-bold text-indigo-600 mt-2 text-xl">12:00 PM</p>
+                <div class="mb-10 bg-white/50 dark:bg-black/20 p-6 rounded-2xl">
+                    <label class="block text-[10px] font-bold uppercase text-gray-400 mb-4 tracking-widest">Slide to travel through time</label>
+                    <input type="range" id="zone-slider" min="0" max="1440" step="15" value="720" class="w-full h-4 bg-indigo-100 dark:bg-gray-800 rounded-full appearance-none cursor-pointer accent-indigo-600" oninput="updateZones(this.value)">
+                    <p id="zone-display" class="text-center font-black text-indigo-600 dark:text-indigo-400 mt-4 text-3xl">12:00 PM</p>
                 </div>
                 <div class="space-y-3" id="zone-list">
                     <!-- Cities injected here -->
@@ -263,106 +312,111 @@
             </div>
         </div>
 
-        <!-- 9. TEXT STUDIO (UPDATED) -->
-        <div id="tab-text" class="tab-content absolute inset-0 p-6 flex flex-col hidden">
-            <div class="flex justify-between items-center mb-4">
+        <!-- 9. TEXT STUDIO -->
+        <div id="tab-text" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden">
+            <div class="flex justify-between items-center mb-4 px-2">
                 <h2 class="text-2xl font-bold">Text Studio</h2>
-                <div class="flex gap-2">
-                    <button onclick="transformText('clean')" class="text-xs bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-300">Clean Fmt</button>
-                    <button onclick="transformText('upper')" class="text-xs bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-300">UPPER</button>
-                    <button onclick="transformText('lower')" class="text-xs bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-300">lower</button>
-                    <button onclick="transformText('title')" class="text-xs bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded hover:bg-gray-300">Title Case</button>
+                <div class="glass-panel p-1 rounded-lg flex gap-1">
+                    <button onclick="transformText('clean')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Clean</button>
+                    <button onclick="transformText('upper')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Upper</button>
+                    <button onclick="transformText('lower')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Lower</button>
+                    <button onclick="transformText('title')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Title</button>
                 </div>
             </div>
             
-            <div class="flex-1 flex flex-col md:flex-row gap-4 h-full">
-                <textarea id="text-input" class="flex-1 p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none resize-none text-sm font-mono" placeholder="Paste text here..." oninput="updateCounts()"></textarea>
-            </div>
-            
-            <div class="mt-4 flex gap-6 text-sm text-gray-500 font-mono">
-                <span>Chars: <b id="count-char" class="text-indigo-600">0</b></span>
-                <span>Words: <b id="count-word" class="text-indigo-600">0</b></span>
+            <div class="glass-panel flex-1 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                <textarea id="text-input" class="flex-1 p-8 bg-transparent focus:outline-none resize-none text-sm font-mono leading-relaxed" placeholder="Paste your text here..." oninput="updateCounts()"></textarea>
+                <div class="bg-gray-50/50 dark:bg-black/20 p-4 border-t border-gray-100 dark:border-gray-700 flex gap-8 text-xs font-mono uppercase tracking-wide text-gray-500">
+                    <span>Chars: <b id="count-char" class="text-indigo-600 dark:text-indigo-400">0</b></span>
+                    <span>Words: <b id="count-word" class="text-indigo-600 dark:text-indigo-400">0</b></span>
+                </div>
             </div>
         </div>
 
         <!-- 10. PDF MERGER -->
         <div id="tab-pdf" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center overflow-y-auto">
-            <div class="max-w-xl w-full bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="file-stack" class="w-8 h-8 text-red-500"></i>
+            <div class="max-w-xl w-full glass-panel p-10 rounded-[2.5rem] shadow-2xl text-center">
+                <div class="bg-red-50 dark:bg-red-900/20 p-5 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-inner">
+                    <i data-lucide="file-stack" class="w-10 h-10 text-red-500"></i>
                 </div>
-                <h2 class="text-2xl font-bold mb-2">Secure PDF Merger</h2>
-                <p class="text-sm text-gray-500 mb-6">Merges files locally on your device. No uploads.</p>
-                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 mb-6 hover:border-indigo-500 transition-colors cursor-pointer relative" onclick="document.getElementById('pdf-input').click()">
+                <h2 class="text-3xl font-bold mb-3">Secure PDF Merger</h2>
+                <p class="text-sm text-gray-500 mb-8 font-medium">Merges files locally on your device. No uploads.</p>
+                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-3xl p-10 mb-8 hover:border-indigo-500 hover:bg-indigo-50/30 transition-all cursor-pointer relative group" onclick="document.getElementById('pdf-input').click()">
                     <input type="file" id="pdf-input" multiple accept=".pdf" class="hidden" onchange="handlePdfSelect(this)">
-                    <div id="pdf-area-content">
-                        <i data-lucide="upload-cloud" class="w-10 h-10 text-gray-400 mx-auto mb-2"></i>
-                        <p class="text-sm font-medium">Click to select PDF files</p>
+                    <div id="pdf-area-content" class="group-hover:scale-105 transition-transform">
+                        <i data-lucide="upload-cloud" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
+                        <p class="text-sm font-bold text-indigo-600">Click to select PDF files</p>
                     </div>
                 </div>
-                <ul id="pdf-list" class="text-left text-sm mb-6 space-y-1"></ul>
-                <button onclick="mergePdfs()" id="btn-merge" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>Merge PDFs</button>
+                <ul id="pdf-list" class="text-left text-sm mb-8 space-y-2 max-h-40 overflow-y-auto"></ul>
+                <button onclick="mergePdfs()" id="btn-merge" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-indigo-500/20" disabled>Merge PDFs</button>
             </div>
         </div>
 
         <!-- 11. DATE CALC -->
         <div id="tab-calc" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="max-w-md w-full bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><i data-lucide="calendar-days" class="w-6 h-6 text-indigo-500"></i> Date Calculator</h2>
-                <div class="space-y-4">
-                    <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Start Date</label><input type="date" id="calc-start" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-transparent"></div>
-                    <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Days to Add</label><input type="number" id="calc-days" value="30" class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-transparent"></div>
-                    <div class="flex items-center gap-2"><input type="checkbox" id="calc-biz" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500" checked><label for="calc-biz" class="text-sm">Business Days Only (Skip Sat/Sun)</label></div>
-                    <button onclick="calculateDate()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold mt-2">Calculate Deadline</button>
-                    <div id="calc-result" class="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg text-center hidden"><p class="text-xs text-gray-500 uppercase">The deadline is</p><p class="text-xl font-bold text-indigo-600 dark:text-indigo-400 mt-1" id="calc-output">--</p></div>
+            <div class="max-w-md w-full glass-panel p-10 rounded-3xl shadow-2xl">
+                <h2 class="text-2xl font-bold mb-8 flex items-center gap-3"><i data-lucide="calendar-days" class="w-8 h-8 text-indigo-500"></i> Date Calculator</h2>
+                <div class="space-y-6">
+                    <div><label class="text-[10px] font-bold text-gray-400 uppercase block mb-2 tracking-wider">Start Date</label><input type="date" id="calc-start" class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white/50 dark:bg-black/20"></div>
+                    <div><label class="text-[10px] font-bold text-gray-400 uppercase block mb-2 tracking-wider">Days to Add</label><input type="number" id="calc-days" value="30" class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white/50 dark:bg-black/20"></div>
+                    <div class="flex items-center gap-3 bg-gray-50/50 dark:bg-gray-800/50 p-3 rounded-xl"><input type="checkbox" id="calc-biz" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 accent-indigo-600" checked><label for="calc-biz" class="text-sm font-medium">Business Days Only (Skip Sat/Sun)</label></div>
+                    <button onclick="calculateDate()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-bold mt-4 shadow-lg hover:bg-indigo-700 transition-colors">Calculate Deadline</button>
+                    <div id="calc-result" class="mt-6 p-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl text-center hidden border border-indigo-100 dark:border-indigo-800"><p class="text-[10px] text-indigo-400 uppercase font-bold tracking-widest">The deadline is</p><p class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-2" id="calc-output">--</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- 12. PASSWORD GEN (NEW) -->
+        <!-- 12. PASSWORD GEN -->
         <div id="tab-password" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="max-w-md w-full bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4"><i data-lucide="lock" class="w-8 h-8 text-green-500"></i></div>
-                <h2 class="text-2xl font-bold mb-6">Secure Password Gen</h2>
+            <div class="max-w-md w-full glass-panel p-10 rounded-3xl shadow-2xl text-center">
+                <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6"><i data-lucide="lock" class="w-8 h-8 text-green-500"></i></div>
+                <h2 class="text-2xl font-bold mb-8">Secure Password Gen</h2>
                 
-                <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-xl mb-6 break-all relative group cursor-pointer" onclick="copyPassword()">
+                <div class="bg-gray-100 dark:bg-black/30 p-6 rounded-2xl mb-8 break-all relative group cursor-pointer border border-gray-200 dark:border-gray-700" onclick="copyPassword()">
                     <div id="pwd-output" class="text-2xl font-mono font-bold text-gray-800 dark:text-gray-200">---</div>
-                    <div class="absolute inset-0 flex items-center justify-center bg-gray-900/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"><span class="bg-black text-white text-xs px-2 py-1 rounded">Click to Copy</span></div>
+                    <div class="absolute inset-0 flex items-center justify-center bg-gray-900/90 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl backdrop-blur-sm"><span class="text-white font-bold text-sm">Click to Copy</span></div>
                 </div>
 
-                <div class="flex items-center gap-4 mb-6">
-                    <input type="range" id="pwd-len" min="8" max="32" value="16" class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" oninput="document.getElementById('pwd-len-val').innerText=this.value">
-                    <span id="pwd-len-val" class="font-bold w-8">16</span>
+                <div class="flex items-center gap-6 mb-8 bg-white/50 dark:bg-black/20 p-4 rounded-xl">
+                    <input type="range" id="pwd-len" min="8" max="32" value="16" class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-600" oninput="document.getElementById('pwd-len-val').innerText=this.value">
+                    <span id="pwd-len-val" class="font-bold text-xl w-8">16</span>
                 </div>
                 
-                <button onclick="generatePassword()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-colors">Generate New</button>
+                <button onclick="generatePassword()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-green-500/20">Generate New</button>
             </div>
         </div>
 
         <!-- 13. BREATHING -->
-        <div id="tab-breathing" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden bg-blue-50 dark:bg-slate-900 transition-colors duration-1000">
-            <h2 class="text-3xl font-light mb-12 tracking-widest text-blue-900 dark:text-blue-100">BOX BREATHING</h2>
+        <div id="tab-breathing" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden bg-blue-50/30 dark:bg-slate-900/30 transition-colors duration-1000 backdrop-blur-sm">
+            <h2 class="text-4xl font-light mb-16 tracking-[0.5em] text-blue-900 dark:text-blue-100 text-center">BREATHE</h2>
             <div class="relative flex items-center justify-center">
-                <div class="w-48 h-48 bg-blue-200 dark:bg-blue-800 rounded-full animate-breathe blur-xl absolute"></div>
-                <div class="w-40 h-40 bg-white dark:bg-slate-800 rounded-full shadow-2xl z-10 flex items-center justify-center relative border-4 border-blue-100 dark:border-slate-700">
-                    <p id="breath-text" class="text-lg font-medium text-blue-600 dark:text-blue-300">Inhale</p>
+                <div class="w-64 h-64 bg-blue-300/30 dark:bg-blue-600/30 rounded-full animate-breathe blur-2xl absolute"></div>
+                <div class="w-48 h-48 glass-panel rounded-full shadow-2xl z-10 flex items-center justify-center relative border-4 border-blue-50 dark:border-slate-700/50">
+                    <p id="breath-text" class="text-2xl font-medium text-blue-600 dark:text-blue-300">Inhale</p>
                 </div>
             </div>
-            <p class="mt-12 text-sm text-center max-w-xs text-blue-800 dark:text-blue-300 opacity-60">Inhale (4s) • Hold (4s) • Exhale (4s) • Hold (4s)</p>
+            <p class="mt-16 text-sm text-center font-mono uppercase tracking-widest text-blue-800 dark:text-blue-300 opacity-60">Inhale (4s) • Hold (4s) • Exhale (4s) • Hold (4s)</p>
         </div>
 
         <!-- 14. ON AIR SIGN -->
         <div id="tab-onair" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl p-6">
-                <button onclick="toggleFullScreenSign('red')" class="aspect-video bg-red-600 rounded-2xl flex flex-col items-center justify-center text-white hover:scale-105 transition-transform shadow-xl"><i data-lucide="video" class="w-16 h-16 mb-4"></i><span class="text-3xl font-bold tracking-widest">ON A CALL</span></button>
-                <button onclick="toggleFullScreenSign('green')" class="aspect-video bg-green-600 rounded-2xl flex flex-col items-center justify-center text-white hover:scale-105 transition-transform shadow-xl"><i data-lucide="coffee" class="w-16 h-16 mb-4"></i><span class="text-3xl font-bold tracking-widest">FREE</span></button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl p-6">
+                <button onclick="toggleFullScreenSign('red')" class="aspect-video bg-gradient-to-br from-red-500 to-red-700 rounded-3xl flex flex-col items-center justify-center text-white hover:scale-[1.02] transition-transform shadow-2xl shadow-red-500/40 group">
+                    <i data-lucide="video" class="w-20 h-20 mb-6 group-hover:animate-pulse"></i>
+                    <span class="text-4xl font-black tracking-widest">ON A CALL</span>
+                </button>
+                <button onclick="toggleFullScreenSign('green')" class="aspect-video bg-gradient-to-br from-green-500 to-green-700 rounded-3xl flex flex-col items-center justify-center text-white hover:scale-[1.02] transition-transform shadow-2xl shadow-green-500/40">
+                    <i data-lucide="coffee" class="w-20 h-20 mb-6"></i>
+                    <span class="text-4xl font-black tracking-widest">FREE</span>
+                </button>
             </div>
-            <p class="mt-6 text-gray-500">Click anywhere to exit full screen mode.</p>
+            <p class="mt-8 text-gray-500 font-medium">Click anywhere to exit full screen mode.</p>
         </div>
 
     </main>
 
-    <div id="onair-overlay" onclick="this.classList.add('hidden')" class="fixed inset-0 z-50 hidden flex flex-col items-center justify-center cursor-pointer"><h1 id="onair-text" class="text-[10vw] font-black text-white tracking-widest text-center leading-none">ON AIR</h1></div>
+    <div id="onair-overlay" onclick="this.classList.add('hidden')" class="fixed inset-0 z-50 hidden flex flex-col items-center justify-center cursor-pointer transition-colors duration-500"><h1 id="onair-text" class="text-[15vw] font-black text-white tracking-tighter text-center leading-none drop-shadow-2xl">ON AIR</h1></div>
 
     <script>
         lucide.createIcons();
@@ -371,16 +425,19 @@
         // --- NAVIGATION ---
         function switchTab(tab) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900', 'dark:text-indigo-300'));
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-500/20', 'dark:text-indigo-300', 'shadow-sm', 'bg-white', 'dark:bg-gray-800');
+                // el.classList.add('text-gray-600', 'dark:text-gray-400');
+            });
             
             const target = document.getElementById('tab-' + tab);
             const btn = document.getElementById('btn-' + tab);
             if(target && btn) {
                 target.classList.remove('hidden');
-                btn.classList.add('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900', 'dark:text-indigo-300');
+                btn.classList.add('bg-white', 'dark:bg-gray-800', 'text-indigo-600', 'dark:text-indigo-300', 'shadow-sm');
+                // btn.classList.remove('text-gray-600', 'dark:text-gray-400');
                 localStorage.setItem('webdesks_tab', tab);
                 
-                // Init Whiteboard if needed
                 if(tab === 'whiteboard') initWhiteboard();
                 if(tab === 'zones') updateZones(document.getElementById('zone-slider').value);
             }
@@ -390,6 +447,7 @@
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('webdesks_theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            if(canvas) resizeCanvas(); // Redraw whiteboard for dark mode colors
         }
         if (localStorage.getItem('webdesks_theme') === 'dark') document.documentElement.classList.add('dark');
 
@@ -402,10 +460,10 @@
         let tasks = JSON.parse(localStorage.getItem('webdesks_tasks') || '[]');
         function renderTasks() {
             document.getElementById('task-list').innerHTML = tasks.map((t, i) => `
-                <li class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 group">
-                    <button onclick="toggleTask(${i})" class="mr-3 text-gray-400 hover:text-indigo-500"><i data-lucide="${t.done ? 'check-circle-2' : 'circle'}" class="w-5 h-5 ${t.done ? 'text-green-500' : ''}"></i></button>
-                    <span class="flex-1 ${t.done ? 'line-through text-gray-400' : ''}">${t.text}</span>
-                    <button onclick="deleteTask(${i})" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500"><i data-lucide="x" class="w-4 h-4"></i></button>
+                <li class="glass-panel p-4 rounded-xl flex items-center group transition-all hover:scale-[1.01]">
+                    <button onclick="toggleTask(${i})" class="mr-4 text-gray-400 hover:text-indigo-500 transition-colors"><i data-lucide="${t.done ? 'check-circle-2' : 'circle'}" class="w-6 h-6 ${t.done ? 'text-green-500 fill-green-100' : ''}"></i></button>
+                    <span class="flex-1 ${t.done ? 'line-through text-gray-400' : 'font-medium'}">${t.text}</span>
+                    <button onclick="deleteTask(${i})" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500 transition-all hover:bg-red-50 p-2 rounded-lg"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                 </li>`).join('');
             lucide.createIcons();
             localStorage.setItem('webdesks_tasks', JSON.stringify(tasks));
@@ -422,22 +480,22 @@
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
             
-            // Events
             canvas.addEventListener('mousedown', startPos);
             canvas.addEventListener('mouseup', endPos);
             canvas.addEventListener('mousemove', draw);
-            // Touch
             canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPos(e.touches[0]); });
             canvas.addEventListener('touchend', (e) => { e.preventDefault(); endPos(); });
             canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
         }
         function resizeCanvas() {
+            if(!canvas) return;
             const parent = canvas.parentElement;
             canvas.width = parent.offsetWidth;
             canvas.height = parent.offsetHeight;
             ctx.lineCap = 'round';
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = document.documentElement.classList.contains('dark') ? '#fff' : '#000';
+            ctx.lineWidth = 4;
+            // Dark mode support for pen color
+            ctx.strokeStyle = document.documentElement.classList.contains('dark') ? '#e2e8f0' : '#1e293b';
         }
         function startPos(e) { painting = true; draw(e); }
         function endPos() { painting = false; ctx.beginPath(); }
@@ -458,10 +516,11 @@
         let canned = JSON.parse(localStorage.getItem('webdesks_canned') || '[{"title":"Ack Email","text":"Thanks, I received this. Will review shortly."},{"title":"In Meeting","text":"I am currently in a meeting, will respond when free."}]');
         function renderCanned() {
             document.getElementById('canned-grid').innerHTML = canned.map((c, i) => `
-                <div onclick="navigator.clipboard.writeText('${c.text.replace(/'/g, "\\'")}')" class="bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-xl cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors border border-indigo-100 dark:border-indigo-800/50 relative group">
-                    <h3 class="font-bold text-indigo-700 dark:text-indigo-300 mb-1">${c.title}</h3>
-                    <p class="text-xs text-gray-500 line-clamp-2">${c.text}</p>
-                    <button onclick="event.stopPropagation(); deleteCanned(${i})" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500"><i data-lucide="x" class="w-4 h-4"></i></button>
+                <div onclick="navigator.clipboard.writeText('${c.text.replace(/'/g, "\\'")}')" class="glass-panel p-6 rounded-2xl cursor-pointer hover:border-indigo-400 transition-all hover:-translate-y-1 relative group bg-white/40 dark:bg-black/20">
+                    <h3 class="font-bold text-lg text-indigo-700 dark:text-indigo-300 mb-2">${c.title}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-3 leading-relaxed">${c.text}</p>
+                    <button onclick="event.stopPropagation(); deleteCanned(${i})" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 bg-white dark:bg-gray-800 p-1.5 rounded-lg shadow-sm"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 text-[10px] font-bold uppercase text-indigo-500 bg-indigo-50 dark:bg-indigo-900/50 px-2 py-1 rounded">Copy</div>
                 </div>`).join('');
             localStorage.setItem('webdesks_canned', JSON.stringify(canned));
             lucide.createIcons();
@@ -486,32 +545,21 @@
         function updateZones(val) {
             const h = Math.floor(val / 60);
             const m = val % 60;
-            // Base time display (Relative 0 UTC for logic simplicity, user views as "My Time")
-            // We assume slider = Local Time for UX simplicity
             const localDate = new Date();
             localDate.setHours(h); localDate.setMinutes(m);
             
             document.getElementById('zone-display').innerText = localDate.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
             
-            // Render list (Simple native calc)
             document.getElementById('zone-list').innerHTML = cities.map(c => {
-                // Calc offset diff
-                const utc = val - (new Date().getTimezoneOffset() * -1); // approximate base
-                // Just use simple UTC offsets for demo reliability
-                const nowUTC = new Date();
-                const utcHours = nowUTC.getUTCHours();
-                const cityTime = (h + c.offset - (new Date().getTimezoneOffset()/-60)) % 24; 
-                
-                // Better approach: Date manipulation
                 const d = new Date();
                 d.setHours(h); d.setMinutes(m);
                 const utcTime = d.getTime() + (d.getTimezoneOffset() * 60000);
                 const cityDate = new Date(utcTime + (3600000 * c.offset));
                 
                 return `
-                <div class="flex justify-between items-center bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                    <span class="font-medium">${c.name}</span>
-                    <span class="font-mono text-gray-500 dark:text-gray-300">${cityDate.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+                <div class="flex justify-between items-center glass-panel p-4 rounded-xl mb-2">
+                    <span class="font-bold text-gray-700 dark:text-gray-200">${c.name}</span>
+                    <span class="font-mono text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-lg">${cityDate.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
                 </div>`;
             }).join('');
         }
@@ -567,14 +615,14 @@
             }
         }
         setInterval(updateClock, 1000); updateClock();
-        function setClockTheme(t) { document.getElementById('live-clock').className = "text-9xl font-bold mb-2 transition-all theme-" + t; }
+        function setClockTheme(t) { document.getElementById('live-clock').className = "text-[12vw] leading-none font-bold mb-2 transition-all drop-shadow-2xl theme-" + t; }
         function setAlarm() { alarmTime = document.getElementById('alarm-input').value; alarmTriggered = false; if(alarmTime) document.getElementById('alarm-status').textContent = "Alarm set for " + alarmTime; }
 
         // --- TIMER ---
         let tmrLeft=25*60, tmrId, tmrRun=false;
         function updateTmr(){ const m=Math.floor(tmrLeft/60).toString().padStart(2,'0'), s=(tmrLeft%60).toString().padStart(2,'0'); document.getElementById('timer-display').innerText=`${m}:${s}`; document.title = tmrRun ? `(${m}:${s}) WebDesks` : "WebDesks"; }
-        function toggleTimer(){ const btn = document.getElementById('btn-toggle'); if(tmrRun){ clearInterval(tmrId); btn.innerHTML='<i data-lucide="play" class="w-5 h-5 fill-current"></i> Start'; btn.classList.replace('bg-red-500','bg-indigo-600'); } else { tmrId=setInterval(()=>{ tmrLeft--; updateTmr(); if(tmrLeft<=0){clearInterval(tmrId); tmrRun=false; alert('Done!');} },1000); btn.innerHTML='<i data-lucide="pause" class="w-5 h-5 fill-current"></i> Pause'; btn.classList.replace('bg-indigo-600','bg-red-500'); } tmrRun=!tmrRun; lucide.createIcons(); }
-        function setMode(m,l){ clearInterval(tmrId); tmrRun=false; tmrLeft=m*60; document.getElementById('timer-mode').innerText=l; updateTmr(); document.getElementById('btn-toggle').innerHTML='<i data-lucide="play" class="w-5 h-5 fill-current"></i> Start'; document.getElementById('btn-toggle').classList.replace('bg-red-500','bg-indigo-600'); lucide.createIcons(); }
+        function toggleTimer(){ const btn = document.getElementById('btn-toggle'); if(tmrRun){ clearInterval(tmrId); btn.innerHTML='<i data-lucide="play" class="w-6 h-6 fill-current"></i> Start Focus'; btn.classList.replace('bg-red-500','bg-indigo-600'); } else { tmrId=setInterval(()=>{ tmrLeft--; updateTmr(); if(tmrLeft<=0){clearInterval(tmrId); tmrRun=false; alert('Done!');} },1000); btn.innerHTML='<i data-lucide="pause" class="w-6 h-6 fill-current"></i> Pause Focus'; btn.classList.replace('bg-indigo-600','bg-red-500'); } tmrRun=!tmrRun; lucide.createIcons(); }
+        function setMode(m,l){ clearInterval(tmrId); tmrRun=false; tmrLeft=m*60; document.getElementById('timer-mode').innerText=l; updateTmr(); document.getElementById('btn-toggle').innerHTML='<i data-lucide="play" class="w-6 h-6 fill-current"></i> Start Focus'; document.getElementById('btn-toggle').classList.replace('bg-red-500','bg-indigo-600'); lucide.createIcons(); }
 
         // --- AUDIO ---
         let audioCtx, activeNoise, gainNode;
@@ -601,7 +649,7 @@
         let pdfFiles = [];
         function handlePdfSelect(input) {
             pdfFiles = Array.from(input.files);
-            document.getElementById('pdf-list').innerHTML = pdfFiles.map(f => `<li class="flex items-center gap-2"><i data-lucide="file" class="w-4 h-4 text-red-500"></i> ${f.name}</li>`).join('');
+            document.getElementById('pdf-list').innerHTML = pdfFiles.map(f => `<li class="flex items-center gap-2 bg-white/50 dark:bg-black/20 p-2 rounded-lg"><i data-lucide="file" class="w-4 h-4 text-red-500"></i> <span class="truncate">${f.name}</span></li>`).join('');
             document.getElementById('btn-merge').disabled = pdfFiles.length < 2;
             lucide.createIcons();
         }
@@ -656,7 +704,6 @@
         switchTab(localStorage.getItem('webdesks_tab') || 'notepad');
         renderTasks();
         document.getElementById('calc-start').valueAsDate = new Date();
-        // Breath loop sync
         const breathStates = ["Inhale", "Hold", "Exhale", "Hold"]; let bIdx = 0;
         setInterval(() => { const el = document.getElementById('breath-text'); if(el.offsetParent !== null) { el.textContent = breathStates[bIdx]; bIdx = (bIdx + 1) % 4; } }, 4000);
     </script>
