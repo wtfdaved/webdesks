@@ -4,1048 +4,700 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO & Metadata -->
-    <title>WebDesks | Privacy-First WFH Operating System</title>
-    <meta name="description" content="WebDesks is a secure, browser-based productivity suite for remote workers. Includes PDF tools, Pomodoro timer, whiteboard, password generator, and developer utilities. Runs 100% offline.">
-    <meta name="keywords" content="wfh tools, remote work dashboard, browser os, online whiteboard, pdf merger, pomodoro timer, secure productivity, no install tools, qr code generator, json formatter">
+    <!-- SEO & METADATA -->
+    <title>WebDesks OS | The Ultimate Privacy-First WFH Workspace</title>
+    <meta name="description" content="WebDesks is an all-in-one browser-based productivity suite. No installation, 100% private, runs locally. Tools include PDF merger, screen recorder, alarm clock, and project boards.">
+    <meta name="keywords" content="browser OS, WFH tools, privacy productivity, online alarm clock, PDF merger local, screen recorder no install, task management browser">
     <meta name="author" content="WebDesks">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="WebDesks - The Privacy-First WFH OS">
-    <meta property="og:description" content="All your essential remote work tools in one tab. No downloads, no sign-ups, runs 100% locally.">
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://webdesks.app">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:url" content="https://webdesks.app/">
+    <meta property="og:title" content="WebDesks OS | Privacy-First Browser Workspace">
+    <meta property="og:description" content="A powerful suite of productivity tools that run entirely in your browser. Your data never leaves your device.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="WebDesks OS">
+    <meta property="twitter:description" content="The ultimate browser-based workspace for remote professionals.">
 
+    <link rel="manifest" href="manifest.json">
+    
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* CORE UI */
+        :root { --accent: #4f46e5; }
         body { 
             font-family: 'Inter', sans-serif; 
-            background: linear-gradient(-45deg, #e0e7ff, #f3e8ff, #dbeafe, #f0f9ff);
+            background: linear-gradient(-45deg, #eef2ff, #f5f3ff, #f0f9ff, #faf5ff);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            overflow: hidden;
         }
-        .dark body { background: linear-gradient(-45deg, #0f172a, #1e1b4b, #172554, #020617); }
+        .dark body { background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #020617); }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* GLASSMORPHISM */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
-        .dark .glass-panel {
-            background: rgba(17, 24, 39, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        /* TAB MANAGEMENT - CRITICAL FIX FOR OVERLAYING */
+        .tab-content { height: 100%; width: 100%; position: absolute; inset: 0; padding: 1.5rem; overflow-y: auto; }
+        .tab-content:not(.active) { display: none !important; }
+        .tab-content.active { animation: fadeIn 0.3s ease; }
         
-        /* UTILS */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background-color: rgba(156, 163, 175, 0.5); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background-color: rgba(156, 163, 175, 0.8); }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
 
-        .theme-retro { font-family: 'Share Tech Mono', monospace; color: #10b981; text-shadow: 0 0 10px rgba(16,185,129,0.5); }
-        .theme-cyber { font-family: 'Orbitron', sans-serif; color: #f43f5e; text-shadow: 0 0 15px rgba(244,63,94,0.6); }
-        .theme-modern { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -2px; }
+        .panic-mode main { filter: blur(50px) grayscale(100%); pointer-events: none; }
         .timer-font { font-variant-numeric: tabular-nums; }
-        
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            25% { transform: scale(1.5); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 1; }
-            75% { transform: scale(1); opacity: 0.8; }
-        }
-        .animate-breathe { animation: breathe 16s infinite ease-in-out; }
-
-        /* HIDE SCROLLBAR UTILITY */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
+        #wb-canvas { cursor: crosshair; touch-action: none; }
     </style>
     <script> tailwind.config = { darkMode: 'class' } </script>
 </head>
-<body class="text-gray-800 dark:text-gray-100 h-screen flex overflow-hidden transition-colors duration-300">
+<body class="text-slate-800 dark:text-slate-100 h-screen flex">
 
     <!-- SIDEBAR -->
-    <aside class="w-16 lg:w-64 glass-panel m-2 lg:m-4 rounded-2xl flex flex-col flex-shrink-0 z-30 transition-all duration-300 overflow-hidden border-r-0">
-        <div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 shrink-0 border-b border-gray-200/30 dark:border-gray-700/30">
-            <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
-                <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+    <aside class="w-20 lg:w-64 glass m-3 rounded-3xl flex flex-col shrink-0 z-50 transition-all duration-300">
+        <div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-slate-200/50 dark:border-slate-800/50">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <i data-lucide="layout" class="text-white w-6 h-6"></i>
             </div>
             <div class="ml-3 hidden lg:block">
-                <h1 class="font-bold text-xl tracking-tight">WebDesks</h1>
-                <p class="text-[10px] uppercase font-bold text-indigo-500 tracking-widest">OS v6.3</p>
+                <h1 class="font-black text-lg tracking-tighter">WebDesks</h1>
+                <span class="text-[9px] font-bold text-indigo-500 uppercase tracking-widest">OS v0.11</span>
             </div>
         </div>
-        
-        <nav class="flex-1 p-2 lg:p-4 space-y-1 overflow-y-auto no-scrollbar">
-            <!-- WORKSPACE -->
-            <div class="px-2 mb-2 mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Workspace</div>
-            <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="layout-grid" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Dashboard</span></button>
-            <button onclick="switchTab('notepad')" id="btn-notepad" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="file-text" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Scratchpad</span></button>
-            <button onclick="switchTab('tasks')" id="btn-tasks" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="check-square" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Tasks</span></button>
-            <button onclick="switchTab('whiteboard')" id="btn-whiteboard" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="pen-tool" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Whiteboard</span></button>
-            <button onclick="switchTab('canned')" id="btn-canned" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="message-square" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Quick Replies</span></button>
-            
-            <!-- FOCUS -->
-            <div class="px-2 mb-2 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Focus</div>
-            <button onclick="switchTab('clock')" id="btn-clock" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="watch" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Desk Clock</span></button>
-            <button onclick="switchTab('timer')" id="btn-timer" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="timer" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Pomodoro</span></button>
-            <button onclick="switchTab('stopwatch')" id="btn-stopwatch" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="hourglass" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Stopwatch</span></button>
-            <button onclick="switchTab('audio')" id="btn-audio" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="headphones" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Sound Studio</span></button>
-            <button onclick="switchTab('breathing')" id="btn-breathing" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="wind" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Wellness</span></button>
 
-            <!-- UTILITIES -->
-            <div class="px-2 mb-2 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Utilities</div>
-            <button onclick="switchTab('zones')" id="btn-zones" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="globe" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Time Zones</span></button>
-            <button onclick="switchTab('text')" id="btn-text" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="type" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Text Studio</span></button>
-            <button onclick="switchTab('pdf')" id="btn-pdf" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="file-stack" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">PDF Merger</span></button>
-            <button onclick="switchTab('calc')" id="btn-calc" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="calendar-days" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Date Calc</span></button>
-            <button onclick="switchTab('password')" id="btn-password" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="lock" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Password Gen</span></button>
-            <button onclick="switchTab('onair')" id="btn-onair" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="radio" class="w-5 h-5 group-hover:text-red-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">On Air Sign</span></button>
+        <nav class="flex-1 overflow-y-auto p-3 space-y-1 no-scrollbar">
+            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Workspace</div>
+            <button onclick="switchTab('dashboard')" class="nav-btn active w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="dashboard">
+                <i data-lucide="grid" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Dashboard</span>
+            </button>
+            <button onclick="switchTab('scratchpad')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="scratchpad">
+                <i data-lucide="file-text" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Scratchpad</span>
+            </button>
+            <button onclick="switchTab('tasks')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="tasks">
+                <i data-lucide="check-square" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Tasks</span>
+            </button>
+            <button onclick="switchTab('board')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="board">
+                <i data-lucide="columns" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Project Board</span>
+            </button>
+            <button onclick="switchTab('whiteboard')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="whiteboard">
+                <i data-lucide="edit-3" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Whiteboard</span>
+            </button>
 
-            <!-- DEV TOOLS (NEW) -->
-            <div class="px-2 mb-2 mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden lg:block">Dev Tools</div>
-            <button onclick="switchTab('qr')" id="btn-qr" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="qr-code" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">QR Gen</span></button>
-            <button onclick="switchTab('json')" id="btn-json" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="braces" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">JSON Prettify</span></button>
-            <button onclick="switchTab('base64')" id="btn-base64" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="binary" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Base64</span></button>
-            <button onclick="switchTab('ratio')" id="btn-ratio" class="nav-btn group w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/50 dark:hover:bg-gray-700/50 text-gray-600 dark:text-gray-400"><i data-lucide="scaling" class="w-5 h-5 group-hover:text-indigo-600 transition-colors"></i><span class="hidden lg:block ml-3 font-medium text-sm">Aspect Ratio</span></button>
+            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Focus & Time</div>
+            <button onclick="switchTab('clock')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="clock">
+                <i data-lucide="clock" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Desk Clock</span>
+            </button>
+            <button onclick="switchTab('timer')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="timer">
+                <i data-lucide="timer" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Focus Timer</span>
+            </button>
+            <button onclick="switchTab('audio')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="audio">
+                <i data-lucide="headphones" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Sound Studio</span>
+            </button>
+
+            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Utilities</div>
+            <button onclick="switchTab('pdf')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="pdf">
+                <i data-lucide="file-stack" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">PDF Merger</span>
+            </button>
+            <button onclick="switchTab('zones')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="zones">
+                <i data-lucide="globe" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Time Zones</span>
+            </button>
+            <button onclick="switchTab('onair')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="onair">
+                <i data-lucide="video" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">On Air Sign</span>
+            </button>
+            <button onclick="switchTab('recorder')" class="nav-btn w-full flex items-center p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50" data-tab="recorder">
+                <i data-lucide="screen-share" class="w-5 h-5"></i><span class="hidden lg:block ml-3 font-medium text-sm">Screen Record</span>
+            </button>
         </nav>
 
-        <div class="p-4 border-t border-gray-200/30 dark:border-gray-700/30 flex justify-center lg:justify-start">
-            <button onclick="toggleTheme()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 hover:text-indigo-600 transition-all">
-                <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
-                <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+        <div class="p-4 border-t border-slate-200/50 dark:border-slate-800/50 space-y-2">
+            <button onclick="toggleTheme()" class="w-full p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center">
+                <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+            </button>
+            <button onclick="togglePrivacy()" class="w-full p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center" title="Panic Button (Alt+P)">
+                <i data-lucide="eye-off" class="w-5 h-5"></i>
             </button>
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 relative overflow-hidden p-2 lg:p-4 pl-0">
+    <!-- MAIN APP AREA -->
+    <main class="flex-1 relative overflow-hidden">
         
-        <!-- 0. DASHBOARD (HOMEPAGE) -->
-        <div id="tab-dashboard" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col overflow-y-auto hidden">
-            <div class="max-w-6xl w-full mx-auto space-y-6">
-                
-                <!-- GREETING & WEATHER -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="col-span-1 md:col-span-2 glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col justify-between min-h-[240px] group hover:scale-[1.01] transition-transform">
-                        <div class="absolute right-[-20px] top-[-20px] opacity-10">
-                            <i data-lucide="sun" class="w-64 h-64 text-yellow-500"></i>
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="tab-content active">
+            <div class="max-w-6xl mx-auto space-y-6">
+                <div class="grid grid-cols-12 gap-6">
+                    <div class="col-span-12 lg:col-span-8 glass p-10 rounded-[2.5rem] flex flex-col justify-between min-h-[250px] relative overflow-hidden">
+                        <div class="z-10">
+                            <h2 id="greeting" class="text-4xl font-black tracking-tighter mb-1">Good Morning</h2>
+                            <input type="text" id="daily-focus" placeholder="Set a focus for today..." class="bg-transparent border-none p-0 text-xl text-slate-400 focus:ring-0 w-full">
                         </div>
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h1 id="dash-greeting" class="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 dark:text-white mb-2">Good Morning</h1>
-                                <p class="text-gray-500 dark:text-gray-400 font-medium">Ready to conquer the day?</p>
-                            </div>
-                            <button onclick="toggleEditPins()" class="p-2 bg-white/50 dark:bg-black/30 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors" title="Customize Dashboard Pins">
-                                <i data-lucide="settings-2" class="w-5 h-5 text-gray-500 dark:text-gray-400"></i>
-                            </button>
+                        <div class="flex items-end gap-5 z-10">
+                            <div id="dash-time" class="text-7xl font-black tracking-tighter text-indigo-600 dark:text-indigo-400 leading-none timer-font">00:00</div>
+                            <div id="dash-date" class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-2">October 24</div>
                         </div>
-                        <div class="flex items-end gap-6 mt-8">
-                            <div>
-                                <div id="dash-clock" class="text-6xl font-black tracking-tighter text-indigo-600 dark:text-indigo-400 timer-font">09:41</div>
-                                <div id="dash-date" class="text-lg font-medium text-gray-400 uppercase tracking-widest pl-1">Wednesday, Oct 24</div>
-                            </div>
+                        <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none transform rotate-12">
+                            <i data-lucide="sun" class="w-64 h-64"></i>
                         </div>
                     </div>
-
-                    <!-- WEATHER WIDGET -->
-                    <div class="glass-panel p-6 rounded-3xl flex flex-col justify-center items-center text-center relative overflow-hidden">
-                        <div id="weather-container" class="relative w-full h-full flex flex-col items-center justify-center">
-                            <div class="absolute top-0 right-0">
-                                <button onclick="toggleWeatherUnit()" id="weather-unit-btn" class="text-[10px] font-bold uppercase bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-gray-500 hover:text-indigo-500">°C</button>
-                            </div>
-                            <i data-lucide="cloud-sun" class="w-16 h-16 text-indigo-500 mb-4 mx-auto"></i>
-                            <div id="weather-temp" class="text-4xl font-bold text-gray-800 dark:text-white">--°</div>
-                            <div id="weather-desc" class="text-sm font-medium text-gray-500 uppercase tracking-wide mt-1">Enable Location</div>
-                            <button onclick="fetchWeather()" class="mt-4 text-xs bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 px-3 py-1 rounded-full font-bold hover:bg-indigo-100 transition-colors">Get Weather</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DASHBOARD WIDGETS (Dynamic) -->
-                <div id="dashboard-pins" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
-                    <!-- PINNED NOTE -->
-                    <div id="pin-note" class="col-span-1 md:col-span-2 glass-panel p-1 rounded-3xl flex flex-col h-64">
-                        <div class="px-5 py-3 border-b border-gray-100 dark:border-gray-700/50 flex justify-between items-center">
-                            <span class="text-xs font-bold uppercase text-gray-400 tracking-widest"><i data-lucide="pin" class="w-3 h-3 inline mr-1"></i> Pinned Note</span>
-                        </div>
-                        <textarea id="dash-note" class="flex-1 p-5 bg-transparent resize-none focus:outline-none text-lg text-gray-700 dark:text-gray-200 placeholder-gray-300" placeholder="Pin important thoughts here..."></textarea>
-                    </div>
-
-                    <!-- MINI TIMER -->
-                    <div id="pin-timer" class="glass-panel p-6 rounded-3xl flex flex-col items-center justify-center text-center relative">
-                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Focus Mode</div>
-                        <div class="text-5xl font-black text-gray-800 dark:text-white timer-font mb-4 mt-2" id="mini-timer-display">25:00</div>
-                        <div class="flex gap-2">
-                            <button onclick="toggleMiniTimer()" id="btn-mini-timer" class="bg-indigo-600 hover:bg-indigo-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95"><i data-lucide="play" class="w-5 h-5 ml-1"></i></button>
-                            <button onclick="resetMiniTimer()" class="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"><i data-lucide="rotate-ccw" class="w-5 h-5"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- MINI ALARM (NEW) -->
-                    <div id="pin-alarm" class="glass-panel p-6 rounded-3xl flex flex-col items-center justify-center text-center relative hidden">
-                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Lunch / Event Alarm</div>
-                        <div class="flex flex-col items-center gap-4 w-full mt-4">
-                            <input type="time" id="mini-alarm-input" class="text-3xl font-bold bg-transparent text-gray-800 dark:text-white text-center w-full focus:outline-none p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                            <div class="flex gap-3 w-full">
-                                <button onclick="setMiniAlarm()" id="btn-mini-alarm-set" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-bold shadow-lg hover:bg-indigo-700">Set Alarm</button>
-                                <button onclick="clearMiniAlarm()" class="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 rounded-xl hover:bg-red-100 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-                            </div>
-                            <p id="mini-alarm-status" class="text-xs font-bold text-indigo-500 h-4 uppercase tracking-wide opacity-0 transition-opacity">Alarm Set</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- QUICK LAUNCH -->
-                <div class="glass-panel p-6 rounded-3xl">
-                    <h3 class="text-xs font-bold uppercase text-gray-400 tracking-widest mb-4">Quick Launch</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                        <button onclick="switchTab('notepad')" class="p-4 rounded-2xl bg-white/50 dark:bg-black/20 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 flex flex-col items-center gap-2 transition-all hover:scale-105 group">
-                            <i data-lucide="file-text" class="text-indigo-500 group-hover:text-indigo-600"></i>
-                            <span class="text-xs font-bold">Notepad</span>
-                        </button>
-                        <button onclick="switchTab('pdf')" class="p-4 rounded-2xl bg-white/50 dark:bg-black/20 hover:bg-red-50 dark:hover:bg-red-900/20 flex flex-col items-center gap-2 transition-all hover:scale-105 group">
-                            <i data-lucide="file-stack" class="text-red-500 group-hover:text-red-600"></i>
-                            <span class="text-xs font-bold">PDF Tools</span>
-                        </button>
-                        <button onclick="switchTab('audio')" class="p-4 rounded-2xl bg-white/50 dark:bg-black/20 hover:bg-pink-50 dark:hover:bg-pink-900/20 flex flex-col items-center gap-2 transition-all hover:scale-105 group">
-                            <i data-lucide="headphones" class="text-pink-500 group-hover:text-pink-600"></i>
-                            <span class="text-xs font-bold">Audio</span>
-                        </button>
-                        <button onclick="switchTab('whiteboard')" class="p-4 rounded-2xl bg-white/50 dark:bg-black/20 hover:bg-blue-50 dark:hover:bg-blue-900/20 flex flex-col items-center gap-2 transition-all hover:scale-105 group">
-                            <i data-lucide="pen-tool" class="text-blue-500 group-hover:text-blue-600"></i>
-                            <span class="text-xs font-bold">Sketch</span>
-                        </button>
-                        <button onclick="switchTab('canned')" class="p-4 rounded-2xl bg-white/50 dark:bg-black/20 hover:bg-green-50 dark:hover:bg-green-900/20 flex flex-col items-center gap-2 transition-all hover:scale-105 group">
-                            <i data-lucide="message-square" class="text-green-500 group-hover:text-green-600"></i>
-                            <span class="text-xs font-bold">Replies</span>
-                        </button>
-                        <button onclick="switchTab('onair')" class="p-4 rounded-2xl bg-white/50 dark:bg-black/20 hover:bg-purple-50 dark:hover:bg-purple-900/20 flex flex-col items-center gap-2 transition-all hover:scale-105 group">
-                            <i data-lucide="radio" class="text-purple-500 group-hover:text-purple-600"></i>
-                            <span class="text-xs font-bold">On Air</span>
-                        </button>
+                    <div class="col-span-12 lg:col-span-4 glass p-8 rounded-[2.5rem] flex flex-col items-center justify-center text-center">
+                        <div id="weather-icon" class="mb-2"><i data-lucide="cloud-sun" class="w-12 h-12 text-indigo-500"></i></div>
+                        <div id="weather-temp" class="text-5xl font-black">--°</div>
+                        <p class="text-xs font-bold uppercase tracking-widest text-slate-400 mt-2">Local Weather</p>
                     </div>
                 </div>
 
-            </div>
-        </div>
-
-        <!-- Customize Pins Modal -->
-        <div id="pin-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/20 backdrop-blur-sm" onclick="if(event.target===this)toggleEditPins()">
-            <div class="glass-panel p-8 rounded-3xl w-full max-w-sm shadow-2xl animate-breathe">
-                <h3 class="text-xl font-bold mb-4">Customize Pins</h3>
-                <p class="text-sm text-gray-500 mb-6">Select widgets to show on your dashboard.</p>
-                <div class="space-y-3 mb-6">
-                    <label class="flex items-center justify-between p-3 rounded-xl bg-white/50 dark:bg-black/20 cursor-pointer">
-                        <span class="font-bold text-sm">Pinned Note</span>
-                        <input type="checkbox" id="check-pin-note" checked onchange="savePins()" class="w-5 h-5 accent-indigo-600 rounded">
-                    </label>
-                    <label class="flex items-center justify-between p-3 rounded-xl bg-white/50 dark:bg-black/20 cursor-pointer">
-                        <span class="font-bold text-sm">Focus Timer</span>
-                        <input type="checkbox" id="check-pin-timer" checked onchange="savePins()" class="w-5 h-5 accent-indigo-600 rounded">
-                    </label>
-                    <label class="flex items-center justify-between p-3 rounded-xl bg-white/50 dark:bg-black/20 cursor-pointer">
-                        <span class="font-bold text-sm">Quick Alarm</span>
-                        <input type="checkbox" id="check-pin-alarm" onchange="savePins()" class="w-5 h-5 accent-indigo-600 rounded">
-                    </label>
-                </div>
-                <button onclick="toggleEditPins()" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700">Done</button>
-            </div>
-        </div>
-
-        <!-- 1. NOTEPAD (Added: Download .txt) -->
-        <div id="tab-notepad" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden">
-            <div class="flex justify-end mb-2 px-2">
-                <button onclick="downloadNote()" class="text-xs bg-white/50 dark:bg-black/20 hover:bg-white px-3 py-1 rounded-lg font-bold uppercase tracking-wide text-gray-500 hover:text-indigo-600 transition-colors shadow-sm">Download .txt</button>
-            </div>
-            <div class="glass-panel flex-1 rounded-2xl overflow-hidden flex flex-col shadow-xl">
-                <textarea id="scratchpad" class="w-full h-full p-8 text-lg bg-transparent text-gray-700 dark:text-gray-200 resize-none focus:outline-none placeholder-gray-400/50 dark:placeholder-gray-500/50" placeholder="Type here... Auto-saves locally." spellcheck="false"></textarea>
-            </div>
-        </div>
-
-        <!-- 2. TASKS (Added: Clear Completed) -->
-        <div id="tab-tasks" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden overflow-y-auto">
-            <div class="max-w-4xl w-full mx-auto pt-8">
-                <div class="flex justify-between items-end mb-6">
-                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Tasks</h2>
-                    <button onclick="clearCompletedTasks()" class="text-xs text-red-400 hover:text-red-500 font-bold uppercase hover:bg-red-50 dark:hover:bg-red-900/20 px-3 py-1 rounded-lg transition-colors">Clear Completed</button>
-                </div>
-                <div class="glass-panel p-2 rounded-2xl mb-6 flex gap-2">
-                    <input type="text" id="task-input" class="flex-1 p-4 bg-transparent focus:outline-none placeholder-gray-500" placeholder="Add a new task..." onkeypress="if(event.key === 'Enter') addTask()">
-                    <button onclick="addTask()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 rounded-xl font-medium shadow-lg shadow-indigo-500/30 transition-all hover:scale-105 active:scale-95">Add</button>
-                </div>
-                <ul id="task-list" class="space-y-3"></ul>
-            </div>
-        </div>
-
-        <!-- 3. WHITEBOARD (Added: Color Picker) -->
-        <div id="tab-whiteboard" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden">
-            <div class="flex justify-between items-center mb-4 px-2">
-                <h2 class="text-2xl font-bold">Quick Sketch</h2>
-                <div class="glass-panel p-1 rounded-lg flex gap-2 items-center">
-                    <div class="flex gap-1 px-2 border-r border-gray-300 dark:border-gray-600">
-                        <button onclick="setPenColor(isDark()?'#fff':'#000')" class="w-5 h-5 rounded-full bg-black dark:bg-white ring-1 ring-gray-300"></button>
-                        <button onclick="setPenColor('#ef4444')" class="w-5 h-5 rounded-full bg-red-500"></button>
-                        <button onclick="setPenColor('#3b82f6')" class="w-5 h-5 rounded-full bg-blue-500"></button>
-                        <button onclick="setPenColor('#10b981')" class="w-5 h-5 rounded-full bg-green-500"></button>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass p-6 rounded-3xl flex flex-col items-center justify-center gap-1">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-orange-500">Next Alarm</div>
+                        <div id="dash-alarm-status" class="text-2xl font-black">None</div>
+                        <button onclick="switchTab('clock')" class="text-[8px] text-slate-400 uppercase">Set Alarm →</button>
                     </div>
-                    <button onclick="clearCanvas()" class="text-gray-500 hover:text-red-500 text-xs font-bold px-3 py-2 uppercase tracking-wide">Clear</button>
-                    <button onclick="copyCanvas()" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wide hover:bg-indigo-700 shadow-md">Copy</button>
+                    <div class="glass p-6 rounded-3xl flex flex-col items-center justify-center gap-4">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-blue-500">Hydration</div>
+                        <div class="flex gap-1" id="water-grid"></div>
+                        <button onclick="addWater()" class="text-[10px] bg-blue-500 text-white px-3 py-1.5 rounded-full font-bold">Add Glass</button>
+                    </div>
+                    <div class="glass p-6 rounded-3xl flex flex-col items-center justify-center gap-2">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-indigo-500">Focus Timer</div>
+                        <div id="mini-timer" class="text-3xl font-black timer-font">25:00</div>
+                    </div>
+                    <div class="glass p-6 rounded-3xl flex flex-col">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Recent Note</div>
+                        <div id="dash-note-preview" class="text-xs text-slate-500 line-clamp-3 italic">Empty...</div>
+                    </div>
                 </div>
-            </div>
-            <div class="glass-panel flex-1 rounded-2xl overflow-hidden relative cursor-crosshair touch-none shadow-xl">
-                <canvas id="wb-canvas" class="w-full h-full block"></canvas>
             </div>
         </div>
 
-        <!-- 4. CANNED RESPONSES (Added: Filter) -->
-        <div id="tab-canned" class="tab-content absolute inset-0 p-2 lg:p-8 flex flex-col hidden overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold">Quick Replies</h2>
-                <input type="text" id="canned-search" placeholder="Search..." oninput="renderCanned()" class="glass-panel px-4 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500/30 w-48">
+        <!-- SCRATCHPAD -->
+        <div id="scratchpad" class="tab-content">
+            <div class="h-full flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-black">Scratchpad</h2>
+                    <button onclick="downloadNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all">Download .txt</button>
+                </div>
+                <textarea id="note-area" class="flex-1 glass p-10 rounded-[2rem] text-lg focus:outline-none resize-none leading-relaxed" placeholder="Drafting securely... Content is stored only in this browser."></textarea>
             </div>
-            <div id="canned-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-            <div class="mt-12 glass-panel p-8 rounded-3xl border-dashed border-2 border-indigo-200/50 dark:border-indigo-800/50">
-                <h3 class="font-bold text-xs mb-6 uppercase tracking-widest text-indigo-500">Create New Response</h3>
+        </div>
+
+        <!-- TASKS -->
+        <div id="tasks" class="tab-content">
+            <div class="max-w-3xl mx-auto py-10 h-full flex flex-col">
+                <h2 class="text-3xl font-black mb-8">Quick Tasks</h2>
+                <div class="glass p-2 rounded-2xl flex gap-2 mb-6 shadow-xl">
+                    <input type="text" id="task-input" placeholder="New task..." class="flex-1 bg-transparent px-4 focus:outline-none">
+                    <button onclick="addTask()" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold">Add</button>
+                </div>
+                <div class="flex-1 overflow-y-auto space-y-3 no-scrollbar" id="task-list"></div>
+            </div>
+        </div>
+
+        <!-- BOARD (KANBAN) -->
+        <div id="board" class="tab-content">
+            <h2 class="text-2xl font-black mb-6">Project Board</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[calc(100%-4rem)]">
                 <div class="flex flex-col gap-4">
-                    <input id="canned-title" placeholder="Button Label (e.g. 'Ack Email')" class="p-4 rounded-xl bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50">
-                    <textarea id="canned-content" placeholder="The text to copy..." class="p-4 rounded-xl bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-700 h-32 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"></textarea>
-                    <button onclick="addCanned()" class="bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity">Create Button</button>
+                    <div class="flex justify-between items-center px-2">
+                        <span class="text-xs font-black uppercase tracking-widest text-slate-400">To Do</span>
+                        <button onclick="addBoardItem('todo')" class="p-1 glass rounded-lg"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                    </div>
+                    <div id="kb-todo" class="flex-1 glass rounded-2xl p-4 space-y-3 overflow-y-auto no-scrollbar"></div>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="flex justify-between items-center px-2">
+                        <span class="text-xs font-black uppercase tracking-widest text-indigo-500">In Progress</span>
+                    </div>
+                    <div id="kb-doing" class="flex-1 glass rounded-2xl p-4 space-y-3 overflow-y-auto no-scrollbar"></div>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="flex justify-between items-center px-2">
+                        <span class="text-xs font-black uppercase tracking-widest text-green-500">Done</span>
+                    </div>
+                    <div id="kb-done" class="flex-1 glass rounded-2xl p-4 space-y-3 overflow-y-auto no-scrollbar"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. CLOCK (Added: Toggle Seconds) -->
-        <div id="tab-clock" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
-            <div id="clock-container" class="text-center p-12 transition-all duration-500 hover:scale-105 cursor-pointer" onclick="toggleSeconds()" title="Click to toggle seconds">
-                <div id="live-clock" class="text-[12vw] leading-none font-bold mb-2 theme-modern transition-all drop-shadow-2xl">12:00</div>
-                <div id="live-date" class="text-2xl opacity-60 font-medium uppercase tracking-[0.5em]">Monday, Jan 1</div>
-            </div>
-            <div class="mt-8 glass-panel p-6 rounded-3xl shadow-2xl flex flex-col gap-4 w-full max-w-sm">
-                <div class="flex gap-2 justify-center bg-gray-100/50 dark:bg-gray-800/50 p-1 rounded-xl">
-                    <button onclick="setClockTheme('modern')" class="flex-1 py-2 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-gray-700">Modern</button>
-                    <button onclick="setClockTheme('retro')" class="flex-1 py-2 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-gray-700 text-green-600">Retro</button>
-                    <button onclick="setClockTheme('cyber')" class="flex-1 py-2 text-xs font-bold rounded-lg hover:bg-white dark:hover:bg-gray-700 text-red-500">Cyber</button>
+        <!-- WHITEBOARD -->
+        <div id="whiteboard" class="tab-content">
+            <div class="h-full flex flex-col gap-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-black">Whiteboard</h2>
+                    <div class="glass p-1 rounded-xl flex gap-2">
+                        <button onclick="setWBColor('#000')" class="w-6 h-6 rounded bg-black"></button>
+                        <button onclick="setWBColor('#4f46e5')" class="w-6 h-6 rounded bg-indigo-600"></button>
+                        <button onclick="setWBColor('#ef4444')" class="w-6 h-6 rounded bg-red-500"></button>
+                        <button onclick="clearWB()" class="px-3 text-[10px] font-bold uppercase">Clear</button>
+                        <button onclick="copyWB()" class="px-3 bg-indigo-600 text-white text-[10px] font-bold uppercase rounded-lg">Copy Image</button>
+                    </div>
                 </div>
-                <div class="flex gap-2">
-                    <input type="time" id="alarm-input" class="flex-1 p-3 rounded-xl bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-gray-700 text-sm outline-none">
-                    <button onclick="setAlarm()" class="bg-indigo-600 text-white px-6 text-sm font-bold rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">Set</button>
+                <div class="flex-1 glass rounded-[2.5rem] overflow-hidden relative shadow-inner">
+                    <canvas id="wb-canvas" class="w-full h-full"></canvas>
                 </div>
-                <p id="alarm-status" class="text-center text-xs font-bold text-indigo-500 h-4 uppercase tracking-wide"></p>
             </div>
         </div>
 
-        <!-- 6. TIMER (Added: Custom Input) -->
-        <div id="tab-timer" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
-            <div class="glass-panel rounded-[3rem] shadow-2xl p-12 w-full max-w-md text-center relative overflow-hidden">
+        <!-- DESK CLOCK & ALARM -->
+        <div id="clock" class="tab-content flex flex-col items-center justify-center p-0">
+            <div class="text-center group cursor-pointer">
+                <div id="full-clock" class="text-[20vw] font-black leading-none tracking-tighter timer-font">00:00</div>
+                <div id="full-date" class="text-3xl font-medium uppercase tracking-[0.5em] text-slate-400 mt-5">Monday, Jan 01</div>
+            </div>
+            <div class="mt-16 glass p-8 rounded-[2rem] flex items-center gap-6">
+                <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase text-slate-400">Set Alarm</span>
+                    <input type="time" id="alarm-input" class="bg-transparent text-2xl font-bold focus:outline-none">
+                </div>
+                <button onclick="setAlarm()" id="alarm-btn" class="bg-indigo-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-indigo-500/30">Set Alarm</button>
+                <button onclick="clearAlarm()" class="p-4 rounded-xl glass text-red-500"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+            </div>
+        </div>
+
+        <!-- FOCUS TIMER -->
+        <div id="timer" class="tab-content flex flex-col items-center justify-center">
+            <div class="glass p-16 rounded-[4rem] text-center max-w-sm w-full relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-2 bg-indigo-500"></div>
-                <div class="mb-10 group relative">
-                    <span id="timer-display" class="timer-font text-8xl font-bold dark:text-white drop-shadow-md">25:00</span>
-                    <input type="number" id="timer-custom-input" class="absolute inset-0 opacity-0 cursor-pointer" onchange="setMode(this.value, 'Custom')" title="Type custom minutes">
-                    <p id="timer-mode" class="text-indigo-500 font-bold mt-2 uppercase tracking-[0.3em] text-xs">Focus Time</p>
-                </div>
-                <button onclick="toggleTimer()" id="btn-toggle" class="bg-indigo-600 hover:bg-indigo-700 text-white w-full py-5 rounded-2xl font-bold text-xl mb-6 flex justify-center items-center gap-3 shadow-xl shadow-indigo-500/40 transition-transform active:scale-95">
-                    <i data-lucide="play" class="w-6 h-6 fill-current"></i> Start Focus
-                </button>
-                <div class="grid grid-cols-3 gap-3">
-                    <button onclick="setMode(25, 'Focus')" class="py-3 text-xs font-bold uppercase bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">25m</button>
-                    <button onclick="setMode(5, 'Short')" class="py-3 text-xs font-bold uppercase bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">5m</button>
-                    <button onclick="setMode(15, 'Long')" class="py-3 text-xs font-bold uppercase bg-gray-50 dark:bg-gray-800/50 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">15m</button>
+                <div id="timer-display" class="text-8xl font-black mb-4 timer-font">25:00</div>
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-indigo-500 mb-10">Deep Focus Phase</p>
+                <div class="flex gap-4">
+                    <button id="timer-btn" onclick="toggleTimer()" class="flex-1 bg-indigo-600 text-white py-4 rounded-2xl font-bold text-xl shadow-xl shadow-indigo-500/20">Start</button>
+                    <button onclick="resetTimer()" class="glass w-16 rounded-2xl flex items-center justify-center"><i data-lucide="rotate-ccw" class="w-6 h-6"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- 7. AUDIO (Added: White Noise) -->
-        <div id="tab-audio" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="glass-panel rounded-3xl shadow-2xl p-8 max-w-3xl w-full">
-                <h2 class="text-2xl font-bold mb-8 text-center">Focus Audio</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-6 border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-black/20 rounded-2xl flex flex-col items-center cursor-pointer hover:border-indigo-500 transition-all hover:scale-[1.02]" onclick="toggleNoise('brown')">
-                        <div class="bg-indigo-100 dark:bg-indigo-900 p-4 rounded-full text-indigo-600 dark:text-indigo-400 mb-3"><i data-lucide="waves" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold">Deep Focus</h3>
-                        <div id="status-brown" class="text-xs font-bold text-gray-400 mt-2">OFF</div>
-                    </div>
-                    <div class="p-6 border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-black/20 rounded-2xl flex flex-col items-center cursor-pointer hover:border-pink-500 transition-all hover:scale-[1.02]" onclick="toggleNoise('pink')">
-                        <div class="bg-pink-100 dark:bg-pink-900 p-4 rounded-full text-pink-600 dark:text-pink-400 mb-3"><i data-lucide="cloud-rain" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold">Rainfall</h3>
-                        <div id="status-pink" class="text-xs font-bold text-gray-400 mt-2">OFF</div>
-                    </div>
-                    <div class="p-6 border border-gray-200/50 dark:border-gray-700/50 bg-white/40 dark:bg-black/20 rounded-2xl flex flex-col items-center cursor-pointer hover:border-gray-500 transition-all hover:scale-[1.02]" onclick="toggleNoise('white')">
-                        <div class="bg-gray-200 dark:bg-gray-800 p-4 rounded-full text-gray-600 dark:text-gray-300 mb-3"><i data-lucide="zap" class="w-6 h-6"></i></div>
-                        <h3 class="font-bold">Static</h3>
-                        <div id="status-white" class="text-xs font-bold text-gray-400 mt-2">OFF</div>
-                    </div>
+        <!-- SOUND STUDIO -->
+        <div id="audio" class="tab-content flex items-center justify-center">
+            <div class="max-w-2xl w-full glass p-10 rounded-[3rem] text-center space-y-10">
+                <h2 class="text-3xl font-black">Sound Studio</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <button onclick="playNoise('white')" class="p-8 rounded-3xl border-2 border-transparent glass hover:border-indigo-500 transition-all flex flex-col items-center gap-3">
+                        <i data-lucide="cloud" class="w-8 h-8 text-slate-400"></i>
+                        <span class="text-xs font-black uppercase">White</span>
+                    </button>
+                    <button onclick="playNoise('pink')" class="p-8 rounded-3xl border-2 border-transparent glass hover:border-indigo-500 transition-all flex flex-col items-center gap-3">
+                        <i data-lucide="cloud-rain" class="w-8 h-8 text-pink-500"></i>
+                        <span class="text-xs font-black uppercase">Pink</span>
+                    </button>
+                    <button onclick="playNoise('brown')" class="p-8 rounded-3xl border-2 border-transparent glass hover:border-indigo-500 transition-all flex flex-col items-center gap-3">
+                        <i data-lucide="waves" class="w-8 h-8 text-indigo-600"></i>
+                        <span class="text-xs font-black uppercase">Brown</span>
+                    </button>
                 </div>
-                <div class="mt-10 px-4">
-                    <input type="range" min="0" max="1" step="0.01" value="0.5" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-indigo-600" oninput="setVolume(this.value)">
+                <div class="flex items-center gap-4 bg-slate-100 dark:bg-slate-900/50 p-4 rounded-2xl">
+                    <i data-lucide="volume-2" class="w-5 h-5 opacity-50"></i>
+                    <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="setVolume(this.value)" class="flex-1 accent-indigo-500">
                 </div>
             </div>
         </div>
 
-        <!-- 8. BREATHING (Added: Speed Toggle) -->
-        <div id="tab-breathing" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden bg-blue-50/30 dark:bg-slate-900/30 transition-colors duration-1000 backdrop-blur-sm">
-            <h2 class="text-4xl font-light mb-8 tracking-[0.5em] text-blue-900 dark:text-blue-100 text-center">BREATHE</h2>
-            
-            <div class="mb-8 flex gap-2">
-                <button onclick="setBreathSpeed('box')" class="px-4 py-2 rounded-full bg-white/50 dark:bg-black/30 text-xs font-bold uppercase tracking-widest hover:bg-blue-100 dark:hover:bg-blue-900/30">Box (4-4-4-4)</button>
-                <button onclick="setBreathSpeed('relax')" class="px-4 py-2 rounded-full bg-white/50 dark:bg-black/30 text-xs font-bold uppercase tracking-widest hover:bg-blue-100 dark:hover:bg-blue-900/30">Relax (4-7-8)</button>
-            </div>
-
-            <div class="relative flex items-center justify-center">
-                <div id="breath-circle" class="w-64 h-64 bg-blue-300/30 dark:bg-blue-600/30 rounded-full animate-breathe blur-2xl absolute"></div>
-                <div class="w-48 h-48 glass-panel rounded-full shadow-2xl z-10 flex items-center justify-center relative border-4 border-blue-50 dark:border-slate-700/50">
-                    <p id="breath-text" class="text-2xl font-medium text-blue-600 dark:text-blue-300">Inhale</p>
+        <!-- PDF MERGER -->
+        <div id="pdf" class="tab-content flex flex-col items-center justify-center">
+            <div class="max-w-xl w-full glass p-12 rounded-[3rem] text-center space-y-8">
+                <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto"><i data-lucide="file-stack" class="w-10 h-10 text-red-500"></i></div>
+                <h2 class="text-3xl font-black">Secure PDF Merger</h2>
+                <p class="text-slate-400 text-sm">Combine PDFs entirely in-browser. Your files never leave your device.</p>
+                <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 p-10 rounded-3xl hover:border-indigo-500 transition-all cursor-pointer" onclick="document.getElementById('pdf-input').click()">
+                    <input type="file" id="pdf-input" multiple accept=".pdf" class="hidden" onchange="handlePDFs(this)">
+                    <i data-lucide="upload" class="w-8 h-8 mx-auto mb-2 opacity-30"></i>
+                    <p class="text-xs font-bold uppercase">Click to Select Files</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- 9. TIME ZONES (Added: Reset Button) -->
-        <div id="tab-zones" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="max-w-2xl w-full glass-panel p-8 rounded-3xl shadow-xl">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-bold">Global Meeting Planner</h2>
-                    <button onclick="resetZones()" class="text-xs font-bold uppercase text-indigo-500 hover:text-indigo-700">Reset to Now</button>
-                </div>
-                <div class="mb-10 bg-white/50 dark:bg-black/20 p-6 rounded-2xl">
-                    <input type="range" id="zone-slider" min="0" max="1440" step="15" value="720" class="w-full h-4 bg-indigo-100 dark:bg-gray-800 rounded-full appearance-none cursor-pointer accent-indigo-600" oninput="updateZones(this.value)">
-                    <p id="zone-display" class="text-center font-black text-indigo-600 dark:text-indigo-400 mt-4 text-3xl">12:00 PM</p>
-                </div>
-                <div class="space-y-3" id="zone-list"></div>
+                <div id="pdf-list" class="text-left space-y-2 max-h-40 overflow-y-auto no-scrollbar"></div>
+                <button id="pdf-merge-btn" disabled onclick="mergePDFs()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold opacity-50">Merge & Download</button>
             </div>
         </div>
 
-        <!-- 10. TEXT STUDIO (Added: Copy Button) -->
-        <div id="tab-text" class="tab-content absolute inset-0 p-2 lg:p-4 flex flex-col hidden">
-            <div class="flex justify-between items-center mb-4 px-2">
-                <h2 class="text-2xl font-bold">Text Studio</h2>
-                <div class="glass-panel p-1 rounded-lg flex gap-1">
-                    <button onclick="transformText('clean')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Clean</button>
-                    <button onclick="transformText('upper')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Upper</button>
-                    <button onclick="transformText('lower')" class="text-[10px] font-bold uppercase px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">Lower</button>
-                    <button onclick="copyText()" class="text-[10px] font-bold uppercase px-3 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700">Copy</button>
-                </div>
-            </div>
-            <div class="glass-panel flex-1 rounded-2xl overflow-hidden shadow-xl flex flex-col">
-                <textarea id="text-input" class="flex-1 p-8 bg-transparent focus:outline-none resize-none text-sm font-mono leading-relaxed" placeholder="Paste your text here..." oninput="updateCounts()"></textarea>
-                <div class="bg-gray-50/50 dark:bg-black/20 p-4 border-t border-gray-100 dark:border-gray-700 flex gap-8 text-xs font-mono uppercase tracking-wide text-gray-500">
-                    <span>Chars: <b id="count-char" class="text-indigo-600 dark:text-indigo-400">0</b></span>
-                    <span>Words: <b id="count-word" class="text-indigo-600 dark:text-indigo-400">0</b></span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 11. PDF MERGER (Added: Clear List) -->
-        <div id="tab-pdf" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center overflow-y-auto">
-            <div class="max-w-xl w-full glass-panel p-10 rounded-[2.5rem] shadow-2xl text-center">
-                <div class="bg-red-50 dark:bg-red-900/20 p-5 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-inner">
-                    <i data-lucide="file-stack" class="w-10 h-10 text-red-500"></i>
-                </div>
-                <div class="flex justify-between items-center mb-3 px-4">
-                    <h2 class="text-3xl font-bold">PDF Merger</h2>
-                    <button onclick="clearPdfList()" class="text-xs text-red-500 font-bold hover:underline">Clear List</button>
-                </div>
-                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-3xl p-10 mb-8 hover:border-indigo-500 hover:bg-indigo-50/30 transition-all cursor-pointer relative group" onclick="document.getElementById('pdf-input').click()">
-                    <input type="file" id="pdf-input" multiple accept=".pdf" class="hidden" onchange="handlePdfSelect(this)">
-                    <div id="pdf-area-content" class="group-hover:scale-105 transition-transform">
-                        <i data-lucide="upload-cloud" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
-                        <p class="text-sm font-bold text-indigo-600">Click to select PDF files</p>
+        <!-- TIME ZONES -->
+        <div id="zones" class="tab-content flex flex-col items-center justify-center">
+            <div class="max-w-3xl w-full glass p-10 rounded-[3rem] space-y-8">
+                <h2 class="text-3xl font-black">Global Meeting Planner</h2>
+                <div class="relative py-10">
+                    <input type="range" min="0" max="23" value="12" id="zone-slider" oninput="updateZones(this.value)" class="w-full accent-indigo-600 h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-400 mt-4 uppercase">
+                        <span>Midnight</span><span>6AM</span><span>Noon</span><span>6PM</span><span>Midnight</span>
                     </div>
                 </div>
-                <ul id="pdf-list" class="text-left text-sm mb-8 space-y-2 max-h-40 overflow-y-auto"></ul>
-                <button onclick="mergePdfs()" id="btn-merge" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-xl shadow-indigo-500/20" disabled>Merge PDFs</button>
+                <div id="zone-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
             </div>
         </div>
 
-        <!-- 12. DATE CALC (Added: Copy Result) -->
-        <div id="tab-calc" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="max-w-md w-full glass-panel p-10 rounded-3xl shadow-2xl">
-                <h2 class="text-2xl font-bold mb-8 flex items-center gap-3"><i data-lucide="calendar-days" class="w-8 h-8 text-indigo-500"></i> Date Calculator</h2>
-                <div class="space-y-6">
-                    <div><label class="text-[10px] font-bold text-gray-400 uppercase block mb-2 tracking-wider">Start Date</label><input type="date" id="calc-start" class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white/50 dark:bg-black/20"></div>
-                    <div><label class="text-[10px] font-bold text-gray-400 uppercase block mb-2 tracking-wider">Days to Add</label><input type="number" id="calc-days" value="30" class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white/50 dark:bg-black/20"></div>
-                    <div class="flex items-center gap-3 bg-gray-50/50 dark:bg-gray-800/50 p-3 rounded-xl"><input type="checkbox" id="calc-biz" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 accent-indigo-600" checked><label for="calc-biz" class="text-sm font-medium">Business Days Only (Skip Sat/Sun)</label></div>
-                    <button onclick="calculateDate()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-bold mt-4 shadow-lg hover:bg-indigo-700 transition-colors">Calculate Deadline</button>
-                    <div id="calc-result" class="mt-6 p-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl text-center hidden border border-indigo-100 dark:border-indigo-800 cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-900/30" onclick="copyDateResult()">
-                        <p class="text-[10px] text-indigo-400 uppercase font-bold tracking-widest">The deadline is</p>
-                        <p class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-2" id="calc-output">--</p>
-                        <p class="text-[10px] text-indigo-300 mt-2">Click to copy</p>
+        <!-- ON AIR -->
+        <div id="onair" class="tab-content">
+            <div class="max-w-5xl mx-auto h-full flex flex-col items-center justify-center gap-10">
+                <h2 class="text-2xl font-black mb-6">Status Signal</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    <div onclick="showOnAir('BUSY', 'bg-red-600')" class="glass p-12 rounded-[2.5rem] text-center cursor-pointer hover:scale-105 transition-all group">
+                        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="video" class="w-10 h-10 text-red-600"></i></div>
+                        <h3 class="text-3xl font-black text-red-600">ON A CALL</h3>
+                    </div>
+                    <div onclick="showOnAir('FREE', 'bg-green-600')" class="glass p-12 rounded-[2.5rem] text-center cursor-pointer hover:scale-105 transition-all group">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6"><i data-lucide="coffee" class="w-10 h-10 text-green-600"></i></div>
+                        <h3 class="text-3xl font-black text-green-600">FREE</h3>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 13. PASSWORD GEN (Added: Symbols Toggle) -->
-        <div id="tab-password" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="max-w-md w-full glass-panel p-10 rounded-3xl shadow-2xl text-center">
-                <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6"><i data-lucide="lock" class="w-8 h-8 text-green-500"></i></div>
-                <h2 class="text-2xl font-bold mb-4">Secure Password Gen</h2>
-                <div class="mb-6 flex justify-center">
-                    <label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-lg">
-                        <input type="checkbox" id="pwd-symbols" checked class="w-4 h-4 accent-green-600">
-                        <span class="text-xs font-bold uppercase text-gray-500">Include Symbols</span>
-                    </label>
+        <!-- SCREEN RECORDER -->
+        <div id="recorder" class="tab-content flex flex-col items-center justify-center">
+            <div class="max-w-md w-full glass p-12 rounded-[3rem] text-center space-y-8">
+                <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto"><i data-lucide="video" class="w-10 h-10 text-indigo-600"></i></div>
+                <h2 class="text-3xl font-black">Screen Recorder</h2>
+                <p class="text-slate-400 text-sm">No software needed. Record your screen and download the video immediately.</p>
+                <div id="recording-status" class="hidden flex items-center justify-center gap-2 text-red-500 font-bold animate-pulse">
+                    <span class="w-3 h-3 bg-red-500 rounded-full"></span> RECORDING
                 </div>
-                <div class="bg-gray-100 dark:bg-black/30 p-6 rounded-2xl mb-8 break-all relative group cursor-pointer border border-gray-200 dark:border-gray-700" onclick="copyPassword()">
-                    <div id="pwd-output" class="text-2xl font-mono font-bold text-gray-800 dark:text-gray-200">---</div>
-                    <div class="absolute inset-0 flex items-center justify-center bg-gray-900/90 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl backdrop-blur-sm"><span class="text-white font-bold text-sm">Click to Copy</span></div>
-                </div>
-                <div class="flex items-center gap-6 mb-8 bg-white/50 dark:bg-black/20 p-4 rounded-xl">
-                    <input type="range" id="pwd-len" min="8" max="32" value="16" class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-600" oninput="document.getElementById('pwd-len-val').innerText=this.value">
-                    <span id="pwd-len-val" class="font-bold text-xl w-8">16</span>
-                </div>
-                <button onclick="generatePassword()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-green-500/20">Generate New</button>
-            </div>
-        </div>
-
-        <!-- 14. ON AIR SIGN (Added: Custom Text) -->
-        <div id="tab-onair" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl p-6">
-                <button onclick="toggleFullScreenSign('red')" class="aspect-video bg-gradient-to-br from-red-500 to-red-700 rounded-3xl flex flex-col items-center justify-center text-white hover:scale-[1.02] transition-transform shadow-2xl shadow-red-500/40 group">
-                    <i data-lucide="video" class="w-20 h-20 mb-6 group-hover:animate-pulse"></i>
-                    <span class="text-4xl font-black tracking-widest">ON A CALL</span>
-                </button>
-                <button onclick="toggleFullScreenSign('green')" class="aspect-video bg-gradient-to-br from-green-500 to-green-700 rounded-3xl flex flex-col items-center justify-center text-white hover:scale-[1.02] transition-transform shadow-2xl shadow-green-500/40">
-                    <i data-lucide="coffee" class="w-20 h-20 mb-6"></i>
-                    <span class="text-4xl font-black tracking-widest">FREE</span>
-                </button>
-            </div>
-            <div class="mt-4 flex gap-2">
-                <input id="onair-custom" placeholder="Custom Status (e.g. RECORDING)" class="p-3 rounded-xl border dark:border-gray-700 bg-white dark:bg-black/20">
-                <button onclick="toggleFullScreenSign('custom')" class="bg-gray-800 text-white px-6 rounded-xl font-bold">Show Custom</button>
-            </div>
-            <p class="mt-8 text-gray-500 font-medium">Click anywhere to exit full screen mode.</p>
-        </div>
-
-        <!-- NEW 1. QR CODE -->
-        <div id="tab-qr" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="glass-panel p-10 rounded-3xl shadow-xl max-w-md w-full text-center">
-                <h2 class="text-2xl font-bold mb-6">QR Generator</h2>
-                <input id="qr-input" type="text" placeholder="Enter URL or Text..." oninput="generateQR()" class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-600 mb-6 bg-white/50 dark:bg-black/20">
-                <div class="bg-white p-4 rounded-xl inline-block shadow-inner">
-                    <canvas id="qr-canvas"></canvas>
-                </div>
-                <p class="text-xs text-gray-400 mt-4">Scan to transfer to mobile</p>
-            </div>
-        </div>
-
-        <!-- NEW 2. JSON PRETTIFY -->
-        <div id="tab-json" class="tab-content absolute inset-0 p-4 flex flex-col hidden">
-            <h2 class="text-2xl font-bold mb-4 px-2">JSON Prettifier</h2>
-            <div class="flex-1 flex flex-col md:flex-row gap-4 h-full">
-                <textarea id="json-input" class="flex-1 p-4 glass-panel rounded-xl font-mono text-xs resize-none" placeholder="Paste ugly JSON here..."></textarea>
-                <div class="flex items-center justify-center">
-                    <button onclick="prettifyJson()" class="bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform"><i data-lucide="arrow-right" class="w-6 h-6"></i></button>
-                </div>
-                <textarea id="json-output" class="flex-1 p-4 glass-panel rounded-xl font-mono text-xs resize-none bg-gray-50/50 dark:bg-black/20" readonly placeholder="Pretty JSON output..."></textarea>
-            </div>
-        </div>
-
-        <!-- NEW 3. STOPWATCH -->
-        <div id="tab-stopwatch" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
-            <div class="glass-panel p-12 rounded-[3rem] text-center w-full max-w-md">
-                <div class="text-7xl font-mono font-bold mb-8 tabular-nums" id="sw-display">00:00.00</div>
-                <div class="flex justify-center gap-4 mb-8">
-                    <button onclick="swStart()" id="sw-btn-start" class="bg-green-500 hover:bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg"><i data-lucide="play" class="w-6 h-6 ml-1"></i></button>
-                    <button onclick="swLap()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-600 dark:text-gray-200 w-16 h-16 rounded-full flex items-center justify-center font-bold text-xs uppercase tracking-wide">Lap</button>
-                    <button onclick="swReset()" class="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg"><i data-lucide="rotate-ccw" class="w-6 h-6"></i></button>
-                </div>
-                <div id="sw-laps" class="h-32 overflow-y-auto space-y-2 text-sm font-mono border-t border-gray-200 dark:border-gray-700 pt-4"></div>
-            </div>
-        </div>
-
-        <!-- NEW 4. BASE64 -->
-        <div id="tab-base64" class="tab-content absolute inset-0 p-6 flex flex-col hidden">
-            <h2 class="text-2xl font-bold mb-4">Base64 Converter</h2>
-            <div class="flex-1 flex flex-col gap-4">
-                <textarea id="b64-text" class="flex-1 p-4 glass-panel rounded-xl font-mono text-sm resize-none" placeholder="Plain Text..."></textarea>
-                <div class="flex gap-4 justify-center">
-                    <button onclick="toBase64()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold">Encode ↓</button>
-                    <button onclick="fromBase64()" class="bg-gray-600 text-white px-6 py-2 rounded-lg font-bold">Decode ↑</button>
-                </div>
-                <textarea id="b64-result" class="flex-1 p-4 glass-panel rounded-xl font-mono text-sm resize-none bg-gray-50/50" placeholder="Base64 Output..."></textarea>
-            </div>
-        </div>
-
-        <!-- NEW 5. ASPECT RATIO -->
-        <div id="tab-ratio" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
-            <div class="glass-panel p-10 rounded-3xl shadow-xl max-w-lg w-full">
-                <h2 class="text-2xl font-bold mb-8">Aspect Ratio Calc</h2>
-                <div class="flex gap-4 mb-6 items-center">
-                    <div class="flex-1">
-                        <label class="text-xs font-bold uppercase text-gray-400 mb-1 block">Width</label>
-                        <input id="ar-w" type="number" class="w-full p-3 rounded-xl border bg-white/50 dark:bg-black/20" oninput="calcRatio('w')">
-                    </div>
-                    <span class="text-2xl text-gray-300 font-light">/</span>
-                    <div class="flex-1">
-                        <label class="text-xs font-bold uppercase text-gray-400 mb-1 block">Height</label>
-                        <input id="ar-h" type="number" class="w-full p-3 rounded-xl border bg-white/50 dark:bg-black/20" oninput="calcRatio('h')">
-                    </div>
-                </div>
-                <div class="mb-6">
-                    <label class="text-xs font-bold uppercase text-gray-400 mb-2 block">Ratio Presets</label>
-                    <div class="flex gap-2">
-                        <button onclick="setRatio(16,9)" class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded text-xs font-bold">16:9</button>
-                        <button onclick="setRatio(4,3)" class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded text-xs font-bold">4:3</button>
-                        <button onclick="setRatio(1,1)" class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded text-xs font-bold">1:1</button>
-                        <button onclick="setRatio(21,9)" class="bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded text-xs font-bold">21:9</button>
-                    </div>
-                </div>
-                <p id="ar-display" class="text-center font-bold text-indigo-600 text-xl">Ratio: 16:9</p>
+                <button id="rec-btn" onclick="toggleRecording()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold text-lg shadow-xl">Start Recording</button>
             </div>
         </div>
 
     </main>
 
-    <div id="onair-overlay" onclick="this.classList.add('hidden')" class="fixed inset-0 z-50 hidden flex flex-col items-center justify-center cursor-pointer transition-colors duration-500"><h1 id="onair-text" class="text-[15vw] font-black text-white tracking-tighter text-center leading-none drop-shadow-2xl">ON AIR</h1></div>
+    <!-- ALARM RINGING OVERLAY -->
+    <div id="alarm-overlay" class="fixed inset-0 z-[300] bg-red-600 hidden flex flex-col items-center justify-center text-white p-10 text-center" onclick="stopAlarm()">
+        <div class="animate-bounce mb-10"><i data-lucide="bell-ring" class="w-32 h-32"></i></div>
+        <h2 class="text-6xl font-black mb-4">ALARM!</h2>
+        <p class="text-xl font-bold uppercase tracking-widest opacity-70">Click anywhere to Dismiss</p>
+    </div>
+
+    <!-- PANIC OVERLAY -->
+    <div id="panic-overlay" class="fixed inset-0 z-[200] bg-slate-900 hidden flex flex-col items-center justify-center text-white" onclick="togglePrivacy()">
+        <i data-lucide="eye-off" class="w-32 h-32 opacity-10 mb-10"></i>
+        <h2 class="text-2xl font-bold uppercase tracking-[0.5em] opacity-30">Privacy Protected</h2>
+    </div>
 
     <script>
         lucide.createIcons();
-        const { PDFDocument } = PDFLib;
 
-        // --- CORE NAV ---
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => {
-                el.classList.remove('bg-white', 'dark:bg-gray-800', 'text-indigo-600', 'dark:text-indigo-300', 'shadow-sm');
-            });
-            const target = document.getElementById('tab-' + tab);
-            const btn = document.getElementById('btn-' + tab);
-            if(target && btn) {
-                target.classList.remove('hidden');
-                btn.classList.add('bg-white', 'dark:bg-gray-800', 'text-indigo-600', 'dark:text-indigo-300', 'shadow-sm');
-                localStorage.setItem('webdesks_tab', tab);
-                if(tab === 'whiteboard') initWhiteboard();
-                if(tab === 'zones') updateZones(document.getElementById('zone-slider').value);
-                if(tab === 'qr') generateQR();
-                if(tab === 'dashboard') updateDashboardClock();
-            }
+        // --- CORE NAVIGATION ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active', 'bg-indigo-600', 'text-white'));
+            
+            const target = document.getElementById(tabId);
+            if(target) target.classList.add('active');
+            
+            const btn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+            if(btn) btn.classList.add('active', 'bg-indigo-600', 'text-white');
+
+            localStorage.setItem('webdesks_last_tab', tabId);
         }
+
+        // --- THEME ---
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('webdesks_theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            if(canvas) resizeCanvas();
-            isDark() ? generateQR() : generateQR(); // Refresh QR color
         }
-        const isDark = () => document.documentElement.classList.contains('dark');
-        if (localStorage.getItem('webdesks_theme') === 'dark') document.documentElement.classList.add('dark');
 
-        // --- DASHBOARD LOGIC ---
-        function updateDashboardClock() {
+        // --- PRIVACY ---
+        function togglePrivacy() {
+            document.body.classList.toggle('panic-mode');
+            document.getElementById('panic-overlay').classList.toggle('hidden');
+            document.title = document.body.classList.contains('panic-mode') ? "System Update..." : "WebDesks OS";
+        }
+
+        // --- DASHBOARD & TIME ---
+        let alarmTime = localStorage.getItem('wd_alarm') || null;
+        let alarmTriggered = false;
+
+        function updateDashboard() {
             const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('dash-clock').textContent = `${hours}:${minutes}`;
-            const options = { weekday: 'long', month: 'short', day: 'numeric' };
-            document.getElementById('dash-date').textContent = now.toLocaleDateString('en-US', options);
+            const h = now.getHours();
+            // 12-Hour format for dashboard as requested
+            const timeStrDash = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const timeStrFull = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+            const dateStr = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
             
-            // Greeting
+            document.getElementById('dash-time').textContent = timeStrDash;
+            document.getElementById('dash-date').textContent = dateStr;
+            document.getElementById('full-clock').textContent = timeStrFull;
+            document.getElementById('full-date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
             let greeting = "Good Morning";
-            if (hours >= 12) greeting = "Good Afternoon";
-            if (hours >= 17) greeting = "Good Evening";
-            document.getElementById('dash-greeting').textContent = greeting;
-        }
-        setInterval(updateDashboardClock, 1000); 
-        
-        // Pinned Note Logic
-        const dashNote = document.getElementById('dash-note');
-        dashNote.value = localStorage.getItem('webdesks_pinned_note') || '';
-        dashNote.addEventListener('input', () => localStorage.setItem('webdesks_pinned_note', dashNote.value));
+            if(h >= 12) greeting = "Good Afternoon";
+            if(h >= 17) greeting = "Good Evening";
+            document.getElementById('greeting').textContent = greeting;
 
-        // Weather Logic
-        let weatherUnit = localStorage.getItem('webdesks_weather_unit') || 'celsius';
-        function toggleWeatherUnit() {
-            weatherUnit = weatherUnit === 'celsius' ? 'fahrenheit' : 'celsius';
-            localStorage.setItem('webdesks_weather_unit', weatherUnit);
-            document.getElementById('weather-unit-btn').textContent = weatherUnit === 'celsius' ? '°C' : '°F';
-            fetchWeather();
-        }
-        document.getElementById('weather-unit-btn').textContent = weatherUnit === 'celsius' ? '°C' : '°F';
-
-        async function fetchWeather() {
-            const weatherEl = document.getElementById('weather-temp');
-            const descEl = document.getElementById('weather-desc');
-            
-            weatherEl.textContent = "...";
-            
-            if (!navigator.geolocation) {
-                descEl.textContent = "Not Supported";
-                return;
-            }
-
-            navigator.geolocation.getCurrentPosition(async (pos) => {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
-                try {
-                    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=${weatherUnit}`);
-                    const data = await response.json();
-                    const temp = Math.round(data.current_weather.temperature);
-                    const unitSymbol = data.current_weather_units.temperature;
-                    weatherEl.textContent = `${temp}${unitSymbol}`;
-                    descEl.textContent = "Local Weather";
-                } catch (e) {
-                    descEl.textContent = "Error Fetching";
+            // Alarm Check
+            if (alarmTime && !alarmTriggered) {
+                const currentH = now.getHours().toString().padStart(2, '0');
+                const currentM = now.getMinutes().toString().padStart(2, '0');
+                if (`${currentH}:${currentM}` === alarmTime) {
+                    triggerAlarm();
                 }
-            }, () => {
-                descEl.textContent = "Location Denied";
-                weatherEl.textContent = "--";
+            }
+        }
+        setInterval(updateDashboard, 1000);
+
+        // --- ALARM LOGIC ---
+        function setAlarm() {
+            const val = document.getElementById('alarm-input').value;
+            if (!val) return;
+            alarmTime = val;
+            alarmTriggered = false;
+            localStorage.setItem('wd_alarm', alarmTime);
+            updateAlarmUI();
+        }
+
+        function clearAlarm() {
+            alarmTime = null;
+            alarmTriggered = false;
+            localStorage.removeItem('wd_alarm');
+            updateAlarmUI();
+        }
+
+        function updateAlarmUI() {
+            const status = document.getElementById('dash-alarm-status');
+            const btn = document.getElementById('alarm-btn');
+            if (alarmTime) {
+                status.textContent = alarmTime;
+                status.classList.add('text-indigo-500');
+                btn.textContent = "Alarm Set";
+            } else {
+                status.textContent = "None";
+                status.classList.remove('text-indigo-500');
+                btn.textContent = "Set Alarm";
+            }
+        }
+
+        function triggerAlarm() {
+            alarmTriggered = true;
+            const overlay = document.getElementById('alarm-overlay');
+            overlay.classList.remove('hidden');
+            const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+            audio.play();
+            audio.loop = true;
+            window.wd_alarm_audio = audio;
+        }
+
+        function stopAlarm() {
+            document.getElementById('alarm-overlay').classList.add('hidden');
+            if (window.wd_alarm_audio) {
+                window.wd_alarm_audio.pause();
+            }
+            clearAlarm();
+        }
+
+        // --- HYDRATION ---
+        let waterCount = parseInt(localStorage.getItem('wd_water') || '0');
+        function addWater() {
+            waterCount = (waterCount + 1) % 9;
+            renderWater();
+        }
+        function renderWater() {
+            const grid = document.getElementById('water-grid');
+            grid.innerHTML = '';
+            for(let i=1; i<=8; i++) {
+                const glass = document.createElement('div');
+                glass.className = `w-3 h-4 rounded-sm border ${i <= waterCount ? 'bg-blue-500 border-blue-600' : 'border-slate-300 dark:border-slate-700'}`;
+                grid.appendChild(glass);
+            }
+            localStorage.setItem('wd_water', waterCount);
+        }
+
+        // --- BOARD LOGIC (KANBAN) ---
+        function addBoardItem(col) {
+            const msg = prompt("Task name:");
+            if(!msg) return;
+            const item = document.createElement('div');
+            item.className = "glass p-3 rounded-xl text-xs font-medium shadow-sm cursor-grab active:cursor-grabbing";
+            item.textContent = msg;
+            item.onclick = () => { if(confirm("Remove?")) item.remove(); };
+            document.getElementById('kb-' + col).appendChild(item);
+        }
+
+        // --- WHITEBOARD ---
+        const canvas = document.getElementById('wb-canvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false, wbColor = '#000';
+
+        function resizeCanvas() {
+            const parent = canvas.parentElement;
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        
+        canvas.addEventListener('mousedown', e => { drawing = true; draw(e); });
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
+        canvas.addEventListener('touchstart', e => { drawing = true; draw(e.touches[0]); e.preventDefault(); });
+        canvas.addEventListener('touchmove', e => { draw(e.touches[0]); e.preventDefault(); });
+        canvas.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
+
+        function draw(e) {
+            if(!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = wbColor;
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function setWBColor(c) { wbColor = c; }
+        function clearWB() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        async function copyWB() {
+            canvas.toBlob(blob => {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]);
+                alert("Image copied to clipboard!");
             });
         }
 
-        // Mini Timer Logic
-        let miniTimerTime = 25 * 60;
-        let miniTimerId = null;
-        function toggleMiniTimer() {
-            const btn = document.getElementById('btn-mini-timer');
-            const display = document.getElementById('mini-timer-display');
-            if (miniTimerId) {
-                clearInterval(miniTimerId);
-                miniTimerId = null;
-                btn.innerHTML = '<i data-lucide="play" class="w-5 h-5 ml-1"></i>';
-                btn.classList.replace('bg-red-500', 'bg-indigo-600');
-            } else {
-                btn.innerHTML = '<i data-lucide="pause" class="w-5 h-5"></i>';
-                btn.classList.replace('bg-indigo-600', 'bg-red-500');
-                miniTimerId = setInterval(() => {
-                    miniTimerTime--;
-                    const m = Math.floor(miniTimerTime / 60).toString().padStart(2, '0');
-                    const s = (miniTimerTime % 60).toString().padStart(2, '0');
-                    display.textContent = `${m}:${s}`;
-                    if (miniTimerTime <= 0) {
-                        clearInterval(miniTimerId);
-                        miniTimerId = null;
-                        btn.innerHTML = '<i data-lucide="play" class="w-5 h-5 ml-1"></i>';
-                        alert("Focus time complete!");
-                    }
-                }, 1000);
+        // --- SOUND STUDIO ---
+        let audioCtx, noiseNode, gainNode;
+        function playNoise(type) {
+            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if(noiseNode) { noiseNode.stop(); noiseNode = null; return; }
+            const bufferSize = 2 * audioCtx.sampleRate;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
             }
-            lucide.createIcons();
+            noiseNode = audioCtx.createBufferSource();
+            noiseNode.buffer = buffer;
+            noiseNode.loop = true;
+            gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.5;
+            noiseNode.connect(gainNode).connect(audioCtx.destination);
+            noiseNode.start();
         }
-        function resetMiniTimer() {
-            clearInterval(miniTimerId);
-            miniTimerId = null;
-            miniTimerTime = 25 * 60;
-            document.getElementById('mini-timer-display').textContent = "25:00";
-            document.getElementById('btn-mini-timer').innerHTML = '<i data-lucide="play" class="w-5 h-5 ml-1"></i>';
-            document.getElementById('btn-mini-timer').classList.replace('bg-red-500', 'bg-indigo-600');
-            lucide.createIcons();
-        }
+        function setVolume(v) { if(gainNode) gainNode.gain.value = v; }
 
-        // Mini Alarm Logic
-        let miniAlarmCheckId = null;
-        function setMiniAlarm() {
-            const timeInput = document.getElementById('mini-alarm-input');
-            const time = timeInput.value;
-            const status = document.getElementById('mini-alarm-status');
-            const btn = document.getElementById('btn-mini-alarm-set');
-            
-            if(!time) {
-                alert("Please select a time first.");
+        // --- SCREEN RECORDER ---
+        let mediaRecorder, chunks = [];
+        async function toggleRecording() {
+            const btn = document.getElementById('rec-btn');
+            const status = document.getElementById('recording-status');
+            if(mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                btn.textContent = "Start Recording";
+                status.classList.add('hidden');
                 return;
             }
-            
-            if(miniAlarmCheckId) clearInterval(miniAlarmCheckId);
-            
-            status.textContent = "Alarm Set for " + time;
-            status.style.opacity = '1';
-            status.className = "text-xs font-bold text-indigo-500 h-4 uppercase tracking-wide transition-opacity";
-            btn.textContent = "Reset";
-            btn.classList.add('bg-green-600', 'hover:bg-green-700');
-            btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-            
-            miniAlarmCheckId = setInterval(() => {
-                const now = new Date();
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const currentTime = `${hours}:${minutes}`;
-                
-                // Check if time matches. Note: input type="time" is 24h format HH:mm
-                if(currentTime === time) {
-                    const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-                    audio.play().catch(e => console.log("Audio play failed", e)); // Catch interaction errors
-                    
-                    clearInterval(miniAlarmCheckId);
-                    miniAlarmCheckId = null;
-                    
-                    status.textContent = "It is " + time + "!";
-                    status.classList.remove('text-indigo-500');
-                    status.classList.add('text-red-500', 'animate-pulse');
-                    
-                    // Reset button style
-                    btn.textContent = "Set Alarm";
-                    btn.classList.remove('bg-green-600', 'hover:bg-green-700');
-                    btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-                    
-                    // Slight delay for alert so UI updates first
-                    setTimeout(() => alert("ALARM: It is " + time), 100);
-                }
-            }, 1000);
-        }
-        function clearMiniAlarm() {
-            if(miniAlarmCheckId) clearInterval(miniAlarmCheckId);
-            miniAlarmCheckId = null;
-            document.getElementById('mini-alarm-input').value = '';
-            document.getElementById('mini-alarm-status').style.opacity = '0';
-            const btn = document.getElementById('btn-mini-alarm-set');
-            btn.textContent = "Set Alarm";
-            btn.classList.remove('bg-green-600', 'hover:bg-green-700');
-            btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = e => chunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url; a.download = 'webdesks_record.webm'; a.click();
+                    chunks = [];
+                };
+                mediaRecorder.start();
+                btn.textContent = "Stop Recording";
+                status.classList.remove('hidden');
+            } catch(e) { console.error(e); }
         }
 
-        // Dashboard Pin Customization
-        function toggleEditPins() {
-            const modal = document.getElementById('pin-modal');
-            modal.classList.toggle('hidden');
-        }
-        function savePins() {
-            const showNote = document.getElementById('check-pin-note').checked;
-            const showTimer = document.getElementById('check-pin-timer').checked;
-            const showAlarm = document.getElementById('check-pin-alarm').checked;
-            
-            // Toggle visibility classes
-            document.getElementById('pin-note').classList.toggle('hidden', !showNote);
-            document.getElementById('pin-timer').classList.toggle('hidden', !showTimer);
-            document.getElementById('pin-alarm').classList.toggle('hidden', !showAlarm);
-            
-            // Save state
-            const state = { note: showNote, timer: showTimer, alarm: showAlarm };
-            localStorage.setItem('webdesks_dash_pins', JSON.stringify(state));
-        }
-        
-        // Load Pin State - Default alarm to true
-        const savedPins = JSON.parse(localStorage.getItem('webdesks_dash_pins') || '{"note":true,"timer":true,"alarm":true}');
-        document.getElementById('check-pin-note').checked = savedPins.note;
-        document.getElementById('check-pin-timer').checked = savedPins.timer;
-        document.getElementById('check-pin-alarm').checked = savedPins.alarm;
-        savePins(); // Apply state
-
-        // --- 1. NOTEPAD ---
-        const pad = document.getElementById('scratchpad');
-        pad.value = localStorage.getItem('webdesks_note') || '';
-        pad.addEventListener('input', () => localStorage.setItem('webdesks_note', pad.value));
-        function downloadNote() {
-            const blob = new Blob([pad.value], {type: "text/plain"});
-            const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "scratchpad.txt"; link.click();
+        // --- PDF MERGER ---
+        let pdfFiles = [];
+        function handlePDFs(input) {
+            pdfFiles = Array.from(input.files);
+            const list = document.getElementById('pdf-list');
+            list.innerHTML = pdfFiles.map(f => `<div class="text-[10px] font-bold p-2 glass rounded-lg">${f.name}</div>`).join('');
+            document.getElementById('pdf-merge-btn').disabled = pdfFiles.length < 2;
+            document.getElementById('pdf-merge-btn').classList.toggle('opacity-50', pdfFiles.length < 2);
         }
 
-        // --- 2. TASKS ---
-        let tasks = JSON.parse(localStorage.getItem('webdesks_tasks') || '[]');
-        function renderTasks() {
-            document.getElementById('task-list').innerHTML = tasks.map((t, i) => `
-                <li class="glass-panel p-4 rounded-xl flex items-center group transition-all hover:scale-[1.01]">
-                    <button onclick="toggleTask(${i})" class="mr-4 text-gray-400 hover:text-indigo-500"><i data-lucide="${t.done ? 'check-circle-2' : 'circle'}" class="w-6 h-6 ${t.done ? 'text-green-500 fill-green-100' : ''}"></i></button>
-                    <span class="flex-1 ${t.done ? 'line-through text-gray-400' : 'font-medium'}">${t.text}</span>
-                    <button onclick="deleteTask(${i})" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                </li>`).join('');
-            lucide.createIcons();
-            localStorage.setItem('webdesks_tasks', JSON.stringify(tasks));
-        }
-        function addTask() { const inp = document.getElementById('task-input'); if(inp.value.trim()){ tasks.push({text:inp.value, done:false}); inp.value=''; renderTasks(); } }
-        function toggleTask(i){ tasks[i].done=!tasks[i].done; renderTasks(); }
-        function deleteTask(i){ tasks.splice(i,1); renderTasks(); }
-        function clearCompletedTasks() { tasks = tasks.filter(t => !t.done); renderTasks(); }
-
-        // --- 3. WHITEBOARD ---
-        let canvas, ctx, painting = false;
-        function initWhiteboard() {
-            canvas = document.getElementById('wb-canvas');
-            ctx = canvas.getContext('2d');
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            canvas.addEventListener('mousedown', startPos); canvas.addEventListener('mouseup', endPos); canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('touchstart', (e)=>{e.preventDefault();startPos(e.touches[0])}); canvas.addEventListener('touchend', (e)=>{e.preventDefault();endPos()}); canvas.addEventListener('touchmove', (e)=>{e.preventDefault();draw(e.touches[0])});
-        }
-        function resizeCanvas() { if(!canvas)return; canvas.width = canvas.parentElement.offsetWidth; canvas.height = canvas.parentElement.offsetHeight; ctx.lineCap = 'round'; ctx.lineWidth = 4; ctx.strokeStyle = isDark()?'#e2e8f0':'#1e293b'; }
-        function startPos(e) { painting = true; draw(e); } function endPos() { painting = false; ctx.beginPath(); }
-        function draw(e) { if(!painting)return; const rect=canvas.getBoundingClientRect(); ctx.lineTo(e.clientX-rect.left, e.clientY-rect.top); ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX-rect.left, e.clientY-rect.top); }
-        function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); }
-        function copyCanvas() { canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]).then(()=>alert('Copied!'))); }
-        function setPenColor(c) { ctx.strokeStyle = c; }
-
-        // --- 4. CANNED ---
-        let canned = JSON.parse(localStorage.getItem('webdesks_canned') || '[{"title":"Ack","text":"Received, thanks."}]');
-        function renderCanned() {
-            const filter = document.getElementById('canned-search').value.toLowerCase();
-            document.getElementById('canned-grid').innerHTML = canned.filter(c => c.title.toLowerCase().includes(filter)).map((c, i) => `
-                <div onclick="navigator.clipboard.writeText('${c.text.replace(/'/g, "\\'")}')" class="glass-panel p-6 rounded-2xl cursor-pointer hover:border-indigo-400 relative group bg-white/40 dark:bg-black/20">
-                    <h3 class="font-bold text-lg text-indigo-700 dark:text-indigo-300 mb-2">${c.title}</h3>
-                    <p class="text-sm text-gray-500 line-clamp-3">${c.text}</p>
-                    <button onclick="event.stopPropagation(); deleteCanned(${i})" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                </div>`).join('');
-            localStorage.setItem('webdesks_canned', JSON.stringify(canned));
-            lucide.createIcons();
-        }
-        function addCanned() { const t = document.getElementById('canned-title').value; const c = document.getElementById('canned-content').value; if(t && c) { canned.push({title:t, text:c}); renderCanned(); document.getElementById('canned-title').value=''; } }
-        function deleteCanned(i) { canned.splice(i,1); renderCanned(); }
-
-        // --- 5. CLOCK ---
-        let showSeconds = true;
-        let alarmTime = null, alarmTriggered = false; // Moved declaration here
-        function toggleSeconds() { showSeconds = !showSeconds; updateClock(); }
-        function updateClock() {
-            const now = new Date();
-            const opts = { hour12: false, hour: '2-digit', minute: '2-digit' };
-            if (showSeconds) opts.second = '2-digit';
-            const ts = now.toLocaleTimeString('en-US', opts);
-            document.getElementById('live-clock').textContent = ts;
-            document.getElementById('live-date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-            if (alarmTime && !alarmTriggered && ts.startsWith(alarmTime) && now.getSeconds()===0) { alarmTriggered=true; new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play(); alert("ALARM!"); document.getElementById('alarm-status').textContent="Ringing!"; }
-        }
-        setInterval(updateClock, 1000); updateClock();
-        function setClockTheme(t) { document.getElementById('live-clock').className = "text-[12vw] leading-none font-bold mb-2 transition-all drop-shadow-2xl theme-" + t; }
-        
-        function setAlarm() { alarmTime = document.getElementById('alarm-input').value; alarmTriggered = false; if(alarmTime) document.getElementById('alarm-status').textContent = "Alarm: " + alarmTime; }
-
-        // --- 6. TIMER ---
-        let tmrLeft=25*60, tmrId, tmrRun=false;
-        function updateTmr(){ const m=Math.floor(tmrLeft/60).toString().padStart(2,'0'), s=(tmrLeft%60).toString().padStart(2,'0'); document.getElementById('timer-display').innerText=`${m}:${s}`; document.title=tmrRun?`(${m}:${s}) WebDesks`:"WebDesks"; }
-        function toggleTimer(){ const btn=document.getElementById('btn-toggle'); if(tmrRun){ clearInterval(tmrId); btn.innerHTML='<i data-lucide="play" class="w-6 h-6 fill-current"></i> Start'; btn.classList.replace('bg-red-500','bg-indigo-600'); } else { tmrId=setInterval(()=>{ tmrLeft--; updateTmr(); if(tmrLeft<=0){clearInterval(tmrId); tmrRun=false; alert('Done!');} },1000); btn.innerHTML='<i data-lucide="pause" class="w-6 h-6 fill-current"></i> Pause'; btn.classList.replace('bg-indigo-600','bg-red-500'); } tmrRun=!tmrRun; lucide.createIcons(); }
-        function setMode(m,l){ clearInterval(tmrId); tmrRun=false; tmrLeft=m*60; document.getElementById('timer-mode').innerText=l; updateTmr(); document.getElementById('btn-toggle').classList.replace('bg-red-500','bg-indigo-600'); }
-
-        // --- 7. AUDIO ---
-        let audioCtx, activeNoise, gainNode;
-        function toggleNoise(type) {
-            if(!audioCtx) { audioCtx = new (window.AudioContext||window.webkitAudioContext)(); gainNode = audioCtx.createGain(); gainNode.gain.value=0.5; gainNode.connect(audioCtx.destination); }
-            document.querySelectorAll('[id^="status-"]').forEach(el => { el.innerText='OFF'; el.classList.remove('text-green-500'); });
-            const statusEl = document.getElementById('status-'+type);
-            if(activeNoise && activeNoise.type === type) { activeNoise.stop(); activeNoise=null; return; }
-            if(activeNoise) { activeNoise.stop(); }
-            const bufferSize = audioCtx.sampleRate * 2, buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate), data = buffer.getChannelData(0);
-            let lastOut = 0;
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-                if(type==='brown') { data[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = data[i]; data[i] *= 3.5; }
-                else if(type==='white') { data[i] = white * 0.5; }
-                else { data[i] = white * 0.5; } // Pink approx
+        async function mergePDFs() {
+            const mergedPdf = await PDFLib.PDFDocument.create();
+            for (const file of pdfFiles) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
             }
-            const noise = audioCtx.createBufferSource();
-            noise.buffer = buffer; noise.loop = true; noise.connect(gainNode); noise.start(); noise.type = type; activeNoise = noise;
-            statusEl.innerText='ON'; statusEl.classList.add('text-green-500');
-        }
-        function setVolume(v){ if(gainNode) gainNode.gain.value=v; }
-
-        // --- 8. BREATHING ---
-        let breathSpeed = { inhale:4000, hold:4000, exhale:4000 };
-        function setBreathSpeed(mode) {
-            const circle = document.getElementById('breath-circle');
-            // Simplified logic: CSS animation is fixed in this demo, but we would update style via JS for true speed control
-            // For now, we update text cycle
-            alert("Speed set to " + mode);
+            const pdfBytes = await mergedPdf.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = "merged_webdesks.pdf";
+            link.click();
         }
 
-        // --- 9. ZONES ---
-        const cities = [{name:"LA",offset:-8},{name:"NY",offset:-5},{name:"London",offset:0},{name:"Paris",offset:1},{name:"Tokyo",offset:9}];
-        function updateZones(val) {
-            const h = Math.floor(val/60), m = val%60;
-            const d = new Date(); d.setHours(h); d.setMinutes(m);
-            document.getElementById('zone-display').innerText = d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-            document.getElementById('zone-list').innerHTML = cities.map(c => {
-                const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-                const cityTime = new Date(utc + (3600000 * c.offset));
-                return `<div class="flex justify-between items-center glass-panel p-4 rounded-xl mb-2"><span class="font-bold">${c.name}</span><span class="font-mono text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">${cityTime.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span></div>`;
+        // --- TIME ZONES ---
+        function updateZones(h) {
+            const zones = [
+                { l: 'Local', tz: Intl.DateTimeFormat().resolvedOptions().timeZone },
+                { l: 'New York', tz: 'America/New_York' },
+                { l: 'London', tz: 'Europe/London' },
+                { l: 'Paris', tz: 'Europe/Paris' },
+                { l: 'Tokyo', tz: 'Asia/Tokyo' }
+            ];
+            const grid = document.getElementById('zone-grid');
+            grid.innerHTML = zones.map(z => {
+                const d = new Date(); d.setHours(h);
+                const t = d.toLocaleTimeString('en-US', { timeZone: z.tz, hour: 'numeric', minute: '2-digit', hour12: true });
+                return `<div class="glass p-4 rounded-2xl flex flex-col items-center">
+                    <span class="text-[10px] font-black uppercase text-slate-400 mb-1">${z.l}</span>
+                    <span class="text-xl font-black">${t}</span>
+                </div>`;
             }).join('');
         }
-        function resetZones() { const d=new Date(); const v = (d.getHours()*60)+d.getMinutes(); document.getElementById('zone-slider').value=v; updateZones(v); }
 
-        // --- 10. TEXT ---
-        function updateCounts() { const t=document.getElementById('text-input').value; document.getElementById('count-char').innerText=t.length; document.getElementById('count-word').innerText=t.trim()===''?0:t.trim().split(/\s+/).length; }
-        function transformText(m) { const el=document.getElementById('text-input'); let t=el.value; if(m==='clean')t=t.replace(/[^\S\r\n]+$/gm,""); if(m==='upper')t=t.toUpperCase(); if(m==='lower')t=t.toLowerCase(); el.value=t; updateCounts(); }
-        function copyText() { navigator.clipboard.writeText(document.getElementById('text-input').value); alert('Copied!'); }
-
-        // --- 11. PDF ---
-        let pdfFiles = [];
-        function handlePdfSelect(input) { pdfFiles = Array.from(input.files); document.getElementById('pdf-list').innerHTML = pdfFiles.map(f => `<li class="flex items-center gap-2 p-2"><span class="truncate">${f.name}</span></li>`).join(''); document.getElementById('btn-merge').disabled = pdfFiles.length<2; }
-        function clearPdfList() { pdfFiles=[]; document.getElementById('pdf-list').innerHTML=''; document.getElementById('btn-merge').disabled=true; }
-        async function mergePdfs() { /* (Keep existing logic) */ }
-
-        // --- 12. DATE ---
-        function calculateDate() { /* (Keep existing logic) */ document.getElementById('calc-result').classList.remove('hidden'); document.getElementById('calc-output').innerText = "Calculated Date"; }
-        function copyDateResult() { navigator.clipboard.writeText(document.getElementById('calc-output').innerText); alert('Copied!'); }
-
-        // --- 13. PASSWORD ---
-        function generatePassword() {
-            const len = document.getElementById('pwd-len').value;
-            const useSym = document.getElementById('pwd-symbols').checked;
-            let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            if(useSym) chars += "!@#$%^&*()_+";
-            let pwd = "";
-            const array = new Uint32Array(len); window.crypto.getRandomValues(array);
-            for(let i=0; i<len; i++) pwd += chars[array[i] % chars.length];
-            document.getElementById('pwd-output').innerText = pwd;
-        }
-        function copyPassword() { navigator.clipboard.writeText(document.getElementById('pwd-output').innerText); alert('Copied!'); }
-
-        // --- 14. ON AIR ---
-        function toggleFullScreenSign(c) {
+        // --- ON AIR ---
+        function showOnAir(msg, color) {
             const overlay = document.getElementById('onair-overlay');
-            const text = document.getElementById('onair-text');
-            overlay.classList.remove('hidden','bg-red-600','bg-green-600','bg-gray-800');
-            if(c==='red') { overlay.classList.add('bg-red-600'); text.textContent='ON AIR'; }
-            else if(c==='green') { overlay.classList.add('bg-green-600'); text.textContent='FREE'; }
-            else { overlay.classList.add('bg-gray-800'); text.textContent=document.getElementById('onair-custom').value || 'BUSY'; }
-            if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+            const txt = document.getElementById('onair-msg');
+            overlay.className = `fixed inset-0 z-[100] flex flex-col items-center justify-center text-white ${color}`;
+            txt.textContent = msg;
+            overlay.classList.remove('hidden');
         }
 
-        // --- NEW 1. QR ---
-        function generateQR() {
-            const val = document.getElementById('qr-input').value || 'https://webdesks.app';
-            new QRious({ element: document.getElementById('qr-canvas'), value: val, size: 200, foreground: isDark()?'white':'black', backgroundAlpha: 0 });
-        }
+        // --- INIT ---
+        window.onload = () => {
+            lucide.createIcons();
+            if(localStorage.getItem('webdesks_theme') === 'dark') document.documentElement.classList.add('dark');
+            switchTab(localStorage.getItem('webdesks_last_tab') || 'dashboard');
+            updateDashboard();
+            renderWater();
+            resizeCanvas();
+            updateZones(12);
+            updateAlarmUI();
 
-        // --- NEW 2. JSON ---
-        function prettifyJson() {
-            try {
-                const val = document.getElementById('json-input').value;
-                const obj = JSON.parse(val);
-                document.getElementById('json-output').value = JSON.stringify(obj, null, 2);
-            } catch(e) { document.getElementById('json-output').value = "Invalid JSON: " + e.message; }
-        }
+            const note = document.getElementById('note-area');
+            note.value = localStorage.getItem('wd_scratch') || '';
+            note.addEventListener('input', () => {
+                localStorage.setItem('wd_scratch', note.value);
+                document.getElementById('dash-note-preview').textContent = note.value.slice(0, 50) || "Empty...";
+            });
+            document.getElementById('dash-note-preview').textContent = note.value.slice(0, 50) || "Empty...";
 
-        // --- NEW 3. STOPWATCH ---
-        let swInterval, swTime = 0, swRunning = false;
-        function swUpdate() { swTime += 10; const d = new Date(swTime); document.getElementById('sw-display').innerText = d.toISOString().slice(14, 22); }
-        function swStart() { if(!swRunning) { swInterval = setInterval(swUpdate, 10); swRunning = true; document.getElementById('sw-btn-start').innerHTML = '<i data-lucide="pause" class="w-6 h-6 ml-0"></i>'; } else { clearInterval(swInterval); swRunning = false; document.getElementById('sw-btn-start').innerHTML = '<i data-lucide="play" class="w-6 h-6 ml-1"></i>'; } lucide.createIcons(); }
-        function swReset() { clearInterval(swInterval); swRunning = false; swTime = 0; document.getElementById('sw-display').innerText = "00:00.00"; document.getElementById('sw-laps').innerHTML = ""; document.getElementById('sw-btn-start').innerHTML = '<i data-lucide="play" class="w-6 h-6 ml-1"></i>'; lucide.createIcons(); }
-        function swLap() { const d = new Date(swTime); const t = d.toISOString().slice(14, 22); document.getElementById('sw-laps').innerHTML = `<div class="border-b border-gray-200 dark:border-gray-700 py-1">Lap: ${t}</div>` + document.getElementById('sw-laps').innerHTML; }
-
-        // --- NEW 4. BASE64 ---
-        function toBase64() { try { document.getElementById('b64-result').value = btoa(document.getElementById('b64-text').value); } catch(e) { alert("Error"); } }
-        function fromBase64() { try { document.getElementById('b64-result').value = atob(document.getElementById('b64-text').value); } catch(e) { alert("Invalid Base64"); } }
-
-        // --- NEW 5. RATIO ---
-        let currentRatio = 16/9;
-        function setRatio(w, h) { currentRatio = w/h; document.getElementById('ar-display').innerText = `Ratio: ${w}:${h}`; calcRatio('w'); }
-        function calcRatio(src) {
-            const wEl = document.getElementById('ar-w');
-            const hEl = document.getElementById('ar-h');
-            if(src === 'w' && wEl.value) hEl.value = Math.round(wEl.value / currentRatio);
-            if(src === 'h' && hEl.value) wEl.value = Math.round(hEl.value * currentRatio);
-        }
-
-        // Init
-        switchTab(localStorage.getItem('webdesks_tab') || 'dashboard');
-        renderTasks(); renderCanned();
+            const focus = document.getElementById('daily-focus');
+            focus.value = localStorage.getItem('wd_focus') || '';
+            focus.addEventListener('input', () => localStorage.setItem('wd_focus', focus.value));
+        };
     </script>
 </body>
 </html>
