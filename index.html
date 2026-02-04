@@ -336,6 +336,11 @@
 
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Tools</div>
             
+            <button onclick="app.switchTab('calculator')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="calculator">
+                <i data-lucide="calculator" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Calculator</span>
+            </button>
+            
             <button onclick="app.switchTab('pdf')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="pdf">
                 <i data-lucide="file-stack" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">PDF Merger</span>
@@ -405,7 +410,7 @@
                             <div id="weather-icon" class="mb-4 transform group-hover:scale-110 transition-transform">
                                 <i data-lucide="cloud-sun" class="w-16 h-16 text-orange-500"></i>
                             </div>
-                            <div id="weather-temp" class="text-5xl font-black mb-1">--°C</div>
+                            <div id="weather-temp" class="text-5xl font-black mb-1 cursor-pointer" onclick="app.toggleWeatherUnit()" title="Click to toggle °C/°F">--°C</div>
                             <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Local Weather</p>
                         </div>
                         
@@ -734,6 +739,44 @@
             </div>
         </div>
 
+        <!-- CALCULATOR -->
+        <div id="calculator" class="tab-content flex flex-col items-center justify-center p-4">
+            <div class="max-w-sm w-full glass p-6 rounded-[2rem] shadow-2xl">
+                <!-- Display -->
+                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-2xl mb-6 text-right relative overflow-hidden">
+                    <div id="calc-history" class="text-xs text-slate-400 font-mono h-4 mb-1"></div>
+                    <div id="calc-display" class="text-4xl font-black timer-font tracking-tight truncate">0</div>
+                </div>
+                
+                <!-- Keypad -->
+                <div class="grid grid-cols-4 gap-3">
+                    <button onclick="app.calcClear()" class="p-4 rounded-xl bg-red-100 text-red-600 font-bold hover:bg-red-200 transition-colors">AC</button>
+                    <button onclick="app.calcDelete()" class="p-4 rounded-xl bg-slate-200 dark:bg-slate-700 font-bold hover:bg-slate-300 transition-colors"><i data-lucide="delete" class="w-5 h-5 mx-auto"></i></button>
+                    <button onclick="app.calcAppend('%')" class="p-4 rounded-xl bg-slate-200 dark:bg-slate-700 font-bold hover:bg-slate-300 transition-colors">%</button>
+                    <button onclick="app.calcAppend('/')" class="p-4 rounded-xl bg-indigo-100 text-indigo-600 font-bold hover:bg-indigo-200 transition-colors">÷</button>
+                    
+                    <button onclick="app.calcAppend('7')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">7</button>
+                    <button onclick="app.calcAppend('8')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">8</button>
+                    <button onclick="app.calcAppend('9')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">9</button>
+                    <button onclick="app.calcAppend('*')" class="p-4 rounded-xl bg-indigo-100 text-indigo-600 font-bold hover:bg-indigo-200 transition-colors">×</button>
+                    
+                    <button onclick="app.calcAppend('4')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">4</button>
+                    <button onclick="app.calcAppend('5')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">5</button>
+                    <button onclick="app.calcAppend('6')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">6</button>
+                    <button onclick="app.calcAppend('-')" class="p-4 rounded-xl bg-indigo-100 text-indigo-600 font-bold hover:bg-indigo-200 transition-colors">-</button>
+                    
+                    <button onclick="app.calcAppend('1')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">1</button>
+                    <button onclick="app.calcAppend('2')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">2</button>
+                    <button onclick="app.calcAppend('3')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">3</button>
+                    <button onclick="app.calcAppend('+')" class="p-4 rounded-xl bg-indigo-100 text-indigo-600 font-bold hover:bg-indigo-200 transition-colors">+</button>
+                    
+                    <button onclick="app.calcAppend('0')" class="col-span-2 p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">0</button>
+                    <button onclick="app.calcAppend('.')" class="p-4 rounded-xl glass hover:bg-white/50 font-bold text-xl">.</button>
+                    <button onclick="app.calcResult()" class="p-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-500/30">=</button>
+                </div>
+            </div>
+        </div>
+
         <!-- PDF MERGER -->
         <div id="pdf" class="tab-content flex flex-col items-center justify-center p-4">
             <div class="max-w-xl w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-6">
@@ -925,6 +968,10 @@
             recordingTimer: null,
             pdfFiles: [],
             draggedElement: null,
+            weatherUnit: 'C',
+            weatherTempC: null,
+            calcValue: '0',
+            calcHistory: '',
 
             // Initialize
             init() {
@@ -1076,8 +1123,8 @@
                     const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
                     const data = await res.json();
                     
-                    const temp = Math.round(data.current_weather.temperature);
-                    document.getElementById('weather-temp').textContent = `${temp}°C`;
+                    this.weatherTempC = Math.round(data.current_weather.temperature);
+                    this.renderWeather();
                     
                     // Weather icon based on code
                     const code = data.current_weather.weathercode;
@@ -1092,6 +1139,18 @@
                 } catch (e) {
                     document.getElementById('weather-temp').textContent = '--°C';
                 }
+            },
+
+            renderWeather() {
+                if (this.weatherTempC === null) return;
+                const isC = this.weatherUnit === 'C';
+                const temp = isC ? this.weatherTempC : Math.round((this.weatherTempC * 9/5) + 32);
+                document.getElementById('weather-temp').textContent = `${temp}°${this.weatherUnit}`;
+            },
+
+            toggleWeatherUnit() {
+                this.weatherUnit = this.weatherUnit === 'C' ? 'F' : 'C';
+                this.renderWeather();
             },
 
             // Alarm
@@ -1777,6 +1836,57 @@
                 lucide.createIcons();
             },
 
+            // Calculator
+            calcAppend(val) {
+                if (this.calcValue === '0' && !['+', '-', '*', '/', '%', '.'].includes(val)) {
+                    this.calcValue = val;
+                } else {
+                    // Prevent multiple operators
+                    const lastChar = this.calcValue.slice(-1);
+                    const isOperator = ['+', '-', '*', '/', '%'].includes(val);
+                    const lastIsOperator = ['+', '-', '*', '/', '%'].includes(lastChar);
+                    
+                    if (isOperator && lastIsOperator) {
+                        this.calcValue = this.calcValue.slice(0, -1) + val;
+                    } else {
+                        this.calcValue += val;
+                    }
+                }
+                this.updateCalcDisplay();
+            },
+            
+            calcClear() {
+                this.calcValue = '0';
+                this.calcHistory = '';
+                this.updateCalcDisplay();
+            },
+            
+            calcDelete() {
+                this.calcValue = this.calcValue.slice(0, -1);
+                if (this.calcValue === '') this.calcValue = '0';
+                this.updateCalcDisplay();
+            },
+            
+            calcResult() {
+                try {
+                    const result = new Function('return ' + this.calcValue)();
+                    this.calcHistory = this.calcValue + ' =';
+                    this.calcValue = String(result);
+                    this.updateCalcDisplay();
+                } catch (e) {
+                    this.calcValue = 'Error';
+                    this.updateCalcDisplay();
+                    setTimeout(() => { this.calcValue = '0'; this.updateCalcDisplay(); }, 1000);
+                }
+            },
+            
+            updateCalcDisplay() {
+                const display = document.getElementById('calc-display');
+                const history = document.getElementById('calc-history');
+                if (display) display.textContent = this.calcValue.replace(/\*/g, '×').replace(/\//g, '÷');
+                if (history) history.textContent = this.calcHistory.replace(/\*/g, '×').replace(/\//g, '÷');
+            },
+
             // PDF Merger
             initPDFDrop() {
                 const dropZone = document.getElementById('pdf-drop-zone');
@@ -1875,7 +1985,7 @@
                 this.updateZones(currentHour);
             },
 
-            updateZones(hour) {
+            updateZones(val) {
                 const zones = [
                     { label: 'Local', zone: Intl.DateTimeFormat().resolvedOptions().timeZone },
                     { label: 'New York', zone: 'America/New_York' },
@@ -1889,8 +1999,10 @@
                 ];
                 
                 const now = new Date();
-                now.setHours(parseInt(hour));
-                now.setMinutes(0);
+                if (val !== 'now') {
+                    now.setHours(parseInt(val));
+                    now.setMinutes(0);
+                }
                 
                 const grid = document.getElementById('zone-grid');
                 grid.innerHTML = zones.map(z => {
@@ -1914,8 +2026,14 @@
             setZoneTime(mode) {
                 let hour;
                 const now = new Date();
+                
+                if (mode === 'now') {
+                    document.getElementById('zone-slider').value = now.getHours();
+                    this.updateZones('now');
+                    return;
+                }
+
                 switch(mode) {
-                    case 'now': hour = now.getHours(); break;
                     case 'morning': hour = 9; break;
                     case 'noon': hour = 12; break;
                     case 'evening': hour = 18; break;
