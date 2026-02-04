@@ -6,19 +6,18 @@
     <title>WebDesks - WFH Toolkit</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Share+Tech+Mono&family=Inter:wght@300;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
         .dark ::-webkit-scrollbar-thumb { background-color: #475569; }
-        
-        /* Font Utilities */
         .timer-font { font-variant-numeric: tabular-nums; }
         
-        /* Toggle Switch */
-        .toggle-checkbox:checked { right: 0; border-color: #6366f1; }
-        .toggle-checkbox:checked + .toggle-label { background-color: #6366f1; }
+        /* CLOCK THEMES */
+        .theme-retro { font-family: 'Share Tech Mono', monospace; color: #10b981; text-shadow: 0 0 10px rgba(16,185,129,0.5); }
+        .theme-modern { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -2px; }
+        .theme-cyber { font-family: 'Orbitron', sans-serif; color: #f43f5e; text-shadow: 0 0 15px rgba(244,63,94,0.6); }
     </style>
     <script>
         tailwind.config = { darkMode: 'class' }
@@ -43,9 +42,13 @@
                 <i data-lucide="check-square" class="w-5 h-5 group-hover:text-indigo-600"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Tasks</span>
             </button>
+            <button onclick="switchTab('clock')" id="btn-clock" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                <i data-lucide="watch" class="w-5 h-5 group-hover:text-indigo-600"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Desk Clock</span>
+            </button>
             <button onclick="switchTab('timer')" id="btn-timer" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <i data-lucide="clock" class="w-5 h-5 group-hover:text-indigo-600"></i>
-                <span class="hidden lg:block ml-3 font-medium text-sm">Focus Timer</span>
+                <i data-lucide="timer" class="w-5 h-5 group-hover:text-indigo-600"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Pomodoro</span>
             </button>
             <button onclick="switchTab('audio')" id="btn-audio" class="nav-btn group w-full flex items-center p-3 rounded-lg transition-all text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                 <i data-lucide="headphones" class="w-5 h-5 group-hover:text-indigo-600"></i>
@@ -64,9 +67,8 @@
     <main class="flex-1 relative">
         
         <div id="tab-notepad" class="tab-content absolute inset-0 p-6 flex flex-col hidden">
-            <h2 class="text-2xl font-bold mb-4">Scratchpad</h2>
             <div class="bg-white dark:bg-gray-800 flex-1 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
-                <textarea id="scratchpad" class="w-full h-full p-8 text-lg bg-transparent text-gray-700 dark:text-gray-200 resize-none focus:outline-none placeholder-gray-300 dark:placeholder-gray-600" placeholder="Start typing... Auto-saving enabled." spellcheck="false"></textarea>
+                <textarea id="scratchpad" class="w-full h-full p-8 text-lg bg-transparent text-gray-700 dark:text-gray-200 resize-none focus:outline-none placeholder-gray-300 dark:placeholder-gray-600" placeholder="Start typing..." spellcheck="false"></textarea>
             </div>
         </div>
 
@@ -75,67 +77,77 @@
             <div class="max-w-3xl w-full">
                 <div class="flex gap-2 mb-6">
                     <input type="text" id="task-input" class="flex-1 p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a new task..." onkeypress="if(event.key === 'Enter') addTask()">
-                    <button onclick="addTask()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 rounded-lg font-medium transition-colors">Add</button>
+                    <button onclick="addTask()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 rounded-lg font-medium">Add</button>
                 </div>
-                <ul id="task-list" class="space-y-2">
-                    </ul>
+                <ul id="task-list" class="space-y-2"></ul>
+            </div>
+        </div>
+
+        <div id="tab-clock" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden bg-gray-100 dark:bg-gray-900">
+            <div id="clock-container" class="text-center p-12 rounded-3xl transition-all duration-500">
+                <div id="live-clock" class="text-9xl font-bold mb-2 theme-modern">12:00:00</div>
+                <div id="live-date" class="text-xl opacity-60 font-medium uppercase tracking-widest">Monday, Jan 1</div>
+            </div>
+
+            <div class="mt-12 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col gap-6 w-full max-w-md">
+                
+                <div>
+                    <label class="text-xs font-bold text-gray-400 uppercase mb-3 block">Clock Theme</label>
+                    <div class="flex gap-2">
+                        <button onclick="setClockTheme('modern')" class="flex-1 py-2 text-sm bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600">Modern</button>
+                        <button onclick="setClockTheme('retro')" class="flex-1 py-2 text-sm bg-gray-900 text-green-400 rounded hover:opacity-80 font-mono">Retro</button>
+                        <button onclick="setClockTheme('cyber')" class="flex-1 py-2 text-sm bg-gray-900 text-red-500 rounded hover:opacity-80 font-mono">Cyber</button>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <label class="text-xs font-bold text-gray-400 uppercase mb-3 block">Set Alarm</label>
+                    <div class="flex gap-2">
+                        <input type="time" id="alarm-input" class="flex-1 p-2 rounded bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 outline-none">
+                        <button onclick="setAlarm()" id="btn-alarm" class="bg-indigo-600 text-white px-4 py-2 rounded font-medium hover:bg-indigo-700">Set</button>
+                    </div>
+                    <p id="alarm-status" class="text-xs text-center mt-2 text-indigo-500 font-medium opacity-0 transition-opacity">Alarm set for 14:30</p>
+                </div>
             </div>
         </div>
 
         <div id="tab-timer" class="tab-content absolute inset-0 flex flex-col items-center justify-center hidden">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-12 w-full max-w-md text-center">
                 <div class="mb-8">
-                    <span id="timer-display" class="timer-font text-8xl font-bold text-gray-800 dark:text-white tracking-tight">25:00</span>
+                    <span id="timer-display" class="timer-font text-8xl font-bold dark:text-white">25:00</span>
                     <p id="timer-mode" class="text-indigo-500 font-medium mt-2 uppercase tracking-wide text-sm">Focus Time</p>
                 </div>
-                <button onclick="toggleTimer()" id="btn-toggle" class="bg-indigo-600 hover:bg-indigo-700 text-white w-full py-4 rounded-xl font-bold text-lg mb-4 transition-transform active:scale-95 flex justify-center items-center gap-2">
-                    <i data-lucide="play" class="w-5 h-5 fill-current"></i> Start Focus
+                <button onclick="toggleTimer()" id="btn-toggle" class="bg-indigo-600 hover:bg-indigo-700 text-white w-full py-4 rounded-xl font-bold text-lg mb-4 flex justify-center items-center gap-2">
+                    <i data-lucide="play" class="w-5 h-5 fill-current"></i> Start
                 </button>
                 <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setMode(25, 'Focus Time')" class="py-2 text-sm font-medium bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600">25m</button>
-                    <button onclick="setMode(5, 'Short Break')" class="py-2 text-sm font-medium bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600">5m</button>
-                    <button onclick="setMode(15, 'Long Break')" class="py-2 text-sm font-medium bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600">15m</button>
+                    <button onclick="setMode(25, 'Focus')" class="py-2 text-sm bg-gray-100 dark:bg-gray-700 rounded-lg">25m</button>
+                    <button onclick="setMode(5, 'Short Break')" class="py-2 text-sm bg-gray-100 dark:bg-gray-700 rounded-lg">5m</button>
+                    <button onclick="setMode(15, 'Long Break')" class="py-2 text-sm bg-gray-100 dark:bg-gray-700 rounded-lg">15m</button>
                 </div>
             </div>
         </div>
 
         <div id="tab-audio" class="tab-content absolute inset-0 p-6 flex flex-col hidden items-center justify-center">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 max-w-2xl w-full">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold mb-2">Focus Audio</h2>
-                    <p class="text-gray-500">Generated locally using Web Audio API. No streaming.</p>
-                </div>
-                
+                <h2 class="text-2xl font-bold mb-6 text-center">Focus Audio</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-between hover:border-indigo-500 transition-colors cursor-pointer" onclick="toggleNoise('brown')">
+                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-between cursor-pointer hover:border-indigo-500" onclick="toggleNoise('brown')">
                         <div class="flex items-center gap-3">
-                            <div class="bg-indigo-100 dark:bg-indigo-900 p-3 rounded-full">
-                                <i data-lucide="waves" class="w-6 h-6 text-indigo-600 dark:text-indigo-400"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold">Deep Focus</h3>
-                                <p class="text-xs text-gray-500">Brown Noise</p>
-                            </div>
+                            <div class="bg-indigo-100 dark:bg-indigo-900 p-3 rounded-full"><i data-lucide="waves" class="w-6 h-6 text-indigo-600 dark:text-indigo-400"></i></div>
+                            <div><h3 class="font-bold">Deep Focus</h3><p class="text-xs text-gray-500">Brown Noise</p></div>
                         </div>
-                        <div id="status-brown" class="text-xs font-bold text-gray-400 uppercase">Off</div>
+                        <div id="status-brown" class="text-xs font-bold text-gray-400">OFF</div>
                     </div>
-
-                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-between hover:border-pink-500 transition-colors cursor-pointer" onclick="toggleNoise('pink')">
+                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-between cursor-pointer hover:border-pink-500" onclick="toggleNoise('pink')">
                         <div class="flex items-center gap-3">
-                            <div class="bg-pink-100 dark:bg-pink-900 p-3 rounded-full">
-                                <i data-lucide="cloud-rain" class="w-6 h-6 text-pink-600 dark:text-pink-400"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold">Rainfall</h3>
-                                <p class="text-xs text-gray-500">Pink Noise</p>
-                            </div>
+                            <div class="bg-pink-100 dark:bg-pink-900 p-3 rounded-full"><i data-lucide="cloud-rain" class="w-6 h-6 text-pink-600 dark:text-pink-400"></i></div>
+                            <div><h3 class="font-bold">Rainfall</h3><p class="text-xs text-gray-500">Pink Noise</p></div>
                         </div>
-                        <div id="status-pink" class="text-xs font-bold text-gray-400 uppercase">Off</div>
+                        <div id="status-pink" class="text-xs font-bold text-gray-400">OFF</div>
                     </div>
                 </div>
-                
                 <div class="mt-8">
-                    <label class="text-xs uppercase font-bold text-gray-400 mb-2 block">Volume</label>
                     <input type="range" min="0" max="1" step="0.01" value="0.5" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" oninput="setVolume(this.value)">
                 </div>
             </div>
@@ -145,24 +157,14 @@
 
     <script>
         lucide.createIcons();
-
-        // --- GLOBAL STATE ---
         let currentTab = 'notepad';
-        
-        // --- TAB SWITCHING ---
+
+        // --- GLOBAL NAV ---
         function switchTab(tab) {
-            // Hide all contents
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            // Reset nav buttons
-            document.querySelectorAll('.nav-btn').forEach(el => {
-                el.classList.remove('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900', 'dark:text-indigo-300');
-            });
-            
-            // Activate target
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900', 'dark:text-indigo-300'));
             document.getElementById('tab-' + tab).classList.remove('hidden');
-            const btn = document.getElementById('btn-' + tab);
-            btn.classList.add('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900', 'dark:text-indigo-300');
-            
+            document.getElementById('btn-' + tab).classList.add('bg-indigo-50', 'text-indigo-600', 'dark:bg-indigo-900', 'dark:text-indigo-300');
             localStorage.setItem('webdesks_tab', tab);
         }
 
@@ -171,8 +173,47 @@
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('webdesks_theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
         }
-        // Load Theme
         if (localStorage.getItem('webdesks_theme') === 'dark') document.documentElement.classList.add('dark');
+
+        // --- CLOCK & ALARM LOGIC ---
+        let alarmTime = null;
+        let alarmTriggered = false;
+
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('live-clock').textContent = timeString;
+            document.getElementById('live-date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+            // Check Alarm
+            if (alarmTime && !alarmTriggered) {
+                const currentHM = timeString.substring(0, 5); // Get HH:MM
+                if (currentHM === alarmTime && now.getSeconds() === 0) {
+                    alarmTriggered = true;
+                    new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();
+                    alert("ALARM: " + alarmTime);
+                    document.getElementById('alarm-status').textContent = "Alarm Ringing!";
+                }
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Init immediately
+
+        function setClockTheme(theme) {
+            const clock = document.getElementById('live-clock');
+            clock.className = "text-9xl font-bold mb-2 theme-" + theme;
+        }
+
+        function setAlarm() {
+            const input = document.getElementById('alarm-input').value;
+            if(input) {
+                alarmTime = input;
+                alarmTriggered = false;
+                const status = document.getElementById('alarm-status');
+                status.textContent = "Alarm set for " + input;
+                status.style.opacity = '1';
+            }
+        }
 
         // --- NOTEPAD ---
         const pad = document.getElementById('scratchpad');
@@ -185,177 +226,62 @@
             const list = document.getElementById('task-list');
             list.innerHTML = tasks.map((t, i) => `
                 <li class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 group">
-                    <button onclick="toggleTask(${i})" class="mr-3 text-gray-400 hover:text-indigo-500">
-                        <i data-lucide="${t.done ? 'check-circle-2' : 'circle'}" class="w-5 h-5 ${t.done ? 'text-green-500' : ''}"></i>
-                    </button>
+                    <button onclick="toggleTask(${i})" class="mr-3 text-gray-400 hover:text-indigo-500"><i data-lucide="${t.done ? 'check-circle-2' : 'circle'}" class="w-5 h-5 ${t.done ? 'text-green-500' : ''}"></i></button>
                     <span class="flex-1 ${t.done ? 'line-through text-gray-400' : ''}">${t.text}</span>
-                    <button onclick="deleteTask(${i})" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500 transition-opacity">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </li>
-            `).join('');
+                    <button onclick="deleteTask(${i})" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-500"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </li>`).join('');
             lucide.createIcons();
             localStorage.setItem('webdesks_tasks', JSON.stringify(tasks));
         }
-        function addTask() {
-            const input = document.getElementById('task-input');
-            if(input.value.trim()) {
-                tasks.push({ text: input.value, done: false });
-                input.value = '';
-                renderTasks();
-            }
+        function addTask() { 
+            const inp = document.getElementById('task-input'); 
+            if(inp.value.trim()){ tasks.push({text:inp.value, done:false}); inp.value=''; renderTasks(); } 
         }
-        function toggleTask(i) { tasks[i].done = !tasks[i].done; renderTasks(); }
-        function deleteTask(i) { tasks.splice(i, 1); renderTasks(); }
+        function toggleTask(i){ tasks[i].done=!tasks[i].done; renderTasks(); }
+        function deleteTask(i){ tasks.splice(i,1); renderTasks(); }
 
-        // --- AUDIO ENGINE (Brown/Pink Noise) ---
-        let audioCtx;
-        let activeNoise = null;
-        let gainNode;
-
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                gainNode = audioCtx.createGain();
-                gainNode.gain.value = 0.5;
-                gainNode.connect(audioCtx.destination);
-            }
-        }
-
-        function createNoiseBuffer(type) {
-            const bufferSize = audioCtx.sampleRate * 2; // 2 seconds
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            for (let i = 0; i < bufferSize; i++) {
-                if (type === 'brown') { // Brown noise algorithm
-                    const white = Math.random() * 2 - 1;
-                    data[i] = (lastOut + (0.02 * white)) / 1.02;
-                    lastOut = data[i];
-                    data[i] *= 3.5; 
-                } else { // Pink noise approx
-                    const white = Math.random() * 2 - 1;
-                    data[i] = (lastOut + (0.02 * white)) / 1.02; // simplified pinkish
-                    lastOut = data[i]; 
-                }
-            }
-            return buffer;
-        }
-        
-        // Simplified Noise Generation for Reliability
-        function playNoise(color) {
-            if (activeNoise) activeNoise.stop();
-            
-            initAudio();
-            const bufferSize = 2 * audioCtx.sampleRate;
-            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const output = noiseBuffer.getChannelData(0);
-            
-            for (let i = 0; i < bufferSize; i++) {
-                let white = Math.random() * 2 - 1;
-                output[i] = (lastOut + (0.02 * white)) / 1.02;
-                lastOut = output[i];
-                output[i] *= 3.5; // Compensate for gain
-            }
-
-            const noise = audioCtx.createBufferSource();
-            noise.buffer = noiseBuffer;
-            noise.loop = true;
-            noise.connect(gainNode);
-            noise.start();
-            activeNoise = noise;
-        }
-        
-        let lastOut = 0;
+        // --- AUDIO ---
+        let audioCtx, activeNoise, gainNode;
         function toggleNoise(type) {
-            initAudio();
-            // Stop logic
-            const statusEl = document.getElementById('status-' + type);
-            const isRunning = statusEl.innerText === 'ON';
+            if(!audioCtx) { audioCtx = new (window.AudioContext||window.webkitAudioContext)(); gainNode = audioCtx.createGain(); gainNode.gain.value=0.5; gainNode.connect(audioCtx.destination); }
             
             // Reset UI
-            document.querySelectorAll('[id^="status-"]').forEach(el => {
-                el.innerText = 'OFF';
-                el.classList.remove('text-green-500');
-                el.classList.add('text-gray-400');
-            });
-            if(activeNoise) { activeNoise.stop(); activeNoise = null; }
+            document.querySelectorAll('[id^="status-"]').forEach(el => { el.innerText='OFF'; el.classList.remove('text-green-500'); });
+            const statusEl = document.getElementById('status-'+type);
+            
+            if(activeNoise && activeNoise.type === type) { activeNoise.stop(); activeNoise=null; return; }
+            if(activeNoise) { activeNoise.stop(); }
 
-            if (!isRunning) {
-                // Start Logic
-                const bufferSize = audioCtx.sampleRate * 2;
-                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const data = buffer.getChannelData(0);
-                
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1;
-                    if(type === 'brown') {
-                        data[i] = (lastOut + (0.02 * white)) / 1.02;
-                        lastOut = data[i];
-                        data[i] *= 3.5; 
-                    } else {
-                        // Simple White Noise for "Rain" feel
-                        data[i] = white * 0.5;
-                    }
-                }
-                
-                const noise = audioCtx.createBufferSource();
-                noise.buffer = buffer;
-                noise.loop = true;
-                noise.connect(gainNode);
-                noise.start();
-                activeNoise = noise;
-                
-                statusEl.innerText = 'ON';
-                statusEl.classList.add('text-green-500');
-                statusEl.classList.remove('text-gray-400');
+            const bufferSize = audioCtx.sampleRate * 2;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            let lastOut = 0;
+            for (let i = 0; i < bufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                if(type==='brown') { data[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = data[i]; data[i] *= 3.5; }
+                else { data[i] = white * 0.5; }
             }
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer; noise.loop = true; noise.connect(gainNode); noise.start();
+            noise.type = type; activeNoise = noise;
+            statusEl.innerText='ON'; statusEl.classList.add('text-green-500');
         }
+        function setVolume(v){ if(gainNode) gainNode.gain.value=v; }
 
-        function setVolume(val) {
-            if(gainNode) gainNode.gain.value = val;
+        // --- TIMER ---
+        let tmrLeft=25*60, tmrId, tmrRun=false;
+        function updateTmr(){ 
+            const m=Math.floor(tmrLeft/60).toString().padStart(2,'0'), s=(tmrLeft%60).toString().padStart(2,'0'); 
+            document.getElementById('timer-display').innerText=`${m}:${s}`; 
+            document.title = tmrRun ? `(${m}:${s}) WebDesks` : "WebDesks";
         }
-
-        // --- TIMER LOGIC (Preserved) ---
-        let timeLeft = 25 * 60;
-        let timerId = null;
-        let isRunning = false;
-        const display = document.getElementById('timer-display');
-        const toggleBtn = document.getElementById('btn-toggle');
-        
-        function updateDisplay() {
-            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            display.textContent = `${m}:${s}`;
-            document.title = isRunning ? `(${m}:${s}) WebDesks` : "WebDesks";
+        function toggleTimer(){
+            const btn = document.getElementById('btn-toggle');
+            if(tmrRun){ clearInterval(tmrId); btn.innerHTML='<i data-lucide="play" class="w-5 h-5 fill-current"></i> Start'; btn.classList.replace('bg-red-500','bg-indigo-600'); }
+            else { tmrId=setInterval(()=>{ tmrLeft--; updateTmr(); if(tmrLeft<=0){clearInterval(tmrId); tmrRun=false; alert('Done!');} },1000); btn.innerHTML='<i data-lucide="pause" class="w-5 h-5 fill-current"></i> Pause'; btn.classList.replace('bg-indigo-600','bg-red-500'); }
+            tmrRun=!tmrRun; lucide.createIcons();
         }
-        function toggleTimer() {
-            if (isRunning) {
-                clearInterval(timerId);
-                toggleBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5 fill-current"></i> Start Focus';
-                toggleBtn.classList.replace('bg-red-500', 'bg-indigo-600');
-                toggleBtn.classList.replace('hover:bg-red-600', 'hover:bg-indigo-700');
-            } else {
-                timerId = setInterval(() => {
-                    timeLeft--;
-                    updateDisplay();
-                    if (timeLeft <= 0) { clearInterval(timerId); isRunning = false; alert("Time is up!"); }
-                }, 1000);
-                toggleBtn.innerHTML = '<i data-lucide="pause" class="w-5 h-5 fill-current"></i> Pause Focus';
-                toggleBtn.classList.replace('bg-indigo-600', 'bg-red-500');
-                toggleBtn.classList.replace('hover:bg-indigo-700', 'hover:bg-red-600');
-            }
-            isRunning = !isRunning;
-            lucide.createIcons();
-        }
-        function setMode(m, label) {
-            clearInterval(timerId); isRunning = false; timeLeft = m * 60;
-            document.getElementById('timer-mode').textContent = label;
-            updateDisplay();
-            toggleBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5 fill-current"></i> Start Focus';
-            toggleBtn.classList.replace('bg-red-500', 'bg-indigo-600');
-            lucide.createIcons();
-        }
+        function setMode(m,l){ clearInterval(tmrId); tmrRun=false; tmrLeft=m*60; document.getElementById('timer-mode').innerText=l; updateTmr(); document.getElementById('btn-toggle').innerHTML='<i data-lucide="play" class="w-5 h-5 fill-current"></i> Start'; document.getElementById('btn-toggle').classList.replace('bg-red-500','bg-indigo-600'); lucide.createIcons(); }
 
         // Init
         switchTab(localStorage.getItem('webdesks_tab') || 'notepad');
