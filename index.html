@@ -92,7 +92,7 @@
             </div>
             <div class="ml-3 hidden lg:block">
                 <h1 class="font-bold text-xl tracking-tight">WebDesks</h1>
-                <p class="text-[10px] uppercase font-bold text-indigo-500 tracking-widest">OS v6.2</p>
+                <p class="text-[10px] uppercase font-bold text-indigo-500 tracking-widest">OS v6.3</p>
             </div>
         </div>
         
@@ -205,11 +205,11 @@
 
                     <!-- MINI ALARM (NEW) -->
                     <div id="pin-alarm" class="glass-panel p-6 rounded-3xl flex flex-col items-center justify-center text-center relative hidden">
-                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Quick Alarm</div>
-                        <div class="flex flex-col items-center gap-4 w-full">
+                        <div class="absolute top-4 left-4 text-xs font-bold text-gray-400 uppercase tracking-widest">Lunch / Event Alarm</div>
+                        <div class="flex flex-col items-center gap-4 w-full mt-4">
                             <input type="time" id="mini-alarm-input" class="text-3xl font-bold bg-transparent text-gray-800 dark:text-white text-center w-full focus:outline-none p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
                             <div class="flex gap-3 w-full">
-                                <button onclick="setMiniAlarm()" id="btn-mini-alarm-set" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-bold shadow-lg hover:bg-indigo-700">Set</button>
+                                <button onclick="setMiniAlarm()" id="btn-mini-alarm-set" class="flex-1 bg-indigo-600 text-white py-2 rounded-xl text-sm font-bold shadow-lg hover:bg-indigo-700">Set Alarm</button>
                                 <button onclick="clearMiniAlarm()" class="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 rounded-xl hover:bg-red-100 hover:text-red-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
                             </div>
                             <p id="mini-alarm-status" class="text-xs font-bold text-indigo-500 h-4 uppercase tracking-wide opacity-0 transition-opacity">Alarm Set</p>
@@ -755,34 +755,62 @@
         // Mini Alarm Logic
         let miniAlarmCheckId = null;
         function setMiniAlarm() {
-            const time = document.getElementById('mini-alarm-input').value;
+            const timeInput = document.getElementById('mini-alarm-input');
+            const time = timeInput.value;
             const status = document.getElementById('mini-alarm-status');
             const btn = document.getElementById('btn-mini-alarm-set');
             
-            if(!time) return;
+            if(!time) {
+                alert("Please select a time first.");
+                return;
+            }
             
             if(miniAlarmCheckId) clearInterval(miniAlarmCheckId);
             
             status.textContent = "Alarm Set for " + time;
             status.style.opacity = '1';
+            status.className = "text-xs font-bold text-indigo-500 h-4 uppercase tracking-wide transition-opacity";
             btn.textContent = "Reset";
+            btn.classList.add('bg-green-600', 'hover:bg-green-700');
+            btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
             
             miniAlarmCheckId = setInterval(() => {
                 const now = new Date();
-                const current = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-                if(current === time && now.getSeconds() === 0) {
-                    new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();
-                    alert("ALARM!");
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const currentTime = `${hours}:${minutes}`;
+                
+                // Check if time matches. Note: input type="time" is 24h format HH:mm
+                if(currentTime === time) {
+                    const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+                    audio.play().catch(e => console.log("Audio play failed", e)); // Catch interaction errors
+                    
                     clearInterval(miniAlarmCheckId);
-                    status.textContent = "Alarm Ringing!";
+                    miniAlarmCheckId = null;
+                    
+                    status.textContent = "It is " + time + "!";
+                    status.classList.remove('text-indigo-500');
+                    status.classList.add('text-red-500', 'animate-pulse');
+                    
+                    // Reset button style
+                    btn.textContent = "Set Alarm";
+                    btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                    
+                    // Slight delay for alert so UI updates first
+                    setTimeout(() => alert("ALARM: It is " + time), 100);
                 }
             }, 1000);
         }
         function clearMiniAlarm() {
-            clearInterval(miniAlarmCheckId);
+            if(miniAlarmCheckId) clearInterval(miniAlarmCheckId);
+            miniAlarmCheckId = null;
             document.getElementById('mini-alarm-input').value = '';
             document.getElementById('mini-alarm-status').style.opacity = '0';
-            document.getElementById('btn-mini-alarm-set').textContent = "Set";
+            const btn = document.getElementById('btn-mini-alarm-set');
+            btn.textContent = "Set Alarm";
+            btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+            btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
         }
 
         // Dashboard Pin Customization
@@ -805,8 +833,8 @@
             localStorage.setItem('webdesks_dash_pins', JSON.stringify(state));
         }
         
-        // Load Pin State
-        const savedPins = JSON.parse(localStorage.getItem('webdesks_dash_pins') || '{"note":true,"timer":true,"alarm":false}');
+        // Load Pin State - Default alarm to true
+        const savedPins = JSON.parse(localStorage.getItem('webdesks_dash_pins') || '{"note":true,"timer":true,"alarm":true}');
         document.getElementById('check-pin-note').checked = savedPins.note;
         document.getElementById('check-pin-timer').checked = savedPins.timer;
         document.getElementById('check-pin-alarm').checked = savedPins.alarm;
