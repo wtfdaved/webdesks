@@ -45,6 +45,10 @@
             --glass-border: rgba(255, 255, 255, 0.05);
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             scrollbar-width: thin;
             scrollbar-color: #cbd5e1 transparent;
@@ -79,6 +83,7 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-hover:hover {
@@ -99,6 +104,7 @@
             inset: 0; 
             padding: 1.5rem; 
             overflow-y: auto;
+            scroll-behavior: smooth;
             opacity: 0;
             transform: translateY(20px) scale(0.96);
             pointer-events: none;
@@ -288,7 +294,7 @@
             </div>
             <div class="ml-3 hidden lg:block">
                 <h1 class="font-black text-lg tracking-tight">WebDesks</h1>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">OS v0.14</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">OS v0.15</span>
             </div>
         </div>
 
@@ -370,6 +376,23 @@
                 <span class="hidden lg:block ml-3 font-medium text-sm">Recorder</span>
             </button>
         </nav>
+
+        <!-- Music Player -->
+        <div class="hidden md:flex flex-col px-4 pt-2 pb-2 border-t border-slate-200/50 dark:border-slate-800/50">
+            <div class="glass p-3 rounded-xl flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-indigo-500 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/20 relative overflow-hidden">
+                    <i data-lucide="music" id="music-icon" class="w-5 h-5 text-white relative z-10 transition-opacity duration-300"></i>
+                    <canvas id="music-viz" width="40" height="40" class="absolute inset-0 opacity-0 transition-opacity duration-300"></canvas>
+                </div>
+                <div class="overflow-hidden flex-1 min-w-0 hidden lg:block">
+                    <div class="text-xs font-bold truncate">Lo-Fi Radio</div>
+                    <div class="text-[10px] text-slate-400 truncate">Focus Beats</div>
+                </div>
+                <button onclick="app.toggleMusic()" id="sidebar-play-btn" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 flex items-center justify-center transition-colors shrink-0 mx-auto lg:mx-0">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                </button>
+            </div>
+        </div>
 
         <!-- Bottom Actions -->
         <div class="hidden md:flex p-4 border-t border-slate-200/50 dark:border-slate-800/50 gap-2">
@@ -1018,6 +1041,11 @@
             // State
             currentTab: 'dashboard',
             alarmTime: localStorage.getItem('wd_alarm') || null,
+            musicPlaying: false,
+            musicAudio: null,
+            musicCtx: null,
+            musicAnalyser: null,
+            vizAnimation: null,
             alarmTriggered: false,
             waterCount: parseInt(localStorage.getItem('wd_water') || '0'),
             tasks: [],
@@ -2539,6 +2567,85 @@
                 overlay.classList.add('flex');
             },
 
+            // Music Player
+            toggleMusic() {
+                if (!this.musicAudio) {
+                    this.musicAudio = new Audio();
+                    this.musicAudio.crossOrigin = "anonymous";
+                    this.musicAudio.src = 'https://stream.zeno.fm/0r0xa792kwzuv';
+                    this.musicAudio.volume = 0.5;
+                    
+                    // Setup Visualizer
+                    try {
+                        const AudioContext = window.AudioContext || window.webkitAudioContext;
+                        if (!this.musicCtx) this.musicCtx = new AudioContext();
+                        
+                        const source = this.musicCtx.createMediaElementSource(this.musicAudio);
+                        this.musicAnalyser = this.musicCtx.createAnalyser();
+                        this.musicAnalyser.fftSize = 32;
+                        
+                        source.connect(this.musicAnalyser);
+                        this.musicAnalyser.connect(this.musicCtx.destination);
+                    } catch(e) {
+                        console.log("Visualizer setup failed:", e);
+                    }
+                }
+                
+                const btn = document.getElementById('sidebar-play-btn');
+                const icon = document.getElementById('music-icon');
+                const canvas = document.getElementById('music-viz');
+                
+                if (this.musicPlaying) {
+                    this.musicAudio.pause();
+                    this.musicPlaying = false;
+                    btn.innerHTML = '<i data-lucide="play" class="w-4 h-4 fill-current"></i>';
+                    btn.classList.remove('text-indigo-500', 'bg-indigo-50');
+                    
+                    if(icon) icon.classList.remove('opacity-0');
+                    if(canvas) canvas.classList.add('opacity-0');
+                    if(this.vizAnimation) cancelAnimationFrame(this.vizAnimation);
+                } else {
+                    if (this.musicCtx && this.musicCtx.state === 'suspended') this.musicCtx.resume();
+                    this.musicAudio.play().catch(e => this.showToast("Stream unavailable"));
+                    this.musicPlaying = true;
+                    btn.innerHTML = '<i data-lucide="pause" class="w-4 h-4 fill-current"></i>';
+                    btn.classList.add('text-indigo-500', 'bg-indigo-50');
+                    
+                    if(icon) icon.classList.add('opacity-0');
+                    if(canvas) {
+                        canvas.classList.remove('opacity-0');
+                        this.drawVisualizer();
+                    }
+                }
+                this._rebuildIcons();
+            },
+
+            drawVisualizer() {
+                if (!this.musicPlaying || !this.musicAnalyser) return;
+                const canvas = document.getElementById('music-viz');
+                const ctx = canvas.getContext('2d');
+                const bufferLength = this.musicAnalyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                
+                const draw = () => {
+                    if (!this.musicPlaying) return;
+                    this.vizAnimation = requestAnimationFrame(draw);
+                    this.musicAnalyser.getByteFrequencyData(dataArray);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    const barWidth = (canvas.width / bufferLength) * 2.5;
+                    let x = 0;
+                    
+                    for(let i = 0; i < bufferLength; i++) {
+                        const barHeight = (dataArray[i] / 255) * canvas.height;
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                        x += barWidth + 1;
+                    }
+                };
+                draw();
+            },
+
             // Utilities
             showToast(message) {
                 const toast = document.createElement('div');
@@ -2567,4 +2674,3 @@
 </html>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966"
      crossorigin="anonymous"></script>
-     
