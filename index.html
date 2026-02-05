@@ -1020,7 +1020,7 @@
             alarmTime: localStorage.getItem('wd_alarm') || null,
             alarmTriggered: false,
             waterCount: parseInt(localStorage.getItem('wd_water') || '0'),
-            tasks: JSON.parse(localStorage.getItem('wd_tasks') || '[]'),
+            tasks: [],
             taskFilter: 'all',
             wbColor: '#000000',
             wbLineWidth: 3,
@@ -1063,11 +1063,7 @@
                 { id: 'onair', label: 'On Air', icon: 'radio', keywords: 'status busy sign' },
                 { id: 'recorder', label: 'Screen Recorder', icon: 'video', keywords: 'capture screen video' }
             ],
-            pins: JSON.parse(localStorage.getItem('wd_pins')) || [
-                {id: 'recorder', label: 'Record Screen'}, 
-                {id: 'pdf', label: 'Merge PDFs'}, 
-                {id: 'onair', label: 'On Air Sign'}
-            ],
+            pins: [],
             
             // Breathing State
             breathActive: false,
@@ -1082,7 +1078,25 @@
 
             // Initialize
             init() {
-                lucide.createIcons();
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+
+                // Safe load data
+                try {
+                    this.tasks = JSON.parse(localStorage.getItem('wd_tasks') || '[]');
+                } catch(e) { this.tasks = []; }
+                if (!Array.isArray(this.tasks)) this.tasks = [];
+
+                try {
+                    this.pins = JSON.parse(localStorage.getItem('wd_pins'));
+                } catch(e) { this.pins = null; }
+                
+                if (!this.pins || !Array.isArray(this.pins)) {
+                    this.pins = [
+                        {id: 'recorder', label: 'Record Screen'}, 
+                        {id: 'pdf', label: 'Merge PDFs'}, 
+                        {id: 'onair', label: 'On Air Sign'}
+                    ];
+                }
                 
                 // Theme
                 if (localStorage.getItem('webdesks_theme') === 'dark') {
@@ -1142,6 +1156,7 @@
 
             // Navigation
             switchTab(tabId) {
+                if (!document.getElementById(tabId)) tabId = 'dashboard';
                 if (this.currentTab === tabId) return;
                 
                 document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -1163,7 +1178,7 @@
 
                 localStorage.setItem('webdesks_last_tab', tabId);
                 this.currentTab = tabId;
-                lucide.createIcons();
+                if (typeof lucide !== 'undefined') lucide.createIcons();
             },
 
             // Search
