@@ -138,6 +138,10 @@
             pointer-events: none;
         }
 
+        /* Zen Mode */
+        .zen-mode aside { display: none !important; }
+        .zen-mode #exit-zen-btn { display: flex !important; }
+
         /* Typography */
         .timer-font { 
             font-family: 'JetBrains Mono', monospace; 
@@ -284,7 +288,7 @@
             </div>
             <div class="ml-3 hidden lg:block">
                 <h1 class="font-black text-lg tracking-tight">WebDesks</h1>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">OS v0.13</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">OS v0.14</span>
             </div>
         </div>
 
@@ -333,6 +337,11 @@
                 <i data-lucide="headphones" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Sound Studio</span>
             </button>
+            
+            <button onclick="app.switchTab('breathing')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="breathing">
+                <i data-lucide="wind" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Breathing</span>
+            </button>
 
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Tools</div>
             
@@ -368,6 +377,9 @@
                 <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
                 <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
             </button>
+            <button onclick="app.toggleZenMode()" class="flex-1 p-3 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all flex items-center justify-center group" title="Zen Mode (Alt+Z)">
+                <i data-lucide="maximize-2" class="w-5 h-5"></i>
+            </button>
             <button onclick="app.togglePrivacy()" class="flex-1 p-3 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center group" title="Panic Button (Alt+P)">
                 <i data-lucide="shield-alert" class="w-5 h-5"></i>
             </button>
@@ -376,6 +388,9 @@
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 relative overflow-hidden order-first md:order-last">
+        <button onclick="app.toggleZenMode()" id="exit-zen-btn" class="absolute top-6 right-6 z-50 p-3 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all hidden shadow-lg" title="Exit Zen Mode (Alt+Z)">
+            <i data-lucide="minimize-2" class="w-5 h-5"></i>
+        </button>
         
         <!-- DASHBOARD -->
         <div id="dashboard" class="tab-content active">
@@ -426,6 +441,15 @@
                             <p class="text-xs font-bold uppercase tracking-widest text-slate-400">Local Weather</p>
                         </div>
                         
+                        <!-- Daily Quote -->
+                        <div class="glass p-6 rounded-[2rem] flex flex-col justify-center relative overflow-hidden group">
+                            <div class="absolute top-2 right-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <i data-lucide="quote" class="w-8 h-8"></i>
+                            </div>
+                            <p id="daily-quote" class="text-sm font-medium text-slate-600 dark:text-slate-300 italic mb-2 relative z-10 leading-relaxed">"Loading inspiration..."</p>
+                            <p id="quote-author" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider relative z-10">- WebDesks</p>
+                        </div>
+
                         <div class="glass p-6 rounded-[2rem] flex items-center justify-between">
                             <div>
                                 <div class="text-[10px] font-black uppercase text-slate-400 mb-1">System Status</div>
@@ -747,6 +771,35 @@
             </div>
         </div>
 
+        <!-- BREATHING GUIDE -->
+        <div id="breathing" class="tab-content flex flex-col items-center justify-center">
+            <div class="max-w-md w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-8 relative overflow-hidden">
+                <button onclick="app.toggleBreathMute()" id="breath-mute-btn" class="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-indigo-500" title="Toggle Sound">
+                    <i data-lucide="volume-2" class="w-5 h-5"></i>
+                </button>
+                <!-- Visualizer -->
+                <div class="relative w-64 h-64 mx-auto flex items-center justify-center my-8">
+                    <div id="breath-circle" class="absolute inset-0 bg-indigo-500/20 rounded-full scale-50 transition-transform ease-in-out"></div>
+                    <div id="breath-circle-inner" class="absolute w-48 h-48 bg-indigo-500/30 rounded-full scale-50 transition-transform ease-in-out blur-xl"></div>
+                    <div class="relative z-10">
+                        <div id="breath-instruction" class="text-3xl font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">Ready</div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="space-y-6">
+                    <div class="flex justify-center gap-2 flex-wrap">
+                        <button onclick="app.setBreathTechnique('box')" class="breath-btn active px-4 py-2 rounded-full text-xs font-bold bg-indigo-600 text-white transition-all" data-tech="box">Box (4-4-4-4)</button>
+                        <button onclick="app.setBreathTechnique('478')" class="breath-btn px-4 py-2 rounded-full text-xs font-bold glass hover:bg-white/50 transition-all" data-tech="478">Relax (4-7-8)</button>
+                        <button onclick="app.setBreathTechnique('coherence')" class="breath-btn px-4 py-2 rounded-full text-xs font-bold glass hover:bg-white/50 transition-all" data-tech="coherence">Coherence (6-6)</button>
+                    </div>
+                    
+                    <button onclick="app.toggleBreathing()" id="breath-toggle" class="w-full btn-primary text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-indigo-500/30">Start Breathing</button>
+                    <p id="breath-desc" class="text-xs text-slate-400 max-w-xs mx-auto">Equal breathing for focus and stress reduction.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- CALCULATOR -->
         <div id="calculator" class="tab-content flex flex-col items-center justify-center p-4">
             <div class="max-w-sm w-full glass p-6 rounded-[2rem] shadow-2xl">
@@ -993,6 +1046,7 @@
             weatherTempC: null,
             calcValue: '0',
             calcHistory: '',
+            draggedTaskIndex: null,
             searchItems: [
                 { id: 'dashboard', label: 'Dashboard', icon: 'home', keywords: 'home start' },
                 { id: 'scratchpad', label: 'Scratchpad', icon: 'file-text', keywords: 'notes write text editor' },
@@ -1002,6 +1056,7 @@
                 { id: 'clock', label: 'Desk Clock', icon: 'clock', keywords: 'time alarm watch' },
                 { id: 'timer', label: 'Focus Timer', icon: 'hourglass', keywords: 'pomodoro countdown focus' },
                 { id: 'audio', label: 'Sound Studio', icon: 'headphones', keywords: 'noise ambient music white noise' },
+                { id: 'breathing', label: 'Breathing Guide', icon: 'wind', keywords: 'meditate relax stress box breathing' },
                 { id: 'calculator', label: 'Calculator', icon: 'calculator', keywords: 'math numbers' },
                 { id: 'pdf', label: 'PDF Merger', icon: 'file-stack', keywords: 'combine join documents' },
                 { id: 'zones', label: 'Time Zones', icon: 'globe-2', keywords: 'world clock global' },
@@ -1012,6 +1067,17 @@
                 {id: 'recorder', label: 'Record Screen'}, 
                 {id: 'pdf', label: 'Merge PDFs'}, 
                 {id: 'onair', label: 'On Air Sign'}
+            ],
+            
+            // Breathing State
+            breathActive: false,
+            breathMuted: false,
+            breathTechnique: 'box',
+            breathTimeouts: [],
+            breathConfig: {
+                box: { phases: [{ l: 'Inhale', d: 4000, s: 1 }, { l: 'Hold', d: 4000, s: 1 }, { l: 'Exhale', d: 4000, s: 0.5 }, { l: 'Hold', d: 4000, s: 0.5 }], desc: 'Equal breathing for focus and stress reduction.' },
+                '478': { phases: [{ l: 'Inhale', d: 4000, s: 1 }, { l: 'Hold', d: 7000, s: 1 }, { l: 'Exhale', d: 8000, s: 0.5 }], desc: 'Natural tranquilizer for the nervous system.' },
+                coherence: { phases: [{ l: 'Inhale', d: 6000, s: 1 }, { l: 'Exhale', d: 6000, s: 0.5 }], desc: 'Balances heart rate variability (HRV).' }
             ],
 
             // Initialize
@@ -1032,6 +1098,7 @@
                 this.initWeather();
                 this.initWhiteboard();
                 this.initScratchpad();
+                this.initQuote();
                 this.renderTasks();
                 this.renderWater();
                 this.updateAlarmUI();
@@ -1049,6 +1116,10 @@
                     if (e.altKey && e.key === 'p') {
                         e.preventDefault();
                         this.togglePrivacy();
+                    }
+                    if (e.altKey && e.key === 'z') {
+                        e.preventDefault();
+                        this.toggleZenMode();
                     }
                 });
 
@@ -1233,6 +1304,15 @@
                 }
             },
 
+            // Zen Mode
+            toggleZenMode() {
+                document.body.classList.toggle('zen-mode');
+                setTimeout(() => {
+                    this.resizeCanvas();
+                    window.dispatchEvent(new Event('resize'));
+                }, 100);
+            },
+
             // Time & Dashboard
             initTime() {
                 const update = () => {
@@ -1311,6 +1391,48 @@
             toggleWeatherUnit() {
                 this.weatherUnit = this.weatherUnit === 'C' ? 'F' : 'C';
                 this.renderWeather();
+            },
+
+            // Daily Quote
+            async initQuote() {
+                const saved = JSON.parse(localStorage.getItem('wd_quote') || 'null');
+                const today = new Date().toDateString();
+
+                if (saved && saved.date === today) {
+                    this.renderQuote(saved.text, saved.author);
+                    return;
+                }
+
+                const fallbacks = [
+                    { text: "The best way to predict the future is to invent it.", author: "Alan Kay" },
+                    { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+                    { text: "Code is like humor. When you have to explain it, it’s bad.", author: "Cory House" },
+                    { text: "Fix the cause, not the symptom.", author: "Steve Maguire" },
+                    { text: "Make it work, make it right, make it fast.", author: "Kent Beck" }
+                ];
+
+                try {
+                    const res = await fetch('https://api.quotable.io/random?tags=technology,wisdom');
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    const data = await res.json();
+                    this.saveQuote(data.content, data.author);
+                } catch (e) {
+                    const random = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+                    this.saveQuote(random.text, random.author);
+                }
+            },
+
+            saveQuote(text, author) {
+                const quote = { text, author, date: new Date().toDateString() };
+                localStorage.setItem('wd_quote', JSON.stringify(quote));
+                this.renderQuote(text, author);
+            },
+
+            renderQuote(text, author) {
+                const q = document.getElementById('daily-quote');
+                const a = document.getElementById('quote-author');
+                if (q) q.textContent = `"${text}"`;
+                if (a) a.textContent = `- ${author}`;
             },
 
             // Alarm
@@ -1452,7 +1574,12 @@
                     list.innerHTML = filtered.map((t, i) => {
                         const originalIndex = this.tasks.indexOf(t);
                         return `
-                        <div class="glass p-4 rounded-xl flex justify-between items-center group hover:shadow-lg transition-all ${t.done ? 'opacity-50' : ''}">
+                        <div draggable="true" 
+                            ondragstart="app.dragTaskStart(event, ${originalIndex})"
+                            ondragover="app.allowTaskDrop(event)"
+                            ondrop="app.dropTask(event, ${originalIndex})"
+                            ondragend="app.dragTaskEnd(event)"
+                            class="glass p-4 rounded-xl flex justify-between items-center group hover:shadow-lg transition-all cursor-move ${t.done ? 'opacity-50' : ''}">
                             <div class="flex items-center gap-3 flex-1">
                                 <button onclick="app.toggleTask(${originalIndex})" class="w-6 h-6 rounded-full border-2 ${t.done ? 'bg-green-500 border-green-500' : 'border-slate-300 dark:border-slate-600'} flex items-center justify-center transition-all">
                                     ${t.done ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
@@ -1511,6 +1638,30 @@
                     }
                 });
                 this.renderTasks();
+            },
+
+            dragTaskStart(e, index) {
+                this.draggedTaskIndex = index;
+                e.target.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            },
+
+            allowTaskDrop(e) {
+                e.preventDefault();
+            },
+
+            dropTask(e, targetIndex) {
+                e.preventDefault();
+                const fromIndex = this.draggedTaskIndex;
+                if (fromIndex === null || fromIndex === targetIndex) return;
+                this.tasks.splice(targetIndex, 0, this.tasks.splice(fromIndex, 1)[0]);
+                this.draggedTaskIndex = null;
+                this.renderTasks();
+            },
+
+            dragTaskEnd(e) {
+                e.target.classList.remove('dragging');
+                this.draggedTaskIndex = null;
             },
 
             // Kanban Board
@@ -1917,6 +2068,126 @@
                     this.gainNode.gain.value = parseFloat(val);
                 }
                 document.getElementById('vol-display').textContent = Math.round(val * 100) + '%';
+            },
+
+            // Breathing Guide
+            setBreathTechnique(tech) {
+                if (this.breathActive) this.stopBreathing();
+                this.breathTechnique = tech;
+                
+                document.querySelectorAll('.breath-btn').forEach(b => {
+                    b.classList.remove('bg-indigo-600', 'text-white');
+                    b.classList.add('glass', 'hover:bg-white/50');
+                    if (b.dataset.tech === tech) {
+                        b.classList.remove('glass', 'hover:bg-white/50');
+                        b.classList.add('bg-indigo-600', 'text-white');
+                    }
+                });
+                
+                document.getElementById('breath-desc').textContent = this.breathConfig[tech].desc;
+            },
+
+            toggleBreathing() {
+                if (this.breathActive) this.stopBreathing();
+                else this.startBreathing();
+            },
+
+            startBreathing() {
+                this.breathActive = true;
+                document.getElementById('breath-toggle').textContent = 'Stop Session';
+                document.getElementById('breath-toggle').classList.replace('btn-primary', 'bg-slate-500');
+                this.runBreathPhase(0);
+            },
+
+            stopBreathing() {
+                this.breathActive = false;
+                this.breathTimeouts.forEach(clearTimeout);
+                this.breathTimeouts = [];
+                
+                document.getElementById('breath-toggle').textContent = 'Start Breathing';
+                document.getElementById('breath-toggle').classList.replace('bg-slate-500', 'btn-primary');
+                document.getElementById('breath-instruction').textContent = 'Ready';
+                
+                const c1 = document.getElementById('breath-circle');
+                const c2 = document.getElementById('breath-circle-inner');
+                if(c1) {
+                    c1.style.transform = 'scale(0.5)';
+                    c1.style.transitionDuration = '0.5s';
+                }
+                if(c2) {
+                    c2.style.transform = 'scale(0.5)';
+                    c2.style.transitionDuration = '0.5s';
+                }
+            },
+
+            toggleBreathMute() {
+                this.breathMuted = !this.breathMuted;
+                const btn = document.getElementById('breath-mute-btn');
+                if (this.breathMuted) {
+                    btn.innerHTML = '<i data-lucide="volume-x" class="w-5 h-5"></i>';
+                    btn.classList.add('text-red-500');
+                } else {
+                    btn.innerHTML = '<i data-lucide="volume-2" class="w-5 h-5"></i>';
+                    btn.classList.remove('text-red-500');
+                }
+                lucide.createIcons();
+            },
+
+            playBreathTone() {
+                if (this.breathMuted) return;
+                try {
+                    if (!this.audioCtx) {
+                        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (this.audioCtx.state === 'suspended') {
+                        this.audioCtx.resume();
+                    }
+
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, this.audioCtx.currentTime); // C5
+                    
+                    const now = this.audioCtx.currentTime;
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.1, now + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+                    
+                    osc.start(now);
+                    osc.stop(now + 2.5);
+                } catch (e) {}
+            },
+
+            runBreathPhase(index) {
+                if (!this.breathActive) return;
+                
+                const config = this.breathConfig[this.breathTechnique];
+                const phase = config.phases[index % config.phases.length];
+                
+                this.playBreathTone();
+                document.getElementById('breath-instruction').textContent = phase.l;
+                
+                const c1 = document.getElementById('breath-circle');
+                const c2 = document.getElementById('breath-circle-inner');
+                
+                if(c1) {
+                    c1.style.transitionDuration = `${phase.d}ms`;
+                    c1.style.transform = `scale(${phase.s})`;
+                }
+                if(c2) {
+                    c2.style.transitionDuration = `${phase.d}ms`;
+                    c2.style.transform = `scale(${phase.s})`;
+                }
+                
+                const t = setTimeout(() => {
+                    this.runBreathPhase(index + 1);
+                }, phase.d);
+                
+                this.breathTimeouts.push(t);
             },
 
             // Screen Recorder
