@@ -294,33 +294,33 @@
         }
         .ft-citizen {
             position: absolute; font-size: 1.15rem; user-select: none;
-            animation: ft-walk-r linear infinite; bottom: 1px;
+            animation: ft-walk-r linear infinite; bottom: 2px;
         }
-        .ft-citizen.rev { animation-name: ft-walk-l; }
+        .ft-citizen.rev { animation-name: ft-walk-l; display: inline-block; transform: scaleX(-1); }
         .ft-vehicle {
-            position: absolute; font-size: 1.25rem; bottom: 5px; user-select: none;
+            position: absolute; font-size: 1.3rem; bottom: 4px; user-select: none;
             animation: ft-drive-r linear infinite;
         }
-        .ft-vehicle.rev { animation-name: ft-drive-l; bottom: 12px; }
+        .ft-vehicle.rev { animation-name: ft-drive-l; display: inline-block; transform: scaleX(-1); bottom: 14px; }
         @keyframes ft-cloud {
-            from { transform: translateX(-100px); }
-            to { transform: translateX(110vw); }
+            from { left: -100px; }
+            to { left: calc(100% + 100px); }
         }
         @keyframes ft-walk-r {
-            from { transform: translateX(-50px); }
-            to { transform: translateX(calc(100vw + 50px)); }
+            from { left: -50px; }
+            to { left: calc(100% + 50px); }
         }
         @keyframes ft-walk-l {
-            from { transform: translateX(calc(100vw + 50px)) scaleX(-1); }
-            to { transform: translateX(-50px) scaleX(-1); }
+            from { left: calc(100% + 50px); }
+            to { left: -50px; }
         }
         @keyframes ft-drive-r {
-            from { transform: translateX(-80px); }
-            to { transform: translateX(calc(100vw + 80px)); }
+            from { left: -90px; }
+            to { left: calc(100% + 90px); }
         }
         @keyframes ft-drive-l {
-            from { transform: translateX(calc(100vw + 80px)) scaleX(-1); }
-            to { transform: translateX(-80px) scaleX(-1); }
+            from { left: calc(100% + 90px); }
+            to { left: -90px; }
         }
         @keyframes ft-stage-up {
             0%,100% { transform: scale(1); filter: brightness(1); }
@@ -420,7 +420,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.16</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.18.2</span>
             </div>
         </div>
 
@@ -1295,11 +1295,19 @@
             <!-- Timer card -->
             <div class="glass p-6 rounded-2xl flex flex-col gap-5">
                 <!-- Mode selector -->
-                <div class="flex justify-center">
-                    <div class="inline-flex gap-2 p-1 rounded-full glass">
-                        <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
-                        <button onclick="app.ftSetMode(45)" class="ft-mode-btn px-4 py-2 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="45">45m</button>
-                        <button onclick="app.ftSetMode(60)" class="ft-mode-btn px-4 py-2 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="60">60m</button>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <div class="inline-flex gap-1 p-1 rounded-full glass">
+                        <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
+                        <button onclick="app.ftSetMode(45)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="45">45m</button>
+                        <button onclick="app.ftSetMode(60)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="60">60m</button>
+                        <button onclick="app.ftSetMode(90)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="90">90m</button>
+                    </div>
+                    <div class="flex items-center gap-2 glass px-3 py-1.5 rounded-full">
+                        <span class="text-xs text-slate-400 font-medium">Custom</span>
+                        <input type="number" id="ft-custom-input" min="1" max="480" value="25"
+                            class="w-14 bg-transparent text-sm font-bold text-center focus:outline-none text-slate-800 dark:text-slate-100"
+                            oninput="app.ftSetCustom(this.value)">
+                        <span class="text-xs text-slate-400">min</span>
                     </div>
                 </div>
 
@@ -3373,24 +3381,31 @@
                 return Math.min(Math.floor(minutes * 0.055) + 2, 50);
             },
 
-            ftRenderScene() {
+            ftEffectiveMin() {
+                // While a session is running, show projected minutes in real-time
+                const elapsed = this.ftRunning ? Math.floor((this.ftMode * 60 - this.ftTime) / 60) : 0;
+                return this.ftMinutes + elapsed;
+            },
+
+            ftRenderScene(minutes) {
                 const scene = document.getElementById('ft-scene');
                 if (!scene) return;
-                const stage = this.ftGetStage(this.ftMinutes);
-                const citizens = this.ftGetCitizenCount(this.ftMinutes);
+                if (minutes === undefined) minutes = this.ftEffectiveMin();
+                const stage = this.ftGetStage(minutes);
+                const citizens = this.ftGetCitizenCount(minutes);
                 const buildings = this.ftBuildings[stage.index];
 
-                // Sky sun/moon decoration
-                const skyDecor = `<span class="ft-sky-obj" style="top:10px;left:16px;font-size:1.8rem;opacity:0.85;">☀️</span>`;
+                // Sky decoration — sun during day, stars at night (dark mode)
+                const skyDecor = `<span class="ft-sky-obj" style="top:8px;left:14px;font-size:1.7rem;opacity:0.9;line-height:1;">☀️</span>`;
 
-                // Clouds — 2-3 with staggered timings
+                // Clouds with left-based animation (works relative to container width)
                 const cloudData = [
-                    { delay: '0s', dur: '28s', top: '12px' },
-                    { delay: '-10s', dur: '38s', top: '24px' },
-                    { delay: '-20s', dur: '32s', top: '8px' }
+                    { delay: '0s',   dur: '26s', top: '14px' },
+                    { delay: '-9s',  dur: '36s', top: '28px' },
+                    { delay: '-18s', dur: '30s', top: '6px'  }
                 ];
                 const cloudHtml = cloudData.map(c =>
-                    `<span class="ft-cloud ft-sky-obj" style="animation-duration:${c.dur};animation-delay:${c.delay};top:${c.top}">☁️</span>`
+                    `<span class="ft-cloud ft-sky-obj" style="animation-duration:${c.dur};animation-delay:${c.delay};top:${c.top};left:-100px;">☁️</span>`
                 ).join('');
 
                 // Mountains (stage ≥ 1)
@@ -3403,7 +3418,7 @@
                     `<span class="ft-building" style="font-size:${b.s}rem">${b.e}</span>`
                 ).join('');
 
-                // Citizens
+                // Citizens — seeded by index so positions are stable on re-render
                 const citizenHtml = this.ftBuildCitizens(citizens);
 
                 // Vehicles (stage ≥ 2)
@@ -3421,15 +3436,16 @@
             },
 
             ftBuildCitizens(count) {
-                const emojis = ['🚶','🧍','🏃','👤','🚶‍♀️','🧑'];
+                // Use deterministic-ish values so re-renders don't cause jarring jumps
+                const emojis = ['🚶','🏃','🧍','🚶‍♀️','🧑','👨','👩','🧒'];
                 let html = '';
                 for (let i = 0; i < count; i++) {
-                    const isRev = Math.random() < 0.5;
-                    const dur = (12 + Math.random() * 20).toFixed(1) + 's';
-                    const delay = -(Math.random() * 25).toFixed(1) + 's';
-                    const bottom = (2 + Math.random() * 6).toFixed(0) + 'px';
+                    const isRev = (i % 3 === 0);
+                    // Spread delays evenly across the loop duration so citizens don't bunch up
+                    const dur = (14 + (i * 3.7) % 18).toFixed(1) + 's';
+                    const delay = -((i * 7.3) % 30).toFixed(1) + 's';
                     const em = emojis[i % emojis.length];
-                    html += `<span class="ft-citizen${isRev ? ' rev' : ''}" style="animation-duration:${dur};animation-delay:${delay};bottom:${bottom}">${em}</span>`;
+                    html += `<span class="ft-citizen${isRev ? ' rev' : ''}" style="animation-duration:${dur};animation-delay:${delay};">${em}</span>`;
                 }
                 return html;
             },
@@ -3451,6 +3467,34 @@
                 ).join('');
             },
 
+            ftUpdateProgress(minutes) {
+                // Called every second during a session with projected (effective) minutes
+                const stage = this.ftGetStage(minutes);
+                const prog = document.getElementById('ft-progress-bar');
+                const label = document.getElementById('ft-progress-label');
+                const sNameEl = document.getElementById('ft-stage-name');
+                const nNameEl = document.getElementById('ft-next-stage-name');
+                if (sNameEl) sNameEl.textContent = stage.name;
+                if (nNameEl) nNameEl.textContent = stage.nextName || '✓ Max';
+                if (stage.nextAt !== null) {
+                    const span = stage.nextAt - stage.prevAt;
+                    const done = minutes - stage.prevAt;
+                    const pct = Math.min(100, Math.round((done / span) * 100));
+                    if (prog) prog.style.width = pct + '%';
+                    const remaining = stage.nextAt - minutes;
+                    if (label) label.textContent = remaining > 0 ? `${remaining} min to unlock ${stage.nextName}` : 'Unlocking…';
+                } else {
+                    if (prog) prog.style.width = '100%';
+                    if (label) label.textContent = 'Maximum stage reached! 🏆';
+                }
+                // Live citizen count in stat card
+                const ccEl = document.getElementById('ft-citizen-count');
+                if (ccEl) ccEl.textContent = this.ftGetCitizenCount(minutes);
+                // Live chip in header
+                const chipEl = document.getElementById('ft-total-chip');
+                if (chipEl && this.ftRunning) chipEl.textContent = `${minutes} min (live)`;
+            },
+
             ftUpdateStats() {
                 const stage = this.ftGetStage(this.ftMinutes);
                 const citizens = this.ftGetCitizenCount(this.ftMinutes);
@@ -3463,31 +3507,12 @@
                 if (badgeEl) badgeEl.textContent = stage.name;
                 if (chipEl) chipEl.textContent = `${this.ftMinutes} min total`;
 
-                // Stage name labels
-                const sNameEl = document.getElementById('ft-stage-name');
-                const nNameEl = document.getElementById('ft-next-stage-name');
-                if (sNameEl) sNameEl.textContent = stage.name;
-                if (nNameEl) nNameEl.textContent = stage.nextName || '✓ Max';
-
-                // Progress bar
-                const prog = document.getElementById('ft-progress-bar');
-                const label = document.getElementById('ft-progress-label');
-                if (stage.nextAt !== null) {
-                    const span = stage.nextAt - stage.prevAt;
-                    const done = this.ftMinutes - stage.prevAt;
-                    const pct = Math.min(100, Math.round((done / span) * 100));
-                    if (prog) prog.style.width = pct + '%';
-                    if (label) label.textContent = `${stage.nextAt - this.ftMinutes} min to unlock`;
-                } else {
-                    if (prog) prog.style.width = '100%';
-                    if (label) label.textContent = 'Maximum stage reached! 🏆';
-                }
+                // Static progress bar (committed minutes)
+                this.ftUpdateProgress(this.ftMinutes);
 
                 // Stats cards
-                const ccEl = document.getElementById('ft-citizen-count');
                 const scEl = document.getElementById('ft-sessions-count');
                 const tmEl = document.getElementById('ft-total-min');
-                if (ccEl) ccEl.textContent = citizens;
                 if (scEl) scEl.textContent = this.ftSessions;
                 if (tmEl) {
                     const h = Math.floor(this.ftMinutes / 60);
@@ -3495,27 +3520,51 @@
                     tmEl.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
                 }
 
-                // Milestones highlight
+                // Milestones highlight — use inline styles to avoid Tailwind dark: class issues
                 document.querySelectorAll('.ft-milestone').forEach(el => {
                     const s = parseInt(el.dataset.stage);
                     if (s <= stage.index) {
-                        el.classList.add('bg-indigo-100', 'dark:bg-indigo-900/30', 'text-indigo-700', 'dark:text-indigo-300');
-                        el.classList.remove('text-slate-400', 'opacity-50');
+                        el.style.background = 'rgba(99,102,241,0.15)';
+                        el.style.color = '#4f46e5';
+                        el.style.opacity = '1';
                     } else {
-                        el.classList.remove('bg-indigo-100', 'dark:bg-indigo-900/30', 'text-indigo-700', 'dark:text-indigo-300');
-                        el.classList.add('text-slate-400', 'opacity-50');
+                        el.style.background = '';
+                        el.style.color = '';
+                        el.style.opacity = '0.45';
                     }
                 });
             },
 
             ftSetMode(minutes) {
+                if (this.ftRunning) return; // don't change mode mid-session
                 this.ftMode = minutes;
                 this.ftTime = minutes * 60;
                 this.ftUpdateTimerDisplay();
+                // Sync custom input
+                const ci = document.getElementById('ft-custom-input');
+                if (ci) ci.value = minutes;
+                // Highlight matching preset button
                 document.querySelectorAll('.ft-mode-btn').forEach(btn => {
                     btn.classList.remove('bg-indigo-600', 'text-white');
                     btn.classList.add('hover:bg-white/20');
                     if (parseInt(btn.dataset.time) === minutes) {
+                        btn.classList.add('bg-indigo-600', 'text-white');
+                        btn.classList.remove('hover:bg-white/20');
+                    }
+                });
+            },
+
+            ftSetCustom(val) {
+                const min = Math.max(1, Math.min(480, parseInt(val) || 25));
+                if (this.ftRunning) return;
+                this.ftMode = min;
+                this.ftTime = min * 60;
+                this.ftUpdateTimerDisplay();
+                // Deselect all preset buttons (custom value doesn't match any)
+                document.querySelectorAll('.ft-mode-btn').forEach(btn => {
+                    btn.classList.remove('bg-indigo-600', 'text-white');
+                    btn.classList.add('hover:bg-white/20');
+                    if (parseInt(btn.dataset.time) === min) {
                         btn.classList.add('bg-indigo-600', 'text-white');
                         btn.classList.remove('hover:bg-white/20');
                     }
@@ -3562,6 +3611,13 @@
             ftTick() {
                 this.ftTime--;
                 this.ftUpdateTimerDisplay();
+                // Real-time updates: every full minute elapsed, refresh scene + progress bar
+                const elapsedMin = Math.floor((this.ftMode * 60 - this.ftTime) / 60);
+                const effectiveMin = this.ftMinutes + elapsedMin;
+                if ((this.ftMode * 60 - this.ftTime) % 60 === 0 && elapsedMin > 0) {
+                    this.ftRenderScene(effectiveMin);
+                }
+                this.ftUpdateProgress(effectiveMin);
                 if (this.ftTime <= 0) this.ftCompleteSession();
             },
 
