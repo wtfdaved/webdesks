@@ -243,6 +243,90 @@
             animation: ring 2s ease-in-out infinite;
         }
 
+        /* Focus Town Scene */
+        #ft-scene {
+            position: relative; height: 280px; overflow: hidden; border-radius: 1.5rem;
+            background: linear-gradient(180deg, #bfdbfe 0%, #dbeafe 55%, #bbf7d0 80%, #4ade80 100%);
+            transition: background 1.5s ease;
+        }
+        #ft-scene.ft-session-active {
+            background: linear-gradient(180deg, #7dd3fc 0%, #bfdbfe 55%, #bbf7d0 80%, #4ade80 100%);
+        }
+        .dark #ft-scene {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 55%, #14532d 80%, #166534 100%);
+        }
+        .ft-ground {
+            position: absolute; bottom: 40px; left: 0; right: 0; height: 22px;
+            background: linear-gradient(180deg, #86efac, #4ade80);
+        }
+        .dark .ft-ground { background: linear-gradient(180deg, #15803d, #166534); }
+        .ft-road {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 42px;
+            background: #94a3b8;
+        }
+        .dark .ft-road { background: #334155; }
+        .ft-road-line {
+            position: absolute; top: 50%; left: 0; right: 0; height: 3px;
+            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.5) 0 28px, transparent 28px 56px);
+            transform: translateY(-50%);
+        }
+        .ft-building-row {
+            position: absolute; bottom: 60px; left: 0; right: 0;
+            display: flex; align-items: flex-end; justify-content: center;
+            gap: 3px; padding: 0 16px; flex-wrap: nowrap;
+        }
+        .ft-building { line-height: 1; display: inline-block; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.18)); user-select: none; }
+        .ft-mountains {
+            position: absolute; bottom: 78px; left: 0; right: 0;
+            display: flex; justify-content: center; gap: 4px;
+            font-size: 2.8rem; opacity: 0.22; pointer-events: none; user-select: none;
+        }
+        .ft-sky-obj {
+            position: absolute; pointer-events: none; user-select: none;
+        }
+        .ft-cloud {
+            font-size: 1.4rem; opacity: 0.75;
+            animation: ft-cloud linear infinite;
+        }
+        .ft-citizen-row {
+            position: absolute; bottom: 5px; left: 0; right: 0; height: 34px;
+            overflow: hidden; pointer-events: none;
+        }
+        .ft-citizen {
+            position: absolute; font-size: 1.15rem; user-select: none;
+            animation: ft-walk-r linear infinite; bottom: 1px;
+        }
+        .ft-citizen.rev { animation-name: ft-walk-l; }
+        .ft-vehicle {
+            position: absolute; font-size: 1.25rem; bottom: 5px; user-select: none;
+            animation: ft-drive-r linear infinite;
+        }
+        .ft-vehicle.rev { animation-name: ft-drive-l; bottom: 12px; }
+        @keyframes ft-cloud {
+            from { transform: translateX(-100px); }
+            to { transform: translateX(110vw); }
+        }
+        @keyframes ft-walk-r {
+            from { transform: translateX(-50px); }
+            to { transform: translateX(calc(100vw + 50px)); }
+        }
+        @keyframes ft-walk-l {
+            from { transform: translateX(calc(100vw + 50px)) scaleX(-1); }
+            to { transform: translateX(-50px) scaleX(-1); }
+        }
+        @keyframes ft-drive-r {
+            from { transform: translateX(-80px); }
+            to { transform: translateX(calc(100vw + 80px)); }
+        }
+        @keyframes ft-drive-l {
+            from { transform: translateX(calc(100vw + 80px)) scaleX(-1); }
+            to { transform: translateX(-80px) scaleX(-1); }
+        }
+        @keyframes ft-stage-up {
+            0%,100% { transform: scale(1); filter: brightness(1); }
+            40% { transform: scale(1.04); filter: brightness(1.25); }
+        }
+
         /* On Air Overlay */
         .onair-overlay {
             background: radial-gradient(circle at center, rgba(220, 38, 38, 0.9) 0%, rgba(153, 27, 27, 1) 100%);
@@ -414,6 +498,11 @@
             <button onclick="app.switchTab('stopwatch')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="stopwatch">
                 <i data-lucide="timer" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Stopwatch</span>
+            </button>
+
+            <button onclick="app.switchTab('focustown')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="focustown">
+                <i data-lucide="building-2" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Focus Town</span>
             </button>
 
             <button onclick="app.switchTab('audio')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="audio">
@@ -1160,6 +1249,106 @@
                 </div>
             </div>
         </div>
+
+        <!-- FOCUS TOWN -->
+        <div id="focustown" class="tab-content flex flex-col gap-4 overflow-y-auto">
+            <!-- Header row -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <span id="ft-stage-emoji" class="text-2xl">🌾</span>
+                    <div>
+                        <h2 class="text-2xl font-black leading-tight">Focus Town</h2>
+                        <div class="flex items-center gap-2 mt-0.5">
+                            <span id="ft-stage-badge" class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400">Village</span>
+                            <span id="ft-total-chip" class="text-[10px] font-bold text-slate-400">0 min total</span>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="app.ftResetProgress()" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium px-3 py-1.5 rounded-lg glass" title="Reset all Focus Town progress">Reset Progress</button>
+            </div>
+
+            <!-- Town scene -->
+            <div class="glass rounded-3xl overflow-hidden shadow-inner relative">
+                <div id="ft-scene">
+                    <!-- Rendered by ftRenderScene() -->
+                </div>
+                <!-- Stage unlock flash overlay -->
+                <div id="ft-unlock-flash" class="absolute inset-0 rounded-3xl pointer-events-none opacity-0 transition-opacity duration-700 bg-yellow-300/20"></div>
+            </div>
+
+            <!-- Stage progress bar -->
+            <div class="glass p-4 rounded-2xl">
+                <div class="flex justify-between items-center mb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-black uppercase tracking-widest text-slate-400">Progress</span>
+                        <span id="ft-stage-name" class="text-xs font-bold text-indigo-500">Village</span>
+                        <span class="text-xs text-slate-400">→</span>
+                        <span id="ft-next-stage-name" class="text-xs font-bold text-slate-500">Hamlet</span>
+                    </div>
+                    <span id="ft-progress-label" class="text-xs text-slate-400 font-medium">30 min to unlock</span>
+                </div>
+                <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div id="ft-progress-bar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-700" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Timer card -->
+            <div class="glass p-6 rounded-2xl flex flex-col gap-5">
+                <!-- Mode selector -->
+                <div class="flex justify-center">
+                    <div class="inline-flex gap-2 p-1 rounded-full glass">
+                        <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
+                        <button onclick="app.ftSetMode(45)" class="ft-mode-btn px-4 py-2 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="45">45m</button>
+                        <button onclick="app.ftSetMode(60)" class="ft-mode-btn px-4 py-2 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="60">60m</button>
+                    </div>
+                </div>
+
+                <!-- Countdown + controls -->
+                <div class="flex items-center gap-4">
+                    <div class="flex-1 text-center">
+                        <div id="ft-timer-display" class="text-6xl md:text-7xl font-black timer-font text-slate-800 dark:text-slate-100 leading-none">25:00</div>
+                        <p id="ft-timer-status" class="text-xs font-black uppercase tracking-[0.3em] text-indigo-500 mt-2">Ready to Focus</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button id="ft-btn" onclick="app.ftToggleTimer()" class="flex-1 btn-primary text-white py-4 rounded-2xl font-bold text-lg">
+                        Start Focusing
+                    </button>
+                    <button onclick="app.ftResetTimer()" class="glass w-14 rounded-2xl flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-500">
+                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats row -->
+            <div class="grid grid-cols-3 gap-3">
+                <div class="glass p-4 rounded-2xl text-center">
+                    <div id="ft-citizen-count" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">2</div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Citizens</div>
+                </div>
+                <div class="glass p-4 rounded-2xl text-center">
+                    <div id="ft-sessions-count" class="text-2xl font-black text-purple-600 dark:text-purple-400">0</div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Sessions</div>
+                </div>
+                <div class="glass p-4 rounded-2xl text-center">
+                    <div id="ft-total-min" class="text-2xl font-black text-green-600 dark:text-green-400">0m</div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Total Focus</div>
+                </div>
+            </div>
+
+            <!-- Stage milestones -->
+            <div class="glass p-5 rounded-2xl">
+                <div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Town Milestones</div>
+                <div class="flex gap-2 flex-wrap">
+                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="0">🌾 Village <span class="text-slate-400 font-normal ml-1">0 min</span></div>
+                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="1">🏡 Hamlet <span class="text-slate-400 font-normal ml-1">30 min</span></div>
+                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="2">🏘️ Town <span class="text-slate-400 font-normal ml-1">2h</span></div>
+                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="3">🏙️ City <span class="text-slate-400 font-normal ml-1">6h</span></div>
+                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="4">🌆 Metropolis <span class="text-slate-400 font-normal ml-1">15h</span></div>
+                </div>
+            </div>
+        </div>
     </main>
 
     </div><!-- end #app-body -->
@@ -1264,7 +1453,8 @@
                 { id: 'recorder', label: 'Screen Recorder', icon: 'video', keywords: 'capture screen video' },
                 { id: 'stopwatch', label: 'Stopwatch', icon: 'timer', keywords: 'lap time elapsed counter' },
                 { id: 'converter', label: 'Unit Converter', icon: 'arrow-left-right', keywords: 'convert length weight temperature speed volume' },
-                { id: 'colorpicker', label: 'Color Picker', icon: 'palette', keywords: 'hex rgb hsl color swatch' }
+                { id: 'colorpicker', label: 'Color Picker', icon: 'palette', keywords: 'hex rgb hsl color swatch' },
+                { id: 'focustown', label: 'Focus Town', icon: 'building-2', keywords: 'rpg village city town grow gamify focus' }
             ],
             pins: [],
             
@@ -1307,6 +1497,29 @@
             // Color Picker State
             cpColor: { r: 79, g: 70, b: 229 },
             cpSwatches: [],
+
+            // Focus Town State
+            ftMinutes: parseInt(localStorage.getItem('wd_ft_minutes') || '0'),
+            ftRunning: false,
+            ftInterval: null,
+            ftMode: 25,
+            ftTime: 25 * 60,
+            ftSessions: parseInt(localStorage.getItem('wd_ft_sessions') || '0'),
+            ftStageNames: ['Village', 'Hamlet', 'Town', 'City', 'Metropolis'],
+            ftStageEmoji: ['🌾', '🏡', '🏘️', '🏙️', '🌆'],
+            ftStageThresholds: [0, 30, 120, 360, 900],
+            ftBuildings: [
+                // Stage 0 — Village
+                [{e:'🌲',s:1.8},{e:'🏠',s:2.2},{e:'🌳',s:2.0},{e:'🏡',s:2.4},{e:'🌲',s:1.7}],
+                // Stage 1 — Hamlet
+                [{e:'🌲',s:1.8},{e:'🏠',s:2.3},{e:'🌳',s:2.0},{e:'🏡',s:2.5},{e:'🏪',s:2.4},{e:'🌲',s:1.9},{e:'🏠',s:2.1},{e:'🌳',s:1.8}],
+                // Stage 2 — Town
+                [{e:'🌲',s:1.7},{e:'🏠',s:2.2},{e:'🏡',s:2.4},{e:'🏘️',s:2.6},{e:'🏪',s:2.5},{e:'🌳',s:2.0},{e:'🏫',s:2.8},{e:'🏠',s:2.1},{e:'🌲',s:1.8},{e:'🏡',s:2.3}],
+                // Stage 3 — City
+                [{e:'🌲',s:1.7},{e:'🏠',s:2.0},{e:'🏢',s:3.0},{e:'🏬',s:3.2},{e:'🏦',s:2.8},{e:'🌳',s:1.9},{e:'🏪',s:2.4},{e:'🏢',s:3.1},{e:'🏫',s:2.7},{e:'🏠',s:2.0},{e:'🏢',s:2.9},{e:'🌲',s:1.8}],
+                // Stage 4 — Metropolis
+                [{e:'🌲',s:1.7},{e:'🏢',s:3.2},{e:'🏢',s:3.5},{e:'🏛️',s:3.3},{e:'🏟️',s:3.0},{e:'🏦',s:3.2},{e:'🏢',s:3.6},{e:'🏬',s:3.1},{e:'🏢',s:3.4},{e:'🏢',s:3.5},{e:'🏛️',s:3.0},{e:'🌲',s:1.7},{e:'🏢',s:3.3}]
+            ],
 
             // Breathing State
             breathActive: false,
@@ -1370,6 +1583,7 @@
                 this.renderPins();
                 this.initConverter();
                 this.initColorPicker();
+                this.initFocusTown();
 
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
@@ -3129,6 +3343,278 @@
                     }
                 }
                 return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+            },
+
+            // ── Focus Town ──────────────────────────────────────────────
+            initFocusTown() {
+                this.ftMinutes = parseInt(localStorage.getItem('wd_ft_minutes') || '0');
+                this.ftSessions = parseInt(localStorage.getItem('wd_ft_sessions') || '0');
+                this.ftRenderScene();
+                this.ftUpdateStats();
+            },
+
+            ftGetStage(minutes) {
+                const t = this.ftStageThresholds;
+                let idx = 0;
+                for (let i = t.length - 1; i >= 0; i--) {
+                    if (minutes >= t[i]) { idx = i; break; }
+                }
+                return {
+                    index: idx,
+                    name: this.ftStageNames[idx],
+                    emoji: this.ftStageEmoji[idx],
+                    prevAt: t[idx],
+                    nextAt: idx < t.length - 1 ? t[idx + 1] : null,
+                    nextName: idx < t.length - 1 ? this.ftStageNames[idx + 1] : null
+                };
+            },
+
+            ftGetCitizenCount(minutes) {
+                return Math.min(Math.floor(minutes * 0.055) + 2, 50);
+            },
+
+            ftRenderScene() {
+                const scene = document.getElementById('ft-scene');
+                if (!scene) return;
+                const stage = this.ftGetStage(this.ftMinutes);
+                const citizens = this.ftGetCitizenCount(this.ftMinutes);
+                const buildings = this.ftBuildings[stage.index];
+
+                // Sky sun/moon decoration
+                const skyDecor = `<span class="ft-sky-obj" style="top:10px;left:16px;font-size:1.8rem;opacity:0.85;">☀️</span>`;
+
+                // Clouds — 2-3 with staggered timings
+                const cloudData = [
+                    { delay: '0s', dur: '28s', top: '12px' },
+                    { delay: '-10s', dur: '38s', top: '24px' },
+                    { delay: '-20s', dur: '32s', top: '8px' }
+                ];
+                const cloudHtml = cloudData.map(c =>
+                    `<span class="ft-cloud ft-sky-obj" style="animation-duration:${c.dur};animation-delay:${c.delay};top:${c.top}">☁️</span>`
+                ).join('');
+
+                // Mountains (stage ≥ 1)
+                const mtns = stage.index >= 1
+                    ? `<div class="ft-mountains">🏔️🏔️🏔️</div>`
+                    : '';
+
+                // Buildings
+                const bldgHtml = buildings.map(b =>
+                    `<span class="ft-building" style="font-size:${b.s}rem">${b.e}</span>`
+                ).join('');
+
+                // Citizens
+                const citizenHtml = this.ftBuildCitizens(citizens);
+
+                // Vehicles (stage ≥ 2)
+                const vehicleHtml = stage.index >= 2 ? this.ftBuildVehicles(stage.index) : '';
+
+                scene.innerHTML = `
+                    ${skyDecor}
+                    ${cloudHtml}
+                    ${mtns}
+                    <div class="ft-building-row">${bldgHtml}</div>
+                    <div class="ft-ground"></div>
+                    <div class="ft-road"><div class="ft-road-line"></div></div>
+                    <div class="ft-citizen-row">${citizenHtml}${vehicleHtml}</div>
+                `;
+            },
+
+            ftBuildCitizens(count) {
+                const emojis = ['🚶','🧍','🏃','👤','🚶‍♀️','🧑'];
+                let html = '';
+                for (let i = 0; i < count; i++) {
+                    const isRev = Math.random() < 0.5;
+                    const dur = (12 + Math.random() * 20).toFixed(1) + 's';
+                    const delay = -(Math.random() * 25).toFixed(1) + 's';
+                    const bottom = (2 + Math.random() * 6).toFixed(0) + 'px';
+                    const em = emojis[i % emojis.length];
+                    html += `<span class="ft-citizen${isRev ? ' rev' : ''}" style="animation-duration:${dur};animation-delay:${delay};bottom:${bottom}">${em}</span>`;
+                }
+                return html;
+            },
+
+            ftBuildVehicles(stageIdx) {
+                const configs = [
+                    [],
+                    [],
+                    // Stage 2 — Town
+                    [{ e:'🚗', rev:false, dur:'18s', delay:'-3s' }],
+                    // Stage 3 — City
+                    [{ e:'🚗', rev:false, dur:'14s', delay:'-1s' }, { e:'🚌', rev:true, dur:'22s', delay:'-8s' }],
+                    // Stage 4 — Metropolis
+                    [{ e:'🚗', rev:false, dur:'12s', delay:'-2s' }, { e:'🚕', rev:false, dur:'16s', delay:'-6s' }, { e:'🚌', rev:true, dur:'20s', delay:'-4s' }, { e:'🚐', rev:true, dur:'24s', delay:'-12s' }]
+                ];
+                const vlist = configs[Math.min(stageIdx, configs.length - 1)];
+                return vlist.map(v =>
+                    `<span class="ft-vehicle${v.rev ? ' rev' : ''}" style="animation-duration:${v.dur};animation-delay:${v.delay}">${v.e}</span>`
+                ).join('');
+            },
+
+            ftUpdateStats() {
+                const stage = this.ftGetStage(this.ftMinutes);
+                const citizens = this.ftGetCitizenCount(this.ftMinutes);
+
+                // Header chips
+                const emojiEl = document.getElementById('ft-stage-emoji');
+                const badgeEl = document.getElementById('ft-stage-badge');
+                const chipEl = document.getElementById('ft-total-chip');
+                if (emojiEl) emojiEl.textContent = stage.emoji;
+                if (badgeEl) badgeEl.textContent = stage.name;
+                if (chipEl) chipEl.textContent = `${this.ftMinutes} min total`;
+
+                // Stage name labels
+                const sNameEl = document.getElementById('ft-stage-name');
+                const nNameEl = document.getElementById('ft-next-stage-name');
+                if (sNameEl) sNameEl.textContent = stage.name;
+                if (nNameEl) nNameEl.textContent = stage.nextName || '✓ Max';
+
+                // Progress bar
+                const prog = document.getElementById('ft-progress-bar');
+                const label = document.getElementById('ft-progress-label');
+                if (stage.nextAt !== null) {
+                    const span = stage.nextAt - stage.prevAt;
+                    const done = this.ftMinutes - stage.prevAt;
+                    const pct = Math.min(100, Math.round((done / span) * 100));
+                    if (prog) prog.style.width = pct + '%';
+                    if (label) label.textContent = `${stage.nextAt - this.ftMinutes} min to unlock`;
+                } else {
+                    if (prog) prog.style.width = '100%';
+                    if (label) label.textContent = 'Maximum stage reached! 🏆';
+                }
+
+                // Stats cards
+                const ccEl = document.getElementById('ft-citizen-count');
+                const scEl = document.getElementById('ft-sessions-count');
+                const tmEl = document.getElementById('ft-total-min');
+                if (ccEl) ccEl.textContent = citizens;
+                if (scEl) scEl.textContent = this.ftSessions;
+                if (tmEl) {
+                    const h = Math.floor(this.ftMinutes / 60);
+                    const m = this.ftMinutes % 60;
+                    tmEl.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
+                }
+
+                // Milestones highlight
+                document.querySelectorAll('.ft-milestone').forEach(el => {
+                    const s = parseInt(el.dataset.stage);
+                    if (s <= stage.index) {
+                        el.classList.add('bg-indigo-100', 'dark:bg-indigo-900/30', 'text-indigo-700', 'dark:text-indigo-300');
+                        el.classList.remove('text-slate-400', 'opacity-50');
+                    } else {
+                        el.classList.remove('bg-indigo-100', 'dark:bg-indigo-900/30', 'text-indigo-700', 'dark:text-indigo-300');
+                        el.classList.add('text-slate-400', 'opacity-50');
+                    }
+                });
+            },
+
+            ftSetMode(minutes) {
+                this.ftMode = minutes;
+                this.ftTime = minutes * 60;
+                this.ftUpdateTimerDisplay();
+                document.querySelectorAll('.ft-mode-btn').forEach(btn => {
+                    btn.classList.remove('bg-indigo-600', 'text-white');
+                    btn.classList.add('hover:bg-white/20');
+                    if (parseInt(btn.dataset.time) === minutes) {
+                        btn.classList.add('bg-indigo-600', 'text-white');
+                        btn.classList.remove('hover:bg-white/20');
+                    }
+                });
+            },
+
+            ftToggleTimer() {
+                if (this.ftRunning) this.ftPause();
+                else this.ftStart();
+            },
+
+            ftStart() {
+                this.ftRunning = true;
+                const btn = document.getElementById('ft-btn');
+                const status = document.getElementById('ft-timer-status');
+                const scene = document.getElementById('ft-scene');
+                if (btn) btn.textContent = 'Pause Focus';
+                if (status) { status.textContent = 'Focusing…'; status.classList.add('animate-pulse'); }
+                if (scene) scene.classList.add('ft-session-active');
+                this.ftInterval = setInterval(() => this.ftTick(), 1000);
+            },
+
+            ftPause() {
+                this.ftRunning = false;
+                clearInterval(this.ftInterval);
+                const btn = document.getElementById('ft-btn');
+                const status = document.getElementById('ft-timer-status');
+                const scene = document.getElementById('ft-scene');
+                if (btn) btn.textContent = 'Resume Focus';
+                if (status) { status.textContent = 'Paused'; status.classList.remove('animate-pulse'); }
+                if (scene) scene.classList.remove('ft-session-active');
+            },
+
+            ftResetTimer() {
+                this.ftPause();
+                this.ftTime = this.ftMode * 60;
+                this.ftUpdateTimerDisplay();
+                const btn = document.getElementById('ft-btn');
+                const status = document.getElementById('ft-timer-status');
+                if (btn) btn.textContent = 'Start Focusing';
+                if (status) { status.textContent = 'Ready to Focus'; status.classList.remove('animate-pulse'); }
+            },
+
+            ftTick() {
+                this.ftTime--;
+                this.ftUpdateTimerDisplay();
+                if (this.ftTime <= 0) this.ftCompleteSession();
+            },
+
+            ftUpdateTimerDisplay() {
+                const el = document.getElementById('ft-timer-display');
+                if (!el) return;
+                const m = Math.floor(this.ftTime / 60);
+                const s = this.ftTime % 60;
+                el.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            },
+
+            ftCompleteSession() {
+                const prevStage = this.ftGetStage(this.ftMinutes).index;
+                this.ftMinutes += this.ftMode;
+                this.ftSessions++;
+                localStorage.setItem('wd_ft_minutes', this.ftMinutes);
+                localStorage.setItem('wd_ft_sessions', this.ftSessions);
+
+                const newStage = this.ftGetStage(this.ftMinutes);
+                const stagedUp = newStage.index > prevStage;
+
+                this.ftResetTimer();
+                this.ftRenderScene();
+                this.ftUpdateStats();
+
+                if (stagedUp) {
+                    this.showToast(`${newStage.emoji} Your village grew into a ${newStage.name}!`);
+                    // Flash the scene
+                    const flash = document.getElementById('ft-unlock-flash');
+                    const scene = document.getElementById('ft-scene');
+                    if (flash) {
+                        flash.style.opacity = '1';
+                        setTimeout(() => { flash.style.opacity = '0'; }, 700);
+                    }
+                    if (scene) {
+                        scene.style.animation = 'ft-stage-up 0.8s ease';
+                        setTimeout(() => { scene.style.animation = ''; }, 800);
+                    }
+                } else {
+                    const citizens = this.ftGetCitizenCount(this.ftMinutes);
+                    this.showToast(`Focus session complete! +${this.ftMode} min — ${citizens} citizens 🏠`);
+                }
+            },
+
+            ftResetProgress() {
+                if (!confirm('Reset all Focus Town progress? Your town will go back to a village.')) return;
+                this.ftMinutes = 0;
+                this.ftSessions = 0;
+                localStorage.removeItem('wd_ft_minutes');
+                localStorage.removeItem('wd_ft_sessions');
+                this.ftRenderScene();
+                this.ftUpdateStats();
+                this.showToast('Focus Town reset. Build your village again! 🌾');
             },
 
             // Utilities
