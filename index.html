@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
     <!-- Primary SEO -->
     <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Screen Recorder & More</title>
@@ -410,6 +410,71 @@
             transform: scale(1.15);
             border-color: rgba(79, 70, 229, 0.5);
         }
+
+        /* ── Mobile & Tablet Optimizations ───────────────────────── */
+
+        /* 1. no-scrollbar — class was used in HTML nav but never defined */
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* 2. iOS Safari 100vh bug — 100dvh shrinks when browser chrome shows */
+        @supports (height: 100dvh) {
+            body { height: 100dvh; }
+            .zen-mode #app-body { height: 100dvh; }
+        }
+
+        /* 3. Safe area insets for notched iPhones (X, 11, 12, 13, 14, 15).
+              Requires viewport-fit=cover in the meta tag. */
+        @supports (padding: env(safe-area-inset-bottom)) {
+            aside { padding-bottom: env(safe-area-inset-bottom); }
+        }
+
+        /* 4. Eliminate 300ms iOS tap delay on all interactive elements */
+        button, a, [role="button"], label { touch-action: manipulation; }
+
+        /* 5. Prevent iOS auto-zoom on focused inputs (triggers when font-size < 16px) */
+        @media (max-width: 768px) {
+            input, textarea, select { font-size: 16px !important; }
+        }
+
+        /* 6. Compact mobile nav — 18 icons × 48px = ~930px on a 375px screen.
+              Reduce to 40px each so more tools are visible without scrolling. */
+        @media (max-width: 767px) {
+            aside nav .nav-btn { width: 2.5rem; padding: 0.5rem; flex-shrink: 0; }
+            aside nav .nav-btn i { width: 1.125rem; height: 1.125rem; }
+        }
+
+        /* 6b. Gradient fade at right edge signals there are more tools to scroll to */
+        @media (max-width: 767px) {
+            aside { position: relative; }
+            aside::after {
+                content: '';
+                position: absolute; right: 0; top: 0; bottom: 0; width: 2.5rem;
+                background: linear-gradient(to right, transparent, rgba(255,255,255,0.9));
+                pointer-events: none; z-index: 10;
+            }
+            .dark aside::after {
+                background: linear-gradient(to right, transparent, rgba(15,23,42,0.9));
+            }
+        }
+
+        /* 7. Extra bottom padding for tab content on mobile */
+        @media (max-width: 768px) {
+            .tab-content { padding-bottom: 1.5rem; }
+        }
+
+        /* 8. Prevent pull-to-refresh / scroll bleed into browser navigation */
+        .tab-content, aside nav { overscroll-behavior: contain; }
+
+        /* 9. Single-column grid on very small phones (iPhone SE = 320px wide) */
+        @media (max-width: 359px) {
+            .grid.grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        }
+
+        /* 10. Focus Town scene — don't dominate narrow tablet viewports */
+        @media (min-width: 600px) and (max-width: 900px) {
+            #ft-scene { height: min(280px, 38vw); }
+        }
     </style>
     
     <script>
@@ -792,7 +857,7 @@
                     <button onclick="app.clearBoard()" class="text-xs text-red-500 font-bold uppercase hover:text-red-600">Clear All</button>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[calc(100%-4rem)] overflow-y-auto pb-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[calc(100%-4rem)] overflow-y-auto">
                     <!-- Todo -->
                     <div class="flex flex-col h-full min-h-[300px]">
                         <div class="flex justify-between items-center px-2 mb-3">
@@ -842,11 +907,11 @@
                     <h2 class="text-2xl font-black">Whiteboard</h2>
                     <div class="glass p-2 rounded-xl flex items-center gap-3">
                         <div class="flex gap-1 border-r border-slate-300 dark:border-slate-700 pr-3">
-                            <button onclick="app.setWBColor('#000000')" class="color-btn w-8 h-8 rounded-lg bg-black border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#000000"></button>
-                            <button onclick="app.setWBColor('#ef4444')" class="color-btn w-8 h-8 rounded-lg bg-red-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#ef4444"></button>
-                            <button onclick="app.setWBColor('#22c55e')" class="color-btn w-8 h-8 rounded-lg bg-green-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#22c55e"></button>
-                            <button onclick="app.setWBColor('#3b82f6')" class="color-btn w-8 h-8 rounded-lg bg-blue-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#3b82f6"></button>
-                            <button onclick="app.setWBColor('#a855f7')" class="color-btn w-8 h-8 rounded-lg bg-purple-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#a855f7"></button>
+                            <button onclick="app.setWBColor('#000000')" class="color-btn w-11 h-11 rounded-xl bg-black border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#000000"></button>
+                            <button onclick="app.setWBColor('#ef4444')" class="color-btn w-11 h-11 rounded-xl bg-red-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#ef4444"></button>
+                            <button onclick="app.setWBColor('#22c55e')" class="color-btn w-11 h-11 rounded-xl bg-green-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#22c55e"></button>
+                            <button onclick="app.setWBColor('#3b82f6')" class="color-btn w-11 h-11 rounded-xl bg-blue-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#3b82f6"></button>
+                            <button onclick="app.setWBColor('#a855f7')" class="color-btn w-11 h-11 rounded-xl bg-purple-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#a855f7"></button>
                         </div>
                         <div class="flex gap-1">
                             <button onclick="app.setLineWidth(2)" class="px-3 py-1 rounded text-xs font-bold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300">Thin</button>
