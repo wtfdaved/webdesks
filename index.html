@@ -4,27 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO & METADATA -->
-    <title>WebDesks OS | The Ultimate Privacy-First WFH Workspace</title>
-    <meta name="description" content="WebDesks is an all-in-one browser-based productivity suite. No installation, 100% private, runs locally. Tools include PDF merger, screen recorder, alarm clock, and project boards.">
-    <meta name="keywords" content="browser OS, WFH tools, privacy productivity, online alarm clock, PDF merger local, screen recorder no install, task management browser">
+    <!-- Primary SEO -->
+    <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Screen Recorder & More</title>
+    <meta name="description" content="18 free browser tools in one tab: alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, whiteboard, kanban board, unit converter, color picker, white noise, breathing guide & more. No download. 100% private.">
+    <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
+    <meta name="application-name" content="WebDesks">
+    <meta name="generator" content="WebDesks v0.18.2">
     <meta name="theme-color" content="#4f46e5">
-    
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://webdesks.app/">
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://webdesks.app/">
-    <meta property="og:title" content="WebDesks OS | Privacy-First Browser Workspace">
-    <meta property="og:description" content="A powerful suite of productivity tools that run entirely in your browser.">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="WebDesks OS">
-    <meta property="twitter:description" content="The ultimate browser-based workspace for remote professionals.">
+    <meta property="og:site_name" content="WebDesks">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="WebDesks | 18 Free Online Productivity Tools in One Tab">
+    <meta property="og:description" content="Alarm clock, Pomodoro timer, PDF merger, screen recorder, whiteboard, kanban board, unit converter, color picker & more — free, no download, 100% private.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="WebDesks — Free Online Productivity Suite">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@webdesks">
+    <meta name="twitter:url" content="https://webdesks.app/">
+    <meta name="twitter:title" content="WebDesks | 18 Free Online Tools in One Browser Tab">
+    <meta name="twitter:description" content="Alarm clock, PDF merger, screen recorder, Pomodoro timer, whiteboard & 13 more free tools. No download. Works in any browser.">
+    <meta name="twitter:image" content="https://webdesks.app/og-image.png">
+    <meta name="twitter:image:alt" content="WebDesks productivity suite preview">
 
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
-    
+
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -396,7 +413,7 @@
     </style>
     
     <script>
-        tailwind.config = { 
+        tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
@@ -407,6 +424,48 @@
                 }
             }
         }
+    </script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WebDesks",
+      "url": "https://webdesks.app/",
+      "description": "A free all-in-one browser productivity suite with 18 tools: alarm clock, Pomodoro timer, stopwatch, focus timer, PDF merger, screen recorder, whiteboard, kanban board, scratchpad, unit converter, color picker, calculator, white noise generator, breathing guide, time zones, and more.",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Any — runs in any modern web browser",
+      "browserRequirements": "Requires a modern browser with JavaScript enabled",
+      "softwareVersion": "0.18.2",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Online Alarm Clock with custom alarm times",
+        "Pomodoro Focus Timer (25/45/60/custom minutes)",
+        "Online Stopwatch with lap tracking",
+        "Focus Town — RPG gamified focus timer",
+        "White Noise and Ambient Sound Studio",
+        "Guided Breathing Exercises (box, 4-7-8, coherence)",
+        "Free PDF Merger — combine PDFs in browser",
+        "Screen Recorder — no install required",
+        "Online Whiteboard with drawing tools",
+        "Kanban Project Board",
+        "Scratchpad and Online Notepad",
+        "Task Manager with drag-and-drop",
+        "Unit Converter (length, weight, temperature, volume, speed)",
+        "Hex RGB HSL Color Picker with saved swatches",
+        "Online Calculator",
+        "World Time Zones Clock",
+        "On Air Busy Sign",
+        "Music Player with ambient tracks"
+      ],
+      "isAccessibleForFree": true,
+      "screenshot": "https://webdesks.app/og-image.png"
+    }
     </script>
 </head>
 <body class="text-slate-800 dark:text-slate-100 h-screen flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
@@ -3699,5 +3758,3 @@
     </script>
 </body>
 </html>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966"
-     crossorigin="anonymous"></script>
