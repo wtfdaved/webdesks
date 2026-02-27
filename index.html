@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://api.open-meteo.com">
+    <link rel="dns-prefetch" href="https://api.quotable.io">
     
     <!-- Primary SEO -->
     <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Screen Recorder & More</title>
@@ -551,6 +561,25 @@
         @media (min-width: 600px) and (max-width: 900px) {
             #ft-scene { height: min(280px, 38vw); }
         }
+
+        /* 11. Respect prefers-reduced-motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            body { animation: none !important; }
+            .tab-content { transition: none !important; }
+            .glass { transition: none !important; }
+            .btn-primary:hover { transform: none !important; }
+            .glass-hover:hover { transform: none !important; }
+            @keyframes gradientBG { 0%, 100% { background-position: 0% 50%; } }
+        }
+
+        /* 12. Visible focus outline for keyboard users */
+        :focus-visible {
+            outline: 2px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        :focus:not(:focus-visible) {
+            outline: none;
+        }
     </style>
     
     <script>
@@ -611,6 +640,9 @@
 </head>
 <body class="text-slate-800 dark:text-slate-100 h-screen flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
 
+    <!-- Skip navigation for keyboard users -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[1000] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-xl focus:font-bold">Skip to main content</a>
+
     <!-- PERSISTENT HEADER -->
     <header id="app-header" class="glass flex items-center justify-between px-4 md:px-6 z-40 shrink-0">
         <!-- Left: Logo -->
@@ -633,18 +665,21 @@
         <!-- Right: Actions -->
         <div class="flex items-center gap-1.5">
             <!-- Alarm bell indicator -->
-            <button onclick="app.switchTab('clock')" id="header-alarm-btn" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all" title="Alarm">
-                <i data-lucide="bell-off" id="header-bell-icon" class="w-4 h-4"></i>
+            <button onclick="app.switchTab('clock')" id="header-alarm-btn" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all" title="Alarm" aria-label="Alarm Clock - No alarm set">
+                <i data-lucide="bell-off" id="header-bell-icon" class="w-4 h-4" aria-hidden="true"></i>
             </button>
-            <button onclick="app.toggleTheme()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all" title="Toggle Theme">
-                <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
-                <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+            <button onclick="app.toggleTheme()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all" title="Toggle Theme" aria-label="Toggle dark/light theme">
+                <i data-lucide="moon" class="w-4 h-4 dark:hidden" aria-hidden="true"></i>
+                <i data-lucide="sun" class="w-4 h-4 hidden dark:block" aria-hidden="true"></i>
             </button>
-            <button onclick="app.toggleZenMode()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all hidden sm:flex items-center justify-center" title="Zen Mode (Alt+Z)">
-                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+            <button onclick="app.openShortcuts()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all hidden sm:flex items-center justify-center" title="Keyboard Shortcuts (?)" aria-label="Show keyboard shortcuts">
+                <i data-lucide="keyboard" class="w-4 h-4" aria-hidden="true"></i>
             </button>
-            <button onclick="app.togglePrivacy()" class="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center" title="Privacy Mode (Alt+P)">
-                <i data-lucide="shield-alert" class="w-4 h-4"></i>
+            <button onclick="app.toggleZenMode()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all hidden sm:flex items-center justify-center" title="Zen Mode (Alt+Z)" aria-label="Enter Zen Mode (Alt+Z)">
+                <i data-lucide="maximize-2" class="w-4 h-4" aria-hidden="true"></i>
+            </button>
+            <button onclick="app.togglePrivacy()" class="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center" title="Privacy Mode (Alt+P)" aria-label="Activate Privacy Mode (Alt+P)">
+                <i data-lucide="shield-alert" class="w-4 h-4" aria-hidden="true"></i>
             </button>
         </div>
     </header>
@@ -653,7 +688,7 @@
     <div id="app-body" class="flex flex-col md:flex-row overflow-hidden min-h-0">
 
     <!-- SIDEBAR -->
-    <aside class="order-last md:order-first w-full md:w-20 lg:w-64 glass md:m-3 rounded-none md:rounded-3xl flex md:flex-col shrink-0 z-50 transition-all duration-300 h-20 md:h-auto overflow-hidden border-t md:border-t-0 border-white/20">
+    <aside role="navigation" aria-label="Main navigation" class="order-last md:order-first w-full md:w-20 lg:w-64 glass md:m-3 rounded-none md:rounded-3xl flex md:flex-col shrink-0 z-50 transition-all duration-300 h-20 md:h-auto overflow-hidden border-t md:border-t-0 border-white/20">
         <!-- Navigation -->
         <nav class="flex-1 flex md:flex-col overflow-x-auto md:overflow-y-auto p-2 md:p-3 space-x-1 md:space-x-0 md:space-y-1 no-scrollbar items-center md:items-stretch">
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-2 tracking-widest">Workspace</div>
@@ -773,7 +808,7 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 relative overflow-hidden order-first md:order-last">
+    <main id="main-content" role="main" class="flex-1 relative overflow-hidden order-first md:order-last">
         <button onclick="app.toggleZenMode()" id="exit-zen-btn" class="absolute top-6 right-6 z-50 p-3 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all hidden shadow-lg" title="Exit Zen Mode (Alt+Z)">
             <i data-lucide="minimize-2" class="w-5 h-5"></i>
         </button>
@@ -843,7 +878,10 @@
                 <div class="glass p-5 rounded-2xl flex items-center gap-6">
                     <div class="text-[10px] font-black uppercase tracking-widest text-blue-500 shrink-0">Hydration</div>
                     <div class="flex gap-1.5 flex-1" id="water-grid"></div>
-                    <button onclick="app.addWater()" class="text-[10px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-bold transition-colors shadow-lg shadow-blue-500/30 shrink-0">+ Glass</button>
+                    <div class="flex gap-2 shrink-0">
+                        <button onclick="app.removeWater()" class="text-[10px] bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 px-3 py-2 rounded-xl font-bold transition-colors" aria-label="Remove one glass of water">−</button>
+                        <button onclick="app.addWater()" class="text-[10px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-bold transition-colors shadow-lg shadow-blue-500/30" aria-label="Add one glass of water">+ Glass</button>
+                    </div>
                 </div>
 
                 <!-- Daily Quote -->
@@ -898,7 +936,12 @@
             <div class="max-w-3xl mx-auto py-6 h-full flex flex-col">
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="text-3xl font-black">Task Manager</h2>
-                    <div class="text-sm text-slate-400" id="task-stats">0 tasks</div>
+                    <div class="flex items-center gap-3">
+                        <div class="text-sm text-slate-400" id="task-stats">0 tasks</div>
+                        <button onclick="app.exportTasks()" class="glass px-3 py-1.5 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-1.5" title="Export tasks as JSON">
+                            <i data-lucide="download" class="w-3 h-3" aria-hidden="true"></i> Export
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="glass p-2 rounded-2xl flex gap-2 mb-6 shadow-xl">
@@ -983,11 +1026,11 @@
                     <h2 class="text-2xl font-black">Whiteboard</h2>
                     <div class="glass p-2 rounded-xl flex items-center gap-3">
                         <div class="flex gap-1 border-r border-slate-300 dark:border-slate-700 pr-3">
-                            <button onclick="app.setWBColor('#000000')" class="color-btn w-11 h-11 rounded-xl bg-black border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#000000"></button>
-                            <button onclick="app.setWBColor('#ef4444')" class="color-btn w-11 h-11 rounded-xl bg-red-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#ef4444"></button>
-                            <button onclick="app.setWBColor('#22c55e')" class="color-btn w-11 h-11 rounded-xl bg-green-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#22c55e"></button>
-                            <button onclick="app.setWBColor('#3b82f6')" class="color-btn w-11 h-11 rounded-xl bg-blue-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#3b82f6"></button>
-                            <button onclick="app.setWBColor('#a855f7')" class="color-btn w-11 h-11 rounded-xl bg-purple-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#a855f7"></button>
+                            <button onclick="app.setWBColor('#000000')" class="color-btn w-11 h-11 rounded-xl bg-black border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#000000" aria-label="Draw in black"></button>
+                            <button onclick="app.setWBColor('#ef4444')" class="color-btn w-11 h-11 rounded-xl bg-red-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#ef4444" aria-label="Draw in red"></button>
+                            <button onclick="app.setWBColor('#22c55e')" class="color-btn w-11 h-11 rounded-xl bg-green-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#22c55e" aria-label="Draw in green"></button>
+                            <button onclick="app.setWBColor('#3b82f6')" class="color-btn w-11 h-11 rounded-xl bg-blue-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#3b82f6" aria-label="Draw in blue"></button>
+                            <button onclick="app.setWBColor('#a855f7')" class="color-btn w-11 h-11 rounded-xl bg-purple-500 border-2 border-transparent hover:scale-110 transition-transform ring-2 ring-transparent focus:ring-indigo-500" data-color="#a855f7" aria-label="Draw in purple"></button>
                         </div>
                         <div class="flex gap-1">
                             <button onclick="app.setLineWidth(2)" class="px-3 py-1 rounded text-xs font-bold bg-slate-200 dark:bg-slate-700 hover:bg-slate-300">Thin</button>
@@ -1604,6 +1647,47 @@
         </div>
     </div>
 
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div id="shortcuts-overlay" class="fixed inset-0 z-[350] bg-slate-900/80 backdrop-blur-sm hidden flex-col items-center justify-center p-4" onclick="if(event.target === this) app.closeShortcuts()" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-xl font-black">Keyboard Shortcuts</h3>
+                <button onclick="app.closeShortcuts()" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors" aria-label="Close shortcuts dialog">
+                    <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Focus search</span>
+                    <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">/</kbd>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Toggle Zen Mode</span>
+                    <div class="flex gap-1"><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Alt</kbd><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Z</kbd></div>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Toggle Privacy Mode</span>
+                    <div class="flex gap-1"><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Alt</kbd><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">P</kbd></div>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Navigate to tool 1–9</span>
+                    <div class="flex gap-1"><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Alt</kbd><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">1–9</kbd></div>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Close overlays</span>
+                    <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Esc</kbd>
+                </div>
+                <div class="flex justify-between items-center py-2">
+                    <span class="text-slate-600 dark:text-slate-300">Show this help</span>
+                    <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">?</kbd>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen reader live region for toast announcements -->
+    <div id="sr-announcer" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
     <script>
         // Main Application Object
         const app = {
@@ -1616,7 +1700,16 @@
             musicAnalyser: null,
             vizAnimation: null,
             alarmTriggered: false,
-            waterCount: parseInt(localStorage.getItem('wd_water') || '0'),
+            waterCount: (() => {
+                const lastDate = localStorage.getItem('wd_water_date');
+                const today = new Date().toDateString();
+                if (lastDate !== today) {
+                    localStorage.setItem('wd_water_date', today);
+                    localStorage.setItem('wd_water', '0');
+                    return 0;
+                }
+                return parseInt(localStorage.getItem('wd_water') || '0');
+            })(),
             tasks: [],
             taskFilter: 'all',
             wbColor: '#000000',
@@ -1767,10 +1860,17 @@
                     ];
                 }
                 
-                // Theme
-                if (localStorage.getItem('webdesks_theme') === 'dark') {
+                // Theme - respect system preference on first visit
+                const savedTheme = localStorage.getItem('webdesks_theme');
+                if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                     document.documentElement.classList.add('dark');
                 }
+                // Watch for OS theme changes and apply if user hasn't set a preference
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    if (!localStorage.getItem('webdesks_theme')) {
+                        document.documentElement.classList.toggle('dark', e.matches);
+                    }
+                });
 
                 // Load saved tab or default
                 const savedTab = localStorage.getItem('webdesks_last_tab') || 'dashboard';
@@ -1792,12 +1892,23 @@
                 this.initConverter();
                 this.initColorPicker();
                 this.initFocusTown();
+                this.loadBoard();
+
+                // Pause background animation when tab is not visible (save GPU)
+                document.addEventListener('visibilitychange', () => {
+                    document.body.style.animationPlayState = document.hidden ? 'paused' : 'running';
+                });
 
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
-                    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                    const inInput = document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA';
+                    if (e.key === '/' && !inInput) {
                         e.preventDefault();
                         document.getElementById('dash-search').focus();
+                    }
+                    if (e.key === '?' && !inInput) {
+                        e.preventDefault();
+                        this.openShortcuts();
                     }
                     if (e.altKey && e.key === 'p') {
                         e.preventDefault();
@@ -1806,6 +1917,19 @@
                     if (e.altKey && e.key === 'z') {
                         e.preventDefault();
                         this.toggleZenMode();
+                    }
+                    // Alt+1-9 for quick tab navigation
+                    if (e.altKey && !e.shiftKey && e.key >= '1' && e.key <= '9') {
+                        const tabOrder = ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown'];
+                        const idx = parseInt(e.key) - 1;
+                        if (tabOrder[idx]) { e.preventDefault(); this.switchTab(tabOrder[idx]); }
+                    }
+                    // Escape closes overlays
+                    if (e.key === 'Escape') {
+                        const shortcuts = document.getElementById('shortcuts-overlay');
+                        if (shortcuts && shortcuts.classList.contains('flex')) { this.closeShortcuts(); return; }
+                        const pinOverlay = document.getElementById('pin-overlay');
+                        if (pinOverlay && pinOverlay.classList.contains('flex')) { this.closePinManager(); return; }
                     }
                 });
 
@@ -1851,6 +1975,20 @@
                 localStorage.setItem('webdesks_last_tab', tabId);
                 this.currentTab = tabId;
                 this._rebuildIcons();
+
+                // Update document title for the active tab
+                const tabTitles = {
+                    dashboard: 'WebDesks', scratchpad: 'Scratchpad | WebDesks',
+                    tasks: 'Task Manager | WebDesks', board: 'Project Board | WebDesks',
+                    whiteboard: 'Whiteboard | WebDesks', clock: 'Alarm Clock | WebDesks',
+                    timer: 'Focus Timer | WebDesks', stopwatch: 'Stopwatch | WebDesks',
+                    focustown: 'Focus Town | WebDesks', audio: 'Sound Studio | WebDesks',
+                    breathing: 'Breathing | WebDesks', calculator: 'Calculator | WebDesks',
+                    pdf: 'PDF Merger | WebDesks', zones: 'Time Zones | WebDesks',
+                    onair: 'On Air | WebDesks', recorder: 'Screen Recorder | WebDesks',
+                    converter: 'Unit Converter | WebDesks', colorpicker: 'Color Picker | WebDesks'
+                };
+                document.title = tabTitles[tabId] || 'WebDesks';
             },
 
             // Search
@@ -1972,6 +2110,22 @@
                 document.documentElement.classList.toggle('dark');
                 const isDark = document.documentElement.classList.contains('dark');
                 localStorage.setItem('webdesks_theme', isDark ? 'dark' : 'light');
+            },
+
+            // Keyboard Shortcuts Dialog
+            openShortcuts() {
+                const el = document.getElementById('shortcuts-overlay');
+                if (!el) return;
+                el.classList.remove('hidden');
+                el.classList.add('flex');
+                this._rebuildIcons();
+            },
+
+            closeShortcuts() {
+                const el = document.getElementById('shortcuts-overlay');
+                if (!el) return;
+                el.classList.add('hidden');
+                el.classList.remove('flex');
             },
 
             // Privacy Mode
@@ -2199,8 +2353,12 @@
 
             // Hydration
             addWater() {
-                this.waterCount = (this.waterCount + 1) % 9;
-                if (this.waterCount === 0) this.waterCount = 1;
+                if (this.waterCount < 8) this.waterCount++;
+                this.renderWater();
+            },
+
+            removeWater() {
+                if (this.waterCount > 0) this.waterCount--;
                 this.renderWater();
             },
 
@@ -2341,6 +2499,22 @@
                 this.renderTasks();
             },
 
+            exportTasks() {
+                if (!this.tasks.length) {
+                    this.showToast('No tasks to export.');
+                    return;
+                }
+                const data = JSON.stringify(this.tasks, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `webdesks_tasks_${new Date().toISOString().slice(0, 10)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.showToast('Tasks exported!');
+            },
+
             dragTaskStart(e, index) {
                 this.draggedTaskIndex = index;
                 e.target.classList.add('dragging');
@@ -2366,36 +2540,108 @@
             },
 
             // Kanban Board
-            addBoardItem(col) {
-                const text = prompt("Enter task name:");
-                if (!text) return;
-                
+            _createBoardItemEl(col, text) {
+                const borders = { todo: 'border-slate-400', doing: 'border-indigo-500', done: 'border-green-500' };
                 const item = document.createElement('div');
-                item.className = "glass p-3 rounded-xl text-sm font-medium shadow-sm cursor-move hover:shadow-md transition-all border-l-4 border-indigo-500";
+                item.className = `glass p-3 rounded-xl text-sm font-medium shadow-sm cursor-move hover:shadow-md transition-all border-l-4 ${borders[col]} group relative`;
                 item.draggable = true;
-                item.textContent = text;
-                
+                item.dataset.text = text;
+
+                const label = document.createElement('span');
+                label.className = 'block pr-6 break-words';
+                label.textContent = text;
+                item.appendChild(label);
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-500 transition-all p-1 rounded';
+                delBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+                delBtn.setAttribute('aria-label', `Delete task: ${text}`);
+                delBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    item.remove();
+                    this.updateBoardCounts();
+                    this.saveBoard();
+                });
+                item.appendChild(delBtn);
+
                 item.addEventListener('dragstart', (e) => {
                     this.draggedElement = item;
                     item.classList.add('dragging');
                     e.dataTransfer.effectAllowed = 'move';
                 });
-                
+
                 item.addEventListener('dragend', () => {
                     item.classList.remove('dragging');
                     this.draggedElement = null;
                     this.updateBoardCounts();
+                    this.saveBoard();
                 });
-                
-                item.addEventListener('click', (e) => {
-                    if (confirm('Delete this task?')) {
-                        item.remove();
+
+                return item;
+            },
+
+            addBoardItem(col) {
+                const colEl = document.getElementById(`kb-${col}`);
+                // Create inline input instead of prompt()
+                const inputWrapper = document.createElement('div');
+                inputWrapper.className = 'glass p-2 rounded-xl flex gap-2 mb-1';
+                inputWrapper.innerHTML = `
+                    <input type="text" placeholder="Task name..." maxlength="200"
+                        class="flex-1 bg-transparent text-sm font-medium focus:outline-none px-2"
+                        aria-label="New task name">
+                    <button class="px-3 py-1 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors" aria-label="Add task">Add</button>
+                    <button class="px-2 py-1 glass rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Cancel">✕</button>
+                `;
+                colEl.prepend(inputWrapper);
+                const input = inputWrapper.querySelector('input');
+                const addBtn = inputWrapper.querySelectorAll('button')[0];
+                const cancelBtn = inputWrapper.querySelectorAll('button')[1];
+                input.focus();
+
+                const doAdd = () => {
+                    const text = input.value.trim();
+                    if (text) {
+                        const item = this._createBoardItemEl(col, text);
+                        inputWrapper.after(item);
                         this.updateBoardCounts();
+                        this.saveBoard();
                     }
+                    inputWrapper.remove();
+                };
+
+                addBtn.addEventListener('click', doAdd);
+                cancelBtn.addEventListener('click', () => inputWrapper.remove());
+                input.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') doAdd();
+                    if (e.key === 'Escape') inputWrapper.remove();
                 });
-                
-                document.getElementById(`kb-${col}`).appendChild(item);
-                this.updateBoardCounts();
+            },
+
+            saveBoard() {
+                const data = {};
+                ['todo', 'doing', 'done'].forEach(col => {
+                    const colEl = document.getElementById(`kb-${col}`);
+                    data[col] = Array.from(colEl.querySelectorAll('[data-text]')).map(el => el.dataset.text);
+                });
+                localStorage.setItem('wd_board', JSON.stringify(data));
+            },
+
+            loadBoard() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem('wd_board') || 'null');
+                    if (!saved) return;
+                    ['todo', 'doing', 'done'].forEach(col => {
+                        const colEl = document.getElementById(`kb-${col}`);
+                        if (saved[col]) {
+                            saved[col].forEach(text => {
+                                colEl.appendChild(this._createBoardItemEl(col, text));
+                            });
+                        }
+                    });
+                    this.updateBoardCounts();
+                } catch(e) {
+                    // Ignore corrupted board data
+                }
             },
 
             allowDrop(e) {
@@ -2408,19 +2654,22 @@
                 e.currentTarget.classList.remove('drop-zone');
                 if (this.draggedElement) {
                     e.currentTarget.appendChild(this.draggedElement);
-                    
+
                     // Update border color based on column
                     const borders = { todo: 'border-slate-400', doing: 'border-indigo-500', done: 'border-green-500' };
-                    this.draggedElement.className = this.draggedElement.className.replace(/border-\w+-500/, borders[col]);
-                    
+                    this.draggedElement.className = this.draggedElement.className.replace(/border-(?:slate|indigo|green)-(?:400|500)/, borders[col]);
+
                     this.updateBoardCounts();
+                    this.saveBoard();
                 }
             },
 
             updateBoardCounts() {
                 ['todo', 'doing', 'done'].forEach(col => {
-                    const count = document.getElementById(`kb-${col}`).children.length;
-                    document.getElementById(`count-${col}`).textContent = count;
+                    const colEl = document.getElementById(`kb-${col}`);
+                    const count = colEl ? colEl.querySelectorAll('[data-text]').length : 0;
+                    const countEl = document.getElementById(`count-${col}`);
+                    if (countEl) countEl.textContent = count;
                 });
             },
 
@@ -2430,6 +2679,7 @@
                         document.getElementById(`kb-${col}`).innerHTML = '';
                     });
                     this.updateBoardCounts();
+                    this.saveBoard();
                 }
             },
 
@@ -2642,11 +2892,20 @@
                 localStorage.setItem('wd_total_min', this.timerTotalMinutes);
                 this.updateTimerStats();
                 
-                // Notification
-                if ('Notification' in window && Notification.permission === 'granted') {
-                    new Notification('Focus Complete!', { body: `Great job! You completed ${this.timerMode} minutes of focused work.` });
+                // Notification - request permission contextually on first completion
+                if ('Notification' in window) {
+                    if (Notification.permission === 'granted') {
+                        new Notification('Focus Complete!', { body: `Great job! You completed ${this.timerMode} minutes of focused work.` });
+                    } else if (Notification.permission === 'default' && this.timerSessions === 1) {
+                        // Ask only after user completes their first session (contextual request)
+                        Notification.requestPermission().then(perm => {
+                            if (perm === 'granted') {
+                                new Notification('Notifications enabled!', { body: 'You\'ll be notified when focus sessions complete.' });
+                            }
+                        });
+                    }
                 }
-                
+
                 this.showToast('Focus session complete! 🎉');
                 this.resetTimer();
             },
@@ -3095,7 +3354,8 @@
                     
                     this.showToast('PDFs merged successfully!');
                 } catch (e) {
-                    alert('Error merging PDFs: ' + e.message);
+                    console.error('PDF merge error:', e);
+                    this.showToast('Could not merge PDFs. Files may be encrypted or corrupted.');
                 } finally {
                     btn.innerHTML = originalText;
                     btn.disabled = false;
@@ -3876,9 +4136,18 @@
             // Utilities
             showToast(message) {
                 const toast = document.createElement('div');
-                toast.className = 'fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full text-sm font-bold shadow-2xl z-[500] animate-bounce';
+                toast.className = 'fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full text-sm font-bold shadow-2xl z-[500] transition-opacity duration-500';
+                toast.setAttribute('role', 'status');
+                toast.setAttribute('aria-live', 'polite');
                 toast.textContent = message;
                 document.body.appendChild(toast);
+                // Also announce to sr-only region for screen readers
+                const announcer = document.getElementById('sr-announcer');
+                if (announcer) {
+                    announcer.textContent = '';
+                    requestAnimationFrame(() => { announcer.textContent = message; });
+                }
+                setTimeout(() => { toast.style.opacity = '0'; }, 2500);
                 setTimeout(() => toast.remove(), 3000);
             },
 
@@ -3891,11 +4160,6 @@
 
         // Initialize on load
         window.addEventListener('load', () => app.init());
-        
-        // Request notification permission
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission();
-        }
     </script>
 </body>
 </html>
