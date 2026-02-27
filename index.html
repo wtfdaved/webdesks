@@ -270,88 +270,72 @@
             animation: ring 2s ease-in-out infinite;
         }
 
-        /* Focus Town Scene */
-        #ft-scene {
-            position: relative; height: 280px; overflow: hidden; border-radius: 1.5rem;
-            background: linear-gradient(180deg, #bfdbfe 0%, #dbeafe 55%, #bbf7d0 80%, #4ade80 100%);
-            transition: background 1.5s ease;
+        /* Focus Town — Canvas Pixel Art */
+        #ft-scene-wrapper {
+            position: relative; border-radius: 1.5rem; overflow: hidden; background: #111;
         }
-        #ft-scene.ft-session-active {
-            background: linear-gradient(180deg, #7dd3fc 0%, #bfdbfe 55%, #bbf7d0 80%, #4ade80 100%);
+        #ft-canvas {
+            display: block; width: 100%; height: auto;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            border-radius: 1.5rem;
+            min-height: 200px;
         }
-        .dark #ft-scene {
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 55%, #14532d 80%, #166534 100%);
+        #ft-town-label {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 700;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+            pointer-events: none; white-space: nowrap;
         }
-        .ft-ground {
-            position: absolute; bottom: 40px; left: 0; right: 0; height: 22px;
-            background: linear-gradient(180deg, #86efac, #4ade80);
+        #ft-unlock-flash {
+            position: absolute; inset: 0; border-radius: 1.5rem;
+            pointer-events: none; opacity: 0; transition: opacity 0.7s;
+            background: rgba(255,221,51,0.22);
         }
-        .dark .ft-ground { background: linear-gradient(180deg, #15803d, #166534); }
-        .ft-road {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 42px;
-            background: #94a3b8;
+        #ft-town-name-input {
+            background: transparent; border: none; outline: none;
+            font-family: 'Inter', sans-serif; font-weight: 900;
+            font-size: 1.5rem; color: inherit;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s; cursor: pointer; max-width: 220px;
         }
-        .dark .ft-road { background: #334155; }
-        .ft-road-line {
-            position: absolute; top: 50%; left: 0; right: 0; height: 3px;
-            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.5) 0 28px, transparent 28px 56px);
-            transform: translateY(-50%);
+        #ft-town-name-input:focus { border-bottom-color: #4f46e5; cursor: text; }
+        .ft-achievement {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 0.75rem; border-radius: 0.75rem;
+            font-size: 0.68rem; font-weight: 700; transition: all 0.3s;
+            border: 1px solid transparent;
         }
-        .ft-building-row {
-            position: absolute; bottom: 60px; left: 0; right: 0;
-            display: flex; align-items: flex-end; justify-content: center;
-            gap: 3px; padding: 0 16px; flex-wrap: nowrap;
+        .ft-achievement.ft-locked { opacity: 0.3; filter: grayscale(1); }
+        .ft-achievement.ft-unlocked {
+            background: rgba(99,102,241,0.12); color: #4f46e5;
+            border-color: rgba(99,102,241,0.25);
         }
-        .ft-building { line-height: 1; display: inline-block; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.18)); user-select: none; }
-        .ft-mountains {
-            position: absolute; bottom: 78px; left: 0; right: 0;
-            display: flex; justify-content: center; gap: 4px;
-            font-size: 2.8rem; opacity: 0.22; pointer-events: none; user-select: none;
+        .dark .ft-achievement.ft-unlocked { background: rgba(99,102,241,0.2); color: #818cf8; }
+        .ft-weather-btn {
+            padding: 0.25rem 0.5rem; border-radius: 9999px;
+            font-size: 0.75rem; cursor: pointer; transition: all 0.15s;
+            background: transparent; border: 1px solid transparent;
         }
-        .ft-sky-obj {
-            position: absolute; pointer-events: none; user-select: none;
+        .ft-weather-btn.ft-active {
+            background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4);
         }
-        .ft-cloud {
-            font-size: 1.4rem; opacity: 0.75;
-            animation: ft-cloud linear infinite;
+        #ft-milestones-row {
+            display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 2px;
+            scrollbar-width: none;
         }
-        .ft-citizen-row {
-            position: absolute; bottom: 5px; left: 0; right: 0; height: 34px;
-            overflow: hidden; pointer-events: none;
-        }
-        .ft-citizen {
-            position: absolute; font-size: 1.15rem; user-select: none;
-            animation: ft-walk-r linear infinite; bottom: 2px;
-        }
-        .ft-citizen.rev { animation-name: ft-walk-l; display: inline-block; transform: scaleX(-1); }
-        .ft-vehicle {
-            position: absolute; font-size: 1.3rem; bottom: 4px; user-select: none;
-            animation: ft-drive-r linear infinite;
-        }
-        .ft-vehicle.rev { animation-name: ft-drive-l; display: inline-block; transform: scaleX(-1); bottom: 14px; }
-        @keyframes ft-cloud {
-            from { left: -100px; }
-            to { left: calc(100% + 100px); }
-        }
-        @keyframes ft-walk-r {
-            from { left: -50px; }
-            to { left: calc(100% + 50px); }
-        }
-        @keyframes ft-walk-l {
-            from { left: calc(100% + 50px); }
-            to { left: -50px; }
-        }
-        @keyframes ft-drive-r {
-            from { left: -90px; }
-            to { left: calc(100% + 90px); }
-        }
-        @keyframes ft-drive-l {
-            from { left: calc(100% + 90px); }
-            to { left: -90px; }
-        }
+        #ft-milestones-row::-webkit-scrollbar { display: none; }
         @keyframes ft-stage-up {
             0%,100% { transform: scale(1); filter: brightness(1); }
-            40% { transform: scale(1.04); filter: brightness(1.25); }
+            40% { transform: scale(1.03); filter: brightness(1.3); }
+        }
+        @media (max-width: 768px) {
+            #ft-canvas { min-height: 160px; }
+            #ft-town-label { font-size: 0.5rem; bottom: 6px; }
+            #ft-town-name-input { font-size: 1.2rem; max-width: 160px; }
         }
 
         /* On Air Overlay */
@@ -557,9 +541,9 @@
             .grid.grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
         }
 
-        /* 10. Focus Town scene — don't dominate narrow tablet viewports */
+        /* 10. Focus Town canvas — don't dominate narrow tablet viewports */
         @media (min-width: 600px) and (max-width: 900px) {
-            #ft-scene { height: min(280px, 38vw); }
+            #ft-canvas { min-height: min(240px, 38vw); }
         }
 
         /* ── v0.18.7 Mobile Overhaul ─────────────────────────────── */
@@ -1743,37 +1727,47 @@
             <!-- Header row -->
             <div class="flex flex-wrap items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                    <span id="ft-stage-emoji" class="text-2xl">🌾</span>
+                    <span id="ft-stage-emoji" class="text-2xl">⛺</span>
                     <div>
-                        <h2 class="text-2xl font-black leading-tight">Focus Town</h2>
-                        <div class="flex items-center gap-2 mt-0.5">
-                            <span id="ft-stage-badge" class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400">Village</span>
+                        <input id="ft-town-name-input" type="text" maxlength="24" value="My Town"
+                            onchange="app.ftSaveTownName(this.value)" title="Click to rename your town"
+                            class="text-slate-800 dark:text-slate-100 leading-tight">
+                        <div class="flex items-center gap-2 mt-0.5 flex-wrap">
+                            <span id="ft-stage-badge" class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400">Campsite</span>
                             <span id="ft-total-chip" class="text-[10px] font-bold text-slate-400">0 min total</span>
+                            <span id="ft-streak-badge" class="hidden text-[10px] font-black text-orange-500">🔥 <span id="ft-streak-val">0</span> day streak</span>
                         </div>
                     </div>
                 </div>
-                <button onclick="app.ftResetProgress()" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium px-3 py-1.5 rounded-lg glass" title="Reset all Focus Town progress">Reset Progress</button>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <!-- Weather controls -->
+                    <div class="flex gap-1 glass px-2 py-1 rounded-full">
+                        <button class="ft-weather-btn ft-active" data-weather="clear" onclick="app.ftSetWeather('clear')" title="Clear">☀️</button>
+                        <button class="ft-weather-btn" data-weather="rain" onclick="app.ftSetWeather('rain')" title="Rain">🌧️</button>
+                        <button class="ft-weather-btn" data-weather="snow" onclick="app.ftSetWeather('snow')" title="Snow">❄️</button>
+                        <button class="ft-weather-btn" data-weather="fog" onclick="app.ftSetWeather('fog')" title="Fog">🌫️</button>
+                    </div>
+                    <button onclick="app.ftResetProgress()" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium px-3 py-1.5 rounded-lg glass">Reset</button>
+                </div>
             </div>
 
-            <!-- Town scene -->
-            <div class="glass rounded-3xl overflow-hidden shadow-inner relative">
-                <div id="ft-scene">
-                    <!-- Rendered by ftRenderScene() -->
-                </div>
-                <!-- Stage unlock flash overlay -->
-                <div id="ft-unlock-flash" class="absolute inset-0 rounded-3xl pointer-events-none opacity-0 transition-opacity duration-700 bg-yellow-300/20"></div>
+            <!-- Town scene (canvas) -->
+            <div class="glass rounded-3xl overflow-hidden shadow-inner" id="ft-scene-wrapper">
+                <canvas id="ft-canvas" width="480" height="192"></canvas>
+                <div id="ft-town-label">My Town</div>
+                <div id="ft-unlock-flash"></div>
             </div>
 
             <!-- Stage progress bar -->
             <div class="glass p-4 rounded-2xl">
                 <div class="flex justify-between items-center mb-2">
                     <div class="flex items-center gap-2">
-                        <span class="text-xs font-black uppercase tracking-widest text-slate-400">Progress</span>
-                        <span id="ft-stage-name" class="text-xs font-bold text-indigo-500">Village</span>
+                        <span class="text-xs font-black uppercase tracking-widest text-slate-400">Stage</span>
+                        <span id="ft-stage-name" class="text-xs font-bold text-indigo-500">Campsite</span>
                         <span class="text-xs text-slate-400">→</span>
                         <span id="ft-next-stage-name" class="text-xs font-bold text-slate-500">Hamlet</span>
                     </div>
-                    <span id="ft-progress-label" class="text-xs text-slate-400 font-medium">30 min to unlock</span>
+                    <span id="ft-progress-label" class="text-xs text-slate-400 font-medium">10 min to unlock</span>
                 </div>
                 <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div id="ft-progress-bar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-700" style="width:0%"></div>
@@ -1782,7 +1776,6 @@
 
             <!-- Timer card -->
             <div class="glass p-6 rounded-2xl flex flex-col gap-5">
-                <!-- Mode selector -->
                 <div class="flex flex-wrap items-center justify-center gap-3">
                     <div class="inline-flex gap-1 p-1 rounded-full glass">
                         <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
@@ -1798,15 +1791,12 @@
                         <span class="text-xs text-slate-400">min</span>
                     </div>
                 </div>
-
-                <!-- Countdown + controls -->
                 <div class="flex items-center gap-4">
                     <div class="flex-1 text-center">
                         <div id="ft-timer-display" class="text-6xl md:text-7xl font-black timer-font text-slate-800 dark:text-slate-100 leading-none">25:00</div>
                         <p id="ft-timer-status" class="text-xs font-black uppercase tracking-[0.3em] text-indigo-500 mt-2">Ready to Focus</p>
                     </div>
                 </div>
-
                 <div class="flex gap-3">
                     <button id="ft-btn" onclick="app.ftToggleTimer()" class="flex-1 btn-primary text-white py-4 rounded-2xl font-bold text-lg">
                         Start Focusing
@@ -1817,8 +1807,8 @@
                 </div>
             </div>
 
-            <!-- Stats row -->
-            <div class="grid grid-cols-3 gap-3">
+            <!-- Stats row (4 cards) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div class="glass p-4 rounded-2xl text-center">
                     <div id="ft-citizen-count" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">2</div>
                     <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Citizens</div>
@@ -1831,17 +1821,35 @@
                     <div id="ft-total-min" class="text-2xl font-black text-green-600 dark:text-green-400">0m</div>
                     <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Total Focus</div>
                 </div>
+                <div class="glass p-4 rounded-2xl text-center">
+                    <div id="ft-streak-stat" class="text-2xl font-black text-orange-500">0</div>
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Day Streak 🔥</div>
+                </div>
             </div>
 
-            <!-- Stage milestones -->
+            <!-- Stage milestones (11 stages, scrollable) -->
             <div class="glass p-5 rounded-2xl">
-                <div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Town Milestones</div>
-                <div class="flex gap-2 flex-wrap">
-                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="0">🌾 Village <span class="text-slate-400 font-normal ml-1">0 min</span></div>
-                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="1">🏡 Hamlet <span class="text-slate-400 font-normal ml-1">30 min</span></div>
-                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="2">🏘️ Town <span class="text-slate-400 font-normal ml-1">2h</span></div>
-                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="3">🏙️ City <span class="text-slate-400 font-normal ml-1">6h</span></div>
-                    <div class="ft-milestone flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold" data-stage="4">🌆 Metropolis <span class="text-slate-400 font-normal ml-1">15h</span></div>
+                <div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Town Milestones</div>
+                <div id="ft-milestones-row">
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="0">⛺ Campsite <span class="text-slate-400 font-normal ml-1">0m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="1">🌾 Hamlet <span class="text-slate-400 font-normal ml-1">10m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="2">🏡 Village <span class="text-slate-400 font-normal ml-1">20m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="3">🏘️ Settlement <span class="text-slate-400 font-normal ml-1">30m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="4">🏚️ Borough <span class="text-slate-400 font-normal ml-1">40m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="5">🏠 Township <span class="text-slate-400 font-normal ml-1">50m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="6">🏙️ Town <span class="text-slate-400 font-normal ml-1">60m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="7">🌆 City <span class="text-slate-400 font-normal ml-1">70m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="8">🌇 Metropolis <span class="text-slate-400 font-normal ml-1">80m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="9">🌃 Megalopolis <span class="text-slate-400 font-normal ml-1">90m</span></div>
+                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="10">✨ Utopia <span class="text-slate-400 font-normal ml-1">100m</span></div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="glass p-5 rounded-2xl">
+                <div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Achievements</div>
+                <div id="ft-achievements-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <!-- Rendered by ftRenderAchievements() -->
                 </div>
             </div>
         </div>
@@ -2142,20 +2150,42 @@
             ftMode: 25,
             ftTime: 25 * 60,
             ftSessions: parseInt(localStorage.getItem('wd_ft_sessions') || '0'),
-            ftStageNames: ['Village', 'Hamlet', 'Town', 'City', 'Metropolis'],
-            ftStageEmoji: ['🌾', '🏡', '🏘️', '🏙️', '🌆'],
-            ftStageThresholds: [0, 30, 120, 360, 900],
-            ftBuildings: [
-                // Stage 0 — Village
-                [{e:'🌲',s:1.8},{e:'🏠',s:2.2},{e:'🌳',s:2.0},{e:'🏡',s:2.4},{e:'🌲',s:1.7}],
-                // Stage 1 — Hamlet
-                [{e:'🌲',s:1.8},{e:'🏠',s:2.3},{e:'🌳',s:2.0},{e:'🏡',s:2.5},{e:'🏪',s:2.4},{e:'🌲',s:1.9},{e:'🏠',s:2.1},{e:'🌳',s:1.8}],
-                // Stage 2 — Town
-                [{e:'🌲',s:1.7},{e:'🏠',s:2.2},{e:'🏡',s:2.4},{e:'🏘️',s:2.6},{e:'🏪',s:2.5},{e:'🌳',s:2.0},{e:'🏫',s:2.8},{e:'🏠',s:2.1},{e:'🌲',s:1.8},{e:'🏡',s:2.3}],
-                // Stage 3 — City
-                [{e:'🌲',s:1.7},{e:'🏠',s:2.0},{e:'🏢',s:3.0},{e:'🏬',s:3.2},{e:'🏦',s:2.8},{e:'🌳',s:1.9},{e:'🏪',s:2.4},{e:'🏢',s:3.1},{e:'🏫',s:2.7},{e:'🏠',s:2.0},{e:'🏢',s:2.9},{e:'🌲',s:1.8}],
-                // Stage 4 — Metropolis
-                [{e:'🌲',s:1.7},{e:'🏢',s:3.2},{e:'🏢',s:3.5},{e:'🏛️',s:3.3},{e:'🏟️',s:3.0},{e:'🏦',s:3.2},{e:'🏢',s:3.6},{e:'🏬',s:3.1},{e:'🏢',s:3.4},{e:'🏢',s:3.5},{e:'🏛️',s:3.0},{e:'🌲',s:1.7},{e:'🏢',s:3.3}]
+            ftTownName: localStorage.getItem('wd_ft_townname') || 'My Town',
+            ftStreak: parseInt(localStorage.getItem('wd_ft_streak') || '0'),
+            ftLastSessionDate: localStorage.getItem('wd_ft_lastdate') || '',
+            ftAchievements: (()=>{ try{ return JSON.parse(localStorage.getItem('wd_ft_achievements')||'[]'); }catch(e){ return []; } })(),
+            ftWeather: 'clear',
+            ftAnimFrame: null,
+            ftScale: 3,
+            ftCanvasTime: 0,
+            ftConstructing: false,
+            ftParticles: [],
+            ftStageNames: ['Campsite','Hamlet','Village','Settlement','Borough','Township','Town','City','Metropolis','Megalopolis','Utopia'],
+            ftStageEmoji: ['⛺','🌾','🏡','🏘️','🏚️','🏠','🏙️','🌆','🌇','🌃','✨'],
+            ftStageThresholds: [0,10,20,30,40,50,60,70,80,90,100],
+            ftAchievementDefs: [
+                { id:'first',   icon:'🎯', label:'First Brick',  desc:'Complete first session',   condition:(s)=>s.ftSessions>=1 },
+                { id:'five',    icon:'🔥', label:'On a Roll',    desc:'Complete 5 sessions',      condition:(s)=>s.ftSessions>=5 },
+                { id:'ten',     icon:'💪', label:'Dedicated',    desc:'Complete 10 sessions',     condition:(s)=>s.ftSessions>=10 },
+                { id:'hour',    icon:'⏰', label:'Deep Work',    desc:'60 min focus total',       condition:(s)=>s.ftMinutes>=60 },
+                { id:'named',   icon:'✏️', label:'City Planner', desc:'Give your town a name',   condition:(s)=>s.ftTownName!=='My Town' },
+                { id:'streak3', icon:'📅', label:'Habit Forming',desc:'3-day streak',             condition:(s)=>s.ftStreak>=3 },
+                { id:'streak7', icon:'🗓️', label:'Week Warrior', desc:'7-day streak',             condition:(s)=>s.ftStreak>=7 },
+                { id:'utopia',  icon:'✨', label:'Utopian',      desc:'Reach Utopia (100 min)',   condition:(s)=>s.ftMinutes>=100 },
+                { id:'fifty',   icon:'👑', label:'Legendary',    desc:'50 sessions completed',    condition:(s)=>s.ftSessions>=50 },
+            ],
+            ftPalettes: [
+                { skyTop:'#f4a261',skyBot:'#e9c46a',ground:'#8B7355',groundAccent:'#6b5a3e',road:'#5a4a35',roadLine:'#7a6a55',buildingBase:'#8B7355',buildingAccent:'#6b5a3e',roofColor:'#c1440e',windowColor:'#f4d03f',treeColor:'#2d6a4f',treeTrunk:'#8B7355' },
+                { skyTop:'#90e0ef',skyBot:'#caf0f8',ground:'#52b788',groundAccent:'#40916c',road:'#6b705c',roadLine:'#a9b388',buildingBase:'#d4a373',buildingAccent:'#b5835a',roofColor:'#c1440e',windowColor:'#ffd60a',treeColor:'#1b4332',treeTrunk:'#8B7355' },
+                { skyTop:'#74c0fc',skyBot:'#a9d6f5',ground:'#52b788',groundAccent:'#40916c',road:'#868e96',roadLine:'#dee2e6',buildingBase:'#ced4da',buildingAccent:'#adb5bd',roofColor:'#e03131',windowColor:'#ffd43b',treeColor:'#2d6a4f',treeTrunk:'#795548' },
+                { skyTop:'#63c5da',skyBot:'#b7e0ff',ground:'#4caf50',groundAccent:'#388e3c',road:'#78909c',roadLine:'#eceff1',buildingBase:'#b0bec5',buildingAccent:'#90a4ae',roofColor:'#d32f2f',windowColor:'#ffeb3b',treeColor:'#1b5e20',treeTrunk:'#6d4c41' },
+                { skyTop:'#4fc3f7',skyBot:'#b3e5fc',ground:'#43a047',groundAccent:'#2e7d32',road:'#546e7a',roadLine:'#b0bec5',buildingBase:'#9e9e9e',buildingAccent:'#757575',roofColor:'#c62828',windowColor:'#ffe082',treeColor:'#1b5e20',treeTrunk:'#5d4037' },
+                { skyTop:'#29b6f6',skyBot:'#81d4fa',ground:'#388e3c',groundAccent:'#27632a',road:'#455a64',roadLine:'#90a4ae',buildingBase:'#78909c',buildingAccent:'#546e7a',roofColor:'#b71c1c',windowColor:'#ffc107',treeColor:'#1a3c1e',treeTrunk:'#4e342e' },
+                { skyTop:'#2196f3',skyBot:'#64b5f6',ground:'#2e7d32',groundAccent:'#1b5e20',road:'#37474f',roadLine:'#78909c',buildingBase:'#607d8b',buildingAccent:'#455a64',roofColor:'#880e4f',windowColor:'#fff59d',treeColor:'#1a3c1e',treeTrunk:'#3e2723' },
+                { skyTop:'#1565c0',skyBot:'#42a5f5',ground:'#1b5e20',groundAccent:'#003300',road:'#263238',roadLine:'#546e7a',buildingBase:'#546e7a',buildingAccent:'#37474f',roofColor:'#4a148c',windowColor:'#e3f2fd',treeColor:'#1a3c1e',treeTrunk:'#37474f' },
+                { skyTop:'#1a237e',skyBot:'#283593',ground:'#1b5e20',groundAccent:'#003300',road:'#1c1c1c',roadLine:'#424242',buildingBase:'#37474f',buildingAccent:'#263238',roofColor:'#311b92',windowColor:'#fff9c4',treeColor:'#1a3c1e',treeTrunk:'#212121' },
+                { skyTop:'#0d0d2b',skyBot:'#1a1a4e',ground:'#1a1a1a',groundAccent:'#111111',road:'#111111',roadLine:'#e040fb',buildingBase:'#1c1c3e',buildingAccent:'#2a2a6e',roofColor:'#7c4dff',windowColor:'#e040fb',treeColor:'#1a3c1e',treeTrunk:'#111111' },
+                { skyTop:'#000428',skyBot:'#004e92',ground:'#0a3d62',groundAccent:'#0c2461',road:'#0a0a2a',roadLine:'#00d2ff',buildingBase:'#0c2461',buildingAccent:'#1e3799',roofColor:'#e84393',windowColor:'#00d2ff',treeColor:'#0a3d62',treeTrunk:'#0c2461' },
             ],
 
             // Breathing State
@@ -2242,6 +2272,12 @@
                     document.body.style.animationPlayState = document.hidden ? 'paused' : 'running';
                     if (!document.hidden && this.timerRunning) this.requestWakeLock();
                     if (document.hidden && !this.timerRunning) this.releaseWakeLock();
+                    // Pause/resume Focus Town canvas loop with page visibility
+                    if (document.hidden) {
+                        this.ftStopAnimLoop();
+                    } else if (this.currentTab === 'focustown') {
+                        this.ftStartAnimLoop();
+                    }
                 });
 
                 // Keyboard shortcuts
@@ -2337,6 +2373,14 @@
                     converter: 'Unit Converter | WebDesks', colorpicker: 'Color Picker | WebDesks'
                 };
                 document.title = tabTitles[tabId] || 'WebDesks';
+
+                // Focus Town animation loop lifecycle
+                if (tabId === 'focustown') {
+                    this.ftStartAnimLoop();
+                    this.ftResizeCanvas();
+                } else {
+                    this.ftStopAnimLoop();
+                }
             },
 
             // Search
@@ -4181,8 +4225,453 @@
             initFocusTown() {
                 this.ftMinutes = parseInt(localStorage.getItem('wd_ft_minutes') || '0');
                 this.ftSessions = parseInt(localStorage.getItem('wd_ft_sessions') || '0');
-                this.ftRenderScene();
+                this.ftTownName = localStorage.getItem('wd_ft_townname') || 'My Town';
+                this.ftStreak = parseInt(localStorage.getItem('wd_ft_streak') || '0');
+                this.ftLastSessionDate = localStorage.getItem('wd_ft_lastdate') || '';
+                try { this.ftAchievements = JSON.parse(localStorage.getItem('wd_ft_achievements') || '[]'); } catch(e) { this.ftAchievements = []; }
+                this.ftParticles = [];
+                this.ftCanvasTime = 0;
+                // Sync town name input and label
+                const nameInput = document.getElementById('ft-town-name-input');
+                if (nameInput) nameInput.value = this.ftTownName;
+                const lbl = document.getElementById('ft-town-label');
+                if (lbl) lbl.textContent = this.ftTownName;
+                // Size canvas to container
+                this.ftResizeCanvas();
+                // Start rAF animation loop
+                this.ftStartAnimLoop();
                 this.ftUpdateStats();
+                this.ftRenderAchievements();
+                // Responsive canvas sizing
+                const wrapper = document.getElementById('ft-scene-wrapper');
+                if (wrapper && window.ResizeObserver) {
+                    this._ftResizeObs = new ResizeObserver(() => this.ftResizeCanvas());
+                    this._ftResizeObs.observe(wrapper);
+                }
+            },
+
+            ftResizeCanvas() {
+                const canvas = document.getElementById('ft-canvas');
+                const wrapper = document.getElementById('ft-scene-wrapper');
+                if (!canvas || !wrapper) return;
+                const cssWidth = wrapper.offsetWidth || 480;
+                // Virtual grid: 160x80. Scale to fill container width, min 2 max 6
+                const scale = Math.max(2, Math.min(6, Math.floor(cssWidth / 160)));
+                this.ftScale = scale;
+                canvas.width  = 160 * scale;
+                canvas.height = 80  * scale;
+            },
+
+            ftStartAnimLoop() {
+                if (this.ftAnimFrame) return;
+                let lastTs = 0;
+                const loop = (ts) => {
+                    const delta = lastTs ? Math.min(ts - lastTs, 100) : 16;
+                    lastTs = ts;
+                    this.ftCanvasTime += delta;
+                    this.ftDrawFrame(this.ftCanvasTime, delta);
+                    this.ftAnimFrame = requestAnimationFrame(loop);
+                };
+                this.ftAnimFrame = requestAnimationFrame(loop);
+            },
+
+            ftStopAnimLoop() {
+                if (this.ftAnimFrame) {
+                    cancelAnimationFrame(this.ftAnimFrame);
+                    this.ftAnimFrame = null;
+                }
+            },
+
+            ftDrawFrame(time, delta) {
+                const canvas = document.getElementById('ft-canvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const scale = this.ftScale || 3;
+                const vw = 160, vh = 80;
+                const minutes = this.ftEffectiveMin();
+                const stage = this.ftGetStage(minutes);
+                const pal = this.ftPalettes[Math.min(stage.index, this.ftPalettes.length - 1)];
+                const hour = new Date().getHours();
+                const isNight = hour >= 20 || hour < 6;
+                const isDusk  = (hour >= 18 && hour < 20) || (hour >= 6 && hour < 8);
+                ctx.imageSmoothingEnabled = false;
+                this.ftDrawSky(ctx, vw, vh, scale, pal, isNight, isDusk);
+                if (stage.index >= 3) this.ftDrawMountains(ctx, vw, vh, scale, pal, stage.index);
+                this.ftDrawClouds(ctx, vw, vh, scale, time, isNight);
+                this.ftDrawBuildings(ctx, vw, vh, scale, pal, stage.index, this.ftConstructing);
+                this.ftDrawGround(ctx, vw, vh, scale, pal, stage.index);
+                if (stage.index >= 1) this.ftDrawCitizens(ctx, vw, vh, scale, this.ftGetCitizenCount(minutes), time, isNight);
+                if (stage.index >= 4) this.ftDrawVehicles(ctx, vw, vh, scale, pal, stage.index, time);
+                if (this.ftWeather !== 'clear') this.ftDrawWeather(ctx, vw, vh, scale, this.ftWeather, time, delta);
+                if (this.ftWeather === 'fog') this.ftDrawFog(ctx, vw, vh, scale, time);
+                if (isNight) this.ftDrawStars(ctx, vw, vh, scale, stage.index, time);
+                if (stage.index === 10) this.ftDrawUtopiaGlow(ctx, vw, vh, scale, time);
+            },
+
+            ftDrawSky(ctx, vw, vh, scale, pal, isNight, isDusk) {
+                let topColor = pal.skyTop;
+                let botColor = pal.skyBot;
+                if (isNight) { topColor = '#020c1b'; botColor = '#0a1628'; }
+                else if (isDusk) { topColor = '#ff6b35'; botColor = '#ffd166'; }
+                const grad = ctx.createLinearGradient(0, 0, 0, Math.floor(vh * 0.72) * scale);
+                grad.addColorStop(0, topColor);
+                grad.addColorStop(1, botColor);
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, vw * scale, vh * scale);
+                // Sun or moon
+                const sunX = Math.floor(vw * 0.85), sunY = Math.floor(vh * 0.15);
+                const s = scale;
+                if (isNight) {
+                    ctx.fillStyle = '#fffde7';
+                    ctx.beginPath(); ctx.arc(sunX * s, sunY * s, 5 * s, 0, Math.PI * 2); ctx.fill();
+                    ctx.fillStyle = '#020c1b';
+                    ctx.beginPath(); ctx.arc((sunX + 2) * s, (sunY - 1) * s, 4 * s, 0, Math.PI * 2); ctx.fill();
+                } else {
+                    ctx.fillStyle = isDusk ? '#ff9f1c' : '#ffe566';
+                    ctx.fillRect((sunX - 2) * s, sunY * s, 5 * s, s);
+                    ctx.fillRect(sunX * s, (sunY - 2) * s, s, 5 * s);
+                    ctx.fillRect((sunX - 1) * s, (sunY - 1) * s, 3 * s, 3 * s);
+                }
+            },
+
+            ftDrawMountains(ctx, vw, vh, scale, pal, stageIdx) {
+                const groundY = Math.floor(vh * 0.72);
+                ctx.fillStyle = pal.buildingAccent + '66';
+                ctx.beginPath();
+                ctx.moveTo(0, groundY * scale);
+                ctx.lineTo(Math.floor(vw * 0.2) * scale, Math.floor(vh * 0.28) * scale);
+                ctx.lineTo(Math.floor(vw * 0.4) * scale, groundY * scale);
+                ctx.closePath(); ctx.fill();
+                ctx.fillStyle = pal.buildingBase + '55';
+                ctx.beginPath();
+                ctx.moveTo(Math.floor(vw * 0.3) * scale, groundY * scale);
+                ctx.lineTo(Math.floor(vw * 0.55) * scale, Math.floor(vh * 0.22) * scale);
+                ctx.lineTo(Math.floor(vw * 0.78) * scale, groundY * scale);
+                ctx.closePath(); ctx.fill();
+                if (stageIdx >= 7) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+                    ctx.beginPath();
+                    ctx.moveTo(Math.floor(vw * 0.2) * scale, Math.floor(vh * 0.28) * scale);
+                    ctx.lineTo(Math.floor(vw * 0.175) * scale, Math.floor(vh * 0.35) * scale);
+                    ctx.lineTo(Math.floor(vw * 0.225) * scale, Math.floor(vh * 0.35) * scale);
+                    ctx.closePath(); ctx.fill();
+                }
+            },
+
+            ftDrawClouds(ctx, vw, vh, scale, time, isNight) {
+                if (isNight) return;
+                ctx.fillStyle = 'rgba(255,255,255,0.82)';
+                const clouds = [
+                    { speed: 0.006, y: 10, w: 18, h: 6, offset: 0   },
+                    { speed: 0.004, y: 16, w: 24, h: 8, offset: 60  },
+                    { speed: 0.007, y: 6,  w: 14, h: 5, offset: 110 },
+                ];
+                clouds.forEach(c => {
+                    const rawX = ((time * c.speed) + c.offset) % (vw + c.w + 10);
+                    const x = Math.floor(rawX - c.w);
+                    ctx.fillRect(x * scale, c.y * scale, c.w * scale, (c.h - 2) * scale);
+                    ctx.fillRect((x + 2) * scale, (c.y - 2) * scale, (c.w - 4) * scale, 2 * scale);
+                    ctx.fillRect((x + 4) * scale, (c.y - 3) * scale, (c.w - 8) * scale, scale);
+                });
+            },
+
+            ftDrawBuildings(ctx, vw, vh, scale, pal, stageIdx, constructing) {
+                const groundY = Math.floor(vh * 0.72);
+                // LCG seeded RNG — must reset seed at top of each call for stable layout
+                let seed = stageIdx * 1337 + 42;
+                const rng = () => { seed = (seed * 1664525 + 1013904223) & 0x7fffffff; return seed / 0x7fffffff; };
+                const hour = new Date().getHours();
+                const isNight = hour >= 20 || hour < 6;
+                const maxBldgH = Math.floor(vh * 0.4 + stageIdx * vh * 0.03);
+                const count = Math.min(3 + Math.floor(stageIdx * 1.3), 14);
+                let x = Math.floor(vw * 0.04);
+                // Stage 0: campsite — tent and fire
+                if (stageIdx === 0) {
+                    // Tent
+                    ctx.fillStyle = '#c1440e';
+                    ctx.beginPath();
+                    ctx.moveTo(20 * scale, groundY * scale);
+                    ctx.lineTo(30 * scale, (groundY - 14) * scale);
+                    ctx.lineTo(40 * scale, groundY * scale);
+                    ctx.closePath(); ctx.fill();
+                    ctx.fillStyle = '#8B7355';
+                    ctx.fillRect(26 * scale, (groundY - 8) * scale, 8 * scale, 8 * scale);
+                    // Campfire
+                    ctx.fillStyle = '#8B7355';
+                    ctx.fillRect(60 * scale, (groundY - 3) * scale, 2 * scale, 3 * scale);
+                    ctx.fillRect(63 * scale, (groundY - 3) * scale, 2 * scale, 3 * scale);
+                    ctx.fillStyle = '#ff6b35';
+                    ctx.fillRect(59 * scale, (groundY - 5) * scale, 6 * scale, 3 * scale);
+                    ctx.fillStyle = '#ffd166';
+                    ctx.fillRect(61 * scale, (groundY - 7) * scale, 2 * scale, 2 * scale);
+                    // Trees
+                    [80, 100, 120].forEach(tx => {
+                        ctx.fillStyle = pal.treeTrunk;
+                        ctx.fillRect(tx * scale, (groundY - 6) * scale, 2 * scale, 6 * scale);
+                        ctx.fillStyle = pal.treeColor;
+                        ctx.fillRect((tx - 3) * scale, (groundY - 12) * scale, 8 * scale, 7 * scale);
+                    });
+                    return;
+                }
+                for (let i = 0; i < count; i++) {
+                    const w = Math.floor(rng() * 10 + 6 + stageIdx * 0.5);
+                    const minH = Math.floor(maxBldgH * 0.35);
+                    const h = Math.floor(rng() * (maxBldgH - minH) + minH);
+                    if (x + w > vw - 6) break;
+                    const by = groundY - h;
+                    // Wall
+                    ctx.fillStyle = pal.buildingBase;
+                    ctx.fillRect(x * scale, by * scale, w * scale, h * scale);
+                    // Accent stripe (top 25%)
+                    ctx.fillStyle = pal.buildingAccent;
+                    ctx.fillRect(x * scale, by * scale, w * scale, Math.max(1, Math.floor(h * 0.25)) * scale);
+                    // Roof line
+                    ctx.fillStyle = pal.roofColor;
+                    ctx.fillRect(x * scale, by * scale, w * scale, scale);
+                    // Windows
+                    for (let wy = by + 2; wy < groundY - 2; wy += 4) {
+                        for (let wx = x + 1; wx < x + w - 1; wx += 4) {
+                            if (rng() > 0.4) {
+                                ctx.fillStyle = isNight ? '#fde68a' : pal.windowColor;
+                                ctx.fillRect(wx * scale, wy * scale, scale, scale);
+                            }
+                        }
+                    }
+                    // Trees between buildings at early stages
+                    if (stageIdx < 5 && i < count - 1 && rng() > 0.55) {
+                        const tx = x + w + 1;
+                        if (tx + 4 < vw - 6) {
+                            ctx.fillStyle = pal.treeTrunk;
+                            ctx.fillRect(tx * scale, (groundY - 5) * scale, scale, 5 * scale);
+                            ctx.fillStyle = pal.treeColor;
+                            ctx.fillRect((tx - 1) * scale, (groundY - 9) * scale, 3 * scale, 5 * scale);
+                            x += 5;
+                        }
+                    }
+                    x += w + Math.floor(rng() * 3 + 1);
+                }
+                // Construction crane when session active and not at max stage
+                if (constructing && stageIdx < 10) {
+                    const craneX = Math.floor(vw * 0.76);
+                    const craneY = Math.floor(vh * 0.18);
+                    ctx.fillStyle = '#f39c12';
+                    ctx.fillRect(craneX * scale, craneY * scale, scale, (groundY - craneY) * scale);
+                    ctx.fillRect((craneX - 8) * scale, craneY * scale, 12 * scale, scale);
+                    ctx.fillStyle = '#bdc3c7';
+                    const swing = Math.floor(Math.sin(this.ftCanvasTime / 600) * 2);
+                    ctx.fillRect((craneX - 4 + swing) * scale, (craneY + 1) * scale, scale, 5 * scale);
+                }
+            },
+
+            ftDrawGround(ctx, vw, vh, scale, pal, stageIdx) {
+                const groundY = Math.floor(vh * 0.72);
+                const groundH = Math.floor(vh * 0.10);
+                const roadY   = groundY + groundH;
+                const roadH   = vh - roadY;
+                // Ground
+                ctx.fillStyle = pal.ground;
+                ctx.fillRect(0, groundY * scale, vw * scale, groundH * scale);
+                ctx.fillStyle = pal.groundAccent;
+                ctx.fillRect(0, groundY * scale, vw * scale, scale);
+                // Sidewalk at stage 5+
+                if (stageIdx >= 5) {
+                    ctx.fillStyle = 'rgba(180,180,180,0.45)';
+                    ctx.fillRect(0, groundY * scale, vw * scale, Math.floor(groundH * 0.35) * scale);
+                }
+                // Road
+                ctx.fillStyle = pal.road;
+                ctx.fillRect(0, roadY * scale, vw * scale, roadH * scale);
+                // Road dashes at stage 4+
+                if (stageIdx >= 4) {
+                    ctx.fillStyle = pal.roadLine;
+                    const lineY = roadY + Math.floor(roadH / 2);
+                    for (let x = 0; x < vw; x += 12) {
+                        ctx.fillRect(x * scale, lineY * scale, 6 * scale, scale);
+                    }
+                }
+            },
+
+            ftDrawCitizens(ctx, vw, vh, scale, count, time, isNight) {
+                const footY = Math.floor(vh * 0.72) - 1;
+                const shirtColors = ['#c0392b','#2980b9','#27ae60','#8e44ad','#e67e22','#16a085','#d35400'];
+                for (let i = 0; i < count; i++) {
+                    const speed  = 0.013 + (i % 5) * 0.004;
+                    const offset = (i * 23.7) % (vw + 12);
+                    const rawX   = ((time * speed) + offset) % (vw + 12);
+                    const dir    = (i % 2 === 0) ? 1 : -1;
+                    const drawX  = dir === 1 ? Math.floor(rawX - 6) : vw - Math.floor(rawX - 6);
+                    if (drawX < -4 || drawX > vw + 4) continue;
+                    const px = drawX * scale, py = (footY - 7) * scale, s = scale;
+                    const col = shirtColors[i % shirtColors.length];
+                    // Head
+                    ctx.fillStyle = isNight ? '#c8956c' : '#f5cba7';
+                    ctx.fillRect(px + s, py, s, s);
+                    // Body
+                    ctx.fillStyle = col;
+                    ctx.fillRect(px, py + s, 3 * s, 3 * s);
+                    // Legs (animate)
+                    const step = Math.floor(time / 220) % 2;
+                    ctx.fillStyle = '#2c3e50';
+                    if (step === 0) {
+                        ctx.fillRect(px, py + 4 * s, s, 3 * s);
+                        ctx.fillRect(px + 2 * s, py + 5 * s, s, 2 * s);
+                    } else {
+                        ctx.fillRect(px, py + 5 * s, s, 2 * s);
+                        ctx.fillRect(px + 2 * s, py + 4 * s, s, 3 * s);
+                    }
+                }
+            },
+
+            ftDrawVehicles(ctx, vw, vh, scale, pal, stageIdx, time) {
+                const roadY  = Math.floor(vh * 0.82);
+                const roadMid = roadY + Math.floor((vh - roadY) * 0.3);
+                const vehicleDefs = [
+                    { speed:0.022, offset:0,   w:12, h:5, color:'#e74c3c', lane:roadMid-3,  dir:1  },
+                    { speed:0.015, offset:70,  w:18, h:6, color:'#3498db', lane:roadMid+1,  dir:-1 },
+                    { speed:0.028, offset:35,  w:10, h:4, color:'#f1c40f', lane:roadMid-3,  dir:1  },
+                    { speed:0.018, offset:110, w:14, h:5, color:'#1abc9c', lane:roadMid+1,  dir:-1 },
+                ];
+                const count = Math.min(1 + Math.floor((stageIdx - 4) * 0.7), vehicleDefs.length);
+                for (let i = 0; i < count; i++) {
+                    const v   = vehicleDefs[i];
+                    const rawX = ((time * v.speed) + v.offset) % (vw + v.w + 10);
+                    const x   = v.dir === 1 ? Math.floor(rawX - v.w) : vw - Math.floor(rawX - v.w);
+                    if (x < -v.w - 2 || x > vw + 2) continue;
+                    const px = x * scale, py = v.lane * scale, s = scale;
+                    ctx.fillStyle = v.color;
+                    ctx.fillRect(px, py, v.w * s, v.h * s);
+                    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                    ctx.fillRect(px + 2 * s, py - 2 * s, (v.w - 4) * s, 3 * s);
+                    ctx.fillStyle = 'rgba(200,230,255,0.85)';
+                    ctx.fillRect(px + 2 * s, py - s, 2 * s, 2 * s);
+                    ctx.fillRect(px + 6 * s, py - s, 2 * s, 2 * s);
+                    ctx.fillStyle = '#222';
+                    ctx.fillRect(px + 2 * s, (py + v.h * s), 2 * s, s);
+                    ctx.fillRect(px + (v.w - 4) * s, (py + v.h * s), 2 * s, s);
+                }
+            },
+
+            ftDrawWeather(ctx, vw, vh, scale, weather, time, delta) {
+                const MAX = 60;
+                while (this.ftParticles.length < MAX) {
+                    this.ftParticles.push({
+                        x: Math.random() * vw,
+                        y: Math.random() * vh,
+                        vy: weather === 'rain' ? 3 + Math.random() * 4 : 0.5 + Math.random() * 1.5,
+                        vx: weather === 'rain' ? -0.5 - Math.random() * 0.5 : Math.random() * 0.4 - 0.2,
+                        size: weather === 'rain' ? 1 : 1 + Math.random() * 2,
+                        opacity: 0.35 + Math.random() * 0.5,
+                    });
+                }
+                const dt = (delta || 16) / 1000;
+                ctx.save();
+                this.ftParticles.forEach(p => {
+                    p.x += p.vx * dt * 40;
+                    p.y += p.vy * dt * 40;
+                    if (p.y > vh) { p.y = -2; p.x = Math.random() * vw; }
+                    if (p.x < 0) p.x = vw;
+                    if (p.x > vw) p.x = 0;
+                    ctx.globalAlpha = p.opacity;
+                    ctx.fillStyle = weather === 'rain' ? '#74b9ff' : '#dfe6e9';
+                    if (weather === 'rain') {
+                        ctx.fillRect(Math.floor(p.x) * scale, Math.floor(p.y) * scale, scale, 3 * scale);
+                    } else {
+                        ctx.fillRect(Math.floor(p.x) * scale, Math.floor(p.y) * scale, Math.ceil(p.size) * scale, Math.ceil(p.size) * scale);
+                    }
+                });
+                ctx.globalAlpha = 1;
+                ctx.restore();
+            },
+
+            ftDrawFog(ctx, vw, vh, scale, time) {
+                const alpha1 = 0.13 + 0.05 * Math.sin(time / 3000);
+                ctx.fillStyle = `rgba(200,210,220,${alpha1.toFixed(3)})`;
+                ctx.fillRect(0, Math.floor(vh * 0.5) * scale, vw * scale, Math.floor(vh * 0.5) * scale);
+                const alpha2 = 0.08 + 0.04 * Math.sin(time / 4000 + 1);
+                ctx.fillStyle = `rgba(200,210,220,${alpha2.toFixed(3)})`;
+                ctx.fillRect(0, Math.floor(vh * 0.62) * scale, vw * scale, Math.floor(vh * 0.3) * scale);
+            },
+
+            ftDrawStars(ctx, vw, vh, scale, stageIdx, time) {
+                let seed = 42;
+                const lrng = () => { seed = (seed * 1664525 + 1013904223) & 0x7fffffff; return seed / 0x7fffffff; };
+                ctx.save();
+                for (let i = 0; i < 30; i++) {
+                    const x = Math.floor(lrng() * vw);
+                    const y = Math.floor(lrng() * vh * 0.6);
+                    const twinkle = 0.3 + 0.7 * Math.abs(Math.sin(time / 800 + i * 0.7));
+                    ctx.globalAlpha = twinkle;
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(x * scale, y * scale, scale, scale);
+                }
+                // Neon glow at stage 8-10
+                if (stageIdx >= 8) {
+                    ctx.globalAlpha = 0.07 + 0.04 * Math.sin(time / 1200);
+                    ctx.fillStyle = '#e040fb';
+                    ctx.fillRect(0, Math.floor(vh * 0.4) * scale, vw * scale, Math.floor(vh * 0.35) * scale);
+                }
+                ctx.globalAlpha = 1;
+                ctx.restore();
+            },
+
+            ftDrawUtopiaGlow(ctx, vw, vh, scale, time) {
+                const bands = [
+                    { color:'rgba(0,210,255,',  alpha:0.07, y:0.10, h:0.30, phase:0   },
+                    { color:'rgba(232,67,147,', alpha:0.05, y:0.20, h:0.25, phase:1.5 },
+                    { color:'rgba(0,210,255,',  alpha:0.04, y:0.05, h:0.20, phase:3   },
+                ];
+                bands.forEach(b => {
+                    const pulse = b.alpha * (1 + 0.5 * Math.sin(time / 2000 + b.phase));
+                    ctx.fillStyle = b.color + pulse.toFixed(3) + ')';
+                    ctx.fillRect(0, Math.floor(vh * b.y) * scale, vw * scale, Math.floor(vh * b.h) * scale);
+                });
+            },
+
+            ftSaveTownName(val) {
+                const name = (val || '').trim().slice(0, 24) || 'My Town';
+                this.ftTownName = name;
+                localStorage.setItem('wd_ft_townname', name);
+                const lbl = document.getElementById('ft-town-label');
+                if (lbl) lbl.textContent = name;
+                this.ftCheckAchievements();
+            },
+
+            ftSetWeather(weather) {
+                this.ftWeather = weather;
+                this.ftParticles = [];
+                document.querySelectorAll('.ft-weather-btn').forEach(btn => {
+                    btn.classList.toggle('ft-active', btn.dataset.weather === weather);
+                });
+            },
+
+            ftCheckAchievements() {
+                const newlyUnlocked = [];
+                this.ftAchievementDefs.forEach(def => {
+                    if (!this.ftAchievements.includes(def.id) && def.condition(this)) {
+                        this.ftAchievements.push(def.id);
+                        newlyUnlocked.push(def);
+                    }
+                });
+                if (newlyUnlocked.length) {
+                    localStorage.setItem('wd_ft_achievements', JSON.stringify(this.ftAchievements));
+                    newlyUnlocked.forEach(a => this.showToast(`${a.icon} Achievement: ${a.label}!`));
+                    this.ftRenderAchievements();
+                }
+            },
+
+            ftRenderAchievements() {
+                const grid = document.getElementById('ft-achievements-grid');
+                if (!grid) return;
+                grid.innerHTML = this.ftAchievementDefs.map(def => {
+                    const unlocked = this.ftAchievements.includes(def.id);
+                    return `<div class="ft-achievement ${unlocked ? 'ft-unlocked' : 'ft-locked'}">
+                        <span>${def.icon}</span>
+                        <div>
+                            <div class="font-bold" style="font-size:0.68rem">${def.label}</div>
+                            <div style="font-size:0.6rem;opacity:0.7;font-weight:400">${def.desc}</div>
+                        </div>
+                    </div>`;
+                }).join('');
             },
 
             ftGetStage(minutes) {
@@ -4202,7 +4691,7 @@
             },
 
             ftGetCitizenCount(minutes) {
-                return Math.min(Math.floor(minutes * 0.055) + 2, 50);
+                return Math.min(Math.floor(minutes / 2) + 2, 80);
             },
 
             ftEffectiveMin() {
@@ -4211,85 +4700,6 @@
                 return this.ftMinutes + elapsed;
             },
 
-            ftRenderScene(minutes) {
-                const scene = document.getElementById('ft-scene');
-                if (!scene) return;
-                if (minutes === undefined) minutes = this.ftEffectiveMin();
-                const stage = this.ftGetStage(minutes);
-                const citizens = this.ftGetCitizenCount(minutes);
-                const buildings = this.ftBuildings[stage.index];
-
-                // Sky decoration — sun during day, stars at night (dark mode)
-                const skyDecor = `<span class="ft-sky-obj" style="top:8px;left:14px;font-size:1.7rem;opacity:0.9;line-height:1;">☀️</span>`;
-
-                // Clouds with left-based animation (works relative to container width)
-                const cloudData = [
-                    { delay: '0s',   dur: '26s', top: '14px' },
-                    { delay: '-9s',  dur: '36s', top: '28px' },
-                    { delay: '-18s', dur: '30s', top: '6px'  }
-                ];
-                const cloudHtml = cloudData.map(c =>
-                    `<span class="ft-cloud ft-sky-obj" style="animation-duration:${c.dur};animation-delay:${c.delay};top:${c.top};left:-100px;">☁️</span>`
-                ).join('');
-
-                // Mountains (stage ≥ 1)
-                const mtns = stage.index >= 1
-                    ? `<div class="ft-mountains">🏔️🏔️🏔️</div>`
-                    : '';
-
-                // Buildings
-                const bldgHtml = buildings.map(b =>
-                    `<span class="ft-building" style="font-size:${b.s}rem">${b.e}</span>`
-                ).join('');
-
-                // Citizens — seeded by index so positions are stable on re-render
-                const citizenHtml = this.ftBuildCitizens(citizens);
-
-                // Vehicles (stage ≥ 2)
-                const vehicleHtml = stage.index >= 2 ? this.ftBuildVehicles(stage.index) : '';
-
-                scene.innerHTML = `
-                    ${skyDecor}
-                    ${cloudHtml}
-                    ${mtns}
-                    <div class="ft-building-row">${bldgHtml}</div>
-                    <div class="ft-ground"></div>
-                    <div class="ft-road"><div class="ft-road-line"></div></div>
-                    <div class="ft-citizen-row">${citizenHtml}${vehicleHtml}</div>
-                `;
-            },
-
-            ftBuildCitizens(count) {
-                // Use deterministic-ish values so re-renders don't cause jarring jumps
-                const emojis = ['🚶','🏃','🧍','🚶‍♀️','🧑','👨','👩','🧒'];
-                let html = '';
-                for (let i = 0; i < count; i++) {
-                    const isRev = (i % 3 === 0);
-                    // Spread delays evenly across the loop duration so citizens don't bunch up
-                    const dur = (14 + (i * 3.7) % 18).toFixed(1) + 's';
-                    const delay = -((i * 7.3) % 30).toFixed(1) + 's';
-                    const em = emojis[i % emojis.length];
-                    html += `<span class="ft-citizen${isRev ? ' rev' : ''}" style="animation-duration:${dur};animation-delay:${delay};">${em}</span>`;
-                }
-                return html;
-            },
-
-            ftBuildVehicles(stageIdx) {
-                const configs = [
-                    [],
-                    [],
-                    // Stage 2 — Town
-                    [{ e:'🚗', rev:false, dur:'18s', delay:'-3s' }],
-                    // Stage 3 — City
-                    [{ e:'🚗', rev:false, dur:'14s', delay:'-1s' }, { e:'🚌', rev:true, dur:'22s', delay:'-8s' }],
-                    // Stage 4 — Metropolis
-                    [{ e:'🚗', rev:false, dur:'12s', delay:'-2s' }, { e:'🚕', rev:false, dur:'16s', delay:'-6s' }, { e:'🚌', rev:true, dur:'20s', delay:'-4s' }, { e:'🚐', rev:true, dur:'24s', delay:'-12s' }]
-                ];
-                const vlist = configs[Math.min(stageIdx, configs.length - 1)];
-                return vlist.map(v =>
-                    `<span class="ft-vehicle${v.rev ? ' rev' : ''}" style="animation-duration:${v.dur};animation-delay:${v.delay}">${v.e}</span>`
-                ).join('');
-            },
 
             ftUpdateProgress(minutes) {
                 // Called every second during a session with projected (effective) minutes
@@ -4321,15 +4731,24 @@
 
             ftUpdateStats() {
                 const stage = this.ftGetStage(this.ftMinutes);
-                const citizens = this.ftGetCitizenCount(this.ftMinutes);
 
                 // Header chips
                 const emojiEl = document.getElementById('ft-stage-emoji');
                 const badgeEl = document.getElementById('ft-stage-badge');
-                const chipEl = document.getElementById('ft-total-chip');
+                const chipEl  = document.getElementById('ft-total-chip');
+                const nameInput = document.getElementById('ft-town-name-input');
                 if (emojiEl) emojiEl.textContent = stage.emoji;
                 if (badgeEl) badgeEl.textContent = stage.name;
                 if (chipEl) chipEl.textContent = `${this.ftMinutes} min total`;
+                if (nameInput) nameInput.value = this.ftTownName;
+
+                // Streak badge
+                const streakBadge = document.getElementById('ft-streak-badge');
+                const streakVal   = document.getElementById('ft-streak-val');
+                const streakStat  = document.getElementById('ft-streak-stat');
+                if (streakBadge) streakBadge.classList.toggle('hidden', this.ftStreak < 2);
+                if (streakVal) streakVal.textContent = this.ftStreak;
+                if (streakStat) streakStat.textContent = this.ftStreak;
 
                 // Static progress bar (committed minutes)
                 this.ftUpdateProgress(this.ftMinutes);
@@ -4337,14 +4756,16 @@
                 // Stats cards
                 const scEl = document.getElementById('ft-sessions-count');
                 const tmEl = document.getElementById('ft-total-min');
+                const ccEl = document.getElementById('ft-citizen-count');
                 if (scEl) scEl.textContent = this.ftSessions;
+                if (ccEl) ccEl.textContent = this.ftGetCitizenCount(this.ftMinutes);
                 if (tmEl) {
                     const h = Math.floor(this.ftMinutes / 60);
                     const m = this.ftMinutes % 60;
                     tmEl.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
                 }
 
-                // Milestones highlight — use inline styles to avoid Tailwind dark: class issues
+                // Milestones highlight
                 document.querySelectorAll('.ft-milestone').forEach(el => {
                     const s = parseInt(el.dataset.stage);
                     if (s <= stage.index) {
@@ -4402,31 +4823,31 @@
 
             ftStart() {
                 this.ftRunning = true;
-                const btn = document.getElementById('ft-btn');
+                this.ftConstructing = true;
+                const btn    = document.getElementById('ft-btn');
                 const status = document.getElementById('ft-timer-status');
-                const scene = document.getElementById('ft-scene');
                 if (btn) btn.textContent = 'Pause Focus';
                 if (status) { status.textContent = 'Focusing…'; status.classList.add('animate-pulse'); }
-                if (scene) scene.classList.add('ft-session-active');
+                this.ftStartAnimLoop();
                 this.ftInterval = setInterval(() => this.ftTick(), 1000);
             },
 
             ftPause() {
                 this.ftRunning = false;
+                this.ftConstructing = false;
                 clearInterval(this.ftInterval);
-                const btn = document.getElementById('ft-btn');
+                const btn    = document.getElementById('ft-btn');
                 const status = document.getElementById('ft-timer-status');
-                const scene = document.getElementById('ft-scene');
                 if (btn) btn.textContent = 'Resume Focus';
                 if (status) { status.textContent = 'Paused'; status.classList.remove('animate-pulse'); }
-                if (scene) scene.classList.remove('ft-session-active');
             },
 
             ftResetTimer() {
                 this.ftPause();
+                this.ftConstructing = false;
                 this.ftTime = this.ftMode * 60;
                 this.ftUpdateTimerDisplay();
-                const btn = document.getElementById('ft-btn');
+                const btn    = document.getElementById('ft-btn');
                 const status = document.getElementById('ft-timer-status');
                 if (btn) btn.textContent = 'Start Focusing';
                 if (status) { status.textContent = 'Ready to Focus'; status.classList.remove('animate-pulse'); }
@@ -4435,12 +4856,8 @@
             ftTick() {
                 this.ftTime--;
                 this.ftUpdateTimerDisplay();
-                // Real-time updates: every full minute elapsed, refresh scene + progress bar
-                const elapsedMin = Math.floor((this.ftMode * 60 - this.ftTime) / 60);
+                const elapsedMin   = Math.floor((this.ftMode * 60 - this.ftTime) / 60);
                 const effectiveMin = this.ftMinutes + elapsedMin;
-                if ((this.ftMode * 60 - this.ftTime) % 60 === 0 && elapsedMin > 0) {
-                    this.ftRenderScene(effectiveMin);
-                }
                 this.ftUpdateProgress(effectiveMin);
                 if (this.ftTime <= 0) this.ftCompleteSession();
             },
@@ -4460,41 +4877,60 @@
                 localStorage.setItem('wd_ft_minutes', this.ftMinutes);
                 localStorage.setItem('wd_ft_sessions', this.ftSessions);
 
+                // Streak tracking
+                const today = new Date().toISOString().slice(0, 10);
+                const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+                if (this.ftLastSessionDate === yesterday) {
+                    this.ftStreak++;
+                } else if (this.ftLastSessionDate !== today) {
+                    this.ftStreak = 1;
+                }
+                this.ftLastSessionDate = today;
+                localStorage.setItem('wd_ft_streak', this.ftStreak);
+                localStorage.setItem('wd_ft_lastdate', today);
+
                 const newStage = this.ftGetStage(this.ftMinutes);
                 const stagedUp = newStage.index > prevStage;
 
                 this.ftResetTimer();
-                this.ftRenderScene();
                 this.ftUpdateStats();
+                this.ftCheckAchievements();
 
                 if (stagedUp) {
-                    this.showToast(`${newStage.emoji} Your village grew into a ${newStage.name}!`);
-                    // Flash the scene
-                    const flash = document.getElementById('ft-unlock-flash');
-                    const scene = document.getElementById('ft-scene');
+                    this.showToast(`${newStage.emoji} ${this.ftTownName} grew into a ${newStage.name}!`);
+                    const flash   = document.getElementById('ft-unlock-flash');
+                    const wrapper = document.getElementById('ft-scene-wrapper');
                     if (flash) {
                         flash.style.opacity = '1';
                         setTimeout(() => { flash.style.opacity = '0'; }, 700);
                     }
-                    if (scene) {
-                        scene.style.animation = 'ft-stage-up 0.8s ease';
-                        setTimeout(() => { scene.style.animation = ''; }, 800);
+                    if (wrapper) {
+                        wrapper.style.animation = 'ft-stage-up 0.8s ease';
+                        setTimeout(() => { wrapper.style.animation = ''; }, 800);
                     }
                 } else {
                     const citizens = this.ftGetCitizenCount(this.ftMinutes);
-                    this.showToast(`Focus session complete! +${this.ftMode} min — ${citizens} citizens 🏠`);
+                    const streakMsg = this.ftStreak >= 2 ? ` 🔥 ${this.ftStreak}-day streak!` : '';
+                    this.showToast(`Session done! +${this.ftMode} min · ${citizens} citizens${streakMsg}`);
                 }
             },
 
             ftResetProgress() {
-                if (!confirm('Reset all Focus Town progress? Your town will go back to a village.')) return;
+                if (!confirm('Reset all Focus Town progress? Your town will go back to a campsite.')) return;
                 this.ftMinutes = 0;
                 this.ftSessions = 0;
-                localStorage.removeItem('wd_ft_minutes');
-                localStorage.removeItem('wd_ft_sessions');
-                this.ftRenderScene();
+                this.ftStreak = 0;
+                this.ftLastSessionDate = '';
+                this.ftAchievements = [];
+                this.ftTownName = 'My Town';
+                ['wd_ft_minutes','wd_ft_sessions','wd_ft_streak','wd_ft_lastdate','wd_ft_achievements','wd_ft_townname'].forEach(k => localStorage.removeItem(k));
+                const nameInput = document.getElementById('ft-town-name-input');
+                if (nameInput) nameInput.value = 'My Town';
+                const lbl = document.getElementById('ft-town-label');
+                if (lbl) lbl.textContent = 'My Town';
                 this.ftUpdateStats();
-                this.showToast('Focus Town reset. Build your village again! 🌾');
+                this.ftRenderAchievements();
+                this.showToast('Focus Town reset. Start building your Campsite! ⛺');
             },
 
             // Utilities
