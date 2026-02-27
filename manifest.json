@@ -1,20 +1,31 @@
 {
   "name": "WebDesks OS",
   "short_name": "WebDesks",
+  "description": "18 free productivity tools in one browser tab",
+  "version": "0.18.7",
   "start_url": "index.html",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#0f172a",
   "theme_color": "#4f46e5",
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    { "name": "Focus Timer", "url": "index.html#timer", "description": "Start a Pomodoro session" },
+    { "name": "Tasks", "url": "index.html#tasks", "description": "View your task list" },
+    { "name": "Scratchpad", "url": "index.html#scratchpad", "description": "Quick notes" }
+  ],
   "icons": [
     {
       "src": "https://webdesks.app/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "https://webdesks.app/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

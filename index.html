@@ -20,7 +20,7 @@
     <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.18.5">
+    <meta name="generator" content="WebDesks v0.18.7">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -562,6 +562,247 @@
             #ft-scene { height: min(280px, 38vw); }
         }
 
+        /* ── v0.18.7 Mobile Overhaul ─────────────────────────────── */
+
+        /* New bottom nav bar: 5 visible tabs + More button */
+        #mobile-nav {
+            display: none;
+        }
+        @media (max-width: 767px) {
+            /* Hide legacy horizontal-scroll aside on mobile */
+            aside { display: none !important; }
+
+            /* Show new bottom nav */
+            #mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0; left: 0; right: 0;
+                z-index: 60;
+                background: rgba(255,255,255,0.82);
+                backdrop-filter: blur(28px) saturate(200%);
+                -webkit-backdrop-filter: blur(28px) saturate(200%);
+                border-top: 1px solid rgba(255,255,255,0.6);
+                box-shadow: 0 -4px 24px rgba(0,0,0,0.06);
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+                height: calc(64px + env(safe-area-inset-bottom, 0px));
+                align-items: stretch;
+            }
+            .dark #mobile-nav {
+                background: rgba(10,15,30,0.88);
+                border-top: 1px solid rgba(255,255,255,0.07);
+                box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+            }
+
+            /* Each tab in the new bottom nav */
+            .mob-tab {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                padding: 8px 4px;
+                cursor: pointer;
+                border: none;
+                background: transparent;
+                color: #64748b;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                text-transform: uppercase;
+                transition: color 0.2s, background 0.2s;
+                border-radius: 0;
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            .mob-tab.active { color: #4f46e5; }
+            .dark .mob-tab { color: #94a3b8; }
+            .dark .mob-tab.active { color: #818cf8; }
+            .mob-tab svg { width: 22px; height: 22px; stroke-width: 1.75; }
+            .mob-tab.active svg { stroke-width: 2.25; }
+
+            /* More button has a gradient background */
+            #mob-more-btn {
+                background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(124,58,237,0.08));
+            }
+            .dark #mob-more-btn {
+                background: linear-gradient(135deg, rgba(79,70,229,0.2), rgba(124,58,237,0.15));
+            }
+
+            /* Push main content up for the nav bar */
+            main { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+            #app-header { position: sticky; top: 0; z-index: 55; }
+        }
+
+        /* More Drawer (bottom sheet) */
+        #more-drawer-backdrop {
+            display: none;
+            position: fixed; inset: 0; z-index: 70;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        #more-drawer {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 71;
+            background: white;
+            border-radius: 28px 28px 0 0;
+            max-height: 88vh;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+            display: flex;
+            flex-direction: column;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            box-shadow: 0 -8px 48px rgba(0,0,0,0.18);
+        }
+        .dark #more-drawer {
+            background: #0f172a;
+            box-shadow: 0 -8px 48px rgba(0,0,0,0.5);
+        }
+        #more-drawer.open { transform: translateY(0); }
+        #more-drawer-backdrop.open { display: block; }
+
+        /* Drag handle */
+        .drawer-handle {
+            width: 40px; height: 5px;
+            background: #cbd5e1;
+            border-radius: 99px;
+            margin: 12px auto 4px;
+            flex-shrink: 0;
+        }
+        .dark .drawer-handle { background: #334155; }
+
+        /* Tool grid inside drawer */
+        .drawer-tool-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 8px 10px;
+            border-radius: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            color: #1e293b;
+        }
+        .dark .drawer-tool-btn { color: #e2e8f0; }
+        .drawer-tool-btn:active { transform: scale(0.93); }
+        .drawer-tool-btn:hover, .drawer-tool-btn:focus-visible {
+            background: rgba(79,70,229,0.09);
+            color: #4f46e5;
+        }
+        .dark .drawer-tool-btn:hover { background: rgba(99,102,241,0.15); color: #818cf8; }
+        .drawer-tool-btn svg { width: 26px; height: 26px; stroke-width: 1.75; }
+        .drawer-tool-btn span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; text-align: center; line-height: 1.2; }
+
+        /* Mini music player (mobile, shown above bottom nav when music plays) */
+        #mobile-music-bar {
+            display: none;
+        }
+        @media (max-width: 767px) {
+            #mobile-music-bar {
+                display: flex;
+                position: fixed;
+                bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+                left: 12px; right: 12px;
+                z-index: 59;
+                background: rgba(255,255,255,0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255,255,255,0.7);
+                border-radius: 18px;
+                padding: 10px 14px;
+                align-items: center;
+                gap: 12px;
+                box-shadow: 0 4px 24px rgba(79,70,229,0.18);
+                transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+                transform: translateY(100px);
+                opacity: 0;
+                pointer-events: none;
+            }
+            .dark #mobile-music-bar {
+                background: rgba(15,23,42,0.95);
+                border-color: rgba(255,255,255,0.08);
+            }
+            #mobile-music-bar.visible {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        /* PWA install banner */
+        #pwa-banner {
+            display: none;
+            position: fixed;
+            bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+            left: 12px; right: 12px;
+            z-index: 58;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border-radius: 18px;
+            padding: 14px 16px;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(79,70,229,0.4);
+            animation: slideUpBanner 0.4s cubic-bezier(0.32,0.72,0,1) both;
+        }
+        @media (max-width: 767px) {
+            #pwa-banner { display: flex; }
+        }
+        @keyframes slideUpBanner {
+            from { transform: translateY(80px); opacity: 0; }
+            to   { transform: translateY(0);   opacity: 1; }
+        }
+
+        /* Swipe progress indicator (brief flash on swipe) */
+        #swipe-hint {
+            position: fixed;
+            top: 50%;
+            z-index: 200;
+            pointer-events: none;
+            font-size: 28px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        #swipe-hint.left  { left: 16px; }
+        #swipe-hint.right { right: 16px; }
+        #swipe-hint.show  { opacity: 0.7; }
+
+        /* Breathing visualizer: responsive size */
+        #breath-visualizer {
+            width: min(256px, 70vw);
+            height: min(256px, 70vw);
+        }
+
+        /* Calculator: larger hit targets on narrow phones */
+        @media (max-width: 380px) {
+            #calculator .grid { gap: 8px; }
+            #calculator button { padding: 14px 4px !important; font-size: 16px; }
+        }
+
+        /* Focus Lock overlay (shown when timer is running on mobile) */
+        #focus-lock {
+            display: none;
+        }
+        @media (max-width: 767px) {
+            #focus-lock {
+                position: fixed; inset: 0; z-index: 80;
+                background: rgba(10,10,30,0.96);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 24px;
+                color: white;
+                text-align: center;
+                padding: 32px;
+            }
+        }
+
         /* 11. Respect prefers-reduced-motion for accessibility */
         @media (prefers-reduced-motion: reduce) {
             body { animation: none !important; }
@@ -607,7 +848,7 @@
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "Any — runs in any modern web browser",
       "browserRequirements": "Requires a modern browser with JavaScript enabled",
-      "softwareVersion": "0.18.5",
+      "softwareVersion": "0.18.7",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -652,7 +893,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.18.5</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.18.7</span>
             </div>
         </div>
 
@@ -815,7 +1056,7 @@
         
         <!-- DASHBOARD -->
         <div id="dashboard" class="tab-content active">
-            <div class="max-w-6xl mx-auto space-y-6 h-full overflow-y-auto pb-20">
+            <div class="max-w-6xl mx-auto space-y-6 h-full overflow-y-auto pb-24 md:pb-20">
                 <!-- Search Bar -->
                 <div class="glass p-2 rounded-[1.5rem] relative z-30">
                     <div class="flex items-center px-4 py-2">
@@ -850,11 +1091,12 @@
                         <div class="text-[10px] text-slate-400 uppercase font-medium">Set Alarm →</div>
                     </div>
 
-                    <!-- Focus Timer -->
-                    <div class="glass p-5 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-indigo-300 border border-transparent transition-colors" onclick="app.switchTab('timer')">
+                    <!-- Focus Timer (tap to quick-start on mobile, navigate on desktop) -->
+                    <div class="glass p-5 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-indigo-300 border border-transparent transition-colors select-none" onclick="app.dashTimerTap()">
                         <div class="text-[10px] font-black uppercase tracking-widest text-indigo-500">Focus Timer</div>
                         <div id="mini-timer" class="text-2xl font-black timer-font text-indigo-600">25:00</div>
-                        <div class="text-[10px] text-slate-400 uppercase font-medium">Pomodoro</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-medium md:hidden" id="dash-timer-hint">Tap to start</div>
+                        <div class="text-[10px] text-slate-400 uppercase font-medium hidden md:block">Pomodoro</div>
                     </div>
 
                     <!-- Note Preview -->
@@ -916,11 +1158,14 @@
                         <p class="text-sm text-slate-400">Auto-saved locally. Never leaves your device.</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="app.copyNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2">
-                            <i data-lucide="copy" class="w-4 h-4"></i> Copy
+                        <button onclick="app.copyNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2" aria-label="Copy note to clipboard">
+                            <i data-lucide="copy" class="w-4 h-4" aria-hidden="true"></i> Copy
                         </button>
-                        <button onclick="app.downloadNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2">
-                            <i data-lucide="download" class="w-4 h-4"></i> Download
+                        <button onclick="app.shareNote()" id="share-note-btn" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2" aria-label="Share note">
+                            <i data-lucide="share-2" class="w-4 h-4" aria-hidden="true"></i> Share
+                        </button>
+                        <button onclick="app.downloadNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2 hidden sm:flex" aria-label="Download note as text file">
+                            <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i> Save
                         </button>
                     </div>
                 </div>
@@ -1044,8 +1289,8 @@
                             <button onclick="app.clearWB()" class="p-2 rounded-lg hover:bg-red-100 text-red-500" title="Clear">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
-                            <button onclick="app.downloadWB()" class="p-2 rounded-lg hover:bg-indigo-100 text-indigo-500" title="Download">
-                                <i data-lucide="download" class="w-4 h-4"></i>
+                            <button onclick="app.shareWhiteboard()" class="p-2 rounded-lg hover:bg-indigo-100 text-indigo-500" title="Share / Download whiteboard" aria-label="Share whiteboard">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
@@ -1199,10 +1444,10 @@
                 <button onclick="app.toggleBreathMute()" id="breath-mute-btn" class="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-indigo-500" title="Toggle Sound">
                     <i data-lucide="volume-2" class="w-5 h-5"></i>
                 </button>
-                <!-- Visualizer -->
-                <div class="relative w-64 h-64 mx-auto flex items-center justify-center my-8">
+                <!-- Visualizer (responsive size via CSS #breath-visualizer) -->
+                <div id="breath-visualizer" class="relative mx-auto flex items-center justify-center my-4 md:my-8" style="width:min(256px,70vw);height:min(256px,70vw)">
                     <div id="breath-circle" class="absolute inset-0 bg-indigo-500/20 rounded-full scale-50 transition-transform ease-in-out"></div>
-                    <div id="breath-circle-inner" class="absolute w-48 h-48 bg-indigo-500/30 rounded-full scale-50 transition-transform ease-in-out blur-xl"></div>
+                    <div id="breath-circle-inner" class="absolute bg-indigo-500/30 rounded-full scale-50 transition-transform ease-in-out blur-xl" style="width:75%;height:75%"></div>
                     <div class="relative z-10">
                         <div id="breath-instruction" class="text-3xl font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">Ready</div>
                     </div>
@@ -1685,6 +1930,97 @@
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════
+         NEW MOBILE NAV (v0.18.7) — replaces old aside on mobile
+         ═══════════════════════════════════════════════ -->
+    <nav id="mobile-nav" aria-label="Main navigation">
+        <!-- Dashboard -->
+        <button class="mob-tab active" data-tab="dashboard" onclick="app.switchTab('dashboard')" aria-label="Dashboard">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Home</span>
+        </button>
+        <!-- Tasks -->
+        <button class="mob-tab" data-tab="tasks" onclick="app.switchTab('tasks')" aria-label="Tasks">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Tasks</span>
+        </button>
+        <!-- Focus Timer -->
+        <button class="mob-tab" data-tab="timer" onclick="app.switchTab('timer')" aria-label="Focus Timer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
+            <span>Focus</span>
+        </button>
+        <!-- Sound Studio -->
+        <button class="mob-tab" data-tab="audio" onclick="app.switchTab('audio')" aria-label="Sound Studio">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+            <span>Sounds</span>
+        </button>
+        <!-- More -->
+        <button class="mob-tab" id="mob-more-btn" onclick="app.openMoreDrawer()" aria-label="More tools" aria-haspopup="dialog">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            <span>More</span>
+        </button>
+    </nav>
+
+    <!-- MORE DRAWER (bottom sheet with all 18 tools) -->
+    <div id="more-drawer-backdrop" onclick="app.closeMoreDrawer()" aria-hidden="true"></div>
+    <div id="more-drawer" role="dialog" aria-modal="true" aria-label="All tools">
+        <div class="drawer-handle" aria-hidden="true"></div>
+        <div class="px-5 pt-2 pb-3 flex-shrink-0">
+            <h2 class="text-lg font-black text-slate-800 dark:text-slate-100 mb-3">All Tools</h2>
+            <div class="relative">
+                <input id="drawer-search" type="search" placeholder="Search tools…" autocomplete="off"
+                    class="w-full bg-slate-100 dark:bg-slate-800 rounded-2xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
+                    oninput="app.filterDrawer(this.value)">
+                <svg class="absolute right-3 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+        </div>
+        <div id="drawer-tool-grid" class="overflow-y-auto flex-1 px-3 pb-6 grid grid-cols-4 gap-1 content-start" style="overscroll-behavior: contain;"></div>
+    </div>
+
+    <!-- MINI MUSIC PLAYER (mobile, floats above bottom nav) -->
+    <div id="mobile-music-bar" role="region" aria-label="Now playing">
+        <div class="w-8 h-8 rounded-xl bg-indigo-500 flex items-center justify-center shrink-0 shadow shadow-indigo-500/40 relative overflow-hidden cursor-pointer" onclick="app.switchTab('audio')">
+            <svg id="mob-music-icon" class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="flex-1 min-w-0 cursor-pointer" onclick="app.switchTab('audio')">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate" id="mob-track-name">Lo-Fi Radio</div>
+            <div class="text-[10px] text-slate-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse inline-block"></span>
+                Now playing
+            </div>
+        </div>
+        <button onclick="app.toggleMusic()" id="mob-play-btn" class="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white shadow shadow-indigo-500/30 hover:bg-indigo-600 transition-colors" aria-label="Play/Pause music">
+            <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </button>
+    </div>
+
+    <!-- PWA INSTALL BANNER -->
+    <div id="pwa-banner" style="display:none" role="complementary" aria-label="Install app">
+        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="text-sm font-bold">Add to Home Screen</div>
+            <div class="text-xs opacity-80">Install for the best experience</div>
+        </div>
+        <button id="pwa-install-btn" class="px-4 py-2 bg-white text-indigo-600 rounded-xl text-xs font-black hover:bg-indigo-50 transition-colors">Install</button>
+        <button onclick="app.dismissPWABanner()" class="p-1 opacity-70 hover:opacity-100" aria-label="Dismiss">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+
+    <!-- FOCUS LOCK OVERLAY (shown during active timer on mobile, keeps UX focused) -->
+    <div id="focus-lock" role="dialog" aria-modal="true" aria-label="Focus session in progress">
+        <div class="text-6xl mb-2">🎯</div>
+        <div id="fl-timer" class="text-7xl font-black timer-font text-white mb-2">25:00</div>
+        <div class="text-indigo-300 text-sm font-bold uppercase tracking-widest mb-8" id="fl-status">Focusing…</div>
+        <button onclick="app.toggleTimer()" id="fl-pause-btn" class="px-10 py-4 rounded-2xl bg-indigo-600 text-white font-bold text-lg mb-4 w-full max-w-xs">Pause</button>
+        <button onclick="app.exitFocusLock()" class="text-slate-400 text-sm underline">Exit full-screen</button>
+    </div>
+
+    <!-- SWIPE DIRECTION HINTS -->
+    <div id="swipe-hint" aria-hidden="true"></div>
+
     <!-- Screen reader live region for toast announcements -->
     <div id="sr-announcer" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
@@ -1894,9 +2230,18 @@
                 this.initFocusTown();
                 this.loadBoard();
 
+                // Mobile v0.18.7 features
+                this.initMoreDrawer();
+                this.initSwipeNav();
+                this.initPWAInstall();
+                this.updateMobileNav(savedTab || 'dashboard');
+
                 // Pause background animation when tab is not visible (save GPU)
+                // Also re-acquire wake lock if hidden then shown while timer active
                 document.addEventListener('visibilitychange', () => {
                     document.body.style.animationPlayState = document.hidden ? 'paused' : 'running';
+                    if (!document.hidden && this.timerRunning) this.requestWakeLock();
+                    if (document.hidden && !this.timerRunning) this.releaseWakeLock();
                 });
 
                 // Keyboard shortcuts
@@ -1975,6 +2320,9 @@
                 localStorage.setItem('webdesks_last_tab', tabId);
                 this.currentTab = tabId;
                 this._rebuildIcons();
+
+                // Update mobile nav active state
+                this.updateMobileNav(tabId);
 
                 // Update document title for the active tab
                 const tabTitles = {
@@ -2330,6 +2678,7 @@
 
             triggerAlarm() {
                 this.alarmTriggered = true;
+                this.vibrate([500, 200, 500, 200, 500]);
                 document.getElementById('alarm-overlay').classList.remove('hidden');
                 document.getElementById('alarm-time-display').textContent = this.alarmTime;
                 
@@ -2480,6 +2829,7 @@
 
             toggleTask(index) {
                 this.tasks[index].done = !this.tasks[index].done;
+                if (this.tasks[index].done) this.vibrate([40, 20, 40]);
                 this.renderTasks();
             },
 
@@ -2847,8 +3197,13 @@
             toggleTimer() {
                 if (this.timerRunning) {
                     this.pauseTimer();
+                    this.releaseWakeLock();
+                    this.updateFocusLock();
                 } else {
                     this.startTimer();
+                    this.requestWakeLock();
+                    this.vibrate([50, 30, 50]);
+                    this.updateFocusLock();
                 }
             },
 
@@ -2861,7 +3216,8 @@
                 this.timerInterval = setInterval(() => {
                     this.timerTime--;
                     this.updateTimerDisplay();
-                    
+                    this.updateFocusLock();
+
                     if (this.timerTime <= 0) {
                         this.completeTimer();
                     }
@@ -2906,6 +3262,9 @@
                     }
                 }
 
+                this.vibrate([200, 100, 200, 100, 400]);
+                this.releaseWakeLock();
+                this.exitFocusLock();
                 this.showToast('Focus session complete! 🎉');
                 this.resetTimer();
             },
@@ -3509,6 +3868,7 @@
                     }
                 }
                 this._rebuildIcons();
+                this.updateMobileMusicBar();
             },
 
             drawVisualizer() {
@@ -3549,6 +3909,7 @@
                 if (this.swRunning) {
                     clearInterval(this.swInterval);
                     this.swRunning = false;
+                    this.releaseWakeLock();
                     document.getElementById('sw-btn').textContent = 'Resume';
                     document.getElementById('sw-status').textContent = 'Paused';
                 } else {
@@ -3558,6 +3919,8 @@
                         document.getElementById('sw-display').textContent = this.formatSw(this.swElapsed);
                     }, 10);
                     this.swRunning = true;
+                    this.requestWakeLock();
+                    this.vibrate([30]);
                     document.getElementById('sw-btn').textContent = 'Pause';
                     document.getElementById('sw-status').textContent = 'Running';
                     document.getElementById('sw-lap-btn').disabled = false;
@@ -3566,6 +3929,7 @@
 
             lapStopwatch() {
                 if (!this.swRunning) return;
+                this.vibrate([25]);
                 const lapTime = this.swElapsed - this.swLapStart;
                 this.swLaps.push({ total: this.swElapsed, split: lapTime });
                 this.swLapStart = this.swElapsed;
@@ -4155,6 +4519,275 @@
                 const div = document.createElement('div');
                 div.textContent = text;
                 return div.innerHTML;
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // MOBILE v0.18.7 — New Features
+            // ═══════════════════════════════════════════════════════
+
+            // ── Mobile Tab Order (for swipe + More drawer) ──────────
+            tabOrder: ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder'],
+            tabIcons: {
+                dashboard:'home', scratchpad:'file-text', tasks:'check-circle-2',
+                board:'columns', whiteboard:'pencil', clock:'clock', timer:'hourglass',
+                stopwatch:'timer', focustown:'building-2', audio:'headphones',
+                breathing:'wind', calculator:'calculator', converter:'arrow-left-right',
+                colorpicker:'palette', pdf:'file-stack', zones:'globe-2',
+                onair:'radio', recorder:'video'
+            },
+            tabLabels: {
+                dashboard:'Home', scratchpad:'Notepad', tasks:'Tasks',
+                board:'Board', whiteboard:'Draw', clock:'Clock', timer:'Timer',
+                stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Sounds',
+                breathing:'Breathing', calculator:'Calc', converter:'Convert',
+                colorpicker:'Colors', pdf:'PDF', zones:'Zones',
+                onair:'On Air', recorder:'Record'
+            },
+
+            // ── More Drawer ──────────────────────────────────────────
+            initMoreDrawer() {
+                const grid = document.getElementById('drawer-tool-grid');
+                if (!grid) return;
+                this._drawerItems = this.tabOrder.map(id => {
+                    const btn = document.createElement('button');
+                    btn.className = 'drawer-tool-btn';
+                    btn.dataset.id = id;
+                    btn.dataset.label = this.tabLabels[id].toLowerCase();
+                    btn.setAttribute('aria-label', this.tabLabels[id]);
+                    btn.innerHTML = `<i data-lucide="${this.tabIcons[id]}" class="w-6 h-6"></i><span>${this.tabLabels[id]}</span>`;
+                    btn.addEventListener('click', () => {
+                        this.switchTab(id);
+                        this.closeMoreDrawer();
+                        this.vibrate([30]);
+                    });
+                    grid.appendChild(btn);
+                    return btn;
+                });
+                this._rebuildIcons();
+
+                // Swipe-to-close the drawer
+                let startY = 0;
+                const drawer = document.getElementById('more-drawer');
+                drawer.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+                drawer.addEventListener('touchend', e => {
+                    if (e.changedTouches[0].clientY - startY > 80) this.closeMoreDrawer();
+                }, { passive: true });
+            },
+
+            openMoreDrawer() {
+                const backdrop = document.getElementById('more-drawer-backdrop');
+                const drawer = document.getElementById('more-drawer');
+                if (!backdrop || !drawer) return;
+                backdrop.classList.add('open');
+                drawer.classList.add('open');
+                document.getElementById('drawer-search')?.focus();
+                this.vibrate([20]);
+            },
+
+            closeMoreDrawer() {
+                document.getElementById('more-drawer-backdrop')?.classList.remove('open');
+                document.getElementById('more-drawer')?.classList.remove('open');
+            },
+
+            filterDrawer(query) {
+                const q = query.toLowerCase().trim();
+                if (!this._drawerItems) return;
+                this._drawerItems.forEach(btn => {
+                    const matches = !q || btn.dataset.label.includes(q);
+                    btn.style.display = matches ? '' : 'none';
+                });
+            },
+
+            // ── Swipe Navigation ─────────────────────────────────────
+            initSwipeNav() {
+                const main = document.getElementById('main-content');
+                if (!main) return;
+                let startX = 0, startY = 0, startTime = 0;
+
+                main.addEventListener('touchstart', e => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    startTime = Date.now();
+                }, { passive: true });
+
+                main.addEventListener('touchend', e => {
+                    const dx = e.changedTouches[0].clientX - startX;
+                    const dy = e.changedTouches[0].clientY - startY;
+                    const dt = Date.now() - startTime;
+                    // Must be mostly horizontal, fast enough, and long enough
+                    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.8 || dt > 500) return;
+                    // Don't swipe on canvas, inputs, or scrollable content with scroll
+                    const el = document.elementFromPoint(startX, startY);
+                    if (!el) return;
+                    if (el.closest('canvas, input, textarea, select, [data-no-swipe]')) return;
+
+                    const idx = this.tabOrder.indexOf(this.currentTab);
+                    if (dx < 0 && idx < this.tabOrder.length - 1) {
+                        this.switchTab(this.tabOrder[idx + 1]);
+                        this._showSwipeHint('right', '›');
+                    } else if (dx > 0 && idx > 0) {
+                        this.switchTab(this.tabOrder[idx - 1]);
+                        this._showSwipeHint('left', '‹');
+                    }
+                    this.vibrate([15]);
+                }, { passive: true });
+            },
+
+            _showSwipeHint(side, glyph) {
+                const el = document.getElementById('swipe-hint');
+                if (!el) return;
+                el.className = `${side} show`;
+                el.textContent = glyph;
+                clearTimeout(this._swipeHintTimer);
+                this._swipeHintTimer = setTimeout(() => { el.className = side; }, 350);
+            },
+
+            // ── Wake Lock API ────────────────────────────────────────
+            wakeLock: null,
+            async requestWakeLock() {
+                if (!('wakeLock' in navigator)) return;
+                try {
+                    this.wakeLock = await navigator.wakeLock.request('screen');
+                } catch (_) { /* silently ignore */ }
+            },
+            releaseWakeLock() {
+                if (this.wakeLock) { this.wakeLock.release(); this.wakeLock = null; }
+            },
+
+            // ── Haptic Feedback (Vibration API) ─────────────────────
+            vibrate(pattern) {
+                if (navigator.vibrate) navigator.vibrate(pattern);
+            },
+
+            // ── Native Share API ─────────────────────────────────────
+            async shareNote() {
+                const text = document.getElementById('note-area')?.value?.trim();
+                if (!text) { this.showToast('Nothing to share yet.'); return; }
+                if (navigator.share) {
+                    try {
+                        await navigator.share({ title: 'My Note', text });
+                        return;
+                    } catch(_) { /* user cancelled or API failed */ }
+                }
+                // Fallback to copy
+                navigator.clipboard.writeText(text).then(() => this.showToast('Copied to clipboard!'));
+            },
+
+            async shareWhiteboard() {
+                const canvas = document.getElementById('wb-canvas');
+                if (!canvas) return;
+                canvas.toBlob(async blob => {
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob],'whiteboard.png',{type:'image/png'})] })) {
+                        try {
+                            await navigator.share({ files: [new File([blob],'whiteboard.png',{type:'image/png'})], title:'My Whiteboard' });
+                            return;
+                        } catch(_) {}
+                    }
+                    // Fallback: download
+                    this.downloadWB();
+                }, 'image/png');
+            },
+
+            // ── Mini Mobile Music Player ─────────────────────────────
+            updateMobileMusicBar() {
+                const bar = document.getElementById('mobile-music-bar');
+                if (!bar) return;
+                const btn = document.getElementById('mob-play-btn');
+                if (this.musicPlaying) {
+                    bar.classList.add('visible');
+                    if (btn) btn.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                } else {
+                    bar.classList.remove('visible');
+                    if (btn) btn.innerHTML = '<svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
+                }
+            },
+
+            // ── PWA Install Prompt ───────────────────────────────────
+            _deferredInstallPrompt: null,
+            initPWAInstall() {
+                window.addEventListener('beforeinstallprompt', e => {
+                    e.preventDefault();
+                    this._deferredInstallPrompt = e;
+                    // Only show if user hasn't dismissed before
+                    if (!localStorage.getItem('wd_pwa_dismissed')) {
+                        setTimeout(() => {
+                            const banner = document.getElementById('pwa-banner');
+                            if (banner) banner.style.display = 'flex';
+                        }, 20000); // show after 20s of engagement
+                    }
+                });
+                const installBtn = document.getElementById('pwa-install-btn');
+                if (installBtn) {
+                    installBtn.addEventListener('click', async () => {
+                        if (!this._deferredInstallPrompt) return;
+                        this._deferredInstallPrompt.prompt();
+                        const { outcome } = await this._deferredInstallPrompt.userChoice;
+                        this._deferredInstallPrompt = null;
+                        this.dismissPWABanner();
+                        if (outcome === 'accepted') this.showToast('WebDesks installed!');
+                    });
+                }
+                // Hide once installed
+                window.addEventListener('appinstalled', () => this.dismissPWABanner());
+            },
+            dismissPWABanner() {
+                const banner = document.getElementById('pwa-banner');
+                if (banner) banner.style.display = 'none';
+                localStorage.setItem('wd_pwa_dismissed', '1');
+            },
+
+            // ── Focus Lock (mobile full-screen during timer) ─────────
+            focusLockActive: false,
+            enterFocusLock() {
+                if (window.innerWidth > 767) return; // desktop only shows timer tab
+                const fl = document.getElementById('focus-lock');
+                if (!fl) return;
+                fl.style.display = 'flex';
+                this.focusLockActive = true;
+                this.updateFocusLock();
+            },
+            exitFocusLock() {
+                const fl = document.getElementById('focus-lock');
+                if (fl) fl.style.display = 'none';
+                this.focusLockActive = false;
+            },
+            updateFocusLock() {
+                if (!this.focusLockActive) return;
+                const m = Math.floor(this.timerTime / 60);
+                const s = this.timerTime % 60;
+                const display = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                const el = document.getElementById('fl-timer');
+                if (el) el.textContent = display;
+                const btn = document.getElementById('fl-pause-btn');
+                if (btn) btn.textContent = this.timerRunning ? 'Pause' : 'Resume';
+                const status = document.getElementById('fl-status');
+                if (status) status.textContent = this.timerRunning ? 'Focusing…' : 'Paused';
+            },
+
+            // ── Dashboard: Quick-start timer on mobile ───────────────
+            dashTimerTap() {
+                if (window.innerWidth <= 767 && !this.timerRunning) {
+                    // Quick-start: start the timer and enter Focus Lock
+                    this.switchTab('timer');
+                    if (!this.timerRunning) {
+                        this.toggleTimer();
+                        setTimeout(() => this.enterFocusLock(), 300);
+                    }
+                    this.vibrate([50, 30, 50]);
+                } else {
+                    this.switchTab('timer');
+                }
+            },
+
+            // ── Update mobile nav active state ───────────────────────
+            updateMobileNav(tabId) {
+                document.querySelectorAll('#mobile-nav .mob-tab[data-tab]').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabId);
+                });
+                // If it's a tab not in the primary 4, highlight "More"
+                const primaryTabs = ['dashboard','tasks','timer','audio'];
+                const moreBtn = document.getElementById('mob-more-btn');
+                if (moreBtn) moreBtn.classList.toggle('active', !primaryTabs.includes(tabId));
             }
         };
 
