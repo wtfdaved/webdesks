@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us | WebDesks</title>
+    <meta name="description" content="Get in touch with the WebDesks team. Send us your feedback, bug reports, feature suggestions, or press inquiries.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://webdesks.app/contact">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webdesks.app/contact">
+    <meta property="og:title" content="Contact Us | WebDesks">
+    <meta property="og:description" content="Send us your feedback, bug reports, or feature suggestions. We'd love to hear from you.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .form-input {
+            width: 100%;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.625rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            background: #fff;
+            transition: border-color 0.15s;
+            outline: none;
+        }
+        .form-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); }
+        .form-input::placeholder { color: #94a3b8; }
+    </style>
+</head>
+<body class="bg-white text-slate-800">
+
+    <!-- Nav -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/blog/" class="hover:text-indigo-600 transition-colors">Blog</a>
+                <a href="/about" class="hover:text-indigo-600 transition-colors">About</a>
+                <a href="/contact" class="text-indigo-600 font-semibold">Contact</a>
+            </div>
+            <a href="/#dashboard" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">Open App →</a>
+        </nav>
+    </header>
+
+    <!-- Header -->
+    <div class="bg-slate-900 text-white py-14 px-4">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-3xl md:text-4xl font-black mb-3">Contact Us</h1>
+            <p class="text-slate-400 text-lg">We read every message. Bug reports, feature ideas, press, and partnership inquiries are all welcome.</p>
+        </div>
+    </div>
+
+    <!-- AdSense -->
+    <div class="max-w-3xl mx-auto px-4 py-6">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- Contact layout -->
+    <main class="max-w-5xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-5 gap-12">
+
+        <!-- Contact form -->
+        <div class="md:col-span-3">
+            <h2 class="text-xl font-bold text-slate-800 mb-6">Send Us a Message</h2>
+
+            <form
+                action="https://formsubmit.co/contact@thegreenborder.com"
+                method="POST"
+                class="space-y-5"
+            >
+                <!-- FormSubmit config fields -->
+                <input type="hidden" name="_subject" value="WebDesks Contact Form Submission">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://webdesks.app/contact?sent=true">
+                <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="name" class="block text-sm font-semibold text-slate-700 mb-1.5">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-input"
+                            placeholder="Your name"
+                            required
+                        >
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="you@example.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div>
+                    <label for="subject" class="block text-sm font-semibold text-slate-700 mb-1.5">Subject</label>
+                    <select id="subject" name="subject" class="form-input">
+                        <option value="General Feedback">General Feedback</option>
+                        <option value="Bug Report">Bug Report</option>
+                        <option value="Feature Request">Feature Request</option>
+                        <option value="Press / Media Inquiry">Press / Media Inquiry</option>
+                        <option value="Partnership">Partnership Inquiry</option>
+                        <option value="Privacy / Legal">Privacy / Legal</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-slate-700 mb-1.5">Message</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        class="form-input resize-y"
+                        placeholder="Tell us what's on your mind..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition-colors text-base"
+                >
+                    Send Message →
+                </button>
+
+                <p class="text-xs text-slate-400 text-center">
+                    We typically respond within 1–2 business days.
+                </p>
+            </form>
+
+            <!-- Success message (shown after redirect) -->
+            <div id="success-msg" class="hidden mt-6 bg-green-50 border border-green-200 rounded-xl p-5 text-center">
+                <p class="text-2xl mb-2">✅</p>
+                <p class="font-bold text-green-800 mb-1">Message sent!</p>
+                <p class="text-green-700 text-sm">Thanks for reaching out. We'll get back to you within 1–2 business days.</p>
+            </div>
+            <script>
+                if (new URLSearchParams(window.location.search).get('sent') === 'true') {
+                    document.querySelector('form').style.display = 'none';
+                    document.getElementById('success-msg').classList.remove('hidden');
+                }
+            </script>
+        </div>
+
+        <!-- Sidebar info -->
+        <aside class="md:col-span-2 space-y-8">
+
+            <div>
+                <h2 class="text-xl font-bold text-slate-800 mb-5">Contact Information</h2>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="text-2xl mt-0.5">✉️</span>
+                        <div>
+                            <p class="font-semibold text-slate-800 text-sm mb-0.5">Email</p>
+                            <a href="mailto:contact@thegreenborder.com" class="text-indigo-600 hover:underline text-sm break-all">
+                                contact@thegreenborder.com
+                            </a>
+                            <p class="text-xs text-slate-400 mt-0.5">Best for non-urgent inquiries</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="text-2xl mt-0.5">🌐</span>
+                        <div>
+                            <p class="font-semibold text-slate-800 text-sm mb-0.5">Website</p>
+                            <a href="https://webdesks.app" class="text-indigo-600 hover:underline text-sm">
+                                webdesks.app
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-slate-800 mb-4">What to Include in a Bug Report</h3>
+                <ul class="space-y-2 text-sm text-slate-600">
+                    <li class="flex items-start gap-2"><span class="text-slate-400 mt-0.5">•</span> Which tool is affected (e.g., PDF Merger)</li>
+                    <li class="flex items-start gap-2"><span class="text-slate-400 mt-0.5">•</span> Your browser and version (e.g., Chrome 124)</li>
+                    <li class="flex items-start gap-2"><span class="text-slate-400 mt-0.5">•</span> Your operating system</li>
+                    <li class="flex items-start gap-2"><span class="text-slate-400 mt-0.5">•</span> Steps to reproduce the issue</li>
+                    <li class="flex items-start gap-2"><span class="text-slate-400 mt-0.5">•</span> What you expected vs. what happened</li>
+                </ul>
+            </div>
+
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-5">
+                <p class="font-bold text-indigo-800 mb-1 text-sm">About WebDesks</p>
+                <p class="text-indigo-700 text-sm leading-relaxed">
+                    WebDesks is a free productivity suite of 18 browser-based tools — no account, no install, no subscription. <a href="/about" class="underline font-semibold hover:text-indigo-900">Learn more about our mission →</a>
+                </p>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 px-4">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+            <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
+            <div class="flex flex-wrap justify-center gap-5">
+                <a href="/" class="hover:text-white transition-colors">Home</a>
+                <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                <a href="/about" class="hover:text-white transition-colors">About</a>
+                <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+                <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+            <p>&copy; 2025 WebDesks. Free browser tools.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
