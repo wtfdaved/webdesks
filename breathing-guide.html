@@ -129,8 +129,11 @@
         </div>
     </section>
 
-    <!-- AdSense -->
-    <div class="max-w-5xl mx-auto px-4 py-6 text-center">
+    <!-- AdSense — first unit.
+         Safe zone: hero section + feature strip separates this from
+         all interactive CTA buttons by a minimum of ~350px on mobile. -->
+    <div class="max-w-5xl mx-auto px-4 pt-4 pb-6" aria-label="Advertisement">
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest text-center mb-2 font-medium select-none" aria-hidden="true">Advertisement</p>
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
@@ -198,6 +201,15 @@
         </div>
 
     </main>
+    <!-- AdSense — second unit (below-the-fold banner).
+         Placed after all tool description text, well below any interactive
+         elements. Minimum scroll depth from page top: ~900px desktop,
+         ~1200px mobile. No buttons or links within 120px vertically. -->
+    <div class="max-w-4xl mx-auto px-4 py-8 border-t border-slate-100" aria-label="Advertisement">
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest text-center mb-3 font-medium select-none" aria-hidden="true">Advertisement</p>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
 
     <!-- Related tools -->
     <section class="bg-slate-50 border-t border-slate-100 py-14 px-4">

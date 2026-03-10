@@ -1855,6 +1855,52 @@
         </div>
     </main>
 
+    <!-- ══ RIGHT AD PANEL — desktop xl+ only, collapsible ══
+         Positioned as a flex sibling of #main-content inside #app-body.
+         Hidden on mobile/tablet so it never pushes tools below the fold.
+         Width of 180px leaves ≥840px for main content on 1280px screens.
+         The toggle button is 28px from interactive tool buttons at minimum. -->
+    <div id="ad-panel"
+         data-collapsed="false"
+         class="hidden xl:flex flex-col shrink-0 glass md:m-3 md:ml-0 md:rounded-3xl overflow-hidden"
+         style="width: 180px; transition: width 0.3s ease; min-width: 0;">
+
+        <!-- Panel header: label + collapse toggle -->
+        <div class="flex items-center justify-between px-2 pt-3 pb-2 border-b border-white/10 shrink-0">
+            <span id="ad-panel-label"
+                  class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-1 transition-opacity duration-300 whitespace-nowrap overflow-hidden"
+                  style="opacity:1;">
+                Advertisement
+            </span>
+            <button id="ad-panel-toggle"
+                    onclick="toggleAdPanel()"
+                    class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-white/20 dark:hover:bg-slate-700/50 transition-all shrink-0 ml-1"
+                    aria-label="Collapse advertisement panel"
+                    title="Collapse ad panel">
+                <svg id="ad-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" stroke-linejoin="round"
+                     style="transition: transform 0.3s ease; display: block;">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Ad unit — flex container so the ins block fills height correctly -->
+        <div id="ad-panel-content"
+             class="flex flex-col flex-1 items-center justify-start px-2 py-3 overflow-hidden"
+             style="transition: opacity 0.3s ease, visibility 0.3s ease;">
+            <ins class="adsbygoogle"
+                 style="display:block; width:160px;"
+                 data-ad-client="ca-pub-8626644983261966"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="false"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+    </div><!-- end #ad-panel -->
+
     </div><!-- end #app-body -->
 
     <!-- ALARM OVERLAY -->
@@ -5229,6 +5275,58 @@
 
         // Initialize on load
         window.addEventListener('load', () => app.init());
+    </script>
+
+    <!-- Ad panel toggle — separate from app logic to avoid coupling -->
+    <script>
+        function toggleAdPanel() {
+            const panel   = document.getElementById('ad-panel');
+            const content = document.getElementById('ad-panel-content');
+            const label   = document.getElementById('ad-panel-label');
+            const chevron = document.getElementById('ad-chevron');
+            if (!panel) return;
+
+            const collapsed = panel.dataset.collapsed === 'true';
+            if (collapsed) {
+                // Expand
+                panel.style.width        = '180px';
+                content.style.opacity    = '1';
+                content.style.visibility = 'visible';
+                label.style.opacity      = '1';
+                chevron.style.transform  = 'rotate(0deg)';
+                panel.dataset.collapsed  = 'false';
+                panel.setAttribute('aria-label', 'Advertisement panel (expanded)');
+            } else {
+                // Collapse — keep toggle button accessible at 28px
+                panel.style.width        = '28px';
+                content.style.opacity    = '0';
+                content.style.visibility = 'hidden';
+                label.style.opacity      = '0';
+                chevron.style.transform  = 'rotate(180deg)';
+                panel.dataset.collapsed  = 'true';
+                panel.setAttribute('aria-label', 'Advertisement panel (collapsed)');
+            }
+            try { localStorage.setItem('adPanelCollapsed', collapsed ? 'false' : 'true'); } catch(e) {}
+        }
+
+        // Restore preference on load — deferred so the ad is already initialised
+        (function restoreAdPanel() {
+            try {
+                if (localStorage.getItem('adPanelCollapsed') !== 'true') return;
+                window.addEventListener('load', function() {
+                    const panel   = document.getElementById('ad-panel');
+                    const content = document.getElementById('ad-panel-content');
+                    const label   = document.getElementById('ad-panel-label');
+                    const chevron = document.getElementById('ad-chevron');
+                    if (!panel) return;
+                    panel.style.width        = '28px';
+                    if (content) { content.style.opacity = '0'; content.style.visibility = 'hidden'; }
+                    if (label)   label.style.opacity   = '0';
+                    if (chevron) chevron.style.transform = 'rotate(180deg)';
+                    panel.dataset.collapsed  = 'true';
+                });
+            } catch(e) {}
+        })();
     </script>
 </body>
 </html>
