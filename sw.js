@@ -1,8 +1,19 @@
-const CACHE_VERSION = 'webdesks-v18.7';
+const CACHE_VERSION = 'webdesks-v18.8';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/manifest.json'
+  '/manifest.json',
+  '/about.html',
+  '/privacy.html',
+  '/terms.html',
+  '/contact.html',
+  '/pdf-merger.html',
+  '/screen-recorder.html',
+  '/pomodoro-timer.html',
+  '/white-noise.html',
+  '/breathing-guide.html',
+  '/blog/',
+  '/blog/index.html'
 ];
 
 self.addEventListener('install', (e) => {
