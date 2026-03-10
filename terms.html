@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | WebDesks</title>
+    <meta name="description" content="WebDesks Terms of Service — the rules for using our free browser-based productivity tools including the PDF Merger and Screen Recorder.">
+    <meta name="author" content="WebDesks">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://webdesks.app/terms">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .prose-content h2 { font-size: 1.4rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .prose-content h3 { font-size: 1.1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #334155; }
+        .prose-content p { margin-bottom: 1rem; line-height: 1.8; color: #475569; }
+        .prose-content ul { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .prose-content li { margin-bottom: 0.5rem; color: #475569; line-height: 1.7; list-style-type: disc; }
+        .prose-content a { color: #4f46e5; text-decoration: underline; }
+        .highlight-box { background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1rem 1.25rem; border-radius: 0 0.75rem 0.75rem 0; margin-bottom: 1.5rem; }
+        .tool-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body class="bg-white text-slate-800">
+
+    <!-- Nav -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">
+                🖥️ WebDesks
+            </a>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/blog/" class="hover:text-indigo-600 transition-colors">Blog</a>
+                <a href="/about" class="hover:text-indigo-600 transition-colors">About</a>
+                <a href="/contact" class="hover:text-indigo-600 transition-colors">Contact</a>
+            </div>
+            <a href="/" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                Open App →
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-br from-indigo-600 to-violet-700 text-white py-14 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-4">
+                📋 Legal
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black mb-3">Terms of Service</h1>
+            <p class="text-white/80 text-lg">Last updated: March 10, 2026</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12 prose-content">
+
+        <div class="highlight-box">
+            <p class="text-indigo-800 font-medium mb-0">By accessing or using WebDesks at <a href="https://webdesks.app" class="text-indigo-700">webdesks.app</a>, you agree to be bound by these Terms of Service. If you do not agree, please do not use WebDesks.</p>
+        </div>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>These Terms of Service ("Terms") govern your access to and use of WebDesks, a free browser-based productivity suite ("Service"), operated as an independent project ("we," "us," or "our"). By using WebDesks, you confirm that you are at least 13 years of age and have the legal capacity to agree to these Terms.</p>
+
+        <h2>2. Description of Service</h2>
+        <p>WebDesks provides over 20 free productivity tools accessible entirely within a web browser, including but not limited to:</p>
+        <ul>
+            <li>Pomodoro Focus Timer and Stopwatch</li>
+            <li>PDF Merger</li>
+            <li>Screen Recorder</li>
+            <li>Multi-channel Audio Mixer</li>
+            <li>Media Converter (WebM to MP4, image resize)</li>
+            <li>Markdown Scratchpad, Task Manager, Kanban Board</li>
+            <li>Calculator, Unit Converter, Color Picker</li>
+            <li>Breathing Guide, White Noise Generator</li>
+        </ul>
+        <p>All tools operate entirely client-side in your browser. We do not operate servers that receive, store, or process your files or documents.</p>
+
+        <h2>3. Data Handling by Tool</h2>
+        <p>Because your privacy matters, here is how each major tool handles your data:</p>
+
+        <div class="tool-card">
+            <h3 style="margin-top: 0;">📄 PDF Merger</h3>
+            <p style="margin-bottom: 0;">Your PDF files are processed entirely within your browser using the open-source <strong>pdf-lib</strong> JavaScript library. Your files are <strong>never uploaded to any server</strong>. The merged PDF is generated locally and downloaded directly to your device. We do not access, log, or retain any information about the documents you merge.</p>
+        </div>
+
+        <div class="tool-card">
+            <h3 style="margin-top: 0;">🎥 Screen Recorder</h3>
+            <p>Screen and audio recording uses your browser's built-in <strong>MediaRecorder API</strong>. Your recording is captured and stored temporarily in your browser's memory (RAM) and is never transmitted to any server.</p>
+            <p style="margin-bottom: 0;"><strong>Your responsibility:</strong> You are solely responsible for ensuring you have the legal right to record any screen content, including obtaining consent from others who may be visible or audible in your recordings. Do not use the Screen Recorder to record content in violation of applicable copyright law, privacy law, or third-party terms of service.</p>
+        </div>
+
+        <div class="tool-card">
+            <h3 style="margin-top: 0;">🎬 Media Converter (WebM to MP4)</h3>
+            <p style="margin-bottom: 0;">Video and image conversion is performed entirely in your browser using <strong>FFmpeg.wasm</strong>. Your media files are never uploaded to any server. Conversion happens locally on your device's CPU.</p>
+        </div>
+
+        <div class="tool-card">
+            <h3 style="margin-top: 0;">📝 Tasks, Notes & Other Tools</h3>
+            <p style="margin-bottom: 0;">Your tasks, notes, scratchpad content, and preferences are stored in your browser's <strong>localStorage</strong>. This data never leaves your device. It is not accessible to us and persists until you clear your browser's site data.</p>
+        </div>
+
+        <h2>4. Acceptable Use</h2>
+        <p>You agree to use WebDesks only for lawful purposes. You must not:</p>
+        <ul>
+            <li>Use any WebDesks tool to process, record, or distribute content that violates applicable laws, including copyright, privacy, and data protection laws.</li>
+            <li>Attempt to reverse-engineer, decompile, or tamper with WebDesks to gain unauthorised access or disrupt the service.</li>
+            <li>Use automated tools (bots, scrapers) to access WebDesks in a manner that places excessive load on our infrastructure.</li>
+            <li>Impersonate WebDesks or misrepresent your affiliation with WebDesks.</li>
+            <li>Use WebDesks to record or capture any individual's screen or audio without their knowledge and explicit consent where required by law.</li>
+        </ul>
+
+        <h2>5. Intellectual Property</h2>
+        <p>WebDesks and all associated content (UI design, branding, written content, blog articles) are the intellectual property of WebDesks and are protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works without prior written permission.</p>
+        <p>The open-source libraries used by WebDesks (pdf-lib, FFmpeg.wasm, Tailwind CSS, Lucide Icons, etc.) are subject to their respective open-source licences.</p>
+        <p>Your own content (documents you merge, recordings you make, notes you write) remains entirely yours. We claim no intellectual property rights over your content.</p>
+
+        <h2>6. Advertisements</h2>
+        <p>WebDesks is supported by advertising through Google AdSense. Advertisements are displayed on our website and landing pages. We do not endorse any advertised products or services. By using WebDesks, you acknowledge that you may be shown advertisements served by Google and its partners.</p>
+
+        <h2>7. Disclaimers and Limitation of Liability</h2>
+        <p>WebDesks is provided on an <strong>"as is" and "as available"</strong> basis without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+        <p>We do not warrant that:</p>
+        <ul>
+            <li>WebDesks will be uninterrupted, error-free, or secure.</li>
+            <li>The tools will produce results that meet your specific requirements.</li>
+            <li>Any specific browser or device will be fully supported.</li>
+        </ul>
+        <p>To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of WebDesks, even if we have been advised of the possibility of such damages.</p>
+
+        <h2>8. Third-Party Services and Links</h2>
+        <p>WebDesks may link to third-party websites or use third-party services (CDNs, APIs). We are not responsible for the content, privacy practices, or terms of third-party services. Your use of such services is governed by their respective terms.</p>
+
+        <h2>9. Modifications to the Service</h2>
+        <p>We reserve the right to modify, suspend, or discontinue any part of WebDesks at any time without notice. We are not liable to you or any third party for any such modification, suspension, or discontinuation.</p>
+
+        <h2>10. Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. The updated Terms will be posted on this page with a revised "Last updated" date. Your continued use of WebDesks after changes are posted constitutes your acceptance of the new Terms.</p>
+
+        <h2>11. Governing Law</h2>
+        <p>These Terms are governed by and construed in accordance with the laws of the jurisdiction in which WebDesks is operated. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of courts in that jurisdiction.</p>
+
+        <h2>12. Contact</h2>
+        <p>If you have questions about these Terms, please contact us:</p>
+        <ul>
+            <li>Email: <a href="mailto:legal@webdesks.app">legal@webdesks.app</a></li>
+            <li>Contact form: <a href="/contact">webdesks.app/contact</a></li>
+        </ul>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-sm mb-6">
+                <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
+                <div class="flex flex-wrap justify-center gap-5">
+                    <a href="/" class="hover:text-white transition-colors">Home</a>
+                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/about" class="hover:text-white transition-colors">About</a>
+                    <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+                    <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 WebDesks. Free browser-based productivity tools.</p>
+                <div class="flex gap-4">
+                    <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-white transition-colors text-indigo-400">Terms of Service</a>
+                    <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

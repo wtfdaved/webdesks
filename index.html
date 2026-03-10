@@ -47,6 +47,7 @@
     <meta name="twitter:image:alt" content="WebDesks productivity suite preview">
 
     <link rel="manifest" href="manifest.json">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
 
     <!-- AdSense -->
@@ -81,6 +82,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow: hidden;
         }
 
         * {
@@ -841,6 +843,97 @@
         /* hljs dark theme swap for light mode */
         :not(.dark) #hljs-theme { display: none; }
         .dark #hljs-theme-light { display: none; }
+
+        /* ── Ad Panel (right-side collapsible) ───────────────── */
+        #ad-panel {
+            position: fixed;
+            right: 0; top: 50%;
+            transform: translateY(-50%);
+            z-index: 45;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            transition: transform 0.3s ease, right 0.3s ease;
+        }
+        #ad-panel.collapsed #ad-panel-inner {
+            display: none;
+        }
+        #ad-panel-toggle {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: rgba(79,70,229,0.85);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.35rem;
+            border-radius: 6px 0 0 6px;
+            cursor: pointer;
+            user-select: none;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-right: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #ad-panel-toggle:hover { opacity: 1; }
+        #ad-panel-inner {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,0,0,0.08);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 0.5rem;
+            width: 160px;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .dark #ad-panel-inner {
+            background: rgba(15,23,42,0.92);
+            border-color: rgba(255,255,255,0.08);
+        }
+        #ad-panel-inner .ad-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+        @media (max-width: 767px) {
+            #ad-panel { display: none !important; }
+        }
+
+        /* ── Sidebar compliance links ─────────────────────────── */
+        .sidebar-legal {
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .sidebar-legal {
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+                padding: 0.5rem 0.75rem 0.75rem;
+                border-top: 1px solid rgba(0,0,0,0.06);
+            }
+            .dark .sidebar-legal {
+                border-top-color: rgba(255,255,255,0.06);
+            }
+        }
+        .sidebar-legal a {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .sidebar-legal a:hover { color: #4f46e5; }
+        .dark .sidebar-legal a:hover { color: #818cf8; }
     </style>
     
     <script>
@@ -1071,7 +1164,39 @@
             </div>
         </div>
 
+        <!-- Compliance Links (desktop only) -->
+        <div class="sidebar-legal">
+            <div class="flex flex-wrap gap-x-3 gap-y-1">
+                <a href="/about">About</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="/contact">Contact</a>
+            </div>
+            <div class="text-[0.55rem] text-slate-400 mt-0.5">&copy; 2026 WebDesks</div>
+        </div>
+
     </aside>
+
+    <!-- Right-side Collapsible Ad Panel (desktop only) -->
+    <div id="ad-panel" class="collapsed" aria-label="Advertisement panel">
+        <button id="ad-panel-toggle" onclick="toggleAdPanel()" title="Toggle ad panel" aria-expanded="false">Ads</button>
+        <div id="ad-panel-inner">
+            <span class="ad-label">Advertisement</span>
+            <ins class="adsbygoogle"
+                style="display:inline-block;width:160px;height:600px"
+                data-ad-client="ca-pub-8626644983261966"
+                data-ad-slot="auto"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+    <script>
+        function toggleAdPanel() {
+            const panel = document.getElementById('ad-panel');
+            const toggle = document.getElementById('ad-panel-toggle');
+            const isCollapsed = panel.classList.toggle('collapsed');
+            toggle.setAttribute('aria-expanded', String(!isCollapsed));
+        }
+    </script>
 
     <!-- MAIN CONTENT -->
     <main id="main-content" role="main" class="flex-1 relative overflow-hidden order-first md:order-last">
@@ -1170,6 +1295,31 @@
                     </div>
                     <div id="quick-actions-grid" class="flex flex-wrap gap-3 min-h-[40px]"></div>
                     <p class="text-[10px] text-slate-400 mt-3 italic opacity-50">Double-click a pin to edit or remove.</p>
+                </div>
+
+                <!-- Below-the-fold Banner Ad (safe zone: below all tool controls) -->
+                <div class="text-center py-2">
+                    <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest mb-1">Advertisement</p>
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-8626644983261966"
+                        data-ad-slot="auto"
+                        data-ad-format="horizontal"
+                        data-full-width-responsive="true"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                </div>
+
+                <!-- App footer: compliance links -->
+                <div class="flex flex-wrap justify-center gap-x-5 gap-y-1 pb-4 text-[10px] text-slate-400">
+                    <a href="/about" class="hover:text-indigo-500 transition-colors">About WebDesks</a>
+                    <span class="opacity-30">·</span>
+                    <a href="/privacy" class="hover:text-indigo-500 transition-colors">Privacy Policy</a>
+                    <span class="opacity-30">·</span>
+                    <a href="/terms" class="hover:text-indigo-500 transition-colors">Terms of Service</a>
+                    <span class="opacity-30">·</span>
+                    <a href="/contact" class="hover:text-indigo-500 transition-colors">Contact Us</a>
+                    <span class="opacity-30">·</span>
+                    <span>&copy; 2026 WebDesks</span>
                 </div>
             </div>
         </div>
