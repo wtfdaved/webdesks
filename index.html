@@ -1030,6 +1030,16 @@
             </div>
         </div>
 
+        <!-- Policy footer links -->
+        <div class="px-3 pb-4 pt-2 border-t border-white/10 mt-2">
+            <div class="flex flex-wrap justify-center gap-x-3 gap-y-1">
+                <a href="/about" class="text-[10px] text-slate-400 hover:text-slate-200 transition-colors hidden lg:inline">About</a>
+                <a href="/privacy" class="text-[10px] text-slate-400 hover:text-slate-200 transition-colors hidden lg:inline">Privacy</a>
+                <a href="/terms" class="text-[10px] text-slate-400 hover:text-slate-200 transition-colors hidden lg:inline">Terms</a>
+                <a href="/contact" class="text-[10px] text-slate-400 hover:text-slate-200 transition-colors hidden lg:inline">Contact</a>
+            </div>
+        </div>
+
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -1317,7 +1327,7 @@
         </div>
 
         <!-- FOCUS TIMER -->
-        <div id="timer" class="tab-content flex flex-col items-center justify-center">
+        <div id="timer" class="tab-content flex flex-col items-center overflow-y-auto py-10 md:py-14 gap-8">
             <div class="glass p-8 md:p-16 rounded-[3rem] text-center max-w-md w-full relative overflow-hidden shadow-2xl">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500"></div>
                 
@@ -1352,6 +1362,52 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Timer FAQ / How-To -->
+            <div class="max-w-md w-full glass p-8 rounded-[2rem] text-left space-y-6">
+                <h3 class="text-xl font-black">How to Use the Pomodoro Timer</h3>
+                <ol class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">1.</span><span>Choose a session length — 25 min (classic), 45 min, or 60 min for longer deep-work blocks.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">2.</span><span>Click <strong>Start Focus</strong>. A soft chime plays when the session ends.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">3.</span><span>Take a 5-minute break after each session. After 4 sessions, take a 20-minute long break.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">4.</span><span>Your session count and total focus time are tracked at the bottom of the timer.</span></li>
+                </ol>
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-500">Frequently Asked Questions</h4>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            What is the Pomodoro Technique?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Developed by Francesco Cirillo in the late 1980s, the Pomodoro Technique breaks work into focused intervals (traditionally 25 minutes) separated by short breaks. It reduces the impact of interruptions and trains sustained concentration.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Which session length should I use?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">25 minutes is best for tasks that require context-switching. 45 or 60 minutes suits creative or coding tasks where flow state takes longer to enter. Experiment to find what works for your work style.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Does the timer work if I switch tabs?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Yes. The timer runs via JavaScript's <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">setInterval</code>, which continues even when you navigate away from the Timer tab within WebDesks. The count will keep running in the background.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Is my session data saved between visits?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Session count and total focus minutes are saved in your browser's <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">localStorage</code>. They persist until you clear your browser data — no account or server required.</p>
+                    </details>
+                </div>
+                <a href="/pomodoro-timer" class="inline-flex items-center gap-2 text-xs font-bold text-indigo-500 hover:text-indigo-400 transition-colors">
+                    Learn more about Pomodoro techniques
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
         </div>
 
         <!-- STOPWATCH -->
@@ -1377,7 +1433,7 @@
         </div>
 
         <!-- SOUND STUDIO -->
-        <div id="audio" class="tab-content flex items-center justify-center">
+        <div id="audio" class="tab-content flex flex-col items-center overflow-y-auto py-10 md:py-14 gap-8">
             <div class="max-w-3xl w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-8">
                 <div>
                     <h2 class="text-3xl font-black mb-2">Sound Studio</h2>
@@ -1420,10 +1476,56 @@
                     <span class="text-xs font-mono w-8 text-right" id="vol-display">30%</span>
                 </div>
             </div>
+
+            <!-- Sound Studio FAQ / How-To -->
+            <div class="max-w-3xl w-full glass p-8 rounded-[2rem] text-left space-y-6">
+                <h3 class="text-xl font-black">How to Use Sound Studio</h3>
+                <ol class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">1.</span><span>Click any noise type — White, Pink, Brown, or Nature — to start playing.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">2.</span><span>Click again to toggle a noise type off. Multiple sounds cannot play simultaneously.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">3.</span><span>Adjust the volume slider to your preferred level. Start low — ambient noise is most effective at subtle volumes.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">4.</span><span>Combine with the Pomodoro Timer for a complete focus environment.</span></li>
+                </ol>
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-500">Noise Types Explained</h4>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            What is White Noise?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">White noise contains equal energy at all frequencies simultaneously — like a TV static hiss. It's highly effective for masking sudden sounds like office chatter or traffic, making it ideal for open-plan offices.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-pink-500 transition-colors">
+                            What is Pink Noise and why is it good for studying?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pink noise has more power at lower frequencies — it sounds like rainfall or wind through trees. Research published in Frontiers in Human Neuroscience (2017) found that pink noise can enhance deep sleep and memory consolidation. Many people find it gentler and more pleasant than white noise for long study sessions.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-amber-700 transition-colors">
+                            What is Brown Noise?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Brown noise (also called red noise) has even more power concentrated at low frequencies — think of a deep bass rumble, like thunder or ocean waves. Many people with ADHD report that brown noise helps quiet mental chatter better than white or pink noise.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-green-500 transition-colors">
+                            Does audio continue playing when I switch tools?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Yes. Noise generation uses the Web Audio API and continues running even when you switch to another tool tab. Return to Sound Studio at any time to adjust volume or stop playback.</p>
+                    </details>
+                </div>
+                <a href="/white-noise" class="inline-flex items-center gap-2 text-xs font-bold text-indigo-500 hover:text-indigo-400 transition-colors">
+                    Learn more about noise types and focus
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
         </div>
 
         <!-- BREATHING GUIDE -->
-        <div id="breathing" class="tab-content flex flex-col items-center justify-center">
+        <div id="breathing" class="tab-content flex flex-col items-center overflow-y-auto py-10 md:py-14 gap-8">
             <div class="max-w-md w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-8 relative overflow-hidden">
                 <button onclick="app.toggleBreathMute()" id="breath-mute-btn" class="absolute top-6 right-6 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-indigo-500" title="Toggle Sound">
                     <i data-lucide="volume-2" class="w-5 h-5"></i>
@@ -1448,6 +1550,52 @@
                     <button onclick="app.toggleBreathing()" id="breath-toggle" class="w-full btn-primary text-white py-4 rounded-2xl font-bold text-lg shadow-lg shadow-indigo-500/30">Start Breathing</button>
                     <p id="breath-desc" class="text-xs text-slate-400 max-w-xs mx-auto">Equal breathing for focus and stress reduction.</p>
                 </div>
+            </div>
+
+            <!-- Breathing FAQ / How-To -->
+            <div class="max-w-md w-full glass p-8 rounded-[2rem] text-left space-y-6">
+                <h3 class="text-xl font-black">How to Use the Breathing Guide</h3>
+                <ol class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">1.</span><span>Select a breathing technique — Box, 4-7-8 (Relax), or Coherence (6-6).</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">2.</span><span>Click <strong>Start Breathing</strong> and follow the animated circle — expand as it grows (inhale), hold when it pauses, and contract as it shrinks (exhale).</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">3.</span><span>Breathe through your nose for maximum benefit. Keep your shoulders relaxed.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">4.</span><span>Use the mute button (top-right) to silence the audio cues if you prefer silent guidance.</span></li>
+                </ol>
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-500">Technique Guide</h4>
+                    <details class="group" open>
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Box Breathing (4-4-4-4) — for focus
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Inhale 4s → Hold 4s → Exhale 4s → Hold 4s. Used by Navy SEALs and elite athletes to reset the nervous system under pressure. Ideal before starting a deep work session or a difficult meeting.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            4-7-8 Breathing — for relaxation &amp; sleep
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Inhale 4s → Hold 7s → Exhale 8s. Developed by Dr. Andrew Weil, this pattern activates the parasympathetic nervous system. Best used at the end of a workday, during a break, or before sleep. The extended exhale is key to its calming effect.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Coherence Breathing (6-6) — for balance
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Inhale 6s → Exhale 6s (5 breaths per minute). Research shows this rhythm maximizes heart rate variability (HRV), a marker of cardiovascular health and stress resilience. Used in clinical settings for anxiety and high blood pressure management.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            How many rounds should I do?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Even 3–5 minutes produces measurable stress reduction. For best results, practice for 5–10 minutes once or twice daily. If you feel lightheaded, return to normal breathing — this is normal when starting out.</p>
+                    </details>
+                </div>
+                <a href="/breathing-guide" class="inline-flex items-center gap-2 text-xs font-bold text-indigo-500 hover:text-indigo-400 transition-colors">
+                    Explore all breathing techniques
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
 
@@ -1490,7 +1638,7 @@
         </div>
 
         <!-- PDF MERGER -->
-        <div id="pdf" class="tab-content flex flex-col items-center justify-center p-4">
+        <div id="pdf" class="tab-content flex flex-col items-center overflow-y-auto py-10 md:py-14 gap-8 px-4">
             <div class="max-w-xl w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-6">
                 <div class="w-20 h-20 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-red-500/30">
                     <i data-lucide="file-stack" class="w-10 h-10 text-white"></i>
@@ -1518,6 +1666,52 @@
                         Clear Files
                     </button>
                 </div>
+            </div>
+
+            <!-- PDF FAQ / How-To -->
+            <div class="max-w-xl w-full glass p-8 rounded-[2rem] text-left space-y-6">
+                <h3 class="text-xl font-black">How to Merge PDFs</h3>
+                <ol class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <li class="flex gap-3"><span class="font-black text-red-500 shrink-0">1.</span><span>Click the upload zone or drag and drop 2 or more PDF files into it.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-red-500 shrink-0">2.</span><span>Your files appear in a list. The merged PDF will combine them in the order shown.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-red-500 shrink-0">3.</span><span>Click <strong>Merge &amp; Download</strong>. Your browser will download the combined PDF instantly.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-red-500 shrink-0">4.</span><span>Click <strong>Clear Files</strong> to start over with a new set of documents.</span></li>
+                </ol>
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-500">Frequently Asked Questions</h4>
+                    <details class="group" open>
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-red-500 transition-colors">
+                            Are my files uploaded to a server?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">No. PDF merging happens entirely inside your browser using the <strong>pdf-lib</strong> library. Your files are read directly from your device's memory and the merged result is generated locally. Nothing is ever transmitted over the internet.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-red-500 transition-colors">
+                            Is there a file size limit?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">There's no hard server-side limit since processing is local. Practically, very large files (over 200 MB combined) may be slow depending on your device's memory and CPU. For best performance, merge files under 100 MB total.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-red-500 transition-colors">
+                            How many PDFs can I merge at once?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">You can select as many PDFs as needed in a single operation. There's no artificial limit on the number of files — just the practical limits of your device's available memory.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-red-500 transition-colors">
+                            Will password-protected PDFs work?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Password-protected PDFs cannot be merged without first removing the password protection. Use your PDF reader's "Print to PDF" function (without the password) to create an unprotected copy, then upload it here.</p>
+                    </details>
+                </div>
+                <a href="/pdf-merger" class="inline-flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-400 transition-colors">
+                    Learn more about our PDF Merger
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
 
@@ -1693,7 +1887,7 @@
         </div>
 
         <!-- SCREEN RECORDER -->
-        <div id="recorder" class="tab-content flex flex-col items-center justify-center p-4">
+        <div id="recorder" class="tab-content flex flex-col items-center overflow-y-auto py-10 md:py-14 gap-8 px-4">
             <div class="max-w-md w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-6">
                 <div id="rec-icon-container" class="w-24 h-24 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mx-auto transition-all duration-300">
                     <i data-lucide="video" id="rec-icon" class="w-12 h-12 text-indigo-600 transition-all duration-300"></i>
@@ -1719,6 +1913,52 @@
                     </button>
                     <p class="text-xs text-slate-400">Recording will download automatically when stopped</p>
                 </div>
+            </div>
+
+            <!-- Recorder FAQ / How-To -->
+            <div class="max-w-md w-full glass p-8 rounded-[2rem] text-left space-y-6">
+                <h3 class="text-xl font-black">How to Record Your Screen</h3>
+                <ol class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">1.</span><span>Click <strong>Start Recording</strong>. Your browser will ask you to choose what to share — your entire screen, a specific application window, or a single browser tab.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">2.</span><span>Select your target and click <strong>Share</strong> in the browser dialog.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">3.</span><span>A red recording indicator and timer will appear. Switch to your target window and proceed with your workflow.</span></li>
+                    <li class="flex gap-3"><span class="font-black text-indigo-500 shrink-0">4.</span><span>Return to WebDesks and click <strong>Stop Recording</strong>. The video file will download automatically to your device.</span></li>
+                </ol>
+                <div class="space-y-4 pt-4 border-t border-white/10">
+                    <h4 class="font-black text-sm uppercase tracking-wider text-slate-500">Frequently Asked Questions</h4>
+                    <details class="group" open>
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            What file format does the recording save in?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">The recording saves as a <strong>WebM</strong> file (VP8/VP9 codec) on most browsers. WebM is supported natively by Chrome, Firefox, and Edge. To convert to MP4, use a free converter like HandBrake or VLC. On Safari, the format may be MP4 natively.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Is my recording uploaded anywhere?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">No. Recording uses the browser's native <strong>MediaRecorder API</strong> and <strong>Screen Capture API</strong>. Video data is stored only in your device's memory while recording, then saved directly to your local disk. Nothing is sent to any server.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Which browsers support screen recording?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Chrome, Edge, and Firefox on desktop support <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">getDisplayMedia()</code> fully. Safari 13+ has partial support. Mobile browsers (iOS Safari, Chrome for Android) do not support screen capture due to OS restrictions.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer text-sm font-bold flex justify-between items-center hover:text-indigo-500 transition-colors">
+                            Can I record audio with the screen?
+                            <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </summary>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">When sharing a browser tab, you can enable tab audio capture in the browser's share dialog. System audio capture depends on your OS — Windows supports it via certain browser configurations; macOS requires a virtual audio device like BlackHole.</p>
+                    </details>
+                </div>
+                <a href="/screen-recorder" class="inline-flex items-center gap-2 text-xs font-bold text-indigo-500 hover:text-indigo-400 transition-colors">
+                    Learn more about Screen Recorder
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
 
@@ -2284,9 +2524,25 @@
                     }
                 });
 
-                // Load saved tab or default
+                // Load tab: URL path takes priority over last-saved tab
                 const savedTab = localStorage.getItem('webdesks_last_tab') || 'dashboard';
-                this.switchTab(savedTab);
+                const _urlPathToTab = {
+                    '/scratchpad':'scratchpad', '/tasks':'tasks', '/board':'board',
+                    '/whiteboard':'whiteboard', '/clock':'clock', '/timer':'timer',
+                    '/stopwatch':'stopwatch', '/focustown':'focustown', '/audio':'audio',
+                    '/breathing':'breathing', '/calculator':'calculator', '/pdf':'pdf',
+                    '/zones':'zones', '/onair':'onair', '/recorder':'recorder',
+                    '/converter':'converter', '/colorpicker':'colorpicker'
+                };
+                const _urlTab = _urlPathToTab[window.location.pathname] || null;
+                this.switchTab(_urlTab || savedTab);
+                // Browser back/forward support
+                window.addEventListener('popstate', (e) => {
+                    const tab = (e.state && e.state.tab)
+                        ? e.state.tab
+                        : (_urlPathToTab[window.location.pathname] || 'dashboard');
+                    this.switchTab(tab);
+                });
 
                 // Initialize components
                 this.initTime();
@@ -2419,6 +2675,23 @@
                     converter: 'Unit Converter | WebDesks', colorpicker: 'Color Picker | WebDesks'
                 };
                 document.title = tabTitles[tabId] || 'WebDesks';
+
+                // Update URL path for bookmarking, back/forward, and Google indexing.
+                // Each tool gets its own crawlable URL (e.g. /timer, /pdf, /recorder).
+                // NOTE: the web server must route all these paths to index.html —
+                // on most static hosts add a rewrite rule: /* → /index.html
+                const _toolPaths = {
+                    dashboard:'/', scratchpad:'/scratchpad', tasks:'/tasks',
+                    board:'/board', whiteboard:'/whiteboard', clock:'/clock',
+                    timer:'/timer', stopwatch:'/stopwatch', focustown:'/focustown',
+                    audio:'/audio', breathing:'/breathing', calculator:'/calculator',
+                    pdf:'/pdf', zones:'/zones', onair:'/onair', recorder:'/recorder',
+                    converter:'/converter', colorpicker:'/colorpicker'
+                };
+                const _newPath = _toolPaths[tabId] || '/';
+                if (window.location.pathname !== _newPath) {
+                    try { history.pushState({ tab: tabId }, document.title, _newPath); } catch(e) {}
+                }
 
                 // Focus Town animation loop lifecycle
                 if (tabId === 'focustown') {
