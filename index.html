@@ -15,9 +15,9 @@
     <link rel="dns-prefetch" href="https://api.quotable.io">
     
     <!-- Primary SEO -->
-    <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Screen Recorder & More</title>
-    <meta name="description" content="18 free browser tools in one tab: alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, whiteboard, kanban board, unit converter, color picker, white noise, breathing guide & more. No download. 100% private.">
-    <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
+    <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Screen Recorder, WebM to MP4 Converter & More</title>
+    <meta name="description" content="21 free browser tools in one tab: alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, multi-channel audio mixer, convert WebM to MP4 free (no upload), bulk image resizer, markdown scratchpad, whiteboard, kanban board, unit converter & more. No download. 100% private.">
+    <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
     <meta name="generator" content="WebDesks v0.18.7">
@@ -56,6 +56,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+    <!-- Markdown + Syntax Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" id="hljs-theme">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" id="hljs-theme-light">
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
+    <!-- FFmpeg.wasm (client-side video conversion) -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -805,6 +812,35 @@
         :focus:not(:focus-visible) {
             outline: none;
         }
+
+        /* ── Mixer channel active state ───────────────────────── */
+        .mixer-channel.active .mixer-badge { display: inline-flex !important; }
+
+        /* ── Scratchpad markdown preview ─────────────────────── */
+        #note-preview-pane h1,#note-preview-pane h2,#note-preview-pane h3 { font-weight: 900; margin-top: 1.25em; }
+        #note-preview-pane h1 { font-size: 1.75rem; }
+        #note-preview-pane h2 { font-size: 1.35rem; }
+        #note-preview-pane h3 { font-size: 1.1rem; }
+        #note-preview-pane p  { margin-top: .75em; line-height: 1.7; }
+        #note-preview-pane code { font-family: 'JetBrains Mono', monospace; font-size: .85em; background: rgba(0,0,0,.06); padding: 2px 5px; border-radius: 4px; }
+        .dark #note-preview-pane code { background: rgba(255,255,255,.08); }
+        #note-preview-pane pre code { background: transparent; padding: 0; }
+        #note-preview-pane pre { background: rgba(0,0,0,.05); border-radius: 12px; padding: 1rem 1.25rem; overflow-x: auto; }
+        .dark #note-preview-pane pre { background: rgba(255,255,255,.04); }
+        #note-preview-pane blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; color: #64748b; margin: .75em 0; }
+        #note-preview-pane a { color: var(--accent); text-decoration: underline; }
+        #note-preview-pane ul,#note-preview-pane ol { padding-left: 1.5rem; margin-top: .75em; }
+        #note-preview-pane li { margin-top: .3em; }
+        #note-preview-pane table { border-collapse: collapse; width: 100%; margin-top: .75em; }
+        #note-preview-pane th,#note-preview-pane td { border: 1px solid #e2e8f0; padding: .5rem .75rem; text-align: left; }
+        .dark #note-preview-pane th, .dark #note-preview-pane td { border-color: #334155; }
+        #note-preview-pane th { font-weight: 700; }
+        #note-preview-pane hr { border: none; border-top: 2px solid rgba(0,0,0,.08); margin: 1.5em 0; }
+        .dark #note-preview-pane hr { border-top-color: rgba(255,255,255,.08); }
+
+        /* hljs dark theme swap for light mode */
+        :not(.dark) #hljs-theme { display: none; }
+        .dark #hljs-theme-light { display: none; }
     </style>
     
     <script>
@@ -843,7 +879,7 @@
         "Pomodoro Focus Timer (25/45/60/custom minutes)",
         "Online Stopwatch with lap tracking",
         "Focus Town — RPG gamified focus timer",
-        "White Noise and Ambient Sound Studio",
+        "Multi-Channel Audio Mixer — lo-fi, rain, pink noise, coffee shop",
         "Guided Breathing Exercises (box, 4-7-8, coherence)",
         "Free PDF Merger — combine PDFs in browser",
         "Screen Recorder — no install required",
@@ -967,7 +1003,7 @@
 
             <button onclick="app.switchTab('audio')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="audio">
                 <i data-lucide="headphones" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
-                <span class="hidden lg:block ml-3 font-medium text-sm">Sound Studio</span>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Audio Mixer</span>
             </button>
             
             <button onclick="app.switchTab('breathing')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="breathing">
@@ -1010,6 +1046,11 @@
             <button onclick="app.switchTab('recorder')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="recorder">
                 <i data-lucide="video" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Recorder</span>
+            </button>
+
+            <button onclick="app.switchTab('mediaconv')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="mediaconv">
+                <i data-lucide="file-cog" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Converter</span>
             </button>
         </nav>
 
@@ -1136,26 +1177,73 @@
         <!-- SCRATCHPAD -->
         <div id="scratchpad" class="tab-content">
             <div class="h-full flex flex-col gap-4 max-w-5xl mx-auto">
-                <div class="flex justify-between items-center">
+                <div class="flex flex-wrap justify-between items-center gap-3">
                     <div>
                         <h2 class="text-2xl font-black">Scratchpad</h2>
                         <p class="text-sm text-slate-400">Auto-saved locally. Never leaves your device.</p>
                     </div>
-                    <div class="flex gap-2">
-                        <button onclick="app.copyNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2" aria-label="Copy note to clipboard">
-                            <i data-lucide="copy" class="w-4 h-4" aria-hidden="true"></i> Copy
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <!-- Mode toggle -->
+                        <div class="glass flex p-1 rounded-xl gap-1">
+                            <button onclick="app.setNoteMode('write')" id="note-mode-write" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-indigo-500 text-white" aria-pressed="true">
+                                <i data-lucide="pencil" class="w-3 h-3 inline mr-1"></i>Write
+                            </button>
+                            <button onclick="app.setNoteMode('preview')" id="note-mode-preview" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-500 hover:text-slate-800 dark:hover:text-white" aria-pressed="false">
+                                <i data-lucide="eye" class="w-3 h-3 inline mr-1"></i>Preview
+                            </button>
+                            <button onclick="app.setNoteMode('code')" id="note-mode-code" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-500 hover:text-slate-800 dark:hover:text-white" aria-pressed="false">
+                                <i data-lucide="code-2" class="w-3 h-3 inline mr-1"></i>Code
+                            </button>
+                        </div>
+                        <button onclick="app.copyNote()" class="glass px-3 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-1.5" aria-label="Copy note to clipboard">
+                            <i data-lucide="copy" class="w-3.5 h-3.5" aria-hidden="true"></i> Copy
                         </button>
-                        <button onclick="app.shareNote()" id="share-note-btn" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2" aria-label="Share note">
-                            <i data-lucide="share-2" class="w-4 h-4" aria-hidden="true"></i> Share
+                        <button onclick="app.shareNote()" id="share-note-btn" class="glass px-3 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-1.5" aria-label="Share note">
+                            <i data-lucide="share-2" class="w-3.5 h-3.5" aria-hidden="true"></i> Share
                         </button>
-                        <button onclick="app.downloadNote()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-2 hidden sm:flex" aria-label="Download note as text file">
-                            <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i> Save
+                        <button onclick="app.downloadNote()" class="glass px-3 py-2 rounded-xl text-xs font-bold uppercase hover:bg-indigo-500 hover:text-white transition-all flex items-center gap-1.5 hidden sm:flex" aria-label="Download note as text file">
+                            <i data-lucide="download" class="w-3.5 h-3.5" aria-hidden="true"></i> Save
                         </button>
                     </div>
                 </div>
-                <div class="flex-1 glass rounded-[2rem] overflow-hidden shadow-inner relative group">
-                    <textarea id="note-area" class="w-full h-full bg-transparent p-8 md:p-12 text-lg md:text-xl focus:outline-none resize-none leading-relaxed font-light" placeholder="Start typing your thoughts..."></textarea>
+
+                <!-- Write mode -->
+                <div class="flex-1 glass rounded-[2rem] overflow-hidden shadow-inner relative group" id="note-write-pane">
+                    <textarea id="note-area" class="w-full h-full bg-transparent p-8 md:p-12 text-base md:text-lg focus:outline-none resize-none leading-relaxed font-light font-sans" placeholder="Start typing… supports **Markdown** and `code`" spellcheck="true"></textarea>
                     <div class="absolute bottom-4 right-4 text-xs text-slate-400 font-mono opacity-0 group-hover:opacity-100 transition-opacity" id="word-count">0 words</div>
+                </div>
+
+                <!-- Markdown preview mode -->
+                <div class="flex-1 glass rounded-[2rem] overflow-y-auto p-8 md:p-12 hidden prose prose-slate dark:prose-invert max-w-none" id="note-preview-pane" style="font-family: inherit;"></div>
+
+                <!-- Code view mode -->
+                <div class="flex-1 glass rounded-[2rem] overflow-hidden hidden flex-col" id="note-code-pane">
+                    <div class="flex items-center justify-between px-5 py-2 border-b border-slate-200/50 dark:border-slate-700/50">
+                        <div class="flex gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                        </div>
+                        <select id="note-lang-select" onchange="app.updateCodeHighlight()" class="text-xs bg-transparent font-mono text-slate-400 focus:outline-none cursor-pointer">
+                            <option value="plaintext">plain text</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="typescript">TypeScript</option>
+                            <option value="python">Python</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="json">JSON</option>
+                            <option value="bash">Bash / Shell</option>
+                            <option value="sql">SQL</option>
+                            <option value="rust">Rust</option>
+                            <option value="go">Go</option>
+                            <option value="cpp">C / C++</option>
+                            <option value="java">Java</option>
+                            <option value="markdown">Markdown</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 overflow-auto">
+                        <pre class="m-0 p-6 text-sm leading-relaxed h-full rounded-b-[2rem] overflow-auto" id="note-code-highlight" style="background:transparent;"><code id="note-code-inner" class="hljs" style="background:transparent;padding:0;font-family:'JetBrains Mono',monospace;"></code></pre>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1377,47 +1465,143 @@
         </div>
 
         <!-- SOUND STUDIO -->
-        <div id="audio" class="tab-content flex items-center justify-center">
-            <div class="max-w-3xl w-full glass p-8 md:p-12 rounded-[3rem] text-center space-y-8">
-                <div>
-                    <h2 class="text-3xl font-black mb-2">Sound Studio</h2>
-                    <p class="text-slate-400 text-sm">Generate ambient noise to help you focus</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <button onclick="app.toggleNoise('white')" id="noise-white" class="noise-btn p-6 rounded-3xl border-2 border-transparent glass hover:border-indigo-500 transition-all flex flex-col items-center gap-3 group relative overflow-hidden">
-                        <div class="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <i data-lucide="wind" class="w-8 h-8 text-slate-400 group-hover:text-indigo-500 transition-colors"></i>
-                        <span class="text-xs font-black uppercase">White Noise</span>
-                        <div class="playing-indicator hidden absolute top-2 right-2 w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></div>
-                    </button>
-
-                    <button onclick="app.toggleNoise('pink')" id="noise-pink" class="noise-btn p-6 rounded-3xl border-2 border-transparent glass hover:border-pink-500 transition-all flex flex-col items-center gap-3 group relative overflow-hidden">
-                        <div class="absolute inset-0 bg-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <i data-lucide="cloud-rain" class="w-8 h-8 text-slate-400 group-hover:text-pink-500 transition-colors"></i>
-                        <span class="text-xs font-black uppercase">Pink Noise</span>
-                        <div class="playing-indicator hidden absolute top-2 right-2 w-2 h-2 bg-pink-500 rounded-full animate-pulse"></div>
-                    </button>
-
-                    <button onclick="app.toggleNoise('brown')" id="noise-brown" class="noise-btn p-6 rounded-3xl border-2 border-transparent glass hover:border-amber-700 transition-all flex flex-col items-center gap-3 group relative overflow-hidden">
-                        <div class="absolute inset-0 bg-amber-700/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <i data-lucide="waves" class="w-8 h-8 text-slate-400 group-hover:text-amber-700 transition-colors"></i>
-                        <span class="text-xs font-black uppercase">Brown Noise</span>
-                        <div class="playing-indicator hidden absolute top-2 right-2 w-2 h-2 bg-amber-700 rounded-full animate-pulse"></div>
-                    </button>
-
-                    <button onclick="app.toggleNoise('nature')" id="noise-nature" class="noise-btn p-6 rounded-3xl border-2 border-transparent glass hover:border-green-500 transition-all flex flex-col items-center gap-3 group relative overflow-hidden">
-                        <div class="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <i data-lucide="trees" class="w-8 h-8 text-slate-400 group-hover:text-green-500 transition-colors"></i>
-                        <span class="text-xs font-black uppercase">Nature</span>
-                        <div class="playing-indicator hidden absolute top-2 right-2 w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+        <div id="audio" class="tab-content">
+            <div class="max-w-3xl mx-auto flex flex-col gap-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-black">Audio Mixer</h2>
+                        <p class="text-sm text-slate-400">Blend multiple sounds — all generated in your browser</p>
+                    </div>
+                    <button onclick="app.mixerStopAll()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-red-500 hover:text-white transition-all flex items-center gap-2">
+                        <i data-lucide="square" class="w-4 h-4"></i> Stop All
                     </button>
                 </div>
 
+                <!-- Mixer Channels -->
+                <div class="space-y-3" id="mixer-channels">
+
+                    <!-- Lo-Fi Beats -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="lofi">
+                        <button onclick="app.mixerToggle('lofi')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/40" id="mixer-btn-lofi" title="Toggle Lo-Fi Beats">
+                            <i data-lucide="music-2" class="w-5 h-5 text-slate-400" id="mixer-icon-lofi"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Lo-Fi Beats</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400 flex items-center gap-1" id="mixer-badge-lofi">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.4" oninput="app.mixerSetVol('lofi', this.value)" class="w-full accent-indigo-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-lofi">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-lofi">40%</span>
+                    </div>
+
+                    <!-- Rain -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="rain">
+                        <button onclick="app.mixerToggle('rain')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40" id="mixer-btn-rain" title="Toggle Rain">
+                            <i data-lucide="cloud-rain" class="w-5 h-5 text-slate-400" id="mixer-icon-rain"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Ambient Rain</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center gap-1" id="mixer-badge-rain">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('rain', this.value)" class="w-full accent-blue-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-rain">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-rain">30%</span>
+                    </div>
+
+                    <!-- Pink Noise -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="pink">
+                        <button onclick="app.mixerToggle('pink')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-pink-100 dark:hover:bg-pink-900/40" id="mixer-btn-pink" title="Toggle Pink Noise">
+                            <i data-lucide="activity" class="w-5 h-5 text-slate-400" id="mixer-icon-pink"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Pink Noise</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-pink-100 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400 flex items-center gap-1" id="mixer-badge-pink">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.25" oninput="app.mixerSetVol('pink', this.value)" class="w-full accent-pink-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-pink">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-pink">25%</span>
+                    </div>
+
+                    <!-- Coffee Shop -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="coffee">
+                        <button onclick="app.mixerToggle('coffee')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-amber-900/40" id="mixer-btn-coffee" title="Toggle Coffee Shop">
+                            <i data-lucide="coffee" class="w-5 h-5 text-slate-400" id="mixer-icon-coffee"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Coffee Shop</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 flex items-center gap-1" id="mixer-badge-coffee">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('coffee', this.value)" class="w-full accent-amber-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-coffee">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-coffee">30%</span>
+                    </div>
+
+                    <!-- White Noise -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="white">
+                        <button onclick="app.mixerToggle('white')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700" id="mixer-btn-white" title="Toggle White Noise">
+                            <i data-lucide="wind" class="w-5 h-5 text-slate-400" id="mixer-icon-white"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">White Noise</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300 flex items-center gap-1" id="mixer-badge-white">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.2" oninput="app.mixerSetVol('white', this.value)" class="w-full accent-slate-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-white">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-white">20%</span>
+                    </div>
+
+                    <!-- Brown Noise -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="brown">
+                        <button onclick="app.mixerToggle('brown')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-orange-100 dark:hover:bg-orange-900/40" id="mixer-btn-brown" title="Toggle Brown Noise">
+                            <i data-lucide="waves" class="w-5 h-5 text-slate-400" id="mixer-icon-brown"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Brown Noise</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 flex items-center gap-1" id="mixer-badge-brown">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('brown', this.value)" class="w-full accent-orange-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-brown">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-brown">30%</span>
+                    </div>
+                </div>
+
+                <!-- Master Volume -->
                 <div class="glass p-4 rounded-2xl flex items-center gap-4">
-                    <i data-lucide="volume-2" class="w-5 h-5 text-slate-400"></i>
-                    <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.setVolume(this.value)" class="flex-1 accent-indigo-500 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                    <span class="text-xs font-mono w-8 text-right" id="vol-display">30%</span>
+                    <i data-lucide="volume-2" class="w-5 h-5 text-slate-400 shrink-0"></i>
+                    <div class="flex-1">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1.5">Master Volume</div>
+                        <input type="range" min="0" max="1" step="0.01" value="0.8" oninput="app.mixerSetMaster(this.value)" class="w-full accent-indigo-500 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    <span class="text-xs font-mono w-8 text-right shrink-0" id="mixer-master-pct">80%</span>
+                </div>
+
+                <!-- Presets -->
+                <div class="glass p-4 rounded-2xl">
+                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Quick Presets</div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="app.mixerPreset('focus')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-indigo-500 hover:text-white transition-all">🎯 Deep Focus</button>
+                        <button onclick="app.mixerPreset('cafe')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-amber-500 hover:text-white transition-all">☕ Café Vibe</button>
+                        <button onclick="app.mixerPreset('rain')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-blue-500 hover:text-white transition-all">🌧️ Rainy Day</button>
+                        <button onclick="app.mixerPreset('sleep')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-purple-500 hover:text-white transition-all">🌙 Sleep</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1718,6 +1902,128 @@
                         <span id="rec-btn-text">Start Recording</span>
                     </button>
                     <p class="text-xs text-slate-400">Recording will download automatically when stopped</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MEDIA CONVERTER -->
+        <div id="mediaconv" class="tab-content">
+            <div class="max-w-2xl mx-auto flex flex-col gap-6">
+                <div>
+                    <h2 class="text-2xl font-black">Media Converter</h2>
+                    <p class="text-sm text-slate-400">Convert &amp; resize files entirely in your browser — nothing is ever uploaded.</p>
+                </div>
+
+                <!-- Tab switcher inside tool -->
+                <div class="glass flex p-1 rounded-2xl gap-1">
+                    <button onclick="app.mcSwitchMode('video')" id="mc-tab-video" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all bg-indigo-500 text-white flex items-center justify-center gap-2">
+                        <i data-lucide="film" class="w-4 h-4"></i> Video (WebM → MP4)
+                    </button>
+                    <button onclick="app.mcSwitchMode('image')" id="mc-tab-image" class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center gap-2">
+                        <i data-lucide="image" class="w-4 h-4"></i> Image Resize / Compress
+                    </button>
+                </div>
+
+                <!-- VIDEO CONVERTER -->
+                <div id="mc-video-panel" class="flex flex-col gap-4">
+                    <!-- Drop zone -->
+                    <label id="mc-video-dropzone" class="glass rounded-[2rem] border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-500 transition-colors cursor-pointer flex flex-col items-center justify-center py-12 px-6 text-center gap-3" ondragover="event.preventDefault()" ondrop="app.mcVideoFileDrop(event)">
+                        <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="film" class="w-8 h-8 text-indigo-500"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-700 dark:text-slate-200">Drop a WebM file here</p>
+                            <p class="text-sm text-slate-400 mt-1">or click to browse</p>
+                        </div>
+                        <input type="file" accept="video/webm,video/*" class="hidden" id="mc-video-input" onchange="app.mcVideoFileSelect(this)">
+                    </label>
+
+                    <!-- File info + convert -->
+                    <div id="mc-video-info" class="hidden glass p-5 rounded-2xl flex items-center gap-4">
+                        <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center shrink-0">
+                            <i data-lucide="file-video" class="w-6 h-6 text-indigo-500"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-bold text-sm truncate" id="mc-video-filename">file.webm</div>
+                            <div class="text-xs text-slate-400" id="mc-video-filesize"></div>
+                        </div>
+                        <button onclick="app.mcClearVideo()" class="text-slate-400 hover:text-red-500 transition-colors p-1">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Output format -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4">
+                        <span class="text-sm font-bold text-slate-500 shrink-0">Output format</span>
+                        <select id="mc-video-fmt" class="flex-1 glass px-3 py-2 rounded-xl text-sm font-bold focus:outline-none bg-transparent">
+                            <option value="mp4">MP4 (H.264)</option>
+                            <option value="webm">WebM (VP9)</option>
+                            <option value="gif">Animated GIF</option>
+                        </select>
+                    </div>
+
+                    <!-- Status / progress -->
+                    <div id="mc-video-status" class="hidden glass p-4 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse shrink-0"></div>
+                            <span class="text-sm font-bold" id="mc-video-status-text">Loading FFmpeg…</span>
+                        </div>
+                        <div class="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-300" id="mc-video-progress" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <button onclick="app.mcConvertVideo()" id="mc-video-btn" class="w-full btn-primary text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-50">
+                        <i data-lucide="zap" class="w-5 h-5"></i> Convert — 100% Private
+                    </button>
+                    <p class="text-center text-xs text-slate-400">Powered by FFmpeg.wasm · files stay on your device</p>
+                </div>
+
+                <!-- IMAGE RESIZER -->
+                <div id="mc-image-panel" class="hidden flex flex-col gap-4">
+                    <!-- Drop zone -->
+                    <label id="mc-img-dropzone" class="glass rounded-[2rem] border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-500 transition-colors cursor-pointer flex flex-col items-center justify-center py-12 px-6 text-center gap-3" ondragover="event.preventDefault()" ondrop="app.mcImgFileDrop(event)">
+                        <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="image" class="w-8 h-8 text-indigo-500"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-700 dark:text-slate-200">Drop images here</p>
+                            <p class="text-sm text-slate-400 mt-1">PNG, JPG, WebP — multiple files supported</p>
+                        </div>
+                        <input type="file" accept="image/*" multiple class="hidden" id="mc-img-input" onchange="app.mcImgFilesSelect(this)">
+                    </label>
+
+                    <!-- Image list -->
+                    <div id="mc-img-list" class="hidden space-y-2"></div>
+
+                    <!-- Options -->
+                    <div class="glass p-5 rounded-2xl grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1.5">Max Width (px)</label>
+                            <input type="number" id="mc-img-width" value="1920" min="1" max="8000" class="w-full glass px-3 py-2 rounded-xl text-sm font-bold focus:outline-none bg-transparent">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1.5">Max Height (px)</label>
+                            <input type="number" id="mc-img-height" value="1080" min="1" max="8000" class="w-full glass px-3 py-2 rounded-xl text-sm font-bold focus:outline-none bg-transparent">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1.5">Quality (%)</label>
+                            <input type="range" id="mc-img-quality" min="10" max="100" value="85" oninput="document.getElementById('mc-img-quality-val').textContent=this.value+'%'" class="w-full accent-indigo-500 mt-1">
+                        </div>
+                        <div class="flex flex-col justify-end">
+                            <div class="text-sm font-bold" id="mc-img-quality-val">85%</div>
+                            <select id="mc-img-format" class="glass px-3 py-2 rounded-xl text-sm font-bold focus:outline-none bg-transparent mt-1">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="app.mcProcessImages()" id="mc-img-btn" class="w-full btn-primary text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2">
+                        <i data-lucide="image-down" class="w-5 h-5"></i> Resize &amp; Download
+                    </button>
+                    <p class="text-center text-xs text-slate-400">Canvas API · zero server contact</p>
                 </div>
             </div>
         </div>
@@ -2064,6 +2370,8 @@
             noiseNode: null,
             gainNode: null,
             currentNoise: null,
+            mixerChannels: {},
+            mixerMasterGain: null,
             timerInterval: null,
             timerTime: 25 * 60,
             timerRunning: false,
@@ -2089,7 +2397,7 @@
                 { id: 'whiteboard', label: 'Whiteboard', icon: 'pencil', keywords: 'draw sketch paint' },
                 { id: 'clock', label: 'Desk Clock', icon: 'clock', keywords: 'time alarm watch' },
                 { id: 'timer', label: 'Focus Timer', icon: 'hourglass', keywords: 'pomodoro countdown focus' },
-                { id: 'audio', label: 'Sound Studio', icon: 'headphones', keywords: 'noise ambient music white noise' },
+                { id: 'audio', label: 'Audio Mixer', icon: 'headphones', keywords: 'noise ambient music lofi rain coffee mixer multi-channel' },
                 { id: 'breathing', label: 'Breathing Guide', icon: 'wind', keywords: 'meditate relax stress box breathing' },
                 { id: 'calculator', label: 'Calculator', icon: 'calculator', keywords: 'math numbers' },
                 { id: 'pdf', label: 'PDF Merger', icon: 'file-stack', keywords: 'combine join documents' },
@@ -2099,7 +2407,8 @@
                 { id: 'stopwatch', label: 'Stopwatch', icon: 'timer', keywords: 'lap time elapsed counter' },
                 { id: 'converter', label: 'Unit Converter', icon: 'arrow-left-right', keywords: 'convert length weight temperature speed volume' },
                 { id: 'colorpicker', label: 'Color Picker', icon: 'palette', keywords: 'hex rgb hsl color swatch' },
-                { id: 'focustown', label: 'Focus Town', icon: 'building-2', keywords: 'rpg village city town grow gamify focus' }
+                { id: 'focustown', label: 'Focus Town', icon: 'building-2', keywords: 'rpg village city town grow gamify focus' },
+                { id: 'mediaconv', label: 'Media Converter', icon: 'file-cog', keywords: 'convert webm mp4 video image resize compress ffmpeg wasm privacy' }
             ],
             pins: [],
             
@@ -2366,11 +2675,12 @@
                     tasks: 'Task Manager | WebDesks', board: 'Project Board | WebDesks',
                     whiteboard: 'Whiteboard | WebDesks', clock: 'Alarm Clock | WebDesks',
                     timer: 'Focus Timer | WebDesks', stopwatch: 'Stopwatch | WebDesks',
-                    focustown: 'Focus Town | WebDesks', audio: 'Sound Studio | WebDesks',
+                    focustown: 'Focus Town | WebDesks', audio: 'Audio Mixer | WebDesks',
                     breathing: 'Breathing | WebDesks', calculator: 'Calculator | WebDesks',
                     pdf: 'PDF Merger | WebDesks', zones: 'Time Zones | WebDesks',
                     onair: 'On Air | WebDesks', recorder: 'Screen Recorder | WebDesks',
-                    converter: 'Unit Converter | WebDesks', colorpicker: 'Color Picker | WebDesks'
+                    converter: 'Unit Converter | WebDesks', colorpicker: 'Color Picker | WebDesks',
+                    mediaconv: 'Media Converter — Free WebM to MP4 | WebDesks'
                 };
                 document.title = tabTitles[tabId] || 'WebDesks';
 
@@ -2767,22 +3077,91 @@
             },
 
             // Scratchpad
+            noteMode: 'write',
+
             initScratchpad() {
                 this.updateNotePreview();
+                this.noteMode = 'write';
+            },
+
+            setNoteMode(mode) {
+                this.noteMode = mode;
+                const write = document.getElementById('note-write-pane');
+                const preview = document.getElementById('note-preview-pane');
+                const code = document.getElementById('note-code-pane');
+                const btns = ['write','preview','code'];
+                btns.forEach(m => {
+                    const b = document.getElementById(`note-mode-${m}`);
+                    if (b) {
+                        if (m === mode) {
+                            b.classList.add('bg-indigo-500','text-white');
+                            b.classList.remove('text-slate-500');
+                            b.setAttribute('aria-pressed','true');
+                        } else {
+                            b.classList.remove('bg-indigo-500','text-white');
+                            b.classList.add('text-slate-500');
+                            b.setAttribute('aria-pressed','false');
+                        }
+                    }
+                });
+                write.classList.toggle('hidden', mode !== 'write');
+                write.classList.toggle('flex-1', mode === 'write');
+                preview.classList.toggle('hidden', mode !== 'preview');
+                code.classList.toggle('hidden', mode !== 'code');
+                code.classList.toggle('flex', mode === 'code');
+                if (mode === 'preview') this._renderMarkdownPreview();
+                if (mode === 'code') this.updateCodeHighlight();
+            },
+
+            _renderMarkdownPreview() {
+                const text = document.getElementById('note-area').value;
+                const pane = document.getElementById('note-preview-pane');
+                if (!pane) return;
+                if (typeof marked !== 'undefined') {
+                    marked.setOptions({ breaks: true, gfm: true });
+                    pane.innerHTML = marked.parse(text || '*Nothing to preview yet. Switch to Write mode and start typing.*');
+                    // Syntax-highlight code blocks within markdown
+                    if (typeof hljs !== 'undefined') {
+                        pane.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+                    }
+                } else {
+                    pane.innerHTML = `<pre style="white-space:pre-wrap;font-family:inherit">${text.replace(/</g,'&lt;')}</pre>`;
+                }
+            },
+
+            updateCodeHighlight() {
+                const text = document.getElementById('note-area').value;
+                const el = document.getElementById('note-code-inner');
+                const lang = document.getElementById('note-lang-select')?.value || 'plaintext';
+                if (!el) return;
+                if (typeof hljs !== 'undefined' && lang !== 'plaintext') {
+                    try {
+                        const result = hljs.highlight(text, { language: lang });
+                        el.innerHTML = result.value;
+                    } catch(e) {
+                        el.textContent = text;
+                    }
+                } else {
+                    el.textContent = text;
+                }
             },
 
             updateNotePreview() {
                 const note = document.getElementById('note-area').value;
                 const preview = document.getElementById('dash-note-preview');
                 const wordCount = document.getElementById('word-count');
-                
+
                 const words = note.trim() ? note.trim().split(/\s+/).length : 0;
                 if (wordCount) wordCount.textContent = `${words} word${words !== 1 ? 's' : ''}`;
-                
+
                 if (preview) {
                     preview.textContent = note.slice(0, 60) || "Start writing...";
                     if (note.length > 60) preview.textContent += '...';
                 }
+
+                // Keep live preview/code pane in sync
+                if (this.noteMode === 'preview') this._renderMarkdownPreview();
+                if (this.noteMode === 'code') this.updateCodeHighlight();
             },
 
             downloadNote() {
@@ -3327,111 +3706,188 @@
                 document.getElementById('total-focus').textContent = `${this.timerTotalMinutes}m`;
             },
 
-            // Audio
-            toggleNoise(type) {
-                if (this.currentNoise === type) {
-                    this.stopNoise();
-                    return;
-                }
-                
-                this.stopNoise();
-                this.currentNoise = type;
-                
+            // ── Audio Mixer ─────────────────────────────────────────
+            _mixerEnsureCtx() {
                 if (!this.audioCtx) {
                     this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    this.mixerMasterGain = this.audioCtx.createGain();
+                    this.mixerMasterGain.gain.value = 0.8;
+                    this.mixerMasterGain.connect(this.audioCtx.destination);
                 }
-                
-                const bufferSize = 2 * this.audioCtx.sampleRate;
-                const buffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
-                const output = buffer.getChannelData(0);
-                
-                // Generate noise based on type
+                if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
+            },
+
+            _mixerBuildBuffer(type) {
+                const rate = this.audioCtx.sampleRate;
+                const bufferSize = 2 * rate;
+                const buffer = this.audioCtx.createBuffer(1, bufferSize, rate);
+                const out = buffer.getChannelData(0);
                 if (type === 'white') {
-                    for (let i = 0; i < bufferSize; i++) {
-                        output[i] = Math.random() * 2 - 1;
-                    }
+                    for (let i = 0; i < bufferSize; i++) out[i] = Math.random() * 2 - 1;
                 } else if (type === 'pink') {
-                    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+                    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
                     for (let i = 0; i < bufferSize; i++) {
-                        const white = Math.random() * 2 - 1;
-                        b0 = 0.99886 * b0 + white * 0.0555179;
-                        b1 = 0.99332 * b1 + white * 0.0750759;
-                        b2 = 0.96900 * b2 + white * 0.1538520;
-                        b3 = 0.86650 * b3 + white * 0.3104856;
-                        b4 = 0.55000 * b4 + white * 0.5329522;
-                        b5 = -0.7616 * b5 - white * 0.0168980;
-                        output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
-                        output[i] *= 0.11;
-                        b6 = white * 0.115926;
+                        const w = Math.random()*2-1;
+                        b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.9690*b2+w*.153852;
+                        b3=.8665*b3+w*.3104856; b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898;
+                        out[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926;
                     }
-                } else if (type === 'brown') {
+                } else if (type === 'brown' || type === 'coffee') {
                     let lastOut = 0;
                     for (let i = 0; i < bufferSize; i++) {
-                        const white = Math.random() * 2 - 1;
-                        output[i] = (lastOut + (0.02 * white)) / 1.02;
-                        lastOut = output[i];
-                        output[i] *= 3.5;
+                        const w = Math.random()*2-1;
+                        out[i] = (lastOut + .02*w) / 1.02;
+                        lastOut = out[i];
+                        out[i] *= 3.5;
                     }
-                } else if (type === 'nature') {
-                    // Simulated nature (mix of brown and occasional bird-like chirps)
+                } else if (type === 'rain') {
+                    // Pink noise through a bandpass for rain character
+                    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+                    for (let i = 0; i < bufferSize; i++) {
+                        const w = Math.random()*2-1;
+                        b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.9690*b2+w*.153852;
+                        b3=.8665*b3+w*.3104856; b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898;
+                        out[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.15; b6=w*.115926;
+                    }
+                } else if (type === 'lofi') {
+                    // Warm brown noise base for lo-fi bed
                     let lastOut = 0;
                     for (let i = 0; i < bufferSize; i++) {
-                        const white = Math.random() * 2 - 1;
-                        output[i] = (lastOut + (0.01 * white)) / 1.01;
-                        lastOut = output[i];
-                        output[i] *= 2;
+                        const w = Math.random()*2-1;
+                        out[i] = (lastOut + .015*w) / 1.015;
+                        lastOut = out[i];
+                        out[i] *= 2.5;
                     }
                 }
-                
-                this.noiseNode = this.audioCtx.createBufferSource();
-                this.noiseNode.buffer = buffer;
-                this.noiseNode.loop = true;
-                
-                this.gainNode = this.audioCtx.createGain();
-                this.gainNode.gain.value = 0.3;
-                
-                // Filter for nature sound
-                if (type === 'nature') {
-                    const filter = this.audioCtx.createBiquadFilter();
-                    filter.type = 'lowpass';
-                    filter.frequency.value = 1000;
-                    this.noiseNode.connect(filter).connect(this.gainNode).connect(this.audioCtx.destination);
+                return buffer;
+            },
+
+            _mixerBuildSource(type, vol) {
+                this._mixerEnsureCtx();
+                const buffer = this._mixerBuildBuffer(type);
+                const source = this.audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.loop = true;
+                const gain = this.audioCtx.createGain();
+                gain.gain.value = vol;
+
+                if (type === 'rain') {
+                    const bp = this.audioCtx.createBiquadFilter();
+                    bp.type = 'bandpass';
+                    bp.frequency.value = 2000;
+                    bp.Q.value = 0.5;
+                    source.connect(bp).connect(gain);
+                } else if (type === 'coffee') {
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass';
+                    lp.frequency.value = 1200;
+                    source.connect(lp).connect(gain);
+                } else if (type === 'lofi') {
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass';
+                    lp.frequency.value = 800;
+                    const hp = this.audioCtx.createBiquadFilter();
+                    hp.type = 'highpass';
+                    hp.frequency.value = 80;
+                    source.connect(hp).connect(lp).connect(gain);
                 } else {
-                    this.noiseNode.connect(this.gainNode).connect(this.audioCtx.destination);
+                    source.connect(gain);
                 }
-                
-                this.noiseNode.start();
-                
-                // Update UI
-                document.querySelectorAll('.noise-btn').forEach(btn => {
-                    btn.classList.remove('border-indigo-500', 'border-pink-500', 'border-amber-700', 'border-green-500');
-                    btn.querySelector('.playing-indicator').classList.add('hidden');
-                });
-                
-                const activeBtn = document.getElementById(`noise-${type}`);
-                const colors = { white: 'indigo', pink: 'pink', brown: 'amber', nature: 'green' };
-                activeBtn.classList.add(`border-${colors[type]}-500`);
-                activeBtn.querySelector('.playing-indicator').classList.remove('hidden');
+                gain.connect(this.mixerMasterGain);
+                source.start();
+                return { source, gain };
             },
 
-            stopNoise() {
-                if (this.noiseNode) {
-                    this.noiseNode.stop();
-                    this.noiseNode = null;
+            mixerToggle(type) {
+                if (this.mixerChannels[type]) {
+                    // Stop this channel
+                    try { this.mixerChannels[type].source.stop(); } catch(e) {}
+                    delete this.mixerChannels[type];
+                    this._mixerUpdateUI(type, false);
+                } else {
+                    // Start this channel
+                    this._mixerEnsureCtx();
+                    const vol = parseFloat(document.getElementById(`mixer-vol-${type}`).value);
+                    this.mixerChannels[type] = this._mixerBuildSource(type, vol);
+                    this._mixerUpdateUI(type, true);
                 }
-                this.currentNoise = null;
-                document.querySelectorAll('.noise-btn').forEach(btn => {
-                    btn.classList.remove('border-indigo-500', 'border-pink-500', 'border-amber-700', 'border-green-500');
-                    btn.querySelector('.playing-indicator').classList.add('hidden');
-                });
+                // Update mobile music bar
+                const anyPlaying = Object.keys(this.mixerChannels).length > 0;
+                const bar = document.getElementById('mobile-music-bar');
+                if (bar) bar.classList.toggle('visible', anyPlaying);
             },
 
-            setVolume(val) {
-                if (this.gainNode) {
-                    this.gainNode.gain.value = parseFloat(val);
+            _mixerUpdateUI(type, active) {
+                const btn = document.getElementById(`mixer-btn-${type}`);
+                const icon = document.getElementById(`mixer-icon-${type}`);
+                const channel = btn?.closest('.mixer-channel');
+                if (active) {
+                    btn?.classList.add('bg-indigo-500', 'text-white');
+                    btn?.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'hover:bg-indigo-100');
+                    icon?.classList.add('text-white');
+                    icon?.classList.remove('text-slate-400');
+                    channel?.classList.add('active');
+                } else {
+                    btn?.classList.remove('bg-indigo-500', 'text-white');
+                    btn?.classList.add('bg-slate-100', 'dark:bg-slate-800', 'hover:bg-indigo-100');
+                    icon?.classList.remove('text-white');
+                    icon?.classList.add('text-slate-400');
+                    channel?.classList.remove('active');
                 }
-                document.getElementById('vol-display').textContent = Math.round(val * 100) + '%';
             },
+
+            mixerSetVol(type, val) {
+                const pct = Math.round(val * 100);
+                document.getElementById(`mixer-pct-${type}`).textContent = pct + '%';
+                if (this.mixerChannels[type]) {
+                    this.mixerChannels[type].gain.gain.value = parseFloat(val);
+                }
+            },
+
+            mixerSetMaster(val) {
+                document.getElementById('mixer-master-pct').textContent = Math.round(val * 100) + '%';
+                this._mixerEnsureCtx();
+                if (this.mixerMasterGain) this.mixerMasterGain.gain.value = parseFloat(val);
+            },
+
+            mixerStopAll() {
+                Object.keys(this.mixerChannels).forEach(type => {
+                    try { this.mixerChannels[type].source.stop(); } catch(e) {}
+                    this._mixerUpdateUI(type, false);
+                });
+                this.mixerChannels = {};
+                const bar = document.getElementById('mobile-music-bar');
+                if (bar) bar.classList.remove('visible');
+            },
+
+            mixerPreset(name) {
+                this.mixerStopAll();
+                const presets = {
+                    focus: { lofi: .45, pink: .25 },
+                    cafe:  { lofi: .4, coffee: .35, brown: .15 },
+                    rain:  { rain: .5, brown: .25 },
+                    sleep: { brown: .4, pink: .2 }
+                };
+                const cfg = presets[name] || {};
+                Object.entries(cfg).forEach(([type, vol]) => {
+                    document.getElementById(`mixer-vol-${type}`).value = vol;
+                    document.getElementById(`mixer-pct-${type}`).textContent = Math.round(vol * 100) + '%';
+                    this._mixerEnsureCtx();
+                    this.mixerChannels[type] = this._mixerBuildSource(type, vol);
+                    this._mixerUpdateUI(type, true);
+                });
+                const bar = document.getElementById('mobile-music-bar');
+                if (bar) bar.classList.toggle('visible', Object.keys(this.mixerChannels).length > 0);
+                const labels = { focus: 'Deep Focus', cafe: 'Café Vibe', rain: 'Rainy Day', sleep: 'Sleep' };
+                const nameEl = document.getElementById('mob-track-name');
+                if (nameEl) nameEl.textContent = labels[name] || 'Mixer';
+                this.showToast(`Preset loaded: ${labels[name] || name}`);
+            },
+
+            // Legacy stubs so old references don't break
+            toggleNoise(type) { this.mixerToggle(type === 'nature' ? 'rain' : type); },
+            stopNoise() { this.mixerStopAll(); },
+            setVolume(val) { this.mixerSetMaster(val); },
 
             // Breathing Guide
             setBreathTechnique(tech) {
@@ -3628,6 +4084,214 @@
                 document.getElementById('rec-timer').textContent = '00:00:00';
                 
                 this._rebuildIcons();
+            },
+
+            // ── Media Converter ─────────────────────────────────────
+            _mcVideoFile: null,
+            _mcImgFiles: [],
+            _ffmpegInstance: null,
+
+            mcSwitchMode(mode) {
+                const videoPanel = document.getElementById('mc-video-panel');
+                const imgPanel   = document.getElementById('mc-image-panel');
+                const videoTab   = document.getElementById('mc-tab-video');
+                const imgTab     = document.getElementById('mc-tab-image');
+                if (mode === 'video') {
+                    videoPanel.classList.remove('hidden');
+                    imgPanel.classList.add('hidden');
+                    videoTab.classList.add('bg-indigo-500','text-white');
+                    videoTab.classList.remove('text-slate-500');
+                    imgTab.classList.remove('bg-indigo-500','text-white');
+                    imgTab.classList.add('text-slate-500');
+                } else {
+                    videoPanel.classList.add('hidden');
+                    imgPanel.classList.remove('hidden');
+                    imgTab.classList.add('bg-indigo-500','text-white');
+                    imgTab.classList.remove('text-slate-500');
+                    videoTab.classList.remove('bg-indigo-500','text-white');
+                    videoTab.classList.add('text-slate-500');
+                }
+            },
+
+            mcVideoFileDrop(e) {
+                e.preventDefault();
+                const file = e.dataTransfer.files[0];
+                if (file) this._mcSetVideoFile(file);
+            },
+
+            mcVideoFileSelect(input) {
+                const file = input.files[0];
+                if (file) this._mcSetVideoFile(file);
+            },
+
+            _mcSetVideoFile(file) {
+                this._mcVideoFile = file;
+                document.getElementById('mc-video-info').classList.remove('hidden');
+                document.getElementById('mc-video-filename').textContent = file.name;
+                document.getElementById('mc-video-filesize').textContent = this._mcFmtSize(file.size);
+                document.getElementById('mc-video-dropzone').classList.add('hidden');
+            },
+
+            mcClearVideo() {
+                this._mcVideoFile = null;
+                document.getElementById('mc-video-info').classList.add('hidden');
+                document.getElementById('mc-video-dropzone').classList.remove('hidden');
+                document.getElementById('mc-video-input').value = '';
+            },
+
+            _mcFmtSize(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+                return (bytes/(1024*1024)).toFixed(1) + ' MB';
+            },
+
+            async mcConvertVideo() {
+                if (!this._mcVideoFile) { this.showToast('Please select a video file first.'); return; }
+                const fmt = document.getElementById('mc-video-fmt').value;
+                const statusBox = document.getElementById('mc-video-status');
+                const statusText = document.getElementById('mc-video-status-text');
+                const progressBar = document.getElementById('mc-video-progress');
+                const btn = document.getElementById('mc-video-btn');
+
+                statusBox.classList.remove('hidden');
+                btn.disabled = true;
+
+                const setStatus = (msg, pct) => {
+                    statusText.textContent = msg;
+                    progressBar.style.width = pct + '%';
+                };
+
+                try {
+                    if (typeof FFmpeg === 'undefined' || !FFmpeg.createFFmpeg) {
+                        throw new Error('FFmpeg.wasm failed to load. Please check your internet connection.');
+                    }
+                    if (!this._ffmpegInstance) {
+                        setStatus('Loading FFmpeg.wasm engine…', 10);
+                        this._ffmpegInstance = FFmpeg.createFFmpeg({ log: false });
+                        this._ffmpegInstance.setProgress(({ ratio }) => {
+                            if (ratio >= 0) setStatus(`Converting… ${Math.round(ratio * 100)}%`, 10 + ratio * 80);
+                        });
+                        await this._ffmpegInstance.load();
+                    }
+
+                    setStatus('Reading file…', 15);
+                    const ffmpeg = this._ffmpegInstance;
+                    const inputName = 'input.' + (this._mcVideoFile.name.split('.').pop() || 'webm');
+                    ffmpeg.FS('writeFile', inputName, await FFmpeg.fetchFile(this._mcVideoFile));
+
+                    setStatus('Converting…', 20);
+                    const outputName = 'output.' + fmt;
+                    let args;
+                    if (fmt === 'mp4') {
+                        args = ['-i', inputName, '-c:v', 'libx264', '-preset', 'fast', '-crf', '23', '-c:a', 'aac', outputName];
+                    } else if (fmt === 'webm') {
+                        args = ['-i', inputName, '-c:v', 'libvpx-vp9', '-crf', '30', '-b:v', '0', outputName];
+                    } else if (fmt === 'gif') {
+                        args = ['-i', inputName, '-vf', 'fps=12,scale=480:-1:flags=lanczos', '-loop', '0', outputName];
+                    }
+                    await ffmpeg.run(...args);
+
+                    setStatus('Preparing download…', 95);
+                    const data = ffmpeg.FS('readFile', outputName);
+                    const mimeTypes = { mp4: 'video/mp4', webm: 'video/webm', gif: 'image/gif' };
+                    const blob = new Blob([data.buffer], { type: mimeTypes[fmt] });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    const baseName = this._mcVideoFile.name.replace(/\.[^.]+$/, '');
+                    a.href = url;
+                    a.download = `${baseName}_converted.${fmt}`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+
+                    // Cleanup FS
+                    try { ffmpeg.FS('unlink', inputName); ffmpeg.FS('unlink', outputName); } catch(e) {}
+
+                    setStatus('Done! File downloaded.', 100);
+                    this.showToast('Conversion complete!');
+                } catch(err) {
+                    setStatus('Error: ' + err.message, 0);
+                    this.showToast('Conversion failed. ' + err.message);
+                } finally {
+                    btn.disabled = false;
+                }
+            },
+
+            mcImgFileDrop(e) {
+                e.preventDefault();
+                this._mcAddImages([...e.dataTransfer.files].filter(f => f.type.startsWith('image/')));
+            },
+
+            mcImgFilesSelect(input) {
+                this._mcAddImages([...input.files]);
+            },
+
+            _mcAddImages(files) {
+                this._mcImgFiles.push(...files);
+                this._mcRenderImgList();
+            },
+
+            _mcRenderImgList() {
+                const list = document.getElementById('mc-img-list');
+                if (!list) return;
+                if (this._mcImgFiles.length === 0) { list.classList.add('hidden'); return; }
+                list.classList.remove('hidden');
+                list.innerHTML = this._mcImgFiles.map((f, i) => `
+                    <div class="glass p-3 rounded-xl flex items-center gap-3">
+                        <i data-lucide="image" class="w-4 h-4 text-indigo-400 shrink-0"></i>
+                        <span class="text-sm font-medium flex-1 truncate">${f.name}</span>
+                        <span class="text-xs text-slate-400 shrink-0">${this._mcFmtSize(f.size)}</span>
+                        <button onclick="app._mcRemoveImg(${i})" class="text-slate-400 hover:text-red-500 transition-colors p-0.5">
+                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>`).join('');
+                this._rebuildIcons();
+            },
+
+            _mcRemoveImg(i) {
+                this._mcImgFiles.splice(i, 1);
+                this._mcRenderImgList();
+            },
+
+            async mcProcessImages() {
+                if (this._mcImgFiles.length === 0) { this.showToast('Add at least one image first.'); return; }
+                const maxW = parseInt(document.getElementById('mc-img-width').value) || 1920;
+                const maxH = parseInt(document.getElementById('mc-img-height').value) || 1080;
+                const quality = parseInt(document.getElementById('mc-img-quality').value) / 100;
+                const fmt = document.getElementById('mc-img-format').value;
+                const mimeType = fmt === 'png' ? 'image/png' : fmt === 'webp' ? 'image/webp' : 'image/jpeg';
+                const ext = fmt === 'jpeg' ? 'jpg' : fmt;
+                const btn = document.getElementById('mc-img-btn');
+                btn.disabled = true;
+
+                let processed = 0;
+                for (const file of this._mcImgFiles) {
+                    try {
+                        const bmp = await createImageBitmap(file);
+                        let w = bmp.width, h = bmp.height;
+                        const ratio = Math.min(maxW / w, maxH / h, 1);
+                        w = Math.round(w * ratio);
+                        h = Math.round(h * ratio);
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w; canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(bmp, 0, 0, w, h);
+                        bmp.close();
+                        canvas.toBlob(blob => {
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            const base = file.name.replace(/\.[^.]+$/, '');
+                            a.href = url;
+                            a.download = `${base}_resized.${ext}`;
+                            a.click();
+                            URL.revokeObjectURL(url);
+                        }, mimeType, quality);
+                        processed++;
+                    } catch(e) {
+                        console.warn('Image processing error:', file.name, e);
+                    }
+                }
+                btn.disabled = false;
+                this.showToast(`${processed} image${processed !== 1 ? 's' : ''} processed & downloaded!`);
             },
 
             // Calculator
@@ -4962,22 +5626,22 @@
             // ═══════════════════════════════════════════════════════
 
             // ── Mobile Tab Order (for swipe + More drawer) ──────────
-            tabOrder: ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder'],
+            tabOrder: ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder','mediaconv'],
             tabIcons: {
                 dashboard:'home', scratchpad:'file-text', tasks:'check-circle-2',
                 board:'columns', whiteboard:'pencil', clock:'clock', timer:'hourglass',
                 stopwatch:'timer', focustown:'building-2', audio:'headphones',
                 breathing:'wind', calculator:'calculator', converter:'arrow-left-right',
                 colorpicker:'palette', pdf:'file-stack', zones:'globe-2',
-                onair:'radio', recorder:'video'
+                onair:'radio', recorder:'video', mediaconv:'file-cog'
             },
             tabLabels: {
                 dashboard:'Home', scratchpad:'Notepad', tasks:'Tasks',
                 board:'Board', whiteboard:'Draw', clock:'Clock', timer:'Timer',
-                stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Sounds',
+                stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Mixer',
                 breathing:'Breathing', calculator:'Calc', converter:'Convert',
                 colorpicker:'Colors', pdf:'PDF', zones:'Zones',
-                onair:'On Air', recorder:'Record'
+                onair:'On Air', recorder:'Record', mediaconv:'Media'
             },
 
             // ── More Drawer ──────────────────────────────────────────
