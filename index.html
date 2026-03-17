@@ -1630,14 +1630,14 @@
                 <!-- Mixer Channels -->
                 <div class="space-y-3" id="mixer-channels">
 
-                    <!-- Lo-Fi Beats -->
+                    <!-- Lo-Fi Vinyl -->
                     <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="lofi">
-                        <button onclick="app.mixerToggle('lofi')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/40" id="mixer-btn-lofi" title="Toggle Lo-Fi Beats">
-                            <i data-lucide="music-2" class="w-5 h-5 text-slate-400" id="mixer-icon-lofi"></i>
+                        <button onclick="app.mixerToggle('lofi')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/40" id="mixer-btn-lofi" title="Toggle Lo-Fi Vinyl">
+                            <i data-lucide="disc-3" class="w-5 h-5 text-slate-400" id="mixer-icon-lofi"></i>
                         </button>
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Lo-Fi Beats</span>
+                                <span class="text-sm font-bold">Lo-Fi Vinyl</span>
                                 <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400 flex items-center gap-1" id="mixer-badge-lofi">
                                     <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse inline-block"></span> playing
                                 </span>
@@ -1731,6 +1731,74 @@
                         </div>
                         <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-brown">30%</span>
                     </div>
+
+                    <!-- Ocean Waves -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="ocean">
+                        <button onclick="app.mixerToggle('ocean')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-cyan-100 dark:hover:bg-cyan-900/40" id="mixer-btn-ocean" title="Toggle Ocean Waves">
+                            <i data-lucide="sailboat" class="w-5 h-5 text-slate-400" id="mixer-icon-ocean"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Ocean Waves</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400 flex items-center gap-1" id="mixer-badge-ocean">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.35" oninput="app.mixerSetVol('ocean', this.value)" class="w-full accent-cyan-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-ocean">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-ocean">35%</span>
+                    </div>
+
+                    <!-- Forest -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="forest">
+                        <button onclick="app.mixerToggle('forest')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-green-100 dark:hover:bg-green-900/40" id="mixer-btn-forest" title="Toggle Forest">
+                            <i data-lucide="trees" class="w-5 h-5 text-slate-400" id="mixer-icon-forest"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Forest</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 flex items-center gap-1" id="mixer-badge-forest">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('forest', this.value)" class="w-full accent-green-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-forest">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-forest">30%</span>
+                    </div>
+
+                    <!-- Fireplace -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="fire">
+                        <button onclick="app.mixerToggle('fire')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-900/40" id="mixer-btn-fire" title="Toggle Fireplace">
+                            <i data-lucide="flame" class="w-5 h-5 text-slate-400" id="mixer-icon-fire"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Fireplace</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 flex items-center gap-1" id="mixer-badge-fire">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.35" oninput="app.mixerSetVol('fire', this.value)" class="w-full accent-red-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-fire">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-fire">35%</span>
+                    </div>
+
+                    <!-- Fan -->
+                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="fan">
+                        <button onclick="app.mixerToggle('fan')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-sky-900/40" id="mixer-btn-fan" title="Toggle Fan">
+                            <i data-lucide="fan" class="w-5 h-5 text-slate-400" id="mixer-icon-fan"></i>
+                        </button>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="text-sm font-bold">Fan</span>
+                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-400 flex items-center gap-1" id="mixer-badge-fan">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse inline-block"></span> playing
+                                </span>
+                            </div>
+                            <input type="range" min="0" max="1" step="0.01" value="0.25" oninput="app.mixerSetVol('fan', this.value)" class="w-full accent-sky-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-fan">
+                        </div>
+                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-fan">25%</span>
+                    </div>
                 </div>
 
                 <!-- Master Volume -->
@@ -1751,6 +1819,8 @@
                         <button onclick="app.mixerPreset('cafe')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-amber-500 hover:text-white transition-all">☕ Café Vibe</button>
                         <button onclick="app.mixerPreset('rain')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-blue-500 hover:text-white transition-all">🌧️ Rainy Day</button>
                         <button onclick="app.mixerPreset('sleep')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-purple-500 hover:text-white transition-all">🌙 Sleep</button>
+                        <button onclick="app.mixerPreset('nature')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-green-500 hover:text-white transition-all">🌿 Nature Walk</button>
+                        <button onclick="app.mixerPreset('cozy')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-red-500 hover:text-white transition-all">🔥 Cozy Cabin</button>
                     </div>
                 </div>
             </div>
@@ -3872,9 +3942,11 @@
                 const bufferSize = 2 * rate;
                 const buffer = this.audioCtx.createBuffer(1, bufferSize, rate);
                 const out = buffer.getChannelData(0);
-                if (type === 'white') {
+                if (type === 'white' || type === 'rain' || type === 'fan') {
+                    // Pure white noise — flat spectrum, correct base for rain and fan
                     for (let i = 0; i < bufferSize; i++) out[i] = Math.random() * 2 - 1;
-                } else if (type === 'pink') {
+                } else if (type === 'pink' || type === 'coffee' || type === 'forest') {
+                    // Pink noise (Paul Kellett) — -3dB/oct rolloff, natural speech/nature base
                     let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
                     for (let i = 0; i < bufferSize; i++) {
                         const w = Math.random()*2-1;
@@ -3882,7 +3954,8 @@
                         b3=.8665*b3+w*.3104856; b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898;
                         out[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926;
                     }
-                } else if (type === 'brown' || type === 'coffee') {
+                } else if (type === 'brown' || type === 'ocean' || type === 'lofi') {
+                    // Brown noise (random walk integrator) — deep -6dB/oct rolloff
                     let lastOut = 0;
                     for (let i = 0; i < bufferSize; i++) {
                         const w = Math.random()*2-1;
@@ -3890,23 +3963,16 @@
                         lastOut = out[i];
                         out[i] *= 3.5;
                     }
-                } else if (type === 'rain') {
-                    // Pink noise through a bandpass for rain character
-                    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const w = Math.random()*2-1;
-                        b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.9690*b2+w*.153852;
-                        b3=.8665*b3+w*.3104856; b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898;
-                        out[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.15; b6=w*.115926;
-                    }
-                } else if (type === 'lofi') {
-                    // Warm brown noise base for lo-fi bed
+                } else if (type === 'fire') {
+                    // Brown noise base with random crackle pops for fireplace character
                     let lastOut = 0;
                     for (let i = 0; i < bufferSize; i++) {
                         const w = Math.random()*2-1;
-                        out[i] = (lastOut + .015*w) / 1.015;
+                        out[i] = (lastOut + .025*w) / 1.025;
                         lastOut = out[i];
-                        out[i] *= 2.5;
+                        out[i] *= 3.0;
+                        // Occasional sharp crackle pops (~3 per second average)
+                        if (Math.random() < 3 / rate) out[i] += (Math.random() * 2 - 1) * 0.8;
                     }
                 }
                 return buffer;
@@ -3922,24 +3988,74 @@
                 gain.gain.value = vol;
 
                 if (type === 'rain') {
-                    const bp = this.audioCtx.createBiquadFilter();
-                    bp.type = 'bandpass';
-                    bp.frequency.value = 2000;
-                    bp.Q.value = 0.5;
-                    source.connect(bp).connect(gain);
-                } else if (type === 'coffee') {
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass';
-                    lp.frequency.value = 1200;
-                    source.connect(lp).connect(gain);
-                } else if (type === 'lofi') {
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass';
-                    lp.frequency.value = 800;
+                    // White noise shaped: remove rumble below 200Hz and harshness above 8kHz,
+                    // boost the patter sweet-spot around 1500Hz
                     const hp = this.audioCtx.createBiquadFilter();
-                    hp.type = 'highpass';
-                    hp.frequency.value = 80;
+                    hp.type = 'highpass'; hp.frequency.value = 200; hp.Q.value = 0.7;
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 8000; lp.Q.value = 0.5;
+                    const peak = this.audioCtx.createBiquadFilter();
+                    peak.type = 'peaking'; peak.frequency.value = 1500; peak.gain.value = 9; peak.Q.value = 0.8;
+                    source.connect(hp).connect(lp).connect(peak).connect(gain);
+                } else if (type === 'coffee') {
+                    // Pink noise shaped to capture murmur/chatter: speech-range bandpass 400–3500Hz
+                    const hp = this.audioCtx.createBiquadFilter();
+                    hp.type = 'highpass'; hp.frequency.value = 400; hp.Q.value = 0.6;
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 3500; lp.Q.value = 0.6;
                     source.connect(hp).connect(lp).connect(gain);
+                } else if (type === 'lofi') {
+                    // Brown noise with warm vinyl character: sub-bass removed, rolled off above 3.5kHz,
+                    // gentle warmth boost at 250Hz
+                    const hp = this.audioCtx.createBiquadFilter();
+                    hp.type = 'highpass'; hp.frequency.value = 60; hp.Q.value = 0.5;
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 3500; lp.Q.value = 0.7;
+                    const warm = this.audioCtx.createBiquadFilter();
+                    warm.type = 'peaking'; warm.frequency.value = 250; warm.gain.value = 5; warm.Q.value = 1.0;
+                    source.connect(hp).connect(lp).connect(warm).connect(gain);
+                } else if (type === 'ocean') {
+                    // Brown noise lowpassed for deep rumble, with slow LFO on gain for wave rhythm
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 600; lp.Q.value = 0.8;
+                    const waveGain = this.audioCtx.createGain();
+                    waveGain.gain.value = 0.5;
+                    // LFO oscillator (~0.08 Hz) creates gentle wave swell
+                    const lfo = this.audioCtx.createOscillator();
+                    lfo.type = 'sine'; lfo.frequency.value = 0.08;
+                    const lfoDepth = this.audioCtx.createGain();
+                    lfoDepth.gain.value = 0.45;
+                    lfo.connect(lfoDepth).connect(waveGain.gain);
+                    lfo.start();
+                    source.connect(lp).connect(waveGain).connect(gain);
+                    // Store lfo on return so it can be stopped later
+                    gain._lfo = lfo;
+                } else if (type === 'forest') {
+                    // Pink noise shaped for rustling leaves and distant birdsong:
+                    // highpass removes rumble, gentle peak at 2.5kHz for that airy presence
+                    const hp = this.audioCtx.createBiquadFilter();
+                    hp.type = 'highpass'; hp.frequency.value = 300; hp.Q.value = 0.6;
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 6000; lp.Q.value = 0.5;
+                    const air = this.audioCtx.createBiquadFilter();
+                    air.type = 'peaking'; air.frequency.value = 2500; air.gain.value = 5; air.Q.value = 1.2;
+                    source.connect(hp).connect(lp).connect(air).connect(gain);
+                } else if (type === 'fire') {
+                    // Brown noise + crackle shaped: lowpassed for warmth, slight low-mid boost
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 3000; lp.Q.value = 0.6;
+                    const warmth = this.audioCtx.createBiquadFilter();
+                    warmth.type = 'peaking'; warmth.frequency.value = 180; warmth.gain.value = 6; warmth.Q.value = 0.9;
+                    source.connect(lp).connect(warmth).connect(gain);
+                } else if (type === 'fan') {
+                    // White noise shaped like a box/desk fan: mechanical hum with strong high-freq roll-off
+                    const hp = this.audioCtx.createBiquadFilter();
+                    hp.type = 'highpass'; hp.frequency.value = 40; hp.Q.value = 0.5;
+                    const lp = this.audioCtx.createBiquadFilter();
+                    lp.type = 'lowpass'; lp.frequency.value = 1800; lp.Q.value = 0.5;
+                    const hum = this.audioCtx.createBiquadFilter();
+                    hum.type = 'peaking'; hum.frequency.value = 120; hum.gain.value = 7; hum.Q.value = 1.5;
+                    source.connect(hp).connect(lp).connect(hum).connect(gain);
                 } else {
                     source.connect(gain);
                 }
@@ -3952,6 +4068,7 @@
                 if (this.mixerChannels[type]) {
                     // Stop this channel
                     try { this.mixerChannels[type].source.stop(); } catch(e) {}
+                    try { if (this.mixerChannels[type].gain._lfo) this.mixerChannels[type].gain._lfo.stop(); } catch(e) {}
                     delete this.mixerChannels[type];
                     this._mixerUpdateUI(type, false);
                 } else {
@@ -4003,6 +4120,7 @@
             mixerStopAll() {
                 Object.keys(this.mixerChannels).forEach(type => {
                     try { this.mixerChannels[type].source.stop(); } catch(e) {}
+                    try { if (this.mixerChannels[type].gain._lfo) this.mixerChannels[type].gain._lfo.stop(); } catch(e) {}
                     this._mixerUpdateUI(type, false);
                 });
                 this.mixerChannels = {};
@@ -4013,10 +4131,12 @@
             mixerPreset(name) {
                 this.mixerStopAll();
                 const presets = {
-                    focus: { lofi: .45, pink: .25 },
-                    cafe:  { lofi: .4, coffee: .35, brown: .15 },
-                    rain:  { rain: .5, brown: .25 },
-                    sleep: { brown: .4, pink: .2 }
+                    focus:  { lofi: .4,  pink: .2 },
+                    cafe:   { lofi: .35, coffee: .4, brown: .1 },
+                    rain:   { rain: .5,  brown: .2, forest: .15 },
+                    sleep:  { ocean: .4, brown: .2, pink: .15 },
+                    nature: { forest: .45, rain: .25, ocean: .2 },
+                    cozy:   { fire: .45, brown: .25, lofi: .2 }
                 };
                 const cfg = presets[name] || {};
                 Object.entries(cfg).forEach(([type, vol]) => {
@@ -4028,7 +4148,7 @@
                 });
                 const bar = document.getElementById('mobile-music-bar');
                 if (bar) bar.classList.toggle('visible', Object.keys(this.mixerChannels).length > 0);
-                const labels = { focus: 'Deep Focus', cafe: 'Café Vibe', rain: 'Rainy Day', sleep: 'Sleep' };
+                const labels = { focus: 'Deep Focus', cafe: 'Café Vibe', rain: 'Rainy Day', sleep: 'Sleep', nature: 'Nature Walk', cozy: 'Cozy Cabin' };
                 const nameEl = document.getElementById('mob-track-name');
                 if (nameEl) nameEl.textContent = labels[name] || 'Mixer';
                 this.showToast(`Preset loaded: ${labels[name] || name}`);
