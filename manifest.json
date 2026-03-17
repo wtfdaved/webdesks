@@ -2,7 +2,7 @@
   "name": "WebDesks OS",
   "short_name": "WebDesks",
   "description": "18 free productivity tools in one browser tab",
-  "version": "0.19.0",
+  "version": "0.19.2",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "any",

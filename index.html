@@ -20,7 +20,7 @@
     <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.19.0">
+    <meta name="generator" content="WebDesks v0.19.2">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -859,15 +859,16 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            transition: transform 0.3s ease, right 0.3s ease;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(-6px 0 18px rgba(79,70,229,0.22));
         }
-        #ad-panel.collapsed #ad-panel-inner {
-            display: none;
+        #ad-panel.collapsed {
+            right: -160px;
         }
         #ad-panel-toggle {
             writing-mode: vertical-rl;
             text-orientation: mixed;
-            background: rgba(79,70,229,0.85);
+            background: rgba(79,70,229,0.92);
             color: white;
             font-size: 0.6rem;
             font-weight: 700;
@@ -878,16 +879,16 @@
             cursor: pointer;
             user-select: none;
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.25);
             border-right: none;
-            opacity: 0.7;
-            transition: opacity 0.2s;
+            transition: background 0.2s;
+            box-shadow: -2px 0 10px rgba(79,70,229,0.25);
         }
-        #ad-panel-toggle:hover { opacity: 1; }
+        #ad-panel-toggle:hover { background: rgba(99,88,249,1); }
         #ad-panel-inner {
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(79,70,229,0.18);
             border-right: none;
             border-radius: 8px 0 0 8px;
             padding: 0.5rem;
@@ -897,10 +898,11 @@
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
+            box-shadow: -6px 0 24px rgba(79,70,229,0.14);
         }
         .dark #ad-panel-inner {
-            background: rgba(15,23,42,0.92);
-            border-color: rgba(255,255,255,0.08);
+            background: rgba(15,23,42,0.97);
+            border-color: rgba(79,70,229,0.25);
         }
         #ad-panel-inner .ad-label {
             font-size: 0.55rem;
@@ -967,7 +969,7 @@
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "Any — runs in any modern web browser",
       "browserRequirements": "Requires a modern browser with JavaScript enabled",
-      "softwareVersion": "0.19.0",
+      "softwareVersion": "0.19.2",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -1012,7 +1014,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.19.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.19.2</span>
             </div>
         </div>
 
@@ -1184,8 +1186,8 @@
     </aside>
 
     <!-- Right-side Collapsible Ad Panel (desktop only) -->
-    <div id="ad-panel" class="collapsed" aria-label="Advertisement panel">
-        <button id="ad-panel-toggle" onclick="toggleAdPanel()" title="Toggle ad panel" aria-expanded="false">Ads</button>
+    <div id="ad-panel" aria-label="Advertisement panel">
+        <button id="ad-panel-toggle" onclick="toggleAdPanel()" title="Toggle ad panel" aria-expanded="true">Hide</button>
         <div id="ad-panel-inner">
             <span class="ad-label">Advertisement</span>
             <ins class="adsbygoogle"
@@ -1207,6 +1209,7 @@
             const toggle = document.getElementById('ad-panel-toggle');
             const isCollapsed = panel.classList.toggle('collapsed');
             toggle.setAttribute('aria-expanded', String(!isCollapsed));
+            toggle.textContent = isCollapsed ? 'Ads' : 'Hide';
         }
     </script>
 
