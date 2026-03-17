@@ -20,7 +20,7 @@
     <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.19.2">
+    <meta name="generator" content="WebDesks v0.20.1">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -969,7 +969,7 @@
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "Any — runs in any modern web browser",
       "browserRequirements": "Requires a modern browser with JavaScript enabled",
-      "softwareVersion": "0.19.2",
+      "softwareVersion": "0.20.1",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -1014,7 +1014,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.19.2</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.20.1</span>
             </div>
         </div>
 
@@ -1281,6 +1281,30 @@
                     </div>
                 </div>
 
+                <!-- Task Progress + Quick Add -->
+                <div class="glass p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Today's Tasks</div>
+                        <button onclick="app.switchTab('tasks')" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-600 transition-colors flex items-center gap-1">
+                            View All <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                            <div id="task-progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width:0%"></div>
+                        </div>
+                        <div id="task-progress-label" class="text-xs font-bold text-slate-500 shrink-0 w-16 text-right">0 / 0</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="dash-task-input" placeholder="Quick add a task..."
+                            class="flex-1 bg-slate-100 dark:bg-slate-800/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 border-none text-slate-800 dark:text-slate-100"
+                            onkeypress="if(event.key==='Enter') app.dashAddTask()">
+                        <button onclick="app.dashAddTask()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-lg shadow-emerald-500/30 flex items-center justify-center" aria-label="Add task">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Hydration -->
                 <div class="glass p-5 rounded-2xl flex items-center gap-6">
                     <div class="text-[10px] font-black uppercase tracking-widest text-blue-500 shrink-0">Hydration</div>
@@ -1291,12 +1315,47 @@
                     </div>
                 </div>
 
+                <!-- Mood Tracker -->
+                <div class="glass p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-purple-500">How Are You Feeling?</div>
+                        <div id="mood-week" class="flex gap-1.5 items-center"></div>
+                    </div>
+                    <div class="flex justify-between gap-2" id="mood-buttons">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
                 <!-- Daily Quote -->
                 <div class="glass p-4 rounded-2xl flex items-start gap-3 relative overflow-hidden">
                     <i data-lucide="quote" class="w-5 h-5 text-slate-300 dark:text-slate-600 shrink-0 mt-0.5"></i>
                     <div class="flex-1 min-w-0">
                         <p id="daily-quote" class="text-sm font-medium text-slate-600 dark:text-slate-300 italic leading-relaxed">"Loading inspiration..."</p>
                         <p id="quote-author" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">- WebDesks</p>
+                    </div>
+                </div>
+
+                <!-- Focus Stats -->
+                <div class="glass p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-indigo-500">Today's Focus</div>
+                        <button onclick="app.switchTab('timer')" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-600 transition-colors flex items-center gap-1">
+                            Start Session <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div id="dash-sessions" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">0</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Sessions</div>
+                        </div>
+                        <div>
+                            <div id="dash-focus-mins" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">0m</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Focus Time</div>
+                        </div>
+                        <div>
+                            <div id="dash-streak" class="text-2xl font-black text-orange-500">0</div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Day Streak 🔥</div>
+                        </div>
                     </div>
                 </div>
 
@@ -2804,9 +2863,12 @@
                 this.initScratchpad();
                 this.initQuote();
                 this.renderTasks();
+                this.updateTaskProgress();
                 this.renderWater();
                 this.updateAlarmUI();
                 this.updateTimerStats();
+                this.initMoodTracker();
+                this.updateFocusStats();
                 this.initZones();
                 this.initPDFDrop();
                 this.renderPins();
@@ -3475,6 +3537,7 @@
                 
                 localStorage.setItem('wd_tasks', JSON.stringify(this.tasks));
                 this._rebuildIcons();
+                this.updateTaskProgress();
             },
 
             addTask() {
@@ -3950,6 +4013,110 @@
             updateTimerStats() {
                 document.getElementById('session-count').textContent = this.timerSessions;
                 document.getElementById('total-focus').textContent = `${this.timerTotalMinutes}m`;
+                this.updateFocusStats();
+            },
+
+            // ── Task Progress ────────────────────────────────────────
+            updateTaskProgress() {
+                const total = this.tasks.length;
+                const done = this.tasks.filter(t => t.done).length;
+                const pct = total ? Math.round((done / total) * 100) : 0;
+                const bar = document.getElementById('task-progress-bar');
+                const label = document.getElementById('task-progress-label');
+                if (bar) bar.style.width = pct + '%';
+                if (label) label.textContent = `${done} / ${total}`;
+                // Celebrate all done
+                if (bar) {
+                    if (total > 0 && done === total) {
+                        bar.classList.remove('bg-emerald-500');
+                        bar.classList.add('bg-yellow-400');
+                    } else {
+                        bar.classList.remove('bg-yellow-400');
+                        bar.classList.add('bg-emerald-500');
+                    }
+                }
+            },
+
+            dashAddTask() {
+                const input = document.getElementById('dash-task-input');
+                const text = input ? input.value.trim() : '';
+                if (!text) return;
+                this.tasks.push({ text, time: '', done: false, id: Date.now() });
+                if (input) input.value = '';
+                localStorage.setItem('wd_tasks', JSON.stringify(this.tasks));
+                this.renderTasks();
+                this.updateTaskProgress();
+            },
+
+            // ── Mood Tracker ─────────────────────────────────────────
+            moodEmojis: ['😫', '😕', '😐', '🙂', '😄'],
+            moodLabelsArr: ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
+
+            initMoodTracker() {
+                const container = document.getElementById('mood-buttons');
+                if (!container) return;
+                const today = new Date().toDateString();
+                const savedDate = localStorage.getItem('wd_mood_date');
+                const currentMood = savedDate === today ? parseInt(localStorage.getItem('wd_mood') || '0') : 0;
+                container.innerHTML = this.moodEmojis.map((emoji, i) => {
+                    const level = i + 1;
+                    const active = currentMood === level;
+                    return `<button onclick="app.setMood(${level})" title="${this.moodLabelsArr[i]}"
+                        class="mood-btn flex-1 text-center py-2.5 rounded-xl text-2xl transition-all duration-200 ${active ? 'bg-purple-100 dark:bg-purple-900/40 scale-110 ring-2 ring-purple-400' : 'hover:bg-slate-100 dark:hover:bg-slate-800/50 opacity-50 hover:opacity-100'}"
+                        data-level="${level}">${emoji}</button>`;
+                }).join('');
+                this.renderMoodHistory();
+            },
+
+            setMood(level) {
+                const today = new Date().toDateString();
+                localStorage.setItem('wd_mood', level);
+                localStorage.setItem('wd_mood_date', today);
+                let history = [];
+                try { history = JSON.parse(localStorage.getItem('wd_mood_history') || '[]'); } catch(e) {}
+                const existing = history.findIndex(d => d.date === today);
+                if (existing >= 0) history[existing].mood = level;
+                else history.push({ date: today, mood: level });
+                history = history.slice(-7);
+                localStorage.setItem('wd_mood_history', JSON.stringify(history));
+                document.querySelectorAll('.mood-btn').forEach(btn => {
+                    const btnLevel = parseInt(btn.dataset.level);
+                    if (btnLevel === level) {
+                        btn.className = 'mood-btn flex-1 text-center py-2.5 rounded-xl text-2xl transition-all duration-200 bg-purple-100 dark:bg-purple-900/40 scale-110 ring-2 ring-purple-400';
+                    } else {
+                        btn.className = 'mood-btn flex-1 text-center py-2.5 rounded-xl text-2xl transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800/50 opacity-50 hover:opacity-100';
+                    }
+                    btn.dataset.level = btnLevel;
+                });
+                this.renderMoodHistory();
+            },
+
+            renderMoodHistory() {
+                const el = document.getElementById('mood-week');
+                if (!el) return;
+                let history = [];
+                try { history = JSON.parse(localStorage.getItem('wd_mood_history') || '[]'); } catch(e) {}
+                const days = [];
+                for (let i = 6; i >= 0; i--) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - i);
+                    const entry = history.find(h => h.date === d.toDateString());
+                    days.push(entry ? entry.mood : 0);
+                }
+                const colors = ['bg-slate-200 dark:bg-slate-700', 'bg-red-400', 'bg-orange-400', 'bg-yellow-400', 'bg-lime-400', 'bg-green-400'];
+                const labels = ['—', 'Terrible', 'Bad', 'Okay', 'Good', 'Great'];
+                el.innerHTML = days.map(m => `<div class="w-2.5 h-2.5 rounded-full ${colors[m]}" title="${labels[m]}"></div>`).join('');
+            },
+
+            // ── Focus Stats ──────────────────────────────────────────
+            updateFocusStats() {
+                const sessEl = document.getElementById('dash-sessions');
+                const minsEl = document.getElementById('dash-focus-mins');
+                const streakEl = document.getElementById('dash-streak');
+                if (sessEl) sessEl.textContent = this.timerSessions;
+                if (minsEl) minsEl.textContent = this.timerTotalMinutes + 'm';
+                const streak = parseInt(localStorage.getItem('wd_ft_streak') || '0');
+                if (streakEl) streakEl.textContent = streak;
             },
 
             // ── Audio Mixer ─────────────────────────────────────────
