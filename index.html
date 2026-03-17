@@ -20,7 +20,7 @@
     <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.18.7">
+    <meta name="generator" content="WebDesks v0.19.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -279,9 +279,11 @@
             animation: ring 2s ease-in-out infinite;
         }
 
-        /* Focus Town — Canvas Pixel Art */
-        #ft-scene-wrapper {
-            position: relative; border-radius: 1.5rem; overflow: hidden; background: #111;
+        /* Focus Town v0.19 — Canvas Pixel Art */
+        .ft-noscroll { overflow: hidden !important; }
+        .ft-scene-hero {
+            position: relative; background: #0a0e1a;
+            min-height: 220px; flex-shrink: 0;
         }
         #ft-canvas {
             display: block; width: 100%; height: auto;
@@ -289,15 +291,21 @@
             image-rendering: -moz-crisp-edges;
             image-rendering: crisp-edges;
             image-rendering: -webkit-optimize-contrast;
-            border-radius: 1.5rem;
-            min-height: 200px;
+            min-height: 220px;
+        }
+        .ft-progress-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 1.25rem 1rem 0.875rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+            pointer-events: none;
         }
         #ft-town-label {
-            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; font-weight: 700;
-            letter-spacing: 0.18em; text-transform: uppercase;
-            color: rgba(255,255,255,0.9); text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+            position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; font-weight: 700;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: rgba(255,255,255,0.75); text-shadow: 0 1px 8px rgba(0,0,0,0.8);
             pointer-events: none; white-space: nowrap;
+            background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 99px;
         }
         #ft-unlock-flash {
             position: absolute; inset: 0; border-radius: 1.5rem;
@@ -314,8 +322,8 @@
         #ft-town-name-input:focus { border-bottom-color: #4f46e5; cursor: text; }
         .ft-achievement {
             display: flex; align-items: center; gap: 0.5rem;
-            padding: 0.5rem 0.75rem; border-radius: 0.75rem;
-            font-size: 0.68rem; font-weight: 700; transition: all 0.3s;
+            padding: 0.4rem 0.6rem; border-radius: 0.65rem;
+            font-size: 0.64rem; font-weight: 700; transition: all 0.3s;
             border: 1px solid transparent;
         }
         .ft-achievement.ft-locked { opacity: 0.3; filter: grayscale(1); }
@@ -332,18 +340,15 @@
         .ft-weather-btn.ft-active {
             background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4);
         }
-        #ft-milestones-row {
-            display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 2px;
-            scrollbar-width: none;
-        }
-        #ft-milestones-row::-webkit-scrollbar { display: none; }
+        #ft-milestones-row { display: flex; flex-wrap: wrap; gap: 0.375rem; }
         @keyframes ft-stage-up {
             0%,100% { transform: scale(1); filter: brightness(1); }
             40% { transform: scale(1.03); filter: brightness(1.3); }
         }
         @media (max-width: 768px) {
-            #ft-canvas { min-height: 160px; }
-            #ft-town-label { font-size: 0.5rem; bottom: 6px; }
+            .ft-scene-hero { min-height: 180px; }
+            #ft-canvas { min-height: 180px; }
+            #ft-town-label { font-size: 0.48rem; top: 6px; }
             #ft-town-name-input { font-size: 1.2rem; max-width: 160px; }
         }
 
@@ -961,7 +966,7 @@
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "Any — runs in any modern web browser",
       "browserRequirements": "Requires a modern browser with JavaScript enabled",
-      "softwareVersion": "0.18.7",
+      "softwareVersion": "0.19.0",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -1006,7 +1011,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.18.7</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.19.0</span>
             </div>
         </div>
 
@@ -2248,12 +2253,13 @@
             </div>
         </div>
 
-        <!-- FOCUS TOWN -->
-        <div id="focustown" class="tab-content flex flex-col gap-4 overflow-y-auto">
-            <!-- Header row -->
-            <div class="flex flex-wrap items-center justify-between gap-3">
+        <!-- FOCUS TOWN v0.19 -->
+        <div id="focustown" class="tab-content flex flex-col gap-3 ft-noscroll">
+
+            <!-- Header: Town identity + weather controls -->
+            <div class="flex items-center justify-between gap-2 flex-wrap">
                 <div class="flex items-center gap-3">
-                    <span id="ft-stage-emoji" class="text-2xl">⛺</span>
+                    <span id="ft-stage-emoji" class="text-2xl select-none">⛺</span>
                     <div>
                         <input id="ft-town-name-input" type="text" maxlength="24" value="My Town"
                             onchange="app.ftSaveTownName(this.value)" title="Click to rename your town"
@@ -2265,8 +2271,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 flex-wrap">
-                    <!-- Weather controls -->
+                <div class="flex items-center gap-2">
                     <div class="flex gap-1 glass px-2 py-1 rounded-full">
                         <button class="ft-weather-btn ft-active" data-weather="clear" onclick="app.ftSetWeather('clear')" title="Clear">☀️</button>
                         <button class="ft-weather-btn" data-weather="rain" onclick="app.ftSetWeather('rain')" title="Rain">🌧️</button>
@@ -2277,105 +2282,110 @@
                 </div>
             </div>
 
-            <!-- Town scene (canvas) -->
-            <div class="glass rounded-3xl overflow-hidden shadow-inner" id="ft-scene-wrapper">
-                <canvas id="ft-canvas" width="480" height="192"></canvas>
-                <div id="ft-town-label">My Town</div>
-                <div id="ft-unlock-flash"></div>
-            </div>
+            <!-- Main body: canvas hero + right panel -->
+            <div class="flex flex-col lg:flex-row gap-3 flex-1 min-h-0">
 
-            <!-- Stage progress bar -->
-            <div class="glass p-4 rounded-2xl">
-                <div class="flex justify-between items-center mb-2">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-black uppercase tracking-widest text-slate-400">Stage</span>
-                        <span id="ft-stage-name" class="text-xs font-bold text-indigo-500">Campsite</span>
-                        <span class="text-xs text-slate-400">→</span>
-                        <span id="ft-next-stage-name" class="text-xs font-bold text-slate-500">Hamlet</span>
+                <!-- Left: Canvas hero with overlaid progress -->
+                <div class="flex flex-col gap-3 lg:flex-1 min-h-0">
+                    <div id="ft-scene-wrapper" class="relative rounded-3xl overflow-hidden ft-scene-hero">
+                        <canvas id="ft-canvas" width="480" height="192"></canvas>
+                        <div id="ft-town-label">My Town</div>
+                        <div id="ft-unlock-flash"></div>
+                        <!-- Stage progress overlaid on canvas -->
+                        <div class="ft-progress-overlay">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <div class="flex items-center gap-1.5">
+                                    <span id="ft-stage-name" class="text-xs font-black text-white drop-shadow-sm">Campsite</span>
+                                    <span class="text-white/50 text-xs">→</span>
+                                    <span id="ft-next-stage-name" class="text-xs text-white/80 font-semibold">Hamlet</span>
+                                </div>
+                                <span id="ft-progress-label" class="text-[10px] text-white/70 font-medium">10 min to unlock</span>
+                            </div>
+                            <div class="h-1.5 bg-white/20 rounded-full overflow-hidden">
+                                <div id="ft-progress-bar" class="h-full rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 transition-all duration-700" style="width:0%"></div>
+                            </div>
+                        </div>
                     </div>
-                    <span id="ft-progress-label" class="text-xs text-slate-400 font-medium">10 min to unlock</span>
-                </div>
-                <div class="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div id="ft-progress-bar" class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-700" style="width:0%"></div>
-                </div>
-            </div>
 
-            <!-- Timer card -->
-            <div class="glass p-6 rounded-2xl flex flex-col gap-5">
-                <div class="flex flex-wrap items-center justify-center gap-3">
-                    <div class="inline-flex gap-1 p-1 rounded-full glass">
-                        <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
-                        <button onclick="app.ftSetMode(45)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="45">45m</button>
-                        <button onclick="app.ftSetMode(60)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="60">60m</button>
-                        <button onclick="app.ftSetMode(90)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="90">90m</button>
-                    </div>
-                    <div class="flex items-center gap-2 glass px-3 py-1.5 rounded-full">
-                        <span class="text-xs text-slate-400 font-medium">Custom</span>
-                        <input type="number" id="ft-custom-input" min="1" max="480" value="25"
-                            class="w-14 bg-transparent text-sm font-bold text-center focus:outline-none text-slate-800 dark:text-slate-100"
-                            oninput="app.ftSetCustom(this.value)">
-                        <span class="text-xs text-slate-400">min</span>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="flex-1 text-center">
-                        <div id="ft-timer-display" class="text-6xl md:text-7xl font-black timer-font text-slate-800 dark:text-slate-100 leading-none">25:00</div>
-                        <p id="ft-timer-status" class="text-xs font-black uppercase tracking-[0.3em] text-indigo-500 mt-2">Ready to Focus</p>
+                    <!-- Milestones: flex-wrap, no scroll -->
+                    <div class="glass p-3 rounded-2xl">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Milestones</div>
+                        <div id="ft-milestones-row" class="flex flex-wrap gap-1.5">
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="0">⛺ Campsite</div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="1">🌾 Hamlet <span class="text-slate-400 font-normal ml-0.5">10m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="2">🏡 Village <span class="text-slate-400 font-normal ml-0.5">20m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="3">🏘️ Settlement <span class="text-slate-400 font-normal ml-0.5">30m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="4">🏚️ Borough <span class="text-slate-400 font-normal ml-0.5">40m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="5">🏠 Township <span class="text-slate-400 font-normal ml-0.5">50m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="6">🏙️ Town <span class="text-slate-400 font-normal ml-0.5">60m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="7">🌆 City <span class="text-slate-400 font-normal ml-0.5">70m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="8">🌇 Metropolis <span class="text-slate-400 font-normal ml-0.5">80m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="9">🌃 Megalopolis <span class="text-slate-400 font-normal ml-0.5">90m</span></div>
+                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="10">✨ Utopia <span class="text-slate-400 font-normal ml-0.5">100m</span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="flex gap-3">
-                    <button id="ft-btn" onclick="app.ftToggleTimer()" class="flex-1 btn-primary text-white py-4 rounded-2xl font-bold text-lg">
-                        Start Focusing
-                    </button>
-                    <button onclick="app.ftResetTimer()" class="glass w-14 rounded-2xl flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-500">
-                        <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
 
-            <!-- Stats row (4 cards) -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div class="glass p-4 rounded-2xl text-center">
-                    <div id="ft-citizen-count" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">2</div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Citizens</div>
-                </div>
-                <div class="glass p-4 rounded-2xl text-center">
-                    <div id="ft-sessions-count" class="text-2xl font-black text-purple-600 dark:text-purple-400">0</div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Sessions</div>
-                </div>
-                <div class="glass p-4 rounded-2xl text-center">
-                    <div id="ft-total-min" class="text-2xl font-black text-green-600 dark:text-green-400">0m</div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Total Focus</div>
-                </div>
-                <div class="glass p-4 rounded-2xl text-center">
-                    <div id="ft-streak-stat" class="text-2xl font-black text-orange-500">0</div>
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mt-1">Day Streak 🔥</div>
-                </div>
-            </div>
+                <!-- Right: Timer + Stats + Achievements -->
+                <div class="flex flex-col gap-3 lg:w-64 xl:w-72">
+                    <!-- Timer card -->
+                    <div class="glass p-4 rounded-2xl flex flex-col gap-4">
+                        <div class="flex flex-wrap items-center justify-center gap-2">
+                            <div class="inline-flex gap-1 p-1 rounded-full glass">
+                                <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
+                                <button onclick="app.ftSetMode(45)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="45">45m</button>
+                                <button onclick="app.ftSetMode(60)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="60">60m</button>
+                                <button onclick="app.ftSetMode(90)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="90">90m</button>
+                            </div>
+                            <div class="flex items-center gap-2 glass px-3 py-1.5 rounded-full">
+                                <span class="text-xs text-slate-400 font-medium">Custom</span>
+                                <input type="number" id="ft-custom-input" min="1" max="480" value="25"
+                                    class="w-12 bg-transparent text-sm font-bold text-center focus:outline-none text-slate-800 dark:text-slate-100"
+                                    oninput="app.ftSetCustom(this.value)">
+                                <span class="text-xs text-slate-400">min</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div id="ft-timer-display" class="text-5xl xl:text-6xl font-black timer-font text-slate-800 dark:text-slate-100 leading-none">25:00</div>
+                            <p id="ft-timer-status" class="text-xs font-black uppercase tracking-[0.3em] text-indigo-500 mt-2">Ready to Focus</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="ft-btn" onclick="app.ftToggleTimer()" class="flex-1 btn-primary text-white py-3.5 rounded-2xl font-bold text-base">
+                                Start Focusing
+                            </button>
+                            <button onclick="app.ftResetTimer()" class="glass w-12 rounded-2xl flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-500">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
 
-            <!-- Stage milestones (11 stages, scrollable) -->
-            <div class="glass p-5 rounded-2xl">
-                <div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Town Milestones</div>
-                <div id="ft-milestones-row">
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="0">⛺ Campsite <span class="text-slate-400 font-normal ml-1">0m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="1">🌾 Hamlet <span class="text-slate-400 font-normal ml-1">10m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="2">🏡 Village <span class="text-slate-400 font-normal ml-1">20m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="3">🏘️ Settlement <span class="text-slate-400 font-normal ml-1">30m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="4">🏚️ Borough <span class="text-slate-400 font-normal ml-1">40m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="5">🏠 Township <span class="text-slate-400 font-normal ml-1">50m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="6">🏙️ Town <span class="text-slate-400 font-normal ml-1">60m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="7">🌆 City <span class="text-slate-400 font-normal ml-1">70m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="8">🌇 Metropolis <span class="text-slate-400 font-normal ml-1">80m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="9">🌃 Megalopolis <span class="text-slate-400 font-normal ml-1">90m</span></div>
-                    <div class="ft-milestone flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap" data-stage="10">✨ Utopia <span class="text-slate-400 font-normal ml-1">100m</span></div>
-                </div>
-            </div>
+                    <!-- Stats: 2×2 compact grid -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="glass p-3 rounded-2xl text-center">
+                            <div id="ft-citizen-count" class="text-xl font-black text-indigo-600 dark:text-indigo-400">2</div>
+                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Citizens</div>
+                        </div>
+                        <div class="glass p-3 rounded-2xl text-center">
+                            <div id="ft-sessions-count" class="text-xl font-black text-purple-600 dark:text-purple-400">0</div>
+                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Sessions</div>
+                        </div>
+                        <div class="glass p-3 rounded-2xl text-center">
+                            <div id="ft-total-min" class="text-xl font-black text-green-600 dark:text-green-400">0m</div>
+                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Total Focus</div>
+                        </div>
+                        <div class="glass p-3 rounded-2xl text-center">
+                            <div id="ft-streak-stat" class="text-xl font-black text-orange-500">0</div>
+                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Day Streak 🔥</div>
+                        </div>
+                    </div>
 
-            <!-- Achievements -->
-            <div class="glass p-5 rounded-2xl">
-                <div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Achievements</div>
-                <div id="ft-achievements-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <!-- Rendered by ftRenderAchievements() -->
+                    <!-- Achievements -->
+                    <div class="glass p-4 rounded-2xl flex-1">
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Achievements</div>
+                        <div id="ft-achievements-grid" class="grid grid-cols-1 gap-1.5">
+                            <!-- Rendered by ftRenderAchievements() -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
