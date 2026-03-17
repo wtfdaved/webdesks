@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service | WebDesks</title>
-    <meta name="description" content="WebDesks Terms of Service — the rules for using our free browser-based productivity tools including the PDF Merger and Screen Recorder.">
+    <meta name="description" content="WebDesks Terms of Service — the rules for using our free browser-based productivity tools including the Pomodoro Timer, PDF Merger, Screen Recorder, and 20+ other tools.">
     <meta name="author" content="WebDesks">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/terms">
@@ -30,7 +30,23 @@
         .prose-content a { color: #4f46e5; text-decoration: underline; }
         .highlight-box { background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1rem 1.25rem; border-radius: 0 0.75rem 0.75rem 0; margin-bottom: 1.5rem; }
         .tool-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; }
+        .toc-link { display: block; padding: 0.35rem 0; color: #4f46e5; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid #f1f5f9; }
+        .toc-link:hover { text-decoration: underline; }
+        .toc-link:last-child { border-bottom: none; }
+        .update-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #f0fdf4; color: #15803d; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #bbf7d0; margin-bottom: 1.5rem; }
     </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Terms of Service — WebDesks",
+      "description": "Terms of Service governing use of WebDesks free browser-based productivity tools.",
+      "url": "https://webdesks.app/terms",
+      "publisher": { "@type": "Organization", "name": "WebDesks", "url": "https://webdesks.app" },
+      "dateModified": "2026-03-17"
+    }
+    </script>
 </head>
 <body class="bg-white text-slate-800">
 
@@ -59,36 +75,64 @@
                 📋 Legal
             </div>
             <h1 class="text-4xl md:text-5xl font-black mb-3">Terms of Service</h1>
-            <p class="text-white/80 text-lg">Last updated: March 10, 2026</p>
+            <p class="text-white/80 text-lg">Last updated: March 17, 2026</p>
         </div>
     </section>
 
     <!-- Content -->
     <main class="max-w-4xl mx-auto px-4 py-12 prose-content">
 
+        <div class="update-badge">
+            ✅ Updated March 17, 2026 — added CCPA rights notice and Focus Town sections
+        </div>
+
         <div class="highlight-box">
             <p class="text-indigo-800 font-medium mb-0">By accessing or using WebDesks at <a href="https://webdesks.app" class="text-indigo-700">webdesks.app</a>, you agree to be bound by these Terms of Service. If you do not agree, please do not use WebDesks.</p>
         </div>
 
-        <h2>1. Acceptance of Terms</h2>
-        <p>These Terms of Service ("Terms") govern your access to and use of WebDesks, a free browser-based productivity suite ("Service"), operated as an independent project ("we," "us," or "our"). By using WebDesks, you confirm that you are at least 13 years of age and have the legal capacity to agree to these Terms.</p>
+        <!-- Table of Contents -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8">
+            <p class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Table of Contents</p>
+            <a href="#acceptance" class="toc-link">1. Acceptance of Terms</a>
+            <a href="#description" class="toc-link">2. Description of Service</a>
+            <a href="#data-handling" class="toc-link">3. Data Handling by Tool</a>
+            <a href="#acceptable-use" class="toc-link">4. Acceptable Use</a>
+            <a href="#ip" class="toc-link">5. Intellectual Property</a>
+            <a href="#advertisements" class="toc-link">6. Advertisements</a>
+            <a href="#disclaimers" class="toc-link">7. Disclaimers and Limitation of Liability</a>
+            <a href="#third-party" class="toc-link">8. Third-Party Services and Links</a>
+            <a href="#modifications" class="toc-link">9. Modifications to the Service</a>
+            <a href="#changes" class="toc-link">10. Changes to These Terms</a>
+            <a href="#ccpa" class="toc-link">11. California Consumer Privacy Rights (CCPA)</a>
+            <a href="#governing-law" class="toc-link">12. Governing Law</a>
+            <a href="#contact" class="toc-link">13. Contact</a>
+        </div>
 
-        <h2>2. Description of Service</h2>
-        <p>WebDesks provides over 20 free productivity tools accessible entirely within a web browser, including but not limited to:</p>
+        <h2 id="acceptance">1. Acceptance of Terms</h2>
+        <p>These Terms of Service ("Terms") govern your access to and use of WebDesks, a free browser-based productivity suite ("Service"), operated as an independent project ("we," "us," or "our"). By using WebDesks, you confirm that you are at least 13 years of age and have the legal capacity to agree to these Terms.</p>
+        <p>These Terms apply to all visitors, users, and others who access or use the Service. If you are using WebDesks on behalf of an organization or employer, you represent that you have authority to bind that entity to these Terms.</p>
+
+        <h2 id="description">2. Description of Service</h2>
+        <p>WebDesks provides over 20 free productivity tools accessible entirely within a web browser, with no account, registration, or download required. Current tools include but are not limited to:</p>
         <ul>
-            <li>Pomodoro Focus Timer and Stopwatch</li>
+            <li>Pomodoro Focus Timer, Stopwatch, and World Clock</li>
             <li>PDF Merger</li>
             <li>Screen Recorder</li>
-            <li>Multi-channel Audio Mixer</li>
-            <li>Media Converter (WebM to MP4, image resize)</li>
-            <li>Markdown Scratchpad, Task Manager, Kanban Board</li>
-            <li>Calculator, Unit Converter, Color Picker</li>
-            <li>Breathing Guide, White Noise Generator</li>
+            <li>Multi-channel Audio Mixer and White Noise Generator</li>
+            <li>Media Converter (WebM to MP4, image resizing)</li>
+            <li>Markdown Scratchpad, Task Manager, Kanban Board, and Whiteboard</li>
+            <li>Calculator, Unit Converter, and Color Picker</li>
+            <li>Breathing Guide</li>
+            <li>Focus Town — gamified pixel-art productivity environment</li>
+            <li>World Zones time-zone converter</li>
+            <li>On Air — live broadcast mode indicator</li>
+            <li>Dashboard with weather and inspiration widgets</li>
         </ul>
-        <p>All tools operate entirely client-side in your browser. We do not operate servers that receive, store, or process your files or documents.</p>
+        <p>All tools operate entirely client-side in your browser. We do not operate servers that receive, store, or process your files or documents. The Service is provided free of charge and supported by advertising.</p>
+        <p>We continually develop WebDesks and may add, modify, or retire tools without prior notice. The current tool list is always available at <a href="/">webdesks.app</a>.</p>
 
-        <h2>3. Data Handling by Tool</h2>
-        <p>Because your privacy matters, here is how each major tool handles your data:</p>
+        <h2 id="data-handling">3. Data Handling by Tool</h2>
+        <p>Because your privacy matters, here is how each major tool category handles your data:</p>
 
         <div class="tool-card">
             <h3 style="margin-top: 0;">📄 PDF Merger</h3>
@@ -103,55 +147,89 @@
 
         <div class="tool-card">
             <h3 style="margin-top: 0;">🎬 Media Converter (WebM to MP4)</h3>
-            <p style="margin-bottom: 0;">Video and image conversion is performed entirely in your browser using <strong>FFmpeg.wasm</strong>. Your media files are never uploaded to any server. Conversion happens locally on your device's CPU.</p>
+            <p style="margin-bottom: 0;">Video and image conversion is performed entirely in your browser using <strong>FFmpeg.wasm</strong>. Your media files are never uploaded to any server. Conversion happens locally on your device's CPU and may use significant processing resources.</p>
         </div>
 
         <div class="tool-card">
-            <h3 style="margin-top: 0;">📝 Tasks, Notes & Other Tools</h3>
-            <p style="margin-bottom: 0;">Your tasks, notes, scratchpad content, and preferences are stored in your browser's <strong>localStorage</strong>. This data never leaves your device. It is not accessible to us and persists until you clear your browser's site data.</p>
+            <h3 style="margin-top: 0;">📝 Tasks, Notes, Board & Scratchpad</h3>
+            <p style="margin-bottom: 0;">Your tasks, notes, kanban board cards, scratchpad content, and preferences are stored in your browser's <strong>localStorage</strong>. This data never leaves your device. It is not accessible to us and persists until you clear your browser's site data. We strongly recommend exporting or backing up important notes regularly as localStorage can be cleared by browser updates or privacy tools.</p>
         </div>
 
-        <h2>4. Acceptable Use</h2>
+        <div class="tool-card">
+            <h3 style="margin-top: 0;">🎮 Focus Town</h3>
+            <p style="margin-bottom: 0;">Focus Town progress, town buildings, and gamification data are stored in your browser's localStorage. No data is sent to our servers. Clearing your browser data will reset your Focus Town progress.</p>
+        </div>
+
+        <div class="tool-card">
+            <h3 style="margin-top: 0;">🎵 Audio Mixer & White Noise Generator</h3>
+            <p style="margin-bottom: 0;">All audio is generated and processed locally in your browser using the Web Audio API. No audio data is transmitted or recorded by WebDesks. Your volume presets and mixer settings are saved in localStorage on your device.</p>
+        </div>
+
+        <h2 id="acceptable-use">4. Acceptable Use</h2>
         <p>You agree to use WebDesks only for lawful purposes. You must not:</p>
         <ul>
             <li>Use any WebDesks tool to process, record, or distribute content that violates applicable laws, including copyright, privacy, and data protection laws.</li>
+            <li>Use the Screen Recorder to record any individual's screen or audio without their knowledge and explicit consent where required by law.</li>
             <li>Attempt to reverse-engineer, decompile, or tamper with WebDesks to gain unauthorised access or disrupt the service.</li>
-            <li>Use automated tools (bots, scrapers) to access WebDesks in a manner that places excessive load on our infrastructure.</li>
-            <li>Impersonate WebDesks or misrepresent your affiliation with WebDesks.</li>
-            <li>Use WebDesks to record or capture any individual's screen or audio without their knowledge and explicit consent where required by law.</li>
+            <li>Use automated tools (bots, scrapers) to access WebDesks in a manner that places excessive load on our infrastructure or CDN providers.</li>
+            <li>Impersonate WebDesks or misrepresent your affiliation with WebDesks in any communication or publication.</li>
+            <li>Attempt to circumvent or bypass any advertising systems or restrictions that fund the free operation of WebDesks.</li>
+            <li>Use WebDesks tools to generate, process, or distribute content that is illegal, defamatory, obscene, or that infringes on the rights of any person or entity.</li>
         </ul>
 
-        <h2>5. Intellectual Property</h2>
-        <p>WebDesks and all associated content (UI design, branding, written content, blog articles) are the intellectual property of WebDesks and are protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works without prior written permission.</p>
-        <p>The open-source libraries used by WebDesks (pdf-lib, FFmpeg.wasm, Tailwind CSS, Lucide Icons, etc.) are subject to their respective open-source licences.</p>
-        <p>Your own content (documents you merge, recordings you make, notes you write) remains entirely yours. We claim no intellectual property rights over your content.</p>
+        <h2 id="ip">5. Intellectual Property</h2>
+        <p>WebDesks and all associated content (UI design, branding, written content, blog articles, Focus Town artwork) are the intellectual property of WebDesks and are protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works without prior written permission.</p>
+        <p>The open-source libraries used by WebDesks (pdf-lib, FFmpeg.wasm, Tailwind CSS, Lucide Icons, Marked, Highlight.js, etc.) are subject to their respective open-source licences.</p>
+        <p>Your own content (documents you merge, recordings you make, notes you write, tasks you create) remains entirely yours. We claim no intellectual property rights over your content. Because your content is processed and stored entirely within your browser, we do not have access to it in any case.</p>
 
-        <h2>6. Advertisements</h2>
-        <p>WebDesks is supported by advertising through Google AdSense. Advertisements are displayed on our website and landing pages. We do not endorse any advertised products or services. By using WebDesks, you acknowledge that you may be shown advertisements served by Google and its partners.</p>
+        <h2 id="advertisements">6. Advertisements</h2>
+        <p>WebDesks is supported by advertising to fund free access to all tools. Advertisements are displayed on our website and landing pages through the following networks:</p>
+        <ul>
+            <li><strong>Google AdSense (ca-pub-8626644983261966)</strong> — contextual and interest-based advertising from Google LLC.</li>
+            <li><strong>AADS (a-ads.com)</strong> — an alternative privacy-friendly advertising network.</li>
+        </ul>
+        <p>We do not endorse any advertised products or services. By using WebDesks, you acknowledge that you may be shown advertisements served by these networks and their partners. Ad networks may use cookies and similar tracking technologies as described in our <a href="/privacy">Privacy Policy</a>.</p>
 
-        <h2>7. Disclaimers and Limitation of Liability</h2>
+        <h2 id="disclaimers">7. Disclaimers and Limitation of Liability</h2>
         <p>WebDesks is provided on an <strong>"as is" and "as available"</strong> basis without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
         <p>We do not warrant that:</p>
         <ul>
-            <li>WebDesks will be uninterrupted, error-free, or secure.</li>
-            <li>The tools will produce results that meet your specific requirements.</li>
-            <li>Any specific browser or device will be fully supported.</li>
+            <li>WebDesks will be uninterrupted, error-free, or secure at all times.</li>
+            <li>The tools will produce results that meet your specific requirements or professional standards.</li>
+            <li>Any specific browser, operating system, or device will be fully supported.</li>
+            <li>localStorage data will persist indefinitely, as browser updates or privacy settings may clear it.</li>
+            <li>Files processed by client-side tools (PDF Merger, Media Converter) will always process successfully on all hardware configurations.</li>
         </ul>
-        <p>To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of WebDesks, even if we have been advised of the possibility of such damages.</p>
+        <p>To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of WebDesks, including but not limited to loss of data, loss of profits, or business interruption, even if we have been advised of the possibility of such damages.</p>
+        <p>Our total liability to you for any claims arising under these Terms shall not exceed £100 (one hundred British pounds) or the equivalent in your local currency.</p>
 
-        <h2>8. Third-Party Services and Links</h2>
-        <p>WebDesks may link to third-party websites or use third-party services (CDNs, APIs). We are not responsible for the content, privacy practices, or terms of third-party services. Your use of such services is governed by their respective terms.</p>
+        <h2 id="third-party">8. Third-Party Services and Links</h2>
+        <p>WebDesks integrates third-party CDNs, APIs, and advertising services. We are not responsible for the content, privacy practices, or terms of third-party services. Your use of such services is governed by their respective terms and privacy policies. Key third-party services include: Google AdSense, Google Fonts, open-meteo.com (weather), Tailwind CDN, unpkg.com, and AADS.</p>
+        <p>Our website may contain links to external websites. These links are provided for information only and we have no control over the content of external sites. Inclusion of a link does not imply endorsement of that site.</p>
 
-        <h2>9. Modifications to the Service</h2>
-        <p>We reserve the right to modify, suspend, or discontinue any part of WebDesks at any time without notice. We are not liable to you or any third party for any such modification, suspension, or discontinuation.</p>
+        <h2 id="modifications">9. Modifications to the Service</h2>
+        <p>We reserve the right to modify, suspend, or discontinue any part of WebDesks at any time without notice. This includes adding new tools, retiring existing tools, changing the tool interface, or modifying how tools function. We are not liable to you or any third party for any such modification, suspension, or discontinuation.</p>
+        <p>We will endeavour to provide advance notice of significant changes via our blog at <a href="/blog/">/blog</a>.</p>
 
-        <h2>10. Changes to These Terms</h2>
-        <p>We may update these Terms from time to time. The updated Terms will be posted on this page with a revised "Last updated" date. Your continued use of WebDesks after changes are posted constitutes your acceptance of the new Terms.</p>
+        <h2 id="changes">10. Changes to These Terms</h2>
+        <p>We may update these Terms from time to time to reflect changes to the Service, new tools, or updated legal requirements. The updated Terms will be posted on this page with a revised "Last updated" date. For material changes, we will also update the changelog note at the top of this page.</p>
+        <p>Your continued use of WebDesks after changes are posted constitutes your acceptance of the new Terms. If you do not agree to revised Terms, please discontinue use of WebDesks.</p>
 
-        <h2>11. Governing Law</h2>
-        <p>These Terms are governed by and construed in accordance with the laws of the jurisdiction in which WebDesks is operated. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of courts in that jurisdiction.</p>
+        <h2 id="ccpa">11. California Consumer Privacy Rights (CCPA)</h2>
+        <p>If you are a California resident, the California Consumer Privacy Act (CCPA) grants you specific rights regarding your personal information:</p>
+        <ul>
+            <li><strong>Right to Know:</strong> You have the right to request disclosure of the categories and specific pieces of personal information we have collected about you, the categories of sources, our business or commercial purpose for collecting it, and the categories of third parties with whom we share it.</li>
+            <li><strong>Right to Delete:</strong> You have the right to request deletion of personal information we have collected from you, subject to certain exceptions.</li>
+            <li><strong>Right to Opt-Out of Sale:</strong> WebDesks does not sell your personal information to third parties. We share limited data with advertising partners (Google AdSense, AADS) as described in our Privacy Policy, which may be considered "sharing" under CCPA.</li>
+            <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your CCPA rights. All WebDesks tools remain free regardless of whether you exercise privacy rights.</li>
+        </ul>
+        <p>To exercise your California privacy rights, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> or use our <a href="/contact">contact form</a>. We will respond within 45 days as required by law.</p>
+        <p>Note: Because WebDesks tools process all data locally in your browser and do not transmit your files or work content to our servers, much of the personal information covered by CCPA (your documents, tasks, recordings) is never in our possession.</p>
 
-        <h2>12. Contact</h2>
+        <h2 id="governing-law">12. Governing Law</h2>
+        <p>These Terms are governed by and construed in accordance with applicable law. Any disputes arising under these Terms that cannot be resolved informally shall be subject to binding arbitration or the jurisdiction of courts as required by applicable consumer protection laws in your location. Nothing in these Terms limits your rights as a consumer under mandatory local consumer protection legislation.</p>
+
+        <h2 id="contact">13. Contact</h2>
         <p>If you have questions about these Terms, please contact us:</p>
         <ul>
             <li>Email: <a href="mailto:legal@webdesks.app">legal@webdesks.app</a></li>

@@ -43,11 +43,13 @@
   </url>
   <url>
     <loc>https://webdesks.app/privacy</loc>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://webdesks.app/terms</loc>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -57,12 +59,47 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Blog -->
+  <!-- Blog Index -->
   <url>
     <loc>https://webdesks.app/blog/</loc>
+    <lastmod>2026-03-17</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Posts — New (March 2026) -->
+  <url>
+    <loc>https://webdesks.app/blog/best-free-online-productivity-tools</loc>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://webdesks.app/blog/record-screen-online-free</loc>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://webdesks.app/blog/merge-pdf-free-online</loc>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://webdesks.app/blog/box-breathing-technique</loc>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://webdesks.app/blog/kanban-board-personal-productivity</loc>
+    <lastmod>2026-03-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog Posts — Original -->
   <url>
     <loc>https://webdesks.app/blog/pink-noise-studying</loc>
     <changefreq>monthly</changefreq>
