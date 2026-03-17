@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | WebDesks</title>
-    <meta name="description" content="WebDesks Privacy Policy — learn how we handle your data, cookies, and third-party advertising including Google AdSense and the DoubleClick cookie.">
+    <meta name="description" content="WebDesks Privacy Policy — learn how we handle your data, cookies, and third-party advertising including Google AdSense, AADS, and the DoubleClick cookie. Your files never leave your browser.">
     <meta name="author" content="WebDesks">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/privacy">
@@ -29,7 +29,27 @@
         .prose-content li { margin-bottom: 0.5rem; color: #475569; line-height: 1.7; list-style-type: disc; }
         .prose-content a { color: #4f46e5; text-decoration: underline; }
         .highlight-box { background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1rem 1.25rem; border-radius: 0 0.75rem 0.75rem 0; margin-bottom: 1.5rem; }
+        .toc-link { display: block; padding: 0.35rem 0; color: #4f46e5; text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid #f1f5f9; }
+        .toc-link:hover { text-decoration: underline; }
+        .toc-link:last-child { border-bottom: none; }
+        .update-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #f0fdf4; color: #15803d; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #bbf7d0; margin-bottom: 1.5rem; }
+        .privacy-stat { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 1rem; text-align: center; }
+        .privacy-stat .icon { font-size: 1.75rem; display: block; margin-bottom: 0.4rem; }
+        .privacy-stat .label { font-size: 0.8rem; color: #64748b; }
+        .privacy-stat .value { font-size: 1rem; font-weight: 700; color: #1e293b; }
     </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Privacy Policy — WebDesks",
+      "description": "Privacy Policy for WebDesks free browser-based productivity tools. All file processing happens locally in your browser.",
+      "url": "https://webdesks.app/privacy",
+      "publisher": { "@type": "Organization", "name": "WebDesks", "url": "https://webdesks.app" },
+      "dateModified": "2026-03-17"
+    }
+    </script>
 </head>
 <body class="bg-white text-slate-800">
 
@@ -58,46 +78,101 @@
                 🔒 Legal
             </div>
             <h1 class="text-4xl md:text-5xl font-black mb-3">Privacy Policy</h1>
-            <p class="text-white/80 text-lg">Last updated: March 10, 2026</p>
+            <p class="text-white/80 text-lg">Last updated: March 17, 2026</p>
         </div>
     </section>
 
     <!-- Content -->
     <main class="max-w-4xl mx-auto px-4 py-12 prose-content">
 
-        <div class="highlight-box">
-            <p class="text-indigo-800 font-medium mb-0"><strong>Privacy-first by design.</strong> WebDesks tools (PDF Merger, Screen Recorder, Media Converter, etc.) process all files and data <strong>entirely within your browser</strong>. Nothing you work on is ever uploaded to our servers. This privacy policy primarily covers website analytics, cookies, and our use of Google AdSense advertising.</p>
+        <div class="update-badge">
+            ✅ Updated March 17, 2026 — added CCPA section, AADS advertising disclosure, and data subject rights detail
         </div>
 
-        <h2>1. Who We Are</h2>
-        <p>WebDesks (<a href="https://webdesks.app">webdesks.app</a>) is a free, browser-based productivity suite offering over 20 tools including a Pomodoro timer, PDF merger, screen recorder, audio mixer, and more. WebDesks is operated as an independent project. For questions about this policy, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>.</p>
+        <div class="highlight-box">
+            <p class="text-indigo-800 font-medium mb-0"><strong>Privacy-first by design.</strong> WebDesks tools (PDF Merger, Screen Recorder, Media Converter, etc.) process all files and data <strong>entirely within your browser</strong>. Nothing you work on is ever uploaded to our servers. This privacy policy primarily covers website analytics, cookies, and our use of advertising networks.</p>
+        </div>
 
-        <h2>2. Information We Collect</h2>
+        <!-- Privacy at a glance -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+            <div class="privacy-stat">
+                <span class="icon">📤</span>
+                <div class="value">Zero</div>
+                <div class="label">Files uploaded to servers</div>
+            </div>
+            <div class="privacy-stat">
+                <span class="icon">🔑</span>
+                <div class="value">None</div>
+                <div class="label">Account or login required</div>
+            </div>
+            <div class="privacy-stat">
+                <span class="icon">💾</span>
+                <div class="value">Local only</div>
+                <div class="label">Your notes &amp; tasks storage</div>
+            </div>
+            <div class="privacy-stat">
+                <span class="icon">📅</span>
+                <div class="value">90 days</div>
+                <div class="label">Server log retention</div>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8">
+            <p class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Table of Contents</p>
+            <a href="#who-we-are" class="toc-link">1. Who We Are</a>
+            <a href="#information-we-collect" class="toc-link">2. Information We Collect</a>
+            <a href="#cookies" class="toc-link">3. Cookies</a>
+            <a href="#third-party" class="toc-link">4. Third-Party Services</a>
+            <a href="#advertising" class="toc-link">5. Advertising Networks</a>
+            <a href="#how-we-use" class="toc-link">6. How We Use Your Information</a>
+            <a href="#data-sharing" class="toc-link">7. Data Sharing and Disclosure</a>
+            <a href="#data-retention" class="toc-link">8. Data Retention</a>
+            <a href="#your-rights" class="toc-link">9. Your Rights (GDPR &amp; General)</a>
+            <a href="#ccpa" class="toc-link">10. California Privacy Rights (CCPA)</a>
+            <a href="#childrens-privacy" class="toc-link">11. Children's Privacy</a>
+            <a href="#international" class="toc-link">12. International Users</a>
+            <a href="#security" class="toc-link">13. Security</a>
+            <a href="#changes" class="toc-link">14. Changes to This Policy</a>
+            <a href="#contact-us" class="toc-link">15. Contact Us</a>
+        </div>
+
+        <h2 id="who-we-are">1. Who We Are</h2>
+        <p>WebDesks (<a href="https://webdesks.app">webdesks.app</a>) is a free, browser-based productivity suite offering over 20 tools including a Pomodoro timer, PDF merger, screen recorder, audio mixer, kanban board, and more. WebDesks is operated as an independent project. For questions about this policy, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>.</p>
+
+        <h2 id="information-we-collect">2. Information We Collect</h2>
 
         <h3>2.1 Information You Provide</h3>
-        <p>We do not require account registration and we do not collect personal information (name, email, etc.) simply to use WebDesks tools. The Contact Us form collects your name, email address, and message solely to respond to your inquiry.</p>
+        <p>We do not require account registration and we do not collect personal information (name, email address, etc.) simply to use WebDesks tools. The only situation in which we actively collect your personal information is:</p>
+        <ul>
+            <li><strong>Contact form:</strong> We collect your name, email address, and message content solely to respond to your inquiry. This data is not used for marketing.</li>
+        </ul>
 
         <h3>2.2 Information Collected Automatically</h3>
         <p>When you visit WebDesks, certain information is collected automatically by our hosting provider and third-party services:</p>
         <ul>
-            <li><strong>IP address</strong> — collected by our hosting infrastructure for security and abuse prevention.</li>
-            <li><strong>Browser type and version</strong> — used to identify compatibility issues.</li>
-            <li><strong>Referring URL</strong> — the page you visited before arriving at WebDesks.</li>
-            <li><strong>Pages visited and time spent</strong> — used to understand which tools are most useful.</li>
+            <li><strong>IP address</strong> — collected by our hosting infrastructure for security and abuse prevention purposes. Stored for up to 90 days.</li>
+            <li><strong>Browser type and version</strong> — used to identify and fix compatibility issues across browsers.</li>
+            <li><strong>Referring URL</strong> — the page you visited before arriving at WebDesks, used to understand traffic sources.</li>
+            <li><strong>Pages visited and time spent</strong> — used in aggregate to understand which tools are most useful to our users.</li>
             <li><strong>Device type</strong> — desktop, tablet, or mobile, for responsive design improvements.</li>
+            <li><strong>Country-level location</strong> — derived from IP address for regional usage statistics. Precise location is not collected.</li>
         </ul>
 
-        <h3>2.3 LocalStorage Data</h3>
-        <p>WebDesks stores your preferences and tool data (tasks, notes, timer settings, themes) in your browser's <strong>localStorage</strong>. This data never leaves your device. It is not accessible to us and is deleted when you clear your browser's site data.</p>
+        <h3>2.3 LocalStorage Data (On-Device Only)</h3>
+        <p>WebDesks stores your preferences and tool data (tasks, kanban board state, scratchpad notes, timer settings, Focus Town progress, audio mixer presets, and UI themes) in your browser's <strong>localStorage</strong>. This data <strong>never leaves your device</strong>. It is not accessible to us and is deleted when you clear your browser's site data for webdesks.app. We do not have any visibility into this data.</p>
 
-        <h2>3. Cookies</h2>
+        <h3>2.4 Files Processed by Tools</h3>
+        <p>Files you process with WebDesks tools — PDFs you merge, videos you convert, screens you record — are handled <strong>entirely within your browser's memory</strong>. These files are never transmitted to our servers. We have no technical access to the content of files you process.</p>
+
+        <h2 id="cookies">3. Cookies</h2>
         <p>Cookies are small text files placed on your device by websites you visit. We use cookies in the following ways:</p>
 
         <h3>3.1 Essential Cookies</h3>
-        <p>These cookies are necessary for the website to function and cannot be switched off. They are set in response to your actions such as setting your privacy preferences or navigating between tools.</p>
+        <p>These cookies are necessary for the website to function and cannot be switched off. They are set in response to your actions such as setting your privacy preferences or navigating between pages. They do not store personally identifiable information.</p>
 
         <h3>3.2 Analytics Cookies</h3>
-        <p>We may use analytics services to understand how visitors interact with WebDesks. These cookies collect aggregate, anonymised information (e.g., page views, popular tools) and do not identify you personally.</p>
+        <p>We may use analytics services to understand how visitors interact with WebDesks in aggregate. These cookies collect anonymised information (e.g., page views, popular tools, session duration) and do not identify individual users. Where we use such services, we configure them in a privacy-preserving manner and do not allow them to build user profiles linked to personal identity.</p>
 
         <h3>3.3 Advertising Cookies — Google AdSense and DoubleClick</h3>
         <p>WebDesks uses <strong>Google AdSense</strong> to display advertisements. Google AdSense uses the <strong>DoubleClick cookie</strong> to serve ads based on your prior visits to WebDesks and other websites across the internet.</p>
@@ -108,71 +183,133 @@
             <li>Combine data from your visit with data from other websites you have visited to show interest-based advertising.</li>
             <li>Share aggregated, non-personal statistics about ad performance with advertisers.</li>
         </ul>
-        <p>You can opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>. You can also opt out of a third-party vendor's use of cookies for personalised advertising by visiting <a href="http://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">aboutads.info</a>.</p>
-        <p>For more information about how Google uses data when you visit sites that use Google services, see <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Google's Privacy & Terms</a>.</p>
+        <p>You can opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>. You can also opt out via <a href="http://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">aboutads.info</a>.</p>
+        <p>For more information about how Google uses data when you visit sites using Google services, see <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Google's Privacy & Terms</a>.</p>
 
-        <h2>4. Third-Party Services</h2>
+        <h3>3.4 AADS Advertising Cookies</h3>
+        <p>WebDesks also uses <strong>AADS (a-ads.com)</strong>, an alternative advertising network. AADS advertisements are served via iframe and may use cookies or similar technologies as described in the <a href="https://a-ads.com/privacy" target="_blank" rel="noopener noreferrer">AADS Privacy Policy</a>. AADS is designed to be a more privacy-friendly advertising option.</p>
+
+        <h2 id="third-party">4. Third-Party Services</h2>
         <p>WebDesks integrates the following third-party services, each with their own privacy policies:</p>
         <ul>
             <li><strong>Google AdSense</strong> — advertising platform. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a></li>
-            <li><strong>Google Fonts</strong> — font delivery. Fonts are loaded from Google's CDN; Google may log request metadata.</li>
-            <li><strong>open-meteo.com</strong> — weather data for the Dashboard widget. No personal data is shared.</li>
+            <li><strong>AADS (a-ads.com)</strong> — alternative advertising network. <a href="https://a-ads.com/privacy" target="_blank" rel="noopener noreferrer">AADS Privacy Policy</a></li>
+            <li><strong>Google Fonts</strong> — font delivery via Google's CDN. Google may log font request metadata including IP address.</li>
+            <li><strong>open-meteo.com</strong> — weather data for the Dashboard widget. Requests include your approximate IP; no personal data is stored by WebDesks from this service.</li>
+            <li><strong>Quotable API (api.quotable.io)</strong> — inspirational quotes for the Dashboard widget. No personal data is shared.</li>
             <li><strong>Tailwind CSS CDN / unpkg.com</strong> — CSS and JavaScript library delivery. These CDNs may log IP addresses as part of standard request logging.</li>
-            <li><strong>pdf-lib (via CDN)</strong> — PDF processing library that runs entirely in your browser. No data is transmitted.</li>
-            <li><strong>FFmpeg.wasm</strong> — media conversion library that runs entirely in your browser. No data is transmitted.</li>
+            <li><strong>pdf-lib (via CDN)</strong> — PDF processing library that runs entirely in your browser. No document data is transmitted.</li>
+            <li><strong>FFmpeg.wasm</strong> — media conversion library that runs entirely in your browser. No media data is transmitted.</li>
+            <li><strong>Marked.js / Highlight.js</strong> — Markdown and code rendering libraries delivered via CDN. No content data is transmitted.</li>
         </ul>
 
-        <h2>5. How We Use Your Information</h2>
+        <h2 id="advertising">5. Advertising Networks — Summary</h2>
+        <p>WebDesks is free to use because it is supported by advertising. Here is a plain-language summary of how advertising works on our site:</p>
+        <ul>
+            <li>We display ads from Google AdSense and AADS on our pages and blog.</li>
+            <li>These ad networks may use cookies and similar technologies to serve you relevant ads.</li>
+            <li>We do not control which specific ads are shown to you — ad selection is handled by the ad networks.</li>
+            <li>We do not share your name, email, or any directly identifying information with ad networks. What is shared is cookie/browser data as described above.</li>
+            <li>Advertising revenue funds free access to all WebDesks tools with no subscription or paywall.</li>
+        </ul>
+        <p>If you prefer not to receive personalised ads, use the opt-out links in Section 3.3 above. You may also use a browser with built-in ad tracking protection (such as Firefox or Brave) or an ad blocker. Note that blocking all ads may impact the long-term viability of free access to WebDesks.</p>
+
+        <h2 id="how-we-use">6. How We Use Your Information</h2>
         <p>The limited information collected is used to:</p>
         <ul>
-            <li>Operate and maintain the WebDesks website.</li>
-            <li>Understand usage patterns to improve our tools.</li>
-            <li>Serve relevant advertisements through Google AdSense to fund free access to WebDesks.</li>
-            <li>Respond to your support requests or contact form submissions.</li>
+            <li>Operate and maintain the WebDesks website and ensure reliable delivery of tools.</li>
+            <li>Understand aggregate usage patterns to improve our tools and prioritise new features.</li>
+            <li>Serve advertisements through Google AdSense and AADS to fund free access to WebDesks.</li>
+            <li>Respond to your contact form submissions and support requests.</li>
+            <li>Prevent and investigate abuse, security incidents, and technical problems.</li>
             <li>Comply with legal obligations.</li>
         </ul>
+        <p>We do not use your data for automated decision-making, profiling, or training machine learning models. We do not use your data for email marketing (we do not collect your email unless you contact us).</p>
 
-        <h2>6. Data Sharing and Disclosure</h2>
+        <h2 id="data-sharing">7. Data Sharing and Disclosure</h2>
         <p>We do not sell, trade, or rent your personal information to third parties. We may share information in the following limited circumstances:</p>
         <ul>
-            <li><strong>With advertising partners</strong> — Google AdSense receives cookie and usage data as described in Section 3.3.</li>
-            <li><strong>For legal compliance</strong> — if required by law, court order, or governmental authority.</li>
-            <li><strong>To protect rights</strong> — if necessary to protect the rights, property, or safety of WebDesks or its users.</li>
+            <li><strong>With advertising partners</strong> — Google AdSense and AADS receive cookie and usage data as described in Sections 3.3 and 3.4. This is not a sale of personal information.</li>
+            <li><strong>With our hosting provider</strong> — standard server logs (IP address, request data) are processed by our hosting infrastructure.</li>
+            <li><strong>For legal compliance</strong> — if required by law, court order, or governmental authority, we may disclose information we hold.</li>
+            <li><strong>To protect rights</strong> — if necessary to protect the rights, property, or safety of WebDesks, our users, or the public.</li>
+            <li><strong>Business transfer</strong> — in the unlikely event of a merger, acquisition, or asset sale, user data may be transferred as part of that transaction. We will notify users via a prominent notice on this page.</li>
         </ul>
 
-        <h2>7. Data Retention</h2>
-        <p>We retain server access logs for up to 90 days for security and debugging purposes. Contact form submissions are retained for up to 12 months. LocalStorage data remains on your device until you delete it.</p>
-
-        <h2>8. Your Rights</h2>
-        <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+        <h2 id="data-retention">8. Data Retention</h2>
         <ul>
-            <li><strong>Access</strong> — request a copy of the personal data we hold about you.</li>
-            <li><strong>Deletion</strong> — request that we delete your personal data.</li>
-            <li><strong>Correction</strong> — request correction of inaccurate data.</li>
-            <li><strong>Opt-out of advertising</strong> — opt out of personalised ads via <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
+            <li><strong>Server access logs:</strong> Retained for up to 90 days for security and debugging purposes, then automatically deleted.</li>
+            <li><strong>Contact form submissions:</strong> Retained for up to 12 months, then deleted.</li>
+            <li><strong>Advertising analytics:</strong> Data shared with Google AdSense and AADS is subject to their respective retention policies.</li>
+            <li><strong>LocalStorage data:</strong> Remains on your device until you clear your browser's site data for webdesks.app. We have no control over or access to this data.</li>
+            <li><strong>File processing data:</strong> Files you process with WebDesks tools (PDFs, videos, recordings) are handled in-browser and are never retained by us — not even temporarily on our servers.</li>
+        </ul>
+
+        <h2 id="your-rights">9. Your Rights (GDPR and General)</h2>
+        <p>Depending on your location, you may have the following rights regarding your personal data. We aim to honour these rights for all users regardless of jurisdiction:</p>
+        <ul>
+            <li><strong>Access</strong> — request a copy of the personal data we hold about you. For most users, this will be minimal (contact form data, if applicable).</li>
+            <li><strong>Deletion (Right to be Forgotten)</strong> — request that we delete your personal data. We will fulfil this within 30 days, subject to legal retention obligations.</li>
+            <li><strong>Correction</strong> — request correction of inaccurate or incomplete personal data we hold.</li>
+            <li><strong>Portability</strong> — request your personal data in a structured, machine-readable format.</li>
+            <li><strong>Objection</strong> — object to our processing of your personal data where we rely on legitimate interest as our legal basis.</li>
+            <li><strong>Restriction</strong> — request that we restrict processing of your personal data in certain circumstances.</li>
+            <li><strong>Opt-out of personalised advertising</strong> — opt out of personalised ads via <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
             <li><strong>Do Not Track</strong> — we honour Do Not Track browser signals where technically feasible.</li>
         </ul>
-        <p>To exercise your rights, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>.</p>
+        <p>To exercise any of these rights, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>. We will respond within 30 days (or as required by applicable law). You may also have the right to lodge a complaint with your local data protection supervisory authority.</p>
+        <p><strong>For EEA/UK users (GDPR):</strong> Our legal basis for processing the limited data we collect is legitimate interest (operating and improving WebDesks) and our contractual obligation to respond to your contact requests. For advertising-related processing, Google's and AADS's legal bases are governed by their own policies. You can withdraw consent for personalised ads at any time using the opt-out links above.</p>
 
-        <h2>9. Children's Privacy</h2>
-        <p>WebDesks is not directed to children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us and we will delete it promptly.</p>
+        <h2 id="ccpa">10. California Privacy Rights (CCPA / CPRA)</h2>
+        <p>If you are a California resident, the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA) grants you specific rights:</p>
 
-        <h2>10. International Users</h2>
-        <p>WebDesks is operated from servers that may be located in the United States. If you are accessing WebDesks from outside the United States, please be aware that your information may be transferred to, stored, and processed in the US where privacy laws may differ from your jurisdiction.</p>
-        <p>For users in the European Economic Area (EEA): Our legal basis for processing the limited data we collect is our legitimate interest in operating and improving WebDesks, and compliance with advertising obligations. You may have additional rights under GDPR — contact us to exercise them.</p>
-
-        <h2>11. Security</h2>
-        <p>We implement industry-standard measures to protect the WebDesks website. However, since your tool data is stored entirely in your browser's localStorage and never transmitted to us, the primary security responsibility for that data rests with your device and browser.</p>
-
-        <h2>12. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. We will indicate the date of the most recent revision at the top of this page. Continued use of WebDesks after changes are posted constitutes your acceptance of the revised policy.</p>
-
-        <h2>13. Contact Us</h2>
-        <p>If you have questions or concerns about this Privacy Policy, please contact us:</p>
+        <h3>Categories of Personal Information Collected</h3>
+        <p>In the past 12 months, we may have collected the following categories of personal information:</p>
         <ul>
-            <li>Email: <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a></li>
+            <li><strong>Identifiers</strong> — IP address (automatically), name and email address (only if you contact us via the contact form).</li>
+            <li><strong>Internet or Network Activity</strong> — pages visited, referring URLs, browser type, device type.</li>
+            <li><strong>Inferences</strong> — country-level location derived from IP address.</li>
+        </ul>
+        <p>We have <strong>not</strong> collected: Social Security numbers, financial information, health information, biometric data, geolocation data beyond country-level, or the content of files you process with our tools.</p>
+
+        <h3>Your California Rights</h3>
+        <ul>
+            <li><strong>Right to Know:</strong> You may request details about the personal information we have collected about you and how it is used and shared.</li>
+            <li><strong>Right to Delete:</strong> You may request deletion of personal information we have collected from you, subject to certain exceptions (e.g., security logs required by law).</li>
+            <li><strong>Right to Correct:</strong> You may request correction of inaccurate personal information.</li>
+            <li><strong>Right to Opt-Out of Sale or Sharing:</strong> WebDesks does not sell personal information. We do share limited data with Google AdSense and AADS for advertising purposes, which may be considered "sharing" under CPRA. You may opt out via <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
+            <li><strong>Right to Limit Use of Sensitive Personal Information:</strong> We do not collect sensitive personal information as defined by CPRA.</li>
+            <li><strong>Right to Non-Discrimination:</strong> We will not deny you service, charge different prices, or provide different service quality if you exercise your CCPA/CPRA rights. All WebDesks tools remain free to use.</li>
+        </ul>
+        <p>To exercise California privacy rights, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> with the subject line "California Privacy Rights Request." We will respond within 45 days as required by CCPA. Requests can be made up to twice per 12-month period at no charge.</p>
+
+        <h2 id="childrens-privacy">11. Children's Privacy</h2>
+        <p>WebDesks is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> and we will take steps to delete that information promptly.</p>
+        <p>If you are between 13 and 16 years old and located in California, you have the right to opt-out of the "sharing" of your personal information for targeted advertising. Contact us at the email above to exercise this right.</p>
+
+        <h2 id="international">12. International Users</h2>
+        <p>WebDesks is operated from infrastructure that may be located in various countries. If you are accessing WebDesks from outside the United States, please be aware that information collected by our hosting provider may be processed in the US, where privacy laws may differ from your jurisdiction.</p>
+        <p>For users in the European Economic Area (EEA) and the United Kingdom: We collect minimal personal data and rely on legitimate interest as our primary legal basis. Because all tool data (files, notes, tasks) stays on your device, GDPR obligations relating to data processor agreements do not apply to that data. For the limited server log data we do hold, you have full data subject rights as described in Section 9.</p>
+        <p>For users in Canada (PIPEDA): We collect only the minimum personal data necessary for legitimate operational purposes and do not use it beyond those purposes. You may request access to or correction of your personal data at any time.</p>
+        <p>For users in Australia (Privacy Act): We comply with the Australian Privacy Principles. You have the right to access and correct personal information we hold about you and to make a privacy complaint to the Office of the Australian Information Commissioner.</p>
+
+        <h2 id="security">13. Security</h2>
+        <p>We implement industry-standard security measures to protect the WebDesks website and any personal data we hold, including encrypted connections (HTTPS), access controls, and regular security reviews.</p>
+        <p>Because your tool data (files, notes, tasks, recordings) is stored entirely in your browser's localStorage and memory, and is never transmitted to us, the primary security responsibility for that data rests with your device, browser, and operating system security. We recommend keeping your browser updated and using trusted devices.</p>
+        <p>If you discover a security vulnerability in WebDesks, please report it responsibly to <a href="mailto:security@webdesks.app">security@webdesks.app</a>. We take all security reports seriously and will respond within 72 hours.</p>
+
+        <h2 id="changes">14. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, tools, or legal requirements. We will indicate the date of the most recent revision at the top of this page and add a changelog note. For significant changes, we will also publish a note on the <a href="/blog/">WebDesks blog</a>.</p>
+        <p>Continued use of WebDesks after changes are posted constitutes your acceptance of the revised policy. If you do not agree to the revised policy, please discontinue use of WebDesks.</p>
+
+        <h2 id="contact-us">15. Contact Us</h2>
+        <p>If you have questions, concerns, or requests regarding this Privacy Policy, please contact us:</p>
+        <ul>
+            <li>Email (general privacy): <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a></li>
+            <li>Email (CCPA/legal requests): <a href="mailto:legal@webdesks.app">legal@webdesks.app</a></li>
             <li>Contact form: <a href="/contact">webdesks.app/contact</a></li>
         </ul>
+        <p>We aim to respond to all privacy requests within 30 days.</p>
 
     </main>
 
