@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free Online Notepad & Markdown Editor — No Sign-Up Required | WebDesks</title>
+    <meta name="description" content="Write, format, and preview notes instantly with a free online notepad and Markdown editor. No download, no account — your notes stay private in your browser.">
+    <meta name="keywords" content="online notepad free, markdown editor online, free text editor browser, online note taking no account, markdown scratchpad, browser notepad, online writing tool, markdown preview online, free online editor no signup, quick notes online">
+    <meta name="author" content="WebDesks">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://webdesks.app/blog/online-notepad-markdown-editor">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://webdesks.app/blog/online-notepad-markdown-editor">
+    <meta property="og:site_name" content="WebDesks">
+    <meta property="og:title" content="Free Online Notepad & Markdown Editor — No Sign-Up Required">
+    <meta property="og:description" content="Write and format notes instantly in your browser with live Markdown preview. No download, no account, completely private.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Online Notepad & Markdown Editor — No Sign-Up Required | WebDesks">
+    <meta name="twitter:description" content="A free browser-based notepad with Markdown support, code highlighting, and live preview. No account needed.">
+    <meta name="twitter:image" content="https://webdesks.app/og-image.png">
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+
+    <meta name="google-adsense-account" content="ca-pub-8626644983261966">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .article-body h2 { font-size: 1.6rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 0.75rem; color: #1e293b; }
+        .article-body h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem; color: #334155; }
+        .article-body p { margin-bottom: 1.1rem; line-height: 1.8; color: #475569; font-size: 1.05rem; }
+        .article-body ul, .article-body ol { margin-bottom: 1.1rem; padding-left: 1.5rem; }
+        .article-body li { margin-bottom: 0.5rem; color: #475569; line-height: 1.75; font-size: 1.05rem; list-style-type: disc; }
+        .article-body ol li { list-style-type: decimal; }
+        .article-body strong { color: #1e293b; }
+        .callout { background: #eef2ff; border-left: 4px solid #4f46e5; padding: 1rem 1.25rem; border-radius: 0 0.75rem 0.75rem 0; margin: 1.5rem 0; }
+        .callout p { margin-bottom: 0; color: #3730a3; }
+        .callout.green { background: #f0fdf4; border-left-color: #16a34a; }
+        .callout.green p { color: #15803d; }
+        .feature-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.25rem 1.5rem; margin: 1rem 0; }
+        .feature-card h3 { margin-top: 0; margin-bottom: 0.4rem; }
+        .mode-card { background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); border: 1px solid #c7d2fe; border-radius: 1rem; padding: 1.25rem; margin-bottom: 0.75rem; }
+        .mode-label { display: inline-block; background: #4f46e5; color: white; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 9999px; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .comparison-table th { background: #f1f5f9; font-weight: 700; padding: 0.75rem; text-align: left; font-size: 0.85rem; color: #334155; }
+        .comparison-table td { padding: 0.75rem; border-top: 1px solid #f1f5f9; font-size: 0.9rem; color: #475569; vertical-align: top; }
+        .yes { color: #16a34a; font-weight: 700; }
+        .no { color: #dc2626; font-weight: 700; }
+        .code-example { background: #0f172a; color: #94a3b8; border-radius: 0.75rem; padding: 1rem 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; margin: 1rem 0; overflow-x: auto; }
+        .code-example .kw { color: #818cf8; }
+        .code-example .str { color: #86efac; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Free Online Notepad & Markdown Editor — No Sign-Up Required",
+      "description": "Write, format, and preview notes instantly with a free browser-based notepad and Markdown editor. No download, no account — your notes stay private.",
+      "author": { "@type": "Organization", "name": "WebDesks" },
+      "publisher": { "@type": "Organization", "name": "WebDesks", "url": "https://webdesks.app" },
+      "url": "https://webdesks.app/blog/online-notepad-markdown-editor",
+      "datePublished": "2026-03-18",
+      "dateModified": "2026-03-18",
+      "mainEntityOfPage": "https://webdesks.app/blog/online-notepad-markdown-editor"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the online notepad really free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The WebDesks Scratchpad is completely free with no subscription, no account, and no hidden fees." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my notes saved automatically?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Your notes are auto-saved to your browser's localStorage so they persist between sessions, even after closing the tab." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the notepad support Markdown?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Scratchpad supports full GitHub-flavored Markdown with a live preview mode and syntax-highlighted code blocks." }
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-white text-slate-800">
+
+    <!-- Nav -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
+                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/#scratchpad" class="hover:text-indigo-600 transition-colors">Scratchpad</a>
+            </div>
+            <a href="/#scratchpad" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                Open Scratchpad →
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <div class="bg-gradient-to-br from-indigo-600 to-violet-700 text-white py-16 px-4">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex items-center gap-2 mb-4 text-indigo-200 text-sm font-medium">
+                <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+                <span>/</span>
+                <span>Tutorial</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black mb-5 leading-tight">
+                Free Online Notepad & Markdown Editor — Write Anywhere, No Sign-Up
+            </h1>
+            <div class="flex items-center gap-4 text-indigo-200 text-sm">
+                <span>By WebDesks Team</span>
+                <span>·</span>
+                <span>8 min read</span>
+                <span>·</span>
+                <span>Tutorial</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- AdSense -->
+    <div class="max-w-3xl mx-auto px-4 py-6">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <div style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+          <iframe data-aa='2430800' src='//acceptable.a-ads.com/2430800/?size=Adaptive'
+                    style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+        </div>
+    </div>
+
+    <!-- Article -->
+    <article class="max-w-3xl mx-auto px-4 py-8 article-body">
+
+        <p>Whether you're jotting down a quick idea, drafting a technical document, or formatting meeting notes in Markdown, a good online notepad should get out of your way. No login screen, no subscription prompt — just an empty page and a cursor.</p>
+
+        <p>The <strong>WebDesks Scratchpad</strong> is a free browser-based notepad with three modes: plain text writing, live Markdown preview, and syntax-highlighted code view. Your notes save automatically to your browser and stay completely private — nothing is ever sent to a server.</p>
+
+        <div class="callout">
+            <p><strong>Try it now:</strong> <a href="/#scratchpad" class="underline font-semibold">Open the WebDesks Scratchpad</a> — no account, no download, works in any modern browser.</p>
+        </div>
+
+        <h2>What Is a Markdown Scratchpad?</h2>
+
+        <p>Markdown is a lightweight writing syntax that lets you format text using plain characters. Type <code>**bold**</code> and it renders as <strong>bold</strong>. Type <code># Heading</code> and it becomes a large headline. The result is readable plain text that also renders beautifully as formatted HTML.</p>
+
+        <p>A Markdown scratchpad combines a plain-text editor with a real-time preview panel. You write on one side and see the formatted output on the other — or toggle between the two. It's the fastest way to write structured notes without touching a mouse or a toolbar.</p>
+
+        <h2>Three Modes in One Editor</h2>
+
+        <p>The WebDesks Scratchpad ships with three editing modes, switchable from the toolbar:</p>
+
+        <div class="mode-card">
+            <span class="mode-label">Write</span>
+            <h3 style="margin-top:0.5rem; margin-bottom:0.25rem;">Plain-text writing mode</h3>
+            <p style="margin-bottom:0;">A distraction-free textarea for stream-of-consciousness writing, quick notes, drafts, and brainstorming. No formatting distractions, just words.</p>
+        </div>
+
+        <div class="mode-card">
+            <span class="mode-label" style="background:#7c3aed;">Preview</span>
+            <h3 style="margin-top:0.5rem; margin-bottom:0.25rem;">Live Markdown preview</h3>
+            <p style="margin-bottom:0;">Renders your Markdown in real time — headings, bold, italics, bullet lists, numbered lists, blockquotes, tables, and inline code. Powered by the same GitHub-flavored Markdown spec used by developers worldwide.</p>
+        </div>
+
+        <div class="mode-card">
+            <span class="mode-label" style="background:#0f172a;">Code</span>
+            <h3 style="margin-top:0.5rem; margin-bottom:0.25rem;">Syntax-highlighted code view</h3>
+            <p style="margin-bottom:0;">Switch to code mode with language selection (JavaScript, Python, HTML, CSS, SQL, and more). The editor highlights syntax using highlight.js with a dark theme — perfect for storing code snippets or reviewing scripts.</p>
+        </div>
+
+        <h2>Common Markdown Syntax Cheat Sheet</h2>
+
+        <p>If you're new to Markdown, here's a quick reference for the most-used formatting. The Scratchpad supports all of these:</p>
+
+        <div class="code-example">
+<span class="kw"># Heading 1</span>
+<span class="kw">## Heading 2</span>
+<span class="kw">### Heading 3</span>
+
+**Bold text**    _Italic text_    ~~Strikethrough~~
+
+- Bullet item
+- Another item
+  - Nested item
+
+1. Numbered list
+2. Second item
+
+<span class="str">`inline code`</span>
+
+```js
+const greet = () => console.log("Hello");
+```
+
+> Blockquote text
+
+| Column 1 | Column 2 |
+|----------|----------|
+| Cell A   | Cell B   |
+
+[Link text](https://example.com)
+        </div>
+
+        <h2>How to Use the WebDesks Scratchpad</h2>
+
+        <ol>
+            <li><strong>Navigate to the Scratchpad</strong> — click the file-text icon in the sidebar or go directly to <a href="/#scratchpad" class="text-indigo-600 hover:underline">webdesks.app/#scratchpad</a>.</li>
+            <li><strong>Start typing</strong> — your content is auto-saved to localStorage every few seconds.</li>
+            <li><strong>Switch to Preview mode</strong> — click the "Preview" button in the toolbar to see your Markdown rendered.</li>
+            <li><strong>Use Code mode</strong> — click "Code," select your programming language from the dropdown, and paste or type your snippet.</li>
+            <li><strong>Share your note</strong> — hit the Share button to copy a shareable URL encoding your note text (no server involved; the note is encoded in the URL itself).</li>
+            <li><strong>Check your word count</strong> — hover over the bottom-right corner to see a live word count.</li>
+        </ol>
+
+        <div class="callout green">
+            <p><strong>Privacy note:</strong> Your notes never leave your device. There's no account sync, no cloud backup, and no telemetry. Clearing your browser data will erase your notes, so copy important content elsewhere if you need it long-term.</p>
+        </div>
+
+        <h2>Who Is an Online Notepad Best For?</h2>
+
+        <p>A browser-based notepad with Markdown support fills a specific gap between "too simple" (basic sticky notes) and "too heavy" (full word processors or synced note apps). It's ideal for:</p>
+
+        <div class="feature-card">
+            <h3>Developers and technical writers</h3>
+            <p style="margin-bottom:0;">Quickly draft README sections, document an API response, or store code snippets with syntax highlighting — without opening a separate IDE.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Students and researchers</h3>
+            <p style="margin-bottom:0;">Take lecture notes in plain text, then switch to Preview mode to see them formatted. Export by copying and pasting into any document editor.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Remote workers on shared or temporary machines</h3>
+            <p style="margin-bottom:0;">On a work computer or library PC where you can't install software? A browser notepad works anywhere, leaves nothing behind after closing the tab.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Writers and bloggers</h3>
+            <p style="margin-bottom:0;">Draft posts in Markdown and preview them instantly. Most publishing platforms (Ghost, Notion, Substack) accept Markdown — write once, paste anywhere.</p>
+        </div>
+
+        <h2>Online Notepad vs. Desktop Editors: When to Use Each</h2>
+
+        <div class="overflow-x-auto my-6">
+            <table class="comparison-table w-full border-collapse border border-slate-200 rounded-xl overflow-hidden text-sm">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>WebDesks Scratchpad</th>
+                        <th>VS Code / Obsidian</th>
+                        <th>Google Docs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>No install required</td><td class="yes">✔ Yes</td><td class="no">✘ Install needed</td><td class="yes">✔ Yes</td></tr>
+                    <tr><td>No account required</td><td class="yes">✔ Yes</td><td class="yes">✔ Yes</td><td class="no">✘ Google account</td></tr>
+                    <tr><td>Markdown support</td><td class="yes">✔ Full preview</td><td class="yes">✔ Full preview</td><td class="no">✘ No</td></tr>
+                    <tr><td>Code syntax highlighting</td><td class="yes">✔ Yes</td><td class="yes">✔ Advanced</td><td class="no">✘ No</td></tr>
+                    <tr><td>Works offline</td><td class="yes">✔ PWA</td><td class="yes">✔ Yes</td><td class="no">✘ Limited</td></tr>
+                    <tr><td>Notes private (no server)</td><td class="yes">✔ Yes</td><td class="yes">✔ Yes</td><td class="no">✘ Cloud stored</td></tr>
+                    <tr><td>Cross-device sync</td><td class="no">✘ Local only</td><td class="yes">✔ With plugins</td><td class="yes">✔ Yes</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>The Scratchpad wins on zero-friction access: open a browser tab and start writing. It can't replace a full editor for large projects, but for quick thoughts and structured notes, it's faster than any alternative.</p>
+
+        <h2>5 Productivity Workflows Using the Scratchpad</h2>
+
+        <h3>1. Meeting notes → formatted document</h3>
+        <p>During a meeting, type raw notes in Write mode. Afterward, switch to Preview to review a clean formatted version. Copy and paste into your team's wiki or email.</p>
+
+        <h3>2. Temporary code storage</h3>
+        <p>Working across multiple files and need to hold a snippet temporarily? Switch to Code mode, paste it, select the language — then retrieve it when you need it. Faster than a chat message to yourself.</p>
+
+        <h3>3. Daily brain dump</h3>
+        <p>Open the Scratchpad first thing each morning. Write everything on your mind — tasks, ideas, worries — in plain text. Clear the mental noise before starting structured work.</p>
+
+        <h3>4. Draft before committing</h3>
+        <p>Before writing a GitHub issue, Slack message, or email, draft it here first. The Markdown preview lets you confirm formatting before copying it over.</p>
+
+        <h3>5. Paired with the Pomodoro Timer</h3>
+        <p>Use the <a href="/pomodoro-timer" class="text-indigo-600 hover:underline">Pomodoro Timer</a> alongside the Scratchpad. At the end of each focus session, write a two-sentence summary of what you accomplished. Over weeks, you'll have a searchable log of your work.</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>Is the online notepad really free?</h3>
+        <p>Yes. The WebDesks Scratchpad is completely free with no subscription tier, no account, and no hidden charges.</p>
+
+        <h3>Are my notes saved automatically?</h3>
+        <p>Yes. The Scratchpad auto-saves to your browser's localStorage. Notes persist between sessions — even if you close the tab — as long as you don't clear browser data or switch browsers.</p>
+
+        <h3>Can I use the notepad offline?</h3>
+        <p>Yes. WebDesks is a Progressive Web App (PWA). After your first visit, the Scratchpad is cached and works without an internet connection.</p>
+
+        <h3>Does it support tables in Markdown?</h3>
+        <p>Yes. GitHub-flavored Markdown tables are fully supported. Type a GFM table in Write mode, switch to Preview, and you'll see a formatted table.</p>
+
+        <h3>Can I export my notes?</h3>
+        <p>Select all (Ctrl+A), copy, and paste into any text editor, document, or email. The Share button encodes your note into a URL you can send to others — they see your note when they open the link, and it's decoded entirely client-side.</p>
+
+        <h3>What happens to my notes if I use a different browser?</h3>
+        <p>Notes are stored per-browser in localStorage. They don't sync across devices or browsers. For cross-device notes, paste important content into your preferred note-taking app after drafting here.</p>
+
+    </article>
+
+    <!-- AdSense mid -->
+    <div class="max-w-3xl mx-auto px-4 py-4">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- CTA -->
+    <section class="bg-indigo-50 border-y border-indigo-100 py-14 px-4 mt-8">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-2xl font-bold text-slate-800 mb-3">Start Writing — No Sign-Up Needed</h2>
+            <p class="text-slate-500 mb-8">The WebDesks Scratchpad opens instantly in your browser. Three modes, live preview, auto-save.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/#scratchpad" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg hover:shadow-indigo-500/30">📝 Open Scratchpad</a>
+                <a href="/blog/" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all hover:shadow-md">More Articles →</a>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <a href="/pomodoro-timer" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏱️ Pomodoro Timer</a>
+                <a href="/#tasks" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
+                <a href="/#board" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📋 Kanban Board</a>
+                <a href="/screen-recorder" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🎥 Screen Recorder</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-sm mb-6">
+                <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
+                <div class="flex flex-wrap justify-center gap-5">
+                    <a href="/" class="hover:text-white transition-colors">Home</a>
+                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+                    <a href="/about" class="hover:text-white transition-colors">About</a>
+                    <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 WebDesks. Free browser-based productivity tools.</p>
+                <div class="flex gap-4">
+                    <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

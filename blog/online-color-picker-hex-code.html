@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free Online Color Picker & Hex Code Generator | WebDesks</title>
+    <meta name="description" content="Pick colors, generate hex codes, convert between RGB, HSL, and HEX — free browser-based color picker with no account or download required. Perfect for designers and developers.">
+    <meta name="keywords" content="online color picker free, hex color picker browser, hex code generator online, color picker no download, RGB to hex converter, HSL color picker, web color picker tool, color code picker online, pick color get hex code, free color tool designers">
+    <meta name="author" content="WebDesks">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://webdesks.app/blog/online-color-picker-hex-code">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://webdesks.app/blog/online-color-picker-hex-code">
+    <meta property="og:site_name" content="WebDesks">
+    <meta property="og:title" content="Free Online Color Picker & Hex Code Generator">
+    <meta property="og:description" content="Pick any color and get its hex, RGB, and HSL codes instantly. Free browser-based color picker for designers and developers.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Online Color Picker & Hex Code Generator | WebDesks">
+    <meta name="twitter:description" content="Generate hex codes, convert RGB to HSL, and pick colors in your browser. Free, no account required.">
+    <meta name="twitter:image" content="https://webdesks.app/og-image.png">
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+
+    <meta name="google-adsense-account" content="ca-pub-8626644983261966">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .article-body h2 { font-size: 1.6rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 0.75rem; color: #1e293b; }
+        .article-body h3 { font-size: 1.15rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem; color: #334155; }
+        .article-body p { margin-bottom: 1.1rem; line-height: 1.8; color: #475569; font-size: 1.05rem; }
+        .article-body ul, .article-body ol { margin-bottom: 1.1rem; padding-left: 1.5rem; }
+        .article-body li { margin-bottom: 0.5rem; color: #475569; line-height: 1.75; font-size: 1.05rem; list-style-type: disc; }
+        .article-body ol li { list-style-type: decimal; }
+        .article-body strong { color: #1e293b; }
+        .callout { background: #fdf4ff; border-left: 4px solid #d946ef; padding: 1rem 1.25rem; border-radius: 0 0.75rem 0.75rem 0; margin: 1.5rem 0; }
+        .callout p { margin-bottom: 0; color: #a21caf; }
+        .color-format-card { border-radius: 1rem; padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; border: 1px solid; }
+        .hex-card { background: #fef3c7; border-color: #fbbf24; }
+        .rgb-card { background: #fce7f3; border-color: #f472b6; }
+        .hsl-card { background: #ede9fe; border-color: #a78bfa; }
+        .use-case-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.25rem; margin-bottom: 0.75rem; }
+        .color-swatch-row { display: flex; gap: 0.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
+        .swatch { width: 3rem; height: 3rem; border-radius: 0.5rem; border: 2px solid rgba(0,0,0,0.1); flex-shrink: 0; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Free Online Color Picker & Hex Code Generator",
+      "description": "Pick any color and get its hex, RGB, and HSL codes instantly in your browser. Free color picker tool for designers and developers.",
+      "author": { "@type": "Organization", "name": "WebDesks" },
+      "publisher": { "@type": "Organization", "name": "WebDesks", "url": "https://webdesks.app" },
+      "url": "https://webdesks.app/blog/online-color-picker-hex-code",
+      "datePublished": "2026-03-18",
+      "dateModified": "2026-03-18",
+      "mainEntityOfPage": "https://webdesks.app/blog/online-color-picker-hex-code"
+    }
+    </script>
+</head>
+<body class="bg-white text-slate-800">
+
+    <!-- Nav -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
+                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/#colorpicker" class="hover:text-indigo-600 transition-colors">Color Picker</a>
+            </div>
+            <a href="/#colorpicker" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                Open Color Picker →
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <div class="bg-gradient-to-br from-fuchsia-600 to-pink-700 text-white py-16 px-4">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex items-center gap-2 mb-4 text-fuchsia-200 text-sm font-medium">
+                <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+                <span>/</span>
+                <span>Design</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black mb-5 leading-tight">
+                Free Online Color Picker & Hex Code Generator for Designers and Developers
+            </h1>
+            <div class="flex items-center gap-4 text-fuchsia-200 text-sm">
+                <span>By WebDesks Team</span>
+                <span>·</span>
+                <span>8 min read</span>
+                <span>·</span>
+                <span>Design</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- AdSense -->
+    <div class="max-w-3xl mx-auto px-4 py-6">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <div style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+          <iframe data-aa='2430800' src='//acceptable.a-ads.com/2430800/?size=Adaptive'
+                    style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+        </div>
+    </div>
+
+    <!-- Article -->
+    <article class="max-w-3xl mx-auto px-4 py-8 article-body">
+
+        <p>Color is one of the most powerful tools in design — and one of the most mismanaged. Choosing the wrong shade, forgetting the exact hex code, or copying a color that looks right on screen but renders differently in print are all common problems. Having a reliable color picker at your fingertips eliminates most of these friction points.</p>
+
+        <p>The <strong>WebDesks Color Picker</strong> is a free browser-based tool that lets you select any color visually and instantly generates its HEX, RGB, and HSL codes. No design software to open, no plugins to install — just a color picker in your browser tab.</p>
+
+        <div class="callout">
+            <p><strong>Pick a color now:</strong> <a href="/#colorpicker" class="underline font-semibold">Open the WebDesks Color Picker</a> — drag the picker, get the code, done.</p>
+        </div>
+
+        <h2>Understanding Color Formats: HEX, RGB, and HSL</h2>
+
+        <p>Every color on a screen can be represented in multiple formats. Each has its use case. The WebDesks Color Picker shows all three simultaneously:</p>
+
+        <div class="color-format-card hex-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem; color:#92400e;">HEX (Hexadecimal)</h3>
+            <p style="margin-bottom:0.4rem; color:#78350f;">Format: <code style="background:#fef9c3; padding:0.1rem 0.4rem; border-radius:0.25rem;">#RRGGBB</code> — e.g., <code style="background:#fef9c3; padding:0.1rem 0.4rem; border-radius:0.25rem;">#4f46e5</code></p>
+            <p style="margin-bottom:0; color:#78350f;">The most common format in web development. Used in HTML, CSS, SVG, and most design tools. Six hexadecimal characters represent the red, green, and blue channels (0–255 each). Quick to copy and paste directly into code.</p>
+        </div>
+
+        <div class="color-format-card rgb-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem; color:#9d174d;">RGB (Red, Green, Blue)</h3>
+            <p style="margin-bottom:0.4rem; color:#831843;">Format: <code style="background:#fce7f3; padding:0.1rem 0.4rem; border-radius:0.25rem;">rgb(79, 70, 229)</code></p>
+            <p style="margin-bottom:0; color:#831843;">Expresses color as three integers (0–255) for red, green, and blue channels. Used in CSS and some design tools. Easier to understand conceptually than HEX — it's obvious that <code>rgb(255, 0, 0)</code> is pure red. Also useful in programming when manipulating channels independently.</p>
+        </div>
+
+        <div class="color-format-card hsl-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem; color:#5b21b6;">HSL (Hue, Saturation, Lightness)</h3>
+            <p style="margin-bottom:0.4rem; color:#4c1d95;">Format: <code style="background:#ede9fe; padding:0.1rem 0.4rem; border-radius:0.25rem;">hsl(244, 75%, 59%)</code></p>
+            <p style="margin-bottom:0; color:#4c1d95;">HSL maps to how humans perceive color. Hue is the color wheel angle (0–360°), Saturation is intensity (0–100%), and Lightness is brightness (0–100%). Exceptionally useful in CSS because you can create color variations by only adjusting the Lightness value — perfect for creating hover states and accessible contrast ratios.</p>
+        </div>
+
+        <h2>How to Use the WebDesks Color Picker</h2>
+
+        <ol>
+            <li>Navigate to <a href="/#colorpicker" class="text-fuchsia-700 hover:underline">webdesks.app/#colorpicker</a> or click the palette icon in the sidebar.</li>
+            <li>Use the <strong>color spectrum slider</strong> to select a hue.</li>
+            <li>Drag the <strong>picker dot</strong> on the saturation/lightness gradient to fine-tune your color.</li>
+            <li>The <strong>HEX, RGB, and HSL codes</strong> update instantly as you drag.</li>
+            <li><strong>Click any code</strong> to copy it to your clipboard.</li>
+            <li>Alternatively, <strong>type a known hex code</strong> into the HEX field to jump directly to that color.</li>
+        </ol>
+
+        <h2>Common Color Picking Use Cases</h2>
+
+        <div class="use-case-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem;">🎨 Web and UI design</h3>
+            <p style="margin-bottom:0;">Designers use color pickers constantly — selecting brand colors, creating accessible color palettes, and generating hover/active state variations. The HSL output is especially useful for generating harmonious variations of a base color.</p>
+        </div>
+
+        <div class="use-case-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem;">💻 Front-end development</h3>
+            <p style="margin-bottom:0;">Copy a HEX code directly into your CSS stylesheet or Tailwind config. Or use the RGB value in JavaScript where you need to manipulate color channels programmatically.</p>
+        </div>
+
+        <div class="use-case-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem;">🖼️ Brand consistency</h3>
+            <p style="margin-bottom:0;">When you need to use a brand color but only have one format (e.g., the brand book says #004aad but your tool expects RGB), the color picker converts instantly. Paste in the HEX, get the RGB output.</p>
+        </div>
+
+        <div class="use-case-card">
+            <h3 style="margin-top:0; margin-bottom:0.4rem;">♿ Accessibility checking</h3>
+            <p style="margin-bottom:0;">Use the HSL values to create color palettes that meet WCAG contrast ratio requirements. Adjust only the Lightness value to create a darker/lighter variant that maintains accessibility while staying on-brand.</p>
+        </div>
+
+        <h2>Color Theory Basics for Better Design Choices</h2>
+
+        <h3>The 60-30-10 rule</h3>
+        <p>A classic interior design rule that works equally well in digital design: use your dominant color for 60% of the design, a secondary color for 30%, and an accent color for 10%. Pick your three colors using the color picker and save the hex codes.</p>
+
+        <h3>Creating tonal variations in HSL</h3>
+        <p>To create a cohesive color scale from one color, keep the Hue and Saturation values fixed and vary only the Lightness. For example, <code>hsl(244, 75%, 20%)</code> through <code>hsl(244, 75%, 95%)</code> gives you a dark-to-light range of the same hue — perfect for backgrounds, borders, and text in a monochromatic design system.</p>
+
+        <h3>Complementary colors</h3>
+        <p>The complementary color is exactly opposite on the color wheel — 180° away in Hue. If your brand color is <code>hsl(244, 75%, 59%)</code> (indigo), the complement is <code>hsl(64, 75%, 59%)</code> (yellow-green). Use complementary pairs for high-contrast, attention-grabbing elements like CTAs.</p>
+
+        <h2>Reference: Common Web Colors and Their Hex Codes</h2>
+
+        <div class="overflow-x-auto my-4">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+                <thead>
+                    <tr class="bg-slate-100">
+                        <th class="text-left p-3 font-bold text-slate-600">Color</th>
+                        <th class="text-left p-3 font-bold text-slate-600">HEX</th>
+                        <th class="text-left p-3 font-bold text-slate-600">RGB</th>
+                        <th class="text-left p-3 font-bold text-slate-600">Preview</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-t border-slate-100"><td class="p-3 text-slate-700">Indigo 600</td><td class="p-3 font-mono text-slate-600">#4f46e5</td><td class="p-3 text-slate-600">79, 70, 229</td><td class="p-3"><div class="w-8 h-8 rounded" style="background:#4f46e5;"></div></td></tr>
+                    <tr class="border-t border-slate-100"><td class="p-3 text-slate-700">Emerald 500</td><td class="p-3 font-mono text-slate-600">#10b981</td><td class="p-3 text-slate-600">16, 185, 129</td><td class="p-3"><div class="w-8 h-8 rounded" style="background:#10b981;"></div></td></tr>
+                    <tr class="border-t border-slate-100"><td class="p-3 text-slate-700">Rose 500</td><td class="p-3 font-mono text-slate-600">#f43f5e</td><td class="p-3 text-slate-600">244, 63, 94</td><td class="p-3"><div class="w-8 h-8 rounded" style="background:#f43f5e;"></div></td></tr>
+                    <tr class="border-t border-slate-100"><td class="p-3 text-slate-700">Amber 500</td><td class="p-3 font-mono text-slate-600">#f59e0b</td><td class="p-3 text-slate-600">245, 158, 11</td><td class="p-3"><div class="w-8 h-8 rounded" style="background:#f59e0b;"></div></td></tr>
+                    <tr class="border-t border-slate-100"><td class="p-3 text-slate-700">Sky 500</td><td class="p-3 font-mono text-slate-600">#0ea5e9</td><td class="p-3 text-slate-600">14, 165, 233</td><td class="p-3"><div class="w-8 h-8 rounded" style="background:#0ea5e9;"></div></td></tr>
+                    <tr class="border-t border-slate-100"><td class="p-3 text-slate-700">Slate 800</td><td class="p-3 font-mono text-slate-600">#1e293b</td><td class="p-3 text-slate-600">30, 41, 59</td><td class="p-3"><div class="w-8 h-8 rounded" style="background:#1e293b;"></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <h3>Is the color picker free?</h3>
+        <p>Yes. The WebDesks Color Picker is completely free with no account, no subscription, and no install.</p>
+
+        <h3>Can I enter a hex code to look up its RGB and HSL values?</h3>
+        <p>Yes. Type or paste a hex code (e.g., <code>#4f46e5</code>) into the HEX input field, and the picker will jump to that color and display its equivalent RGB and HSL values.</p>
+
+        <h3>Can I save colors for later?</h3>
+        <p>Copy the HEX code to your clipboard and paste it into your <a href="/#scratchpad" class="text-fuchsia-700 hover:underline">Scratchpad</a> for a quick color reference log. For a full color system, save codes in your design tool's color library.</p>
+
+        <h3>Does it work offline?</h3>
+        <p>Yes. WebDesks is a PWA that works offline after your first visit. All color calculations happen locally.</p>
+
+        <h3>What is the difference between HSL and HSB?</h3>
+        <p>HSL (Hue, Saturation, Lightness) and HSB/HSV (Hue, Saturation, Brightness/Value) are similar but not identical. In HSL, 50% Lightness produces a pure color; in HSB, 100% Brightness with 100% Saturation produces a pure color. HSL is more common in CSS; HSB is more common in design tools like Figma and Photoshop.</p>
+
+    </article>
+
+    <!-- AdSense mid -->
+    <div class="max-w-3xl mx-auto px-4 py-4">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8626644983261966" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- CTA -->
+    <section class="bg-fuchsia-50 border-y border-fuchsia-100 py-14 px-4 mt-8">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-2xl font-bold text-slate-800 mb-3">Pick a Color — Get the Code Instantly</h2>
+            <p class="text-slate-500 mb-8">HEX, RGB, and HSL — all in one free browser tool. No account required.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/#colorpicker" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🎨 Open Color Picker</a>
+                <a href="/blog/" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <a href="/#whiteboard" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🖌️ Whiteboard</a>
+                <a href="/#scratchpad" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
+                <a href="/#converter" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔄 Unit Converter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-sm mb-6">
+                <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
+                <div class="flex flex-wrap justify-center gap-5">
+                    <a href="/" class="hover:text-white transition-colors">Home</a>
+                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+                    <a href="/about" class="hover:text-white transition-colors">About</a>
+                    <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 WebDesks. Free browser-based productivity tools.</p>
+                <div class="flex gap-4">
+                    <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
