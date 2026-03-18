@@ -2006,29 +2006,81 @@
         </div>
 
         <!-- TIME ZONES -->
-        <div id="zones" class="tab-content flex flex-col items-center justify-center p-4">
-            <div class="max-w-4xl w-full glass p-8 md:p-10 rounded-[3rem] space-y-8">
+        <div id="zones" class="tab-content flex flex-col items-center p-4 overflow-y-auto">
+            <div class="max-w-5xl w-full glass p-8 md:p-10 rounded-[3rem] space-y-6">
+
+                <!-- Header -->
                 <div class="text-center">
-                    <h2 class="text-3xl font-black mb-2">Global Meeting Planner</h2>
-                    <p class="text-slate-400 text-sm">Drag the slider to find the perfect meeting time across time zones</p>
+                    <h2 class="text-3xl font-black mb-2">World Clock</h2>
+                    <p class="text-slate-400 text-sm">Track time globally — live or plan any hour</p>
                 </div>
 
-                <div class="relative py-6">
-                    <input type="range" min="0" max="23" value="12" id="zone-slider" oninput="app.updateZones(this.value)" 
-                        class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full appearance-none cursor-pointer accent-indigo-600 relative z-10">
-                    <div class="flex justify-between text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-wider">
+                <!-- Live time display -->
+                <div class="text-center space-y-1">
+                    <div id="zone-display-time" class="text-5xl font-black timer-font text-indigo-400 leading-none tabular-nums">12:00 PM</div>
+                    <div id="zone-display-date" class="text-xs text-slate-400 uppercase tracking-widest font-bold">Wednesday, March 18</div>
+                    <div id="zone-live-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-[10px] font-black uppercase tracking-widest">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block"></span> Live
+                    </div>
+                </div>
+
+                <!-- Half-hour slider -->
+                <div class="relative py-4">
+                    <input type="range" min="0" max="47" step="1" value="24" id="zone-slider"
+                        oninput="app.onZoneSlider(parseInt(this.value))"
+                        class="w-full h-3 bg-slate-200 dark:bg-slate-700 rounded-full appearance-none cursor-pointer accent-indigo-600">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-400 mt-3 uppercase tracking-wider">
                         <span>12 AM</span><span>6 AM</span><span>12 PM</span><span>6 PM</span><span>12 AM</span>
                     </div>
                 </div>
 
-                <div class="flex justify-center gap-4 flex-wrap mb-6">
-                    <button onclick="app.setZoneTime('now')" class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-colors">Now</button>
-                    <button onclick="app.setZoneTime('morning')" class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-colors">9 AM</button>
-                    <button onclick="app.setZoneTime('noon')" class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-colors">12 PM</button>
-                    <button onclick="app.setZoneTime('evening')" class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-colors">6 PM</button>
+                <!-- Presets -->
+                <div class="flex justify-center gap-3 flex-wrap">
+                    <button onclick="app.setZoneTime('now')" id="zone-btn-now" class="px-4 py-2 rounded-full glass text-xs font-bold transition-all">
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-green-400 mr-1 animate-pulse"></span>Live
+                    </button>
+                    <button onclick="app.setZoneTime('morning')"  id="zone-btn-morning"  class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-all">9 AM</button>
+                    <button onclick="app.setZoneTime('noon')"     id="zone-btn-noon"     class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-all">12 PM</button>
+                    <button onclick="app.setZoneTime('standup')"  id="zone-btn-standup"  class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-all">3 PM</button>
+                    <button onclick="app.setZoneTime('evening')"  id="zone-btn-evening"  class="px-4 py-2 rounded-full glass text-xs font-bold hover:bg-indigo-500 hover:text-white transition-all">6 PM</button>
                 </div>
 
+                <!-- Zone grid -->
                 <div id="zone-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+                <!-- Add / Reset cities -->
+                <div class="flex items-center gap-3 pt-4 border-t border-slate-200/20">
+                    <select id="zone-city-add" class="flex-1 rounded-xl px-3 py-2 text-sm bg-slate-100 dark:bg-slate-800 border-0 outline-none cursor-pointer text-slate-700 dark:text-slate-200 min-w-0">
+                        <option value="">＋ Add a city…</option>
+                        <option value="America/Los_Angeles|Los Angeles|🇺🇸">Los Angeles</option>
+                        <option value="America/Chicago|Chicago|🇺🇸">Chicago</option>
+                        <option value="America/Denver|Denver|🇺🇸">Denver</option>
+                        <option value="America/Toronto|Toronto|🇨🇦">Toronto</option>
+                        <option value="America/Vancouver|Vancouver|🇨🇦">Vancouver</option>
+                        <option value="America/Sao_Paulo|São Paulo|🇧🇷">São Paulo</option>
+                        <option value="America/Mexico_City|Mexico City|🇲🇽">Mexico City</option>
+                        <option value="America/Buenos_Aires|Buenos Aires|🇦🇷">Buenos Aires</option>
+                        <option value="Europe/Paris|Paris|🇫🇷">Paris</option>
+                        <option value="Europe/Madrid|Madrid|🇪🇸">Madrid</option>
+                        <option value="Europe/Amsterdam|Amsterdam|🇳🇱">Amsterdam</option>
+                        <option value="Europe/Rome|Rome|🇮🇹">Rome</option>
+                        <option value="Europe/Stockholm|Stockholm|🇸🇪">Stockholm</option>
+                        <option value="Europe/Moscow|Moscow|🇷🇺">Moscow</option>
+                        <option value="Africa/Cairo|Cairo|🇪🇬">Cairo</option>
+                        <option value="Africa/Nairobi|Nairobi|🇰🇪">Nairobi</option>
+                        <option value="Asia/Karachi|Karachi|🇵🇰">Karachi</option>
+                        <option value="Asia/Bangkok|Bangkok|🇹🇭">Bangkok</option>
+                        <option value="Asia/Shanghai|Beijing|🇨🇳">Beijing</option>
+                        <option value="Asia/Seoul|Seoul|🇰🇷">Seoul</option>
+                        <option value="Asia/Taipei|Taipei|🇹🇼">Taipei</option>
+                        <option value="Asia/Hong_Kong|Hong Kong|🇭🇰">Hong Kong</option>
+                        <option value="Pacific/Auckland|Auckland|🇳🇿">Auckland</option>
+                        <option value="Pacific/Honolulu|Honolulu|🇺🇸">Honolulu</option>
+                    </select>
+                    <button onclick="app.addZoneCity()" class="px-4 py-2 rounded-xl bg-indigo-500 text-white text-xs font-bold hover:bg-indigo-600 transition-colors flex-shrink-0">Add</button>
+                    <button onclick="app.resetZoneCities()" class="px-3 py-2 rounded-xl glass text-xs font-bold text-slate-400 hover:text-red-400 transition-colors flex-shrink-0">Reset</button>
+                </div>
+
             </div>
         </div>
 
@@ -2694,6 +2746,21 @@
             calcValue: '0',
             calcHistory: '',
             draggedTaskIndex: null,
+            zonesLive: true,
+            zonesLiveInterval: null,
+            zonesCities: null,
+            _zonesManualDate: null,
+            _zonesDefaultCities: [
+                { label: 'Local',     zone: null,                    flag: '📍' },
+                { label: 'New York',  zone: 'America/New_York',       flag: '🇺🇸' },
+                { label: 'London',    zone: 'Europe/London',          flag: '🇬🇧' },
+                { label: 'Berlin',    zone: 'Europe/Berlin',          flag: '🇩🇪' },
+                { label: 'Dubai',     zone: 'Asia/Dubai',             flag: '🇦🇪' },
+                { label: 'Mumbai',    zone: 'Asia/Kolkata',           flag: '🇮🇳' },
+                { label: 'Singapore', zone: 'Asia/Singapore',         flag: '🇸🇬' },
+                { label: 'Tokyo',     zone: 'Asia/Tokyo',             flag: '🇯🇵' },
+                { label: 'Sydney',    zone: 'Australia/Sydney',       flag: '🇦🇺' },
+            ],
             searchItems: [
                 { id: 'dashboard', label: 'Dashboard', icon: 'home', keywords: 'home start' },
                 { id: 'scratchpad', label: 'Scratchpad', icon: 'file-text', keywords: 'notes write text editor' },
@@ -4902,66 +4969,159 @@
 
             // Time Zones
             initZones() {
-                const currentHour = new Date().getHours();
-                document.getElementById('zone-slider').value = currentHour;
-                this.updateZones(currentHour);
+                const saved = localStorage.getItem('webdesks_zones');
+                this.zonesCities = saved ? JSON.parse(saved) : JSON.parse(JSON.stringify(this._zonesDefaultCities));
+                this._startZonesLive();
             },
 
-            updateZones(val) {
-                const zones = [
-                    { label: 'Local', zone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-                    { label: 'New York', zone: 'America/New_York' },
-                    { label: 'London', zone: 'Europe/London' },
-                    { label: 'Berlin', zone: 'Europe/Berlin' },
-                    { label: 'Dubai', zone: 'Asia/Dubai' },
-                    { label: 'Mumbai', zone: 'Asia/Kolkata' },
-                    { label: 'Singapore', zone: 'Asia/Singapore' },
-                    { label: 'Tokyo', zone: 'Asia/Tokyo' },
-                    { label: 'Sydney', zone: 'Australia/Sydney' }
-                ];
-                
-                const now = new Date();
-                if (val !== 'now') {
-                    now.setHours(parseInt(val));
-                    now.setMinutes(0);
+            _startZonesLive() {
+                this._stopZonesLive();
+                this.zonesLive = true;
+                this._renderZones();
+                this.zonesLiveInterval = setInterval(() => { if (this.zonesLive) this._renderZones(); }, 1000);
+                this._setZoneActiveBtn('zone-btn-now');
+            },
+
+            _stopZonesLive() {
+                if (this.zonesLiveInterval) { clearInterval(this.zonesLiveInterval); this.zonesLiveInterval = null; }
+            },
+
+            _setZoneActiveBtn(activeId) {
+                ['zone-btn-now','zone-btn-morning','zone-btn-noon','zone-btn-standup','zone-btn-evening'].forEach(id => {
+                    const btn = document.getElementById(id);
+                    if (!btn) return;
+                    if (id === activeId) {
+                        btn.style.background = 'rgb(99 102 241)';
+                        btn.style.color = 'white';
+                    } else {
+                        btn.style.background = '';
+                        btn.style.color = '';
+                    }
+                });
+            },
+
+            _renderZones() {
+                const now = this.zonesLive ? new Date() : this._zonesManualDate;
+                if (!now) return;
+                const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const getISODate = (d, tz) => new Intl.DateTimeFormat('en-CA', { timeZone: tz }).format(d);
+                const localISO = getISODate(now, localTz);
+
+                // Update header
+                const dispTime = document.getElementById('zone-display-time');
+                const dispDate = document.getElementById('zone-display-date');
+                const liveBadge = document.getElementById('zone-live-badge');
+                if (dispTime) {
+                    const opts = { hour: 'numeric', minute: '2-digit', hour12: true };
+                    if (this.zonesLive) opts.second = '2-digit';
+                    dispTime.textContent = now.toLocaleTimeString('en-US', opts);
                 }
-                
+                if (dispDate) {
+                    dispDate.textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+                }
+                if (liveBadge) liveBadge.style.display = this.zonesLive ? 'inline-flex' : 'none';
+
+                // Keep slider in sync when live
+                if (this.zonesLive) {
+                    const slider = document.getElementById('zone-slider');
+                    if (slider) slider.value = now.getHours() * 2 + (now.getMinutes() >= 30 ? 1 : 0);
+                }
+
+                // Render grid
                 const grid = document.getElementById('zone-grid');
-                grid.innerHTML = zones.map(z => {
-                    const time = now.toLocaleTimeString('en-US', { 
-                        timeZone: z.zone, 
-                        hour: 'numeric', 
-                        minute: '2-digit',
-                        hour12: true 
-                    });
-                    const isNight = parseInt(time) < 6 || parseInt(time) >= 18;
-                    
-                    return `
-                    <div class="glass p-4 rounded-2xl flex flex-col items-center hover:scale-105 transition-transform">
-                        <span class="text-[10px] font-black uppercase text-slate-400 mb-1">${z.label}</span>
-                        <span class="text-2xl font-black timer-font ${isNight ? 'text-indigo-400' : 'text-amber-500'}">${time}</span>
-                        <span class="text-[10px] text-slate-500 mt-1">${z.zone.split('/')[1].replace('_', ' ')}</span>
+                if (!grid) return;
+                const cities = this.zonesCities || this._zonesDefaultCities;
+                grid.innerHTML = cities.map((z, idx) => {
+                    const tz = z.zone || localTz;
+                    const time = now.toLocaleTimeString('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit', hour12: true });
+                    const hour24 = parseInt(new Intl.DateTimeFormat('en', { timeZone: tz, hour: 'numeric', hourCycle: 'h23' }).format(now));
+
+                    // UTC offset e.g. "GMT+5:30"
+                    const utcOffset = (new Intl.DateTimeFormat('en', { timeZone: tz, timeZoneName: 'shortOffset' }).formatToParts(now).find(p => p.type === 'timeZoneName') || {}).value || '';
+
+                    // Day offset badge
+                    const cityISO = getISODate(now, tz);
+                    const dayDiff = Math.round((new Date(cityISO) - new Date(localISO)) / 86400000);
+                    const weekday = now.toLocaleDateString('en-US', { timeZone: tz, weekday: 'short' });
+                    const dayBadge = dayDiff !== 0
+                        ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded-full ${dayDiff > 0 ? 'bg-blue-500/20 text-blue-400' : 'bg-orange-500/20 text-orange-400'}">${dayDiff > 0 ? '+1 day' : '−1 day'}</span>`
+                        : `<span class="text-[9px] text-slate-500">${weekday}</span>`;
+
+                    // Status icon + color
+                    let icon, color, ringClass;
+                    if (hour24 < 6 || hour24 >= 22)       { icon = '🌙'; color = 'text-indigo-400'; ringClass = ''; }
+                    else if (hour24 < 9)                   { icon = '🌅'; color = 'text-amber-400';  ringClass = ''; }
+                    else if (hour24 < 18)                  { icon = '☀️'; color = 'text-amber-500';  ringClass = 'ring-1 ring-green-500/40'; }
+                    else                                   { icon = '🌆'; color = 'text-orange-400'; ringClass = ''; }
+
+                    return `<div class="glass ${ringClass} p-4 rounded-2xl flex flex-col items-center gap-0.5 hover:scale-105 transition-transform relative group cursor-default">
+                        ${idx > 0 ? `<button onclick="app.removeZoneCity(${idx})" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-red-400 text-[10px] leading-none w-4 h-4 flex items-center justify-center rounded-full" title="Remove">✕</button>` : ''}
+                        <span class="text-xl leading-none">${z.flag || '🌐'}</span>
+                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-wide mt-1">${z.label}</span>
+                        <span class="text-2xl font-black timer-font ${color} tabular-nums leading-tight">${time}</span>
+                        <span class="text-sm leading-none">${icon}</span>
+                        ${dayBadge}
+                        <span class="text-[9px] text-slate-500 font-medium">${utcOffset}</span>
                     </div>`;
                 }).join('');
             },
 
-            setZoneTime(mode) {
-                let hour;
-                const now = new Date();
-                
-                if (mode === 'now') {
-                    document.getElementById('zone-slider').value = now.getHours();
-                    this.updateZones('now');
-                    return;
-                }
+            onZoneSlider(val) {
+                this._stopZonesLive();
+                this.zonesLive = false;
+                const d = new Date();
+                d.setHours(Math.floor(val / 2), (val % 2) * 30, 0, 0);
+                this._zonesManualDate = d;
+                this._renderZones();
+                this._setZoneActiveBtn(null);
+            },
 
-                switch(mode) {
-                    case 'morning': hour = 9; break;
-                    case 'noon': hour = 12; break;
-                    case 'evening': hour = 18; break;
-                }
-                document.getElementById('zone-slider').value = hour;
-                this.updateZones(hour);
+            updateZones(val) {
+                // Legacy compatibility
+                if (val === 'now') { this.setZoneTime('now'); return; }
+                this.onZoneSlider(parseInt(val) * 2);
+            },
+
+            setZoneTime(mode) {
+                if (mode === 'now') { this._startZonesLive(); return; }
+                this._stopZonesLive();
+                this.zonesLive = false;
+                const map = { morning: 18, noon: 24, standup: 30, evening: 36 };
+                const halfSlot = map[mode] !== undefined ? map[mode] : 24;
+                const d = new Date();
+                d.setHours(Math.floor(halfSlot / 2), (halfSlot % 2) * 30, 0, 0);
+                this._zonesManualDate = d;
+                const slider = document.getElementById('zone-slider');
+                if (slider) slider.value = halfSlot;
+                this._renderZones();
+                const btnMap = { morning: 'zone-btn-morning', noon: 'zone-btn-noon', standup: 'zone-btn-standup', evening: 'zone-btn-evening' };
+                this._setZoneActiveBtn(btnMap[mode] || null);
+            },
+
+            addZoneCity() {
+                const sel = document.getElementById('zone-city-add');
+                if (!sel || !sel.value) return;
+                const parts = sel.value.split('|');
+                const zone = parts[0], label = parts[1], flag = parts[2];
+                if (!this.zonesCities) this.zonesCities = JSON.parse(JSON.stringify(this._zonesDefaultCities));
+                if (this.zonesCities.some(c => c.zone === zone)) { sel.value = ''; return; }
+                this.zonesCities.push({ label, zone, flag });
+                localStorage.setItem('webdesks_zones', JSON.stringify(this.zonesCities));
+                sel.value = '';
+                this._renderZones();
+            },
+
+            removeZoneCity(idx) {
+                if (!this.zonesCities || idx <= 0) return;
+                this.zonesCities.splice(idx, 1);
+                localStorage.setItem('webdesks_zones', JSON.stringify(this.zonesCities));
+                this._renderZones();
+            },
+
+            resetZoneCities() {
+                this.zonesCities = JSON.parse(JSON.stringify(this._zonesDefaultCities));
+                localStorage.removeItem('webdesks_zones');
+                this._renderZones();
             },
 
             // On Air
