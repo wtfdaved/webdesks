@@ -1016,6 +1016,10 @@
                 <span class="font-black text-base tracking-tight">WebDesks</span>
                 <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.20.1</span>
             </div>
+            <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+                <span>Family Feud</span>
+            </a>
         </div>
 
         <!-- Center: Live Clock -->
@@ -2767,6 +2771,7 @@
                 { id: 'tasks', label: 'Task Manager', icon: 'check-circle-2', keywords: 'todo list jobs' },
                 { id: 'board', label: 'Project Board', icon: 'columns', keywords: 'kanban agile trello' },
                 { id: 'whiteboard', label: 'Whiteboard', icon: 'pencil', keywords: 'draw sketch paint' },
+                { id: 'feud', label: 'Family Feud Game', icon: 'trophy', link: '/family-feud', keywords: 'family feud game party survey vote team streaming' },
                 { id: 'clock', label: 'Desk Clock', icon: 'clock', keywords: 'time alarm watch' },
                 { id: 'timer', label: 'Focus Timer', icon: 'hourglass', keywords: 'pomodoro countdown focus' },
                 { id: 'audio', label: 'Audio Mixer', icon: 'headphones', keywords: 'noise ambient music lofi rain coffee mixer multi-channel' },
@@ -3017,6 +3022,13 @@
 
             // Navigation
             switchTab(tabId) {
+                // Check if this tool has an external link
+                const tool = this.searchItems.find(t => t.id === tabId);
+                if (tool && tool.link) {
+                    window.location.href = tool.link;
+                    return;
+                }
+
                 if (!document.getElementById(tabId)) tabId = 'dashboard';
                 if (this.currentTab === tabId) return;
                 
@@ -3084,20 +3096,24 @@
                 );
 
                 container.classList.remove('hidden');
-                
+
                 if (matches.length > 0) {
-                    container.innerHTML = matches.map(item => `
-                        <button onclick="app.switchTab('${item.id}'); document.getElementById('dash-search').value = ''; app.handleSearch('')" 
+                    container.innerHTML = matches.map(item => {
+                        const isExternal = !!item.link;
+                        const action = isExternal ? `window.location.href='${item.link}'` : `app.switchTab('${item.id}')`;
+                        return `
+                        <button onclick="${action}; document.getElementById('dash-search').value = ''; app.handleSearch('')"
                             class="flex items-center gap-3 p-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors text-left group w-full">
                             <div class="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 group-hover:scale-110 transition-transform">
                                 <i data-lucide="${item.icon}" class="w-4 h-4"></i>
                             </div>
                             <div>
                                 <div class="font-bold text-sm text-slate-700 dark:text-slate-200">${item.label}</div>
-                                <div class="text-[10px] text-slate-400 uppercase tracking-wider">Switch Tab</div>
+                                <div class="text-[10px] text-slate-400 uppercase tracking-wider">${isExternal ? 'Open Game' : 'Switch Tab'}</div>
                             </div>
                         </button>
-                    `).join('');
+                    `;
+                    }).join('');
                     this._rebuildIcons();
                 } else {
                     container.innerHTML = `<div class="col-span-full text-center text-slate-400 py-4 text-sm">No tools found for "${this.escapeHtml(query)}"</div>`;
@@ -3112,15 +3128,17 @@
                 container.innerHTML = this.pins.map((pin, index) => {
                     const tool = this.searchItems.find(i => i.id === pin.id);
                     if (!tool) return '';
-                    
+
+                    const isExternal = !!tool.link;
+                    const action = isExternal ? `window.location.href='${tool.link}'` : `app.switchTab('${pin.id}')`;
                     return `
-                    <button 
-                        onclick="app.switchTab('${pin.id}')" 
+                    <button
+                        onclick="${action}"
                         ondblclick="app.editPin(${index})"
                         class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 text-sm font-medium transition-colors flex items-center gap-2 group relative select-none"
                         title="Double-click to edit"
                     >
-                        <i data-lucide="${tool.icon}" class="w-4 h-4 text-slate-500 group-hover:text-indigo-600 transition-colors"></i> 
+                        <i data-lucide="${tool.icon}" class="w-4 h-4 text-slate-500 group-hover:text-indigo-600 transition-colors"></i>
                         <span class="text-slate-700 dark:text-slate-200 group-hover:text-indigo-700 dark:group-hover:text-indigo-300">${this.escapeHtml(pin.label || tool.label)}</span>
                     </button>
                     `;

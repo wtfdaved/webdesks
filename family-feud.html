@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Feud Game | Free Online Party Game | WebDesks</title>
+    <meta name="description" content="Play Family Feud-style game online. Create questions, share voting links with friends, set up teams, and play together. Perfect for streaming on Zoom or Teams. Free, no signup required.">
+    <meta name="keywords" content="family feud game, family feud online, party game, trivia game, survey game, streaming game, group game, team game, free online game">
+    <meta name="author" content="WebDesks">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://webdesks.app/family-feud">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://webdesks.app/family-feud">
+    <meta property="og:site_name" content="WebDesks">
+    <meta property="og:title" content="Family Feud Game — Free Online Party Game | WebDesks">
+    <meta property="og:description" content="Create questions, gather votes, and play Family Feud online. Stream to your group. Perfect for Zoom, Teams, and streaming.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Family Feud Game — Free Online Party Game">
+    <meta name="twitter:description" content="Create questions, gather votes, and play Family Feud online. Stream to your group.">
+    <meta name="twitter:image" content="https://webdesks.app/og-image.png">
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+
+    <meta name="google-adsense-account" content="ca-pub-8626644983261966">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-hero { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); }
+        .btn-primary { @apply bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition-all active:scale-95; }
+        .btn-secondary { @apply bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-900 dark:text-white font-semibold px-6 py-3 rounded-lg transition-all; }
+        .card { @apply bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700; }
+        .input-base { @apply w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Family Feud Game",
+      "url": "https://webdesks.app/family-feud",
+      "description": "Free online Family Feud-style game with question creation, voting, and team gameplay.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+        <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600 dark:text-indigo-400">
+                🖥️ WebDesks
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="/#dashboard" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                    All Tools
+                </a>
+                <button onclick="location.reload()" class="btn-secondary text-sm px-4 py-2">
+                    Reset
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 relative">
+
+        <!-- Screen 1: Home -->
+        <div id="screen-home" class="screen active w-full h-screen flex flex-col items-center justify-center p-4">
+            <div class="max-w-2xl w-full text-center fade-in">
+                <h1 class="text-6xl font-black mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    Family Feud
+                </h1>
+                <p class="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-8">
+                    The Survey Says...
+                </p>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-12 leading-relaxed">
+                    Create fun survey questions, gather votes from friends, and play an exciting game with your teams. Perfect for streaming on Zoom or Teams!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="app.goToScreen('setup')" class="btn-primary text-lg py-4">
+                        Start New Game
+                    </button>
+                    <button onclick="app.loadFromVoteLink()" class="btn-secondary text-lg py-4">
+                        Have Votes Ready?
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Setup Questions -->
+        <div id="screen-setup" class="screen w-full h-screen flex flex-col p-4 hidden">
+            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold mb-2">Create Your Game</h2>
+                    <p class="text-slate-600 dark:text-slate-400">Add questions and answer options</p>
+                </div>
+
+                <div class="flex-1 overflow-y-auto mb-6 space-y-4">
+                    <div class="card">
+                        <label class="block text-sm font-semibold mb-2">Number of Questions</label>
+                        <div class="flex gap-2">
+                            <input type="number" id="num-questions" value="5" min="1" max="20" class="input-base w-24">
+                            <button onclick="app.generateQuestionFields()" class="btn-secondary">Generate</button>
+                        </div>
+                    </div>
+
+                    <div id="questions-container" class="space-y-4">
+                        <!-- Questions will be generated here -->
+                    </div>
+                </div>
+
+                <div class="flex gap-4 justify-between">
+                    <button onclick="app.goToScreen('home')" class="btn-secondary">Back</button>
+                    <button onclick="app.goToScreen('voting')" class="btn-primary">Next: Share Votes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Voting Share -->
+        <div id="screen-voting" class="screen w-full h-screen flex flex-col p-4 hidden">
+            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold mb-2">Share Voting Link</h2>
+                    <p class="text-slate-600 dark:text-slate-400">Send this link to friends to vote on answers</p>
+                </div>
+
+                <div class="flex-1 flex flex-col gap-6">
+                    <div class="card">
+                        <label class="block text-sm font-semibold mb-4">Voting Link</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="vote-link" readonly class="input-base flex-1 bg-slate-100 dark:bg-slate-700 cursor-pointer">
+                            <button onclick="app.copyVotingLink()" class="btn-primary px-4">Copy</button>
+                        </div>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                            Share this link with friends. They'll vote on the best answers.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="font-semibold mb-4">Your Questions</h3>
+                        <div id="questions-preview" class="space-y-3">
+                            <!-- Questions preview -->
+                        </div>
+                    </div>
+
+                    <div class="card bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+                        <p class="text-sm font-medium text-blue-900 dark:text-blue-300">
+                            💡 Open the voting link in another tab to gather responses while setting up your game.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 justify-between mt-6">
+                    <button onclick="app.goToScreen('setup')" class="btn-secondary">Back</button>
+                    <button onclick="app.goToScreen('team-setup')" class="btn-primary">Next: Create Teams</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Voting (when accessed via link) -->
+        <div id="screen-vote" class="screen w-full h-screen flex flex-col p-4 hidden">
+            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
+                <div class="mb-6 text-center">
+                    <h1 class="text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                        Family Feud Survey
+                    </h1>
+                    <p class="text-slate-600 dark:text-slate-400">Vote on the best answers</p>
+                </div>
+
+                <div id="current-vote-question" class="card mb-6">
+                    <h3 id="vote-question-text" class="text-2xl font-bold mb-6"></h3>
+                    <div id="vote-answers-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Answer buttons will be generated -->
+                    </div>
+                </div>
+
+                <div class="card bg-slate-100 dark:bg-slate-700">
+                    <div id="vote-progress" class="text-sm font-medium">
+                        Question <span id="vote-current">1</span> of <span id="vote-total">5</span>
+                    </div>
+                    <div class="w-full bg-slate-300 dark:bg-slate-600 rounded-full h-2 mt-3">
+                        <div id="vote-progress-bar" class="h-full bg-indigo-600 rounded-full transition-all"></div>
+                    </div>
+                </div>
+
+                <button id="vote-next-btn" onclick="app.nextVoteQuestion()" class="btn-primary w-full mt-6">
+                    Next Question
+                </button>
+            </div>
+        </div>
+
+        <!-- Screen 5: Team Setup -->
+        <div id="screen-team-setup" class="screen w-full h-screen flex flex-col p-4 hidden">
+            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold mb-2">Create Teams</h2>
+                    <p class="text-slate-600 dark:text-slate-400">Add team names and players</p>
+                </div>
+
+                <div class="flex-1 overflow-y-auto mb-6">
+                    <div id="teams-container" class="space-y-4">
+                        <!-- Teams will be generated here -->
+                    </div>
+                    <button onclick="app.addTeam()" class="btn-secondary w-full mt-4">
+                        + Add Another Team
+                    </button>
+                </div>
+
+                <div class="flex gap-4 justify-between">
+                    <button onclick="app.goToScreen('voting')" class="btn-secondary">Back</button>
+                    <button onclick="app.goToScreen('game')" class="btn-primary">Start Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: Game Play -->
+        <div id="screen-game" class="screen w-full h-screen flex flex-col p-4 hidden">
+            <div class="max-w-6xl w-full mx-auto flex flex-col h-full">
+                <!-- Score Board -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6" id="scoreboard">
+                    <!-- Teams will be rendered here -->
+                </div>
+
+                <!-- Current Question -->
+                <div class="card flex-1 mb-6 flex flex-col">
+                    <h3 id="game-question" class="text-3xl font-bold mb-6"></h3>
+
+                    <!-- Answers Grid -->
+                    <div id="game-answers" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 flex-1">
+                        <!-- Answers will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Host Input -->
+                <div class="card">
+                    <label class="block text-sm font-semibold mb-3">Host: Enter the answer given</label>
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="host-answer-input" placeholder="Type the answer..." class="input-base flex-1" onkeypress="if(event.key==='Enter') app.checkAnswer()">
+                        <button onclick="app.checkAnswer()" class="btn-primary px-6">Check</button>
+                    </div>
+                    <div id="answer-feedback" class="text-sm font-medium mb-4" style="display:none;"></div>
+                </div>
+
+                <!-- Game Controls -->
+                <div class="flex gap-3 mt-6 justify-between">
+                    <button onclick="app.previousQuestion()" class="btn-secondary">← Previous</button>
+                    <button onclick="app.endGame()" class="btn-secondary">End Game</button>
+                    <button onclick="app.nextQuestion()" class="btn-primary">Next Question →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 7: Results -->
+        <div id="screen-results" class="screen w-full h-screen flex flex-col items-center justify-center p-4 hidden">
+            <div class="max-w-2xl w-full text-center">
+                <h1 class="text-5xl font-black mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    Game Over!
+                </h1>
+
+                <div id="final-results" class="space-y-4 mb-12">
+                    <!-- Results will be rendered here -->
+                </div>
+
+                <div class="flex gap-4 justify-center">
+                    <button onclick="app.goToScreen('home')" class="btn-primary">
+                        Play Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const app = {
+            gameId: Date.now().toString(36),
+            questions: [],
+            answers: [],
+            votes: {},
+            teams: [],
+            currentQuestionIndex: 0,
+            currentVoteQuestionIndex: 0,
+            scores: {},
+
+            init() {
+                this.loadGame();
+                this.generateVotingLink();
+            },
+
+            saveGame() {
+                const gameData = {
+                    gameId: this.gameId,
+                    questions: this.questions,
+                    answers: this.answers,
+                    votes: this.votes,
+                    teams: this.teams,
+                    scores: this.scores
+                };
+                localStorage.setItem(`game-${this.gameId}`, JSON.stringify(gameData));
+            },
+
+            loadGame() {
+                const saved = localStorage.getItem(`game-${this.gameId}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.questions = data.questions;
+                    this.answers = data.answers;
+                    this.votes = data.votes;
+                    this.teams = data.teams;
+                    this.scores = data.scores;
+                }
+            },
+
+            goToScreen(screenName) {
+                document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+                document.getElementById(`screen-${screenName}`).classList.add('active');
+
+                if (screenName === 'voting') {
+                    this.displayQuestionsPreview();
+                }
+                if (screenName === 'team-setup') {
+                    this.displayTeamSetup();
+                }
+                if (screenName === 'game') {
+                    this.startGame();
+                }
+            },
+
+            generateQuestionFields() {
+                const num = parseInt(document.getElementById('num-questions').value);
+                this.questions = Array(num).fill(null).map(() => '');
+                this.answers = Array(num).fill(null).map(() => []);
+                this.votes = {};
+
+                const container = document.getElementById('questions-container');
+                container.innerHTML = '';
+
+                this.questions.forEach((_, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `
+                        <h3 class="font-semibold mb-4">Question ${idx + 1}</h3>
+                        <input type="text" placeholder="Enter question..." class="input-base mb-4 question-input" data-index="${idx}">
+                        <div class="space-y-2" id="answers-${idx}">
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="Answer option..." class="input-base flex-1 answer-input" data-index="${idx}" data-answer="0">
+                                <button onclick="app.removeAnswer(${idx}, 0)" class="btn-secondary px-4">Remove</button>
+                            </div>
+                        </div>
+                        <button onclick="app.addAnswer(${idx})" class="btn-secondary w-full mt-3">+ Add Answer Option</button>
+                    `;
+                    container.appendChild(div);
+                });
+
+                document.querySelectorAll('.question-input').forEach(el => {
+                    el.addEventListener('change', (e) => {
+                        const idx = e.target.dataset.index;
+                        this.questions[idx] = e.target.value;
+                        this.saveGame();
+                    });
+                });
+
+                this.attachAnswerListeners();
+            },
+
+            addAnswer(questionIdx) {
+                if (!this.answers[questionIdx]) this.answers[questionIdx] = [];
+                this.answers[questionIdx].push('');
+
+                const answerIdx = this.answers[questionIdx].length - 1;
+                const container = document.getElementById(`answers-${questionIdx}`);
+
+                const div = document.createElement('div');
+                div.className = 'flex gap-2';
+                div.id = `answer-${questionIdx}-${answerIdx}`;
+                div.innerHTML = `
+                    <input type="text" placeholder="Answer option..." class="input-base flex-1 answer-input" data-index="${questionIdx}" data-answer="${answerIdx}">
+                    <button onclick="app.removeAnswer(${questionIdx}, ${answerIdx})" class="btn-secondary px-4">Remove</button>
+                `;
+
+                container.appendChild(div);
+                this.attachAnswerListeners();
+            },
+
+            removeAnswer(questionIdx, answerIdx) {
+                this.answers[questionIdx].splice(answerIdx, 1);
+                document.getElementById(`answer-${questionIdx}-${answerIdx}`)?.remove();
+                this.saveGame();
+            },
+
+            attachAnswerListeners() {
+                document.querySelectorAll('.answer-input').forEach(el => {
+                    el.addEventListener('change', (e) => {
+                        const qIdx = parseInt(e.target.dataset.index);
+                        const aIdx = parseInt(e.target.dataset.answer);
+                        this.answers[qIdx][aIdx] = e.target.value;
+                        this.saveGame();
+                    });
+                });
+            },
+
+            generateVotingLink() {
+                const link = `${window.location.origin}${window.location.pathname}?vote=${this.gameId}`;
+                document.getElementById('vote-link').value = link;
+            },
+
+            copyVotingLink() {
+                const link = document.getElementById('vote-link');
+                link.select();
+                document.execCommand('copy');
+                alert('Voting link copied!');
+            },
+
+            displayQuestionsPreview() {
+                const preview = document.getElementById('questions-preview');
+                preview.innerHTML = this.questions.map((q, idx) => `
+                    <div class="text-sm p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                        <strong>Q${idx + 1}:</strong> ${q || '(empty)'}
+                    </div>
+                `).join('');
+            },
+
+            displayTeamSetup() {
+                const container = document.getElementById('teams-container');
+
+                if (this.teams.length === 0) {
+                    this.teams = [
+                        { name: 'Team 1', players: ['', ''], score: 0, strikes: 0 },
+                        { name: 'Team 2', players: ['', ''], score: 0, strikes: 0 }
+                    ];
+                }
+
+                container.innerHTML = this.teams.map((team, tIdx) => `
+                    <div class="card">
+                        <h3 class="font-semibold mb-4">Team ${tIdx + 1}</h3>
+                        <input type="text" value="${team.name}" placeholder="Team name..." class="input-base mb-4 team-name-input" data-index="${tIdx}">
+                        <div class="space-y-2">
+                            ${team.players.map((player, pIdx) => `
+                                <input type="text" value="${player}" placeholder="Player ${pIdx + 1}..." class="input-base team-player-input" data-team="${tIdx}" data-player="${pIdx}">
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.team-name-input').forEach(el => {
+                    el.addEventListener('change', (e) => {
+                        this.teams[e.target.dataset.index].name = e.target.value;
+                        this.saveGame();
+                    });
+                });
+
+                document.querySelectorAll('.team-player-input').forEach(el => {
+                    el.addEventListener('change', (e) => {
+                        const tIdx = parseInt(e.target.dataset.team);
+                        const pIdx = parseInt(e.target.dataset.player);
+                        this.teams[tIdx].players[pIdx] = e.target.value;
+                        this.saveGame();
+                    });
+                });
+            },
+
+            addTeam() {
+                this.teams.push({ name: `Team ${this.teams.length + 1}`, players: ['', ''], score: 0, strikes: 0 });
+                this.displayTeamSetup();
+                this.saveGame();
+            },
+
+            startGame() {
+                this.currentQuestionIndex = 0;
+                this.teams.forEach(team => {
+                    this.scores[team.name] = { score: 0, strikes: 0 };
+                });
+                this.renderScoreboard();
+                this.renderGameQuestion();
+            },
+
+            renderScoreboard() {
+                const board = document.getElementById('scoreboard');
+                board.innerHTML = this.teams.map(team => {
+                    const score = this.scores[team.name] || { score: 0, strikes: 0 };
+                    return `
+                        <div class="card text-center">
+                            <p class="text-sm font-semibold text-slate-600 dark:text-slate-400">${team.name}</p>
+                            <p class="text-3xl font-black text-indigo-600 dark:text-indigo-400 my-2">${score.score}</p>
+                            <p class="text-xs font-medium">Strikes: <span class="text-red-600">${'X'.repeat(score.strikes)}</span></p>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            renderGameQuestion() {
+                const q = this.questions[this.currentQuestionIndex];
+                document.getElementById('game-question').textContent = q;
+
+                const answersDiv = document.getElementById('game-answers');
+                answersDiv.innerHTML = this.answers[this.currentQuestionIndex].map((answer, idx) => {
+                    const voteCount = this.votes[`${this.currentQuestionIndex}-${idx}`] || 0;
+                    return `
+                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-lg border-2 border-transparent" id="answer-${idx}">
+                            <div class="font-semibold text-slate-900 dark:text-white">${answer}</div>
+                            <div class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-2">${voteCount}</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400">votes</div>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('host-answer-input').value = '';
+                document.getElementById('answer-feedback').style.display = 'none';
+            },
+
+            checkAnswer() {
+                const input = document.getElementById('host-answer-input').value.toLowerCase().trim();
+                if (!input) return;
+
+                const feedback = document.getElementById('answer-feedback');
+                const q = this.currentQuestionIndex;
+
+                let found = false;
+                let foundIdx = -1;
+
+                for (let i = 0; i < this.answers[q].length; i++) {
+                    if (this.answers[q][i].toLowerCase().trim() === input) {
+                        found = true;
+                        foundIdx = i;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    feedback.style.display = 'block';
+                    feedback.className = 'text-sm font-medium mb-4 text-green-600 dark:text-green-400';
+                    feedback.textContent = '✓ CORRECT! Answer is on the board.';
+                    document.getElementById(`answer-${foundIdx}`).classList.add('border-green-500', 'border-2', 'bg-green-50', 'dark:bg-green-900/20');
+                } else {
+                    feedback.style.display = 'block';
+                    feedback.className = 'text-sm font-medium mb-4 text-red-600 dark:text-red-400';
+                    feedback.textContent = '✗ NOT on the board! Strike!';
+                }
+            },
+
+            nextQuestion() {
+                if (this.currentQuestionIndex < this.questions.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.renderGameQuestion();
+                } else {
+                    this.endGame();
+                }
+            },
+
+            previousQuestion() {
+                if (this.currentQuestionIndex > 0) {
+                    this.currentQuestionIndex--;
+                    this.renderGameQuestion();
+                }
+            },
+
+            endGame() {
+                const results = document.getElementById('final-results');
+                const sorted = [...this.teams].sort((a, b) =>
+                    (this.scores[b.name]?.score || 0) - (this.scores[a.name]?.score || 0)
+                );
+
+                results.innerHTML = sorted.map((team, idx) => {
+                    const score = this.scores[team.name] || { score: 0, strikes: 0 };
+                    return `
+                        <div class="card text-center">
+                            <p class="text-lg font-bold">${idx === 0 ? '🏆' : idx === 1 ? '🥈' : '🥉'} ${team.name}</p>
+                            <p class="text-4xl font-black text-indigo-600 dark:text-indigo-400 my-3">${score.score}</p>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Points</p>
+                        </div>
+                    `;
+                }).join('');
+
+                this.goToScreen('results');
+            },
+
+            loadFromVoteLink() {
+                const params = new URLSearchParams(window.location.search);
+                if (params.has('vote')) {
+                    this.gameId = params.get('vote');
+                    this.loadGame();
+                    this.displayVoteScreen();
+                } else {
+                    alert('No voting session found. Start a new game first.');
+                }
+            },
+
+            displayVoteScreen() {
+                if (this.questions.length === 0) {
+                    alert('Game not ready yet. Please ask the host to create questions.');
+                    return;
+                }
+                this.currentVoteQuestionIndex = 0;
+                this.renderVoteQuestion();
+                this.goToScreen('vote');
+            },
+
+            renderVoteQuestion() {
+                const q = this.questions[this.currentVoteQuestionIndex];
+                document.getElementById('vote-question-text').textContent = q;
+                document.getElementById('vote-current').textContent = this.currentVoteQuestionIndex + 1;
+                document.getElementById('vote-total').textContent = this.questions.length;
+
+                const bar = document.getElementById('vote-progress-bar');
+                bar.style.width = ((this.currentVoteQuestionIndex + 1) / this.questions.length * 100) + '%';
+
+                const grid = document.getElementById('vote-answers-grid');
+                grid.innerHTML = this.answers[this.currentVoteQuestionIndex].map((answer, idx) => `
+                    <button onclick="app.voteForAnswer(${idx})" class="p-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-all active:scale-95">
+                        ${answer}
+                    </button>
+                `).join('');
+            },
+
+            voteForAnswer(answerIdx) {
+                const key = `${this.currentVoteQuestionIndex}-${answerIdx}`;
+                this.votes[key] = (this.votes[key] || 0) + 1;
+                this.saveGame();
+
+                if (this.currentVoteQuestionIndex < this.questions.length - 1) {
+                    this.nextVoteQuestion();
+                } else {
+                    alert('Thank you for voting!');
+                }
+            },
+
+            nextVoteQuestion() {
+                if (this.currentVoteQuestionIndex < this.questions.length - 1) {
+                    this.currentVoteQuestionIndex++;
+                    this.renderVoteQuestion();
+                } else {
+                    document.getElementById('vote-next-btn').textContent = 'Voting Complete!';
+                }
+            }
+        };
+
+        // Check if this is a voting link
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('vote')) {
+            app.gameId = params.get('vote');
+            app.loadGame();
+            if (app.questions.length > 0) {
+                app.displayVoteScreen();
+            }
+        }
+
+        app.init();
+    </script>
+
+</body>
+</html>
