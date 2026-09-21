@@ -1,18 +1,44 @@
 {
   "name": "WebDesks OS",
   "short_name": "WebDesks",
-  "description": "18 free productivity tools in one browser tab",
-  "version": "0.20.1",
+  "description": "23 free productivity and developer tools in one browser tab",
+  "version": "0.21.0",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0f172a",
   "theme_color": "#4f46e5",
-  "categories": ["productivity", "utilities"],
+  "categories": [
+    "productivity",
+    "utilities",
+    "developer"
+  ],
   "shortcuts": [
-    { "name": "Focus Timer", "url": "index.html#timer", "description": "Start a Pomodoro session" },
-    { "name": "Tasks", "url": "index.html#tasks", "description": "View your task list" },
-    { "name": "Scratchpad", "url": "index.html#scratchpad", "description": "Quick notes" }
+    {
+      "name": "Command palette",
+      "url": "index.html#dashboard",
+      "description": "Jump to any tool with Ctrl/Cmd+K"
+    },
+    {
+      "name": "Focus Timer",
+      "url": "index.html#timer",
+      "description": "Start a Pomodoro session"
+    },
+    {
+      "name": "Dev Toolkit",
+      "url": "index.html#devtools",
+      "description": "JSON, Base64, hashes, JWT, UUID and QR codes"
+    },
+    {
+      "name": "Image to Text",
+      "url": "index.html#ocr",
+      "description": "Run OCR on a screenshot or scan"
+    },
+    {
+      "name": "Tasks",
+      "url": "index.html#tasks",
+      "description": "View your task list"
+    }
   ],
   "icons": [
     {
