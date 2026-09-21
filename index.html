@@ -15,12 +15,12 @@
     <link rel="dns-prefetch" href="https://api.quotable.io">
     
     <!-- Primary SEO -->
-    <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Screen Recorder, WebM to MP4 Converter & More</title>
-    <meta name="description" content="21 free browser tools in one tab: alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, multi-channel audio mixer, convert WebM to MP4 free (no upload), bulk image resizer, markdown scratchpad, whiteboard, kanban board, unit converter & more. No download. 100% private.">
-    <meta name="keywords" content="online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
+    <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Image to Text OCR, JSON Formatter &amp; 18 More Tools</title>
+    <meta name="description" content="23 free browser tools in one tab: alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, free online OCR (image to text), developer toolkit (JSON formatter, Base64, SHA hash, JWT decoder, UUID, QR code), audio mixer, WebM to MP4 converter, whiteboard, kanban board & more. No download. 100% private.">
+    <meta name="keywords" content="free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.20.1">
+    <meta name="generator" content="WebDesks v0.21.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -30,8 +30,8 @@
     <meta property="og:url" content="https://webdesks.app/">
     <meta property="og:site_name" content="WebDesks">
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="WebDesks | 18 Free Online Productivity Tools in One Tab">
-    <meta property="og:description" content="Alarm clock, Pomodoro timer, PDF merger, screen recorder, whiteboard, kanban board, unit converter, color picker & more — free, no download, 100% private.">
+    <meta property="og:title" content="WebDesks | 23 Free Online Productivity &amp; Developer Tools in One Tab">
+    <meta property="og:description" content="Alarm clock, Pomodoro timer, PDF merger, screen recorder, image-to-text OCR, dev toolkit, whiteboard, kanban board &amp; more — free, no download, 100% private.">
     <meta property="og:image" content="https://webdesks.app/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -41,8 +41,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@webdesks">
     <meta name="twitter:url" content="https://webdesks.app/">
-    <meta name="twitter:title" content="WebDesks | 18 Free Online Tools in One Browser Tab">
-    <meta name="twitter:description" content="Alarm clock, PDF merger, screen recorder, Pomodoro timer, whiteboard & 13 more free tools. No download. Works in any browser.">
+    <meta name="twitter:title" content="WebDesks | 23 Free Online Tools in One Browser Tab">
+    <meta name="twitter:description" content="Alarm clock, PDF merger, screen recorder, image-to-text OCR, JSON formatter, QR generator &amp; 17 more free tools. No download.">
     <meta name="twitter:image" content="https://webdesks.app/og-image.png">
     <meta name="twitter:image:alt" content="WebDesks productivity suite preview">
 
@@ -1014,7 +1014,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.20.1</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.21.0</span>
             </div>
             <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="trophy" class="w-4 h-4"></i>
@@ -1157,6 +1157,16 @@
                 <i data-lucide="file-cog" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Converter</span>
             </button>
+
+            <button onclick="app.switchTab('devtools')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="devtools">
+                <i data-lucide="terminal" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Dev Toolkit</span>
+            </button>
+
+            <button onclick="app.switchTab('ocr')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="ocr">
+                <i data-lucide="scan-text" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Image to Text</span>
+            </button>
         </nav>
 
         <!-- Music Player -->
@@ -1230,10 +1240,11 @@
                 <div class="glass p-2 rounded-[1.5rem] relative z-30">
                     <div class="flex items-center px-4 py-2">
                         <i data-lucide="search" class="w-5 h-5 text-slate-400 mr-3"></i>
-                        <input type="text" id="dash-search" placeholder="Search tools (Press '/' to focus)..." 
+                        <input type="text" id="dash-search" placeholder="Search 23 tools — or press ⌘K for the command palette..." 
                             class="bg-transparent border-none w-full text-lg font-medium focus:ring-0 placeholder:text-slate-400 text-slate-800 dark:text-slate-100"
                             oninput="app.handleSearch(this.value)">
-                        <div class="hidden md:flex text-[10px] font-bold text-slate-400 border border-slate-300 dark:border-slate-600 rounded px-1.5 py-0.5">/</div>
+                        <button onclick="app.openPalette()" title="Open the command palette (Ctrl/Cmd+K)" aria-label="Open the command palette"
+                            class="hidden md:flex items-center gap-1 text-[10px] font-bold text-slate-400 border border-slate-300 dark:border-slate-600 rounded px-1.5 py-0.5 hover:text-indigo-500 hover:border-indigo-400 transition-colors">⌘K</button>
                     </div>
                     <div id="search-results" class="hidden border-t border-slate-200 dark:border-slate-700/50 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
@@ -2520,9 +2531,155 @@
                 </div>
             </div>
         </div>
+
+        <!-- DEV TOOLKIT — client-side utility belt (inspired by CorentinTh/it-tools & gchq/CyberChef) -->
+        <div id="devtools" class="tab-content flex flex-col p-4 overflow-y-auto">
+            <div class="max-w-4xl w-full mx-auto space-y-4">
+                <div class="text-center">
+                    <h2 class="text-2xl font-black mb-1">Dev Toolkit</h2>
+                    <p class="text-sm text-slate-400">Encoders, hashes, formatters &amp; generators — every byte stays in your browser</p>
+                </div>
+
+                <div id="dt-chips" class="flex gap-2 flex-wrap justify-center"></div>
+
+                <div class="glass p-5 md:p-7 rounded-[2rem] space-y-4 shadow-2xl">
+                    <div class="flex items-start justify-between gap-3 flex-wrap">
+                        <div>
+                            <h3 id="dt-title" class="text-lg font-black">JSON Formatter</h3>
+                            <p id="dt-desc" class="text-xs text-slate-400"></p>
+                        </div>
+                        <div id="dt-options" class="flex items-center gap-2 flex-wrap"></div>
+                    </div>
+
+                    <div id="dt-input-wrap" class="space-y-2">
+                        <label id="dt-input-label" for="dt-input" class="text-[10px] font-black uppercase tracking-widest text-slate-400">Input</label>
+                        <textarea id="dt-input" rows="6" spellcheck="false"
+                            class="w-full glass px-4 py-3 rounded-2xl text-sm font-mono focus:outline-none bg-transparent dark:bg-slate-800/30 resize-y"
+                            placeholder="Paste your input here…"></textarea>
+                        <div id="dt-input-b-wrap" class="space-y-2 hidden">
+                            <label for="dt-input-b" class="text-[10px] font-black uppercase tracking-widest text-slate-400">Compare with</label>
+                            <textarea id="dt-input-b" rows="6" spellcheck="false"
+                                class="w-full glass px-4 py-3 rounded-2xl text-sm font-mono focus:outline-none bg-transparent dark:bg-slate-800/30 resize-y"
+                                placeholder="Second version…"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button onclick="app.dtRun()" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-black hover:bg-indigo-700 transition-colors">Run</button>
+                        <button onclick="app.dtClear()" class="px-4 py-2.5 rounded-xl glass text-xs font-bold hover:bg-white/50 transition-colors">Clear</button>
+                        <button onclick="app.dtCopyOutput()" class="px-4 py-2.5 rounded-xl glass text-xs font-bold hover:bg-white/50 transition-colors">Copy result</button>
+                        <button onclick="app.dtDownloadOutput()" class="px-4 py-2.5 rounded-xl glass text-xs font-bold hover:bg-white/50 transition-colors">Download</button>
+                        <span id="dt-status" class="text-xs font-bold ml-auto"></span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Result</span>
+                        <pre id="dt-output" class="w-full glass px-4 py-3 rounded-2xl text-sm font-mono whitespace-pre-wrap break-words min-h-[7rem] max-h-96 overflow-auto dark:bg-slate-800/30"></pre>
+                        <div id="dt-visual" class="hidden justify-center p-4"></div>
+                    </div>
+                </div>
+
+                <p class="text-center text-[11px] text-slate-400 px-4">
+                    Nothing is uploaded. Hashing uses the browser's built-in Web Crypto API; QR codes are drawn locally.
+                </p>
+            </div>
+        </div>
+
+        <!-- IMAGE TO TEXT (OCR) — powered by tesseract.js -->
+        <div id="ocr" class="tab-content flex flex-col p-4 overflow-y-auto">
+            <div class="max-w-3xl w-full mx-auto space-y-4">
+                <div class="text-center">
+                    <h2 class="text-2xl font-black mb-1">Image to Text</h2>
+                    <p class="text-sm text-slate-400">Pull text out of screenshots, scans and photos — offline OCR, no upload</p>
+                </div>
+
+                <div class="glass p-5 md:p-7 rounded-[2rem] space-y-4 shadow-2xl">
+                    <div id="ocr-drop" tabindex="0" role="button" aria-label="Choose or drop an image to read"
+                        class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 transition-colors">
+                        <i data-lucide="scan-text" class="w-10 h-10 mx-auto mb-3 text-slate-400"></i>
+                        <p class="text-sm font-bold">Drop an image here, paste from the clipboard, or click to browse</p>
+                        <p class="text-xs text-slate-400 mt-1">PNG, JPG, WebP, BMP — processed entirely on this device</p>
+                        <input type="file" id="ocr-file" accept="image/*" class="hidden">
+                    </div>
+
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <label for="ocr-lang" class="text-[10px] font-black uppercase tracking-widest text-slate-400">Language</label>
+                        <select id="ocr-lang" class="glass px-3 py-2 rounded-xl text-sm font-bold focus:outline-none dark:bg-slate-800/50">
+                            <option value="eng">English</option>
+                            <option value="spa">Spanish</option>
+                            <option value="fra">French</option>
+                            <option value="deu">German</option>
+                            <option value="ita">Italian</option>
+                            <option value="por">Portuguese</option>
+                            <option value="nld">Dutch</option>
+                            <option value="rus">Russian</option>
+                            <option value="chi_sim">Chinese (Simplified)</option>
+                            <option value="jpn">Japanese</option>
+                            <option value="kor">Korean</option>
+                            <option value="ara">Arabic</option>
+                            <option value="hin">Hindi</option>
+                        </select>
+                        <button onclick="app.ocrRun()" id="ocr-run-btn" disabled
+                            class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-black hover:bg-indigo-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">Extract text</button>
+                        <button onclick="app.ocrReset()" class="px-4 py-2.5 rounded-xl glass text-xs font-bold hover:bg-white/50 transition-colors">Reset</button>
+                    </div>
+
+                    <div id="ocr-preview-wrap" class="hidden">
+                        <img id="ocr-preview" alt="Selected image preview" class="max-h-56 rounded-2xl mx-auto shadow-lg">
+                    </div>
+
+                    <div id="ocr-progress-wrap" class="hidden space-y-1">
+                        <div class="flex justify-between text-[10px] font-bold text-slate-400">
+                            <span id="ocr-phase">Starting…</span>
+                            <span id="ocr-pct">0%</span>
+                        </div>
+                        <div class="h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                            <div id="ocr-bar" class="h-full rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 transition-all duration-300" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Extracted text</span>
+                            <div class="flex gap-2">
+                                <button onclick="app.ocrCopy()" class="px-3 py-1.5 rounded-lg glass text-[11px] font-bold hover:bg-white/50 transition-colors">Copy</button>
+                                <button onclick="app.ocrDownload()" class="px-3 py-1.5 rounded-lg glass text-[11px] font-bold hover:bg-white/50 transition-colors">Download .txt</button>
+                                <button onclick="app.ocrToScratchpad()" class="px-3 py-1.5 rounded-lg glass text-[11px] font-bold hover:bg-white/50 transition-colors">Send to Notepad</button>
+                            </div>
+                        </div>
+                        <textarea id="ocr-output" rows="8" spellcheck="false"
+                            class="w-full glass px-4 py-3 rounded-2xl text-sm font-mono focus:outline-none bg-transparent dark:bg-slate-800/30 resize-y"
+                            placeholder="Recognised text appears here…"></textarea>
+                    </div>
+                </div>
+
+                <p class="text-center text-[11px] text-slate-400 px-4">
+                    Recognition runs in a WebAssembly worker on your machine. The language model is fetched once from a CDN and then cached.
+                </p>
+            </div>
+        </div>
     </main>
 
     </div><!-- end #app-body -->
+
+    <!-- COMMAND PALETTE (Ctrl/Cmd+K) -->
+    <div id="cmdk" class="fixed inset-0 z-[450] hidden items-start justify-center bg-slate-950/50 backdrop-blur-sm p-4 pt-[12vh]"
+        role="dialog" aria-modal="true" aria-label="Command palette" onclick="if(event.target===this) app.closePalette()">
+        <div class="w-full max-w-xl glass rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+            <div class="flex items-center gap-3 px-5 py-4 border-b border-slate-200/50 dark:border-slate-800/50">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 shrink-0"></i>
+                <input type="text" id="cmdk-input" autocomplete="off" spellcheck="false"
+                    placeholder="Search tools and actions…" aria-label="Search tools and actions"
+                    aria-controls="cmdk-list" aria-autocomplete="list"
+                    class="flex-1 bg-transparent text-base font-medium focus:outline-none placeholder:text-slate-400">
+                <kbd class="text-[10px] font-black text-slate-400 border border-slate-300 dark:border-slate-700 rounded px-1.5 py-0.5">ESC</kbd>
+            </div>
+            <div id="cmdk-list" role="listbox" aria-label="Results" class="max-h-[50vh] overflow-y-auto p-2"></div>
+            <div class="flex items-center gap-4 px-5 py-2.5 border-t border-slate-200/50 dark:border-slate-800/50 text-[10px] font-bold text-slate-400">
+                <span>↑↓ navigate</span><span>↵ open</span><span class="ml-auto">⌘K / Ctrl+K</span>
+            </div>
+        </div>
+    </div>
 
     <!-- ALARM OVERLAY -->
     <div id="alarm-overlay" class="fixed inset-0 z-[300] bg-gradient-to-br from-red-600 to-red-800 hidden flex flex-col items-center justify-center text-white p-10 text-center" onclick="app.stopAlarm()">
@@ -2577,6 +2734,10 @@
                 </button>
             </div>
             <div class="space-y-2 text-sm">
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Command palette</span>
+                    <div class="flex gap-1"><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">⌘/Ctrl</kbd><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">K</kbd></div>
+                </div>
                 <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
                     <span class="text-slate-600 dark:text-slate-300">Focus search</span>
                     <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">/</kbd>
@@ -2785,7 +2946,9 @@
                 { id: 'converter', label: 'Unit Converter', icon: 'arrow-left-right', keywords: 'convert length weight temperature speed volume' },
                 { id: 'colorpicker', label: 'Color Picker', icon: 'palette', keywords: 'hex rgb hsl color swatch' },
                 { id: 'focustown', label: 'Focus Town', icon: 'building-2', keywords: 'rpg village city town grow gamify focus' },
-                { id: 'mediaconv', label: 'Media Converter', icon: 'file-cog', keywords: 'convert webm mp4 video image resize compress ffmpeg wasm privacy' }
+                { id: 'mediaconv', label: 'Media Converter', icon: 'file-cog', keywords: 'convert webm mp4 video image resize compress ffmpeg wasm privacy' },
+                { id: 'devtools', label: 'Dev Toolkit', icon: 'terminal', keywords: 'json formatter base64 encode decode url hash sha256 jwt decoder uuid guid password generator case converter text diff regex tester unix timestamp lorem ipsum qr code developer tools' },
+                { id: 'ocr', label: 'Image to Text', icon: 'scan-text', keywords: 'ocr image to text extract screenshot scan photo recognise tesseract optical character recognition' }
             ],
             pins: [],
             
@@ -2925,8 +3088,15 @@
                 });
 
                 // Load saved tab or default
-                const savedTab = localStorage.getItem('webdesks_last_tab') || 'dashboard';
+                const hashTab = (location.hash || '').replace('#', '');
+                const savedTab = (hashTab && document.getElementById(hashTab))
+                    ? hashTab
+                    : (localStorage.getItem('webdesks_last_tab') || 'dashboard');
                 this.switchTab(savedTab);
+                window.addEventListener('hashchange', () => {
+                    const id = (location.hash || '').replace('#', '');
+                    if (id && id !== this.currentTab) this.switchTab(id);
+                });
 
                 // Initialize components
                 this.initTime();
@@ -2948,6 +3118,9 @@
                 this.initColorPicker();
                 this.initFocusTown();
                 this.loadBoard();
+                this.initPalette();
+                this.initDevTools();
+                this.initOCR();
 
                 // Mobile v0.18.7 features
                 this.initMoreDrawer();
@@ -2972,6 +3145,17 @@
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => {
                     const inInput = document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA';
+                    // Command palette — works from anywhere, including inside a field
+                    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
+                        e.preventDefault();
+                        this.togglePalette();
+                        return;
+                    }
+                    if (this._cmdkOpen) {
+                        // The palette owns the keyboard while it is open.
+                        if (e.key === 'Escape') { e.preventDefault(); this.closePalette(); }
+                        return;
+                    }
                     if (e.key === '/' && !inInput) {
                         e.preventDefault();
                         document.getElementById('dash-search').focus();
@@ -3051,6 +3235,11 @@
 
                 localStorage.setItem('webdesks_last_tab', tabId);
                 this.currentTab = tabId;
+                // Keep the URL shareable and make the PWA manifest shortcuts land correctly.
+                const desiredHash = tabId === 'dashboard' ? '' : '#' + tabId;
+                if ((location.hash || '') !== desiredHash) {
+                    history.replaceState(null, '', location.pathname + location.search + desiredHash);
+                }
                 this._rebuildIcons();
 
                 // Update mobile nav active state
@@ -3067,7 +3256,9 @@
                     pdf: 'PDF Merger | WebDesks', zones: 'Time Zones | WebDesks',
                     onair: 'On Air | WebDesks', recorder: 'Screen Recorder | WebDesks',
                     converter: 'Unit Converter | WebDesks', colorpicker: 'Color Picker | WebDesks',
-                    mediaconv: 'Media Converter — Free WebM to MP4 | WebDesks'
+                    mediaconv: 'Media Converter — Free WebM to MP4 | WebDesks',
+                    devtools: 'Dev Toolkit — JSON, Base64, Hash, JWT & QR | WebDesks',
+                    ocr: 'Image to Text — Free Online OCR | WebDesks'
                 };
                 document.title = tabTitles[tabId] || 'WebDesks';
 
@@ -3089,11 +3280,18 @@
                     return;
                 }
 
-                const term = query.toLowerCase();
-                const matches = this.searchItems.filter(item => 
-                    item.label.toLowerCase().includes(term) || 
-                    item.keywords.includes(term)
-                );
+                const term = query.toLowerCase().trim();
+                const matches = this.searchItems
+                    .map(item => ({
+                        item,
+                        score: Math.max(
+                            this._fuzzyScore(term, item.label),
+                            this._fuzzyScore(term, item.keywords) * 0.85
+                        )
+                    }))
+                    .filter(r => r.score > 0)
+                    .sort((a, b) => b.score - a.score)
+                    .map(r => r.item);
 
                 container.classList.remove('hidden');
 
@@ -6238,6 +6436,851 @@
                 this.showToast('Focus Town reset. Start building your Campsite! ⛺');
             },
 
+
+            // ═══════════════════════════════════════════════════════
+            // COMMAND PALETTE (Ctrl/Cmd+K)
+            // Fuzzy-ranked launcher over every tool and quick action.
+            // Pattern borrowed from CorentinTh/it-tools and the
+            // Fuse.js scoring model (substring first, subsequence
+            // fallback with a gap penalty).
+            // ═══════════════════════════════════════════════════════
+
+            _cmdkOpen: false,
+            _cmdkIndex: 0,
+            _cmdkResults: [],
+
+            paletteActions: [
+                { id: 'act-theme',    label: 'Toggle dark mode',        icon: 'moon',          keywords: 'theme light dark appearance', run() { app.toggleTheme(); } },
+                { id: 'act-zen',      label: 'Toggle Zen mode',         icon: 'maximize',      keywords: 'fullscreen distraction free focus', run() { app.toggleZenMode(); } },
+                { id: 'act-privacy',  label: 'Panic / privacy screen',  icon: 'eye-off',       keywords: 'boss hide blank panic', run() { app.togglePrivacy(); } },
+                { id: 'act-timer',    label: 'Start or pause the focus timer', icon: 'play',   keywords: 'pomodoro start pause countdown', run() { app.switchTab('timer'); app.toggleTimer(); } },
+                { id: 'act-music',    label: 'Play or pause Lo-Fi radio', icon: 'music',       keywords: 'audio sound beats radio', run() { app.toggleMusic(); } },
+                { id: 'act-uuid',     label: 'Copy a fresh UUID',       icon: 'fingerprint',   keywords: 'guid identifier random generate', run() { app.quickCopyUUID(); } },
+                { id: 'act-password', label: 'Copy a strong password',  icon: 'key-round',     keywords: 'secret random generate credentials', run() { app.quickCopyPassword(); } },
+                { id: 'act-shortcuts',label: 'Show keyboard shortcuts', icon: 'keyboard',      keywords: 'help keys hotkeys', run() { app.openShortcuts(); } }
+            ],
+
+            _fuzzyScore(query, text) {
+                if (!query) return 0.5;
+                text = (text || '').toLowerCase();
+                const idx = text.indexOf(query);
+                if (idx === 0) return 1;
+                if (idx > 0) return 0.9 - Math.min(idx, 40) / 400;
+                let cursor = 0, gaps = 0, last = -1;
+                for (const ch of query) {
+                    const found = text.indexOf(ch, cursor);
+                    if (found === -1) return -1;
+                    if (last >= 0) gaps += found - last - 1;
+                    last = found;
+                    cursor = found + 1;
+                }
+                return Math.max(0.05, 0.7 - gaps / Math.max(text.length * 2, 1));
+            },
+
+            _paletteItems() {
+                const tools = this.searchItems.map(t => ({
+                    id: t.id,
+                    label: t.label,
+                    icon: t.icon,
+                    keywords: t.keywords || '',
+                    sub: t.link ? 'Open page' : 'Tool',
+                    run: () => this.switchTab(t.id)
+                }));
+                return tools.concat(this.paletteActions.map(a => ({
+                    id: a.id, label: a.label, icon: a.icon, keywords: a.keywords, sub: 'Action', run: a.run
+                })));
+            },
+
+            _paletteRecents() {
+                try {
+                    const raw = JSON.parse(localStorage.getItem('wd_cmdk_recent') || '[]');
+                    return Array.isArray(raw) ? raw : [];
+                } catch (e) { return []; }
+            },
+
+            _paletteRemember(id) {
+                const recents = [id].concat(this._paletteRecents().filter(r => r !== id)).slice(0, 6);
+                try { localStorage.setItem('wd_cmdk_recent', JSON.stringify(recents)); } catch (e) {}
+            },
+
+            togglePalette() {
+                this._cmdkOpen ? this.closePalette() : this.openPalette();
+            },
+
+            openPalette(prefill) {
+                const overlay = document.getElementById('cmdk');
+                if (!overlay) return;
+                this._cmdkOpen = true;
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+                const input = document.getElementById('cmdk-input');
+                input.value = prefill || '';
+                this.renderPalette();
+                requestAnimationFrame(() => input.focus());
+            },
+
+            closePalette() {
+                const overlay = document.getElementById('cmdk');
+                if (!overlay) return;
+                this._cmdkOpen = false;
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+            },
+
+            renderPalette() {
+                const query = (document.getElementById('cmdk-input').value || '').trim().toLowerCase();
+                const items = this._paletteItems();
+                let results;
+
+                if (!query) {
+                    const recents = this._paletteRecents();
+                    const pinned = recents.map(id => items.find(i => i.id === id)).filter(Boolean);
+                    const rest = items.filter(i => !recents.includes(i.id));
+                    results = pinned.concat(rest).slice(0, 40);
+                    results.forEach((r, i) => { r._recent = i < pinned.length; });
+                } else {
+                    results = items
+                        .map(item => {
+                            const score = Math.max(
+                                this._fuzzyScore(query, item.label),
+                                this._fuzzyScore(query, item.keywords) * 0.85,
+                                this._fuzzyScore(query, item.sub) * 0.4
+                            );
+                            return { item, score };
+                        })
+                        .filter(r => r.score > 0)
+                        .sort((a, b) => b.score - a.score)
+                        .slice(0, 20)
+                        .map(r => r.item);
+                }
+
+                this._cmdkResults = results;
+                this._cmdkIndex = 0;
+
+                const list = document.getElementById('cmdk-list');
+                if (!results.length) {
+                    list.innerHTML = `<div class="px-4 py-8 text-center text-sm text-slate-400">Nothing matches “${this.escapeHtml(query)}”</div>`;
+                    return;
+                }
+                list.innerHTML = results.map((r, i) => `
+                    <button data-cmdk-index="${i}" role="option" aria-selected="${i === 0}"
+                        class="cmdk-row w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors ${i === 0 ? 'bg-indigo-50 dark:bg-indigo-900/30' : 'hover:bg-slate-100/60 dark:hover:bg-slate-800/40'}">
+                        <span class="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 shrink-0">
+                            <i data-lucide="${r.icon || 'circle'}" class="w-4 h-4"></i>
+                        </span>
+                        <span class="min-w-0 flex-1">
+                            <span class="block font-bold text-sm truncate text-slate-700 dark:text-slate-200">${this.escapeHtml(r.label)}</span>
+                            <span class="block text-[10px] uppercase tracking-wider text-slate-400">${r._recent ? 'Recent' : this.escapeHtml(r.sub)}</span>
+                        </span>
+                    </button>
+                `).join('');
+
+                list.querySelectorAll('.cmdk-row').forEach(btn => {
+                    btn.addEventListener('click', () => this.paletteExec(parseInt(btn.dataset.cmdkIndex, 10)));
+                    btn.addEventListener('mousemove', () => this.paletteHighlight(parseInt(btn.dataset.cmdkIndex, 10)));
+                });
+                this._rebuildIcons();
+            },
+
+            paletteHighlight(index) {
+                if (index === this._cmdkIndex) return;
+                this._cmdkIndex = index;
+                const rows = document.querySelectorAll('#cmdk-list .cmdk-row');
+                rows.forEach((row, i) => {
+                    row.classList.toggle('bg-indigo-50', i === index);
+                    row.classList.toggle('dark:bg-indigo-900/30', i === index);
+                    row.setAttribute('aria-selected', i === index ? 'true' : 'false');
+                });
+                const active = rows[index];
+                if (active) active.scrollIntoView({ block: 'nearest' });
+            },
+
+            paletteMove(delta) {
+                if (!this._cmdkResults.length) return;
+                const next = (this._cmdkIndex + delta + this._cmdkResults.length) % this._cmdkResults.length;
+                this.paletteHighlight(next);
+            },
+
+            paletteExec(index) {
+                const target = this._cmdkResults[typeof index === 'number' ? index : this._cmdkIndex];
+                if (!target) return;
+                this._paletteRemember(target.id);
+                this.closePalette();
+                try { target.run(); } catch (e) { this.showToast('That action failed to run.'); }
+            },
+
+            initPalette() {
+                const input = document.getElementById('cmdk-input');
+                if (!input) return;
+                input.addEventListener('input', () => this.renderPalette());
+                input.addEventListener('keydown', e => {
+                    if (e.key === 'ArrowDown') { e.preventDefault(); this.paletteMove(1); }
+                    else if (e.key === 'ArrowUp') { e.preventDefault(); this.paletteMove(-1); }
+                    else if (e.key === 'Enter') { e.preventDefault(); this.paletteExec(); }
+                    else if (e.key === 'Escape') { e.preventDefault(); this.closePalette(); }
+                });
+            },
+
+            // Quick actions reachable from the palette
+            quickCopyUUID() {
+                const uuid = this.dtUUID();
+                this.copyText(uuid, `Copied ${uuid}`);
+            },
+
+            quickCopyPassword() {
+                const pw = this.dtPassword(20, true, true);
+                this.copyText(pw, 'Strong password copied to clipboard');
+            },
+
+            copyText(text, message) {
+                const done = () => this.showToast(message || 'Copied to clipboard');
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(done).catch(() => this.showToast('Clipboard blocked by the browser'));
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); done(); } catch (e) { this.showToast('Clipboard blocked by the browser'); }
+                    ta.remove();
+                }
+            },
+
+            downloadText(text, filename, mime) {
+                const blob = new Blob([text], { type: mime || 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            },
+
+            _loadScript(src) {
+                this._loadedScripts = this._loadedScripts || {};
+                if (this._loadedScripts[src]) return this._loadedScripts[src];
+                this._loadedScripts[src] = new Promise((resolve, reject) => {
+                    const tag = document.createElement('script');
+                    tag.src = src;
+                    tag.async = true;
+                    tag.onload = resolve;
+                    tag.onerror = () => { delete this._loadedScripts[src]; reject(new Error('Failed to load ' + src)); };
+                    document.head.appendChild(tag);
+                });
+                return this._loadedScripts[src];
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // DEV TOOLKIT
+            // A client-side utility belt modelled on the tool catalogue
+            // of CorentinTh/it-tools and gchq/CyberChef: every transform
+            // runs locally, nothing is ever posted to a server.
+            // ═══════════════════════════════════════════════════════
+
+            dtCurrent: 'json',
+            dtOptValues: {},
+            dtLastOutput: '',
+
+            dtTools: [
+                {
+                    id: 'json', label: 'JSON', icon: 'braces', title: 'JSON Formatter',
+                    desc: 'Validate, pretty-print or minify JSON. Errors point at the offending character.',
+                    placeholder: '{"hello":"world","items":[1,2,3]}', live: true,
+                    opts: [{ key: 'indent', label: 'Style', type: 'select', values: [['2', '2 spaces'], ['4', '4 spaces'], ['tab', 'Tabs'], ['min', 'Minified']], def: '2' }],
+                    run(input, _b, o) {
+                        const parsed = JSON.parse(input);
+                        if (o.indent === 'min') return JSON.stringify(parsed);
+                        const indent = o.indent === 'tab' ? '\t' : parseInt(o.indent, 10);
+                        return JSON.stringify(parsed, null, indent);
+                    }
+                },
+                {
+                    id: 'base64', label: 'Base64', icon: 'binary', title: 'Base64 Encoder / Decoder',
+                    desc: 'UTF-8 safe Base64, with an optional URL-safe alphabet.',
+                    placeholder: 'Text to encode…', live: true,
+                    opts: [
+                        { key: 'mode', label: 'Mode', type: 'select', values: [['encode', 'Encode'], ['decode', 'Decode']], def: 'encode' },
+                        { key: 'urlsafe', label: 'URL safe', type: 'toggle', def: false }
+                    ],
+                    run(input, _b, o) {
+                        if (o.mode === 'encode') {
+                            const bytes = new TextEncoder().encode(input);
+                            let bin = '';
+                            bytes.forEach(b => { bin += String.fromCharCode(b); });
+                            const out = btoa(bin);
+                            return o.urlsafe ? out.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') : out;
+                        }
+                        let normalised = input.trim().replace(/-/g, '+').replace(/_/g, '/');
+                        while (normalised.length % 4) normalised += '=';
+                        const bin = atob(normalised);
+                        const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+                        return new TextDecoder().decode(bytes);
+                    }
+                },
+                {
+                    id: 'url', label: 'URL', icon: 'link', title: 'URL Encoder / Decoder',
+                    desc: 'Percent-encode a query value, or unpick one you were handed.',
+                    placeholder: 'https://example.com/?q=hello world', live: true,
+                    opts: [
+                        { key: 'mode', label: 'Mode', type: 'select', values: [['encode', 'Encode'], ['decode', 'Decode']], def: 'encode' },
+                        { key: 'component', label: 'Component', type: 'toggle', def: true }
+                    ],
+                    run(input, _b, o) {
+                        if (o.mode === 'encode') return o.component ? encodeURIComponent(input) : encodeURI(input);
+                        return o.component ? decodeURIComponent(input) : decodeURI(input);
+                    }
+                },
+                {
+                    id: 'hash', label: 'Hash', icon: 'hash', title: 'Hash Generator',
+                    desc: 'SHA digests computed with the browser’s native Web Crypto implementation.',
+                    placeholder: 'Text to hash…', live: true,
+                    opts: [{ key: 'algo', label: 'Algorithm', type: 'select', values: [['SHA-256', 'SHA-256'], ['SHA-1', 'SHA-1'], ['SHA-384', 'SHA-384'], ['SHA-512', 'SHA-512'], ['all', 'All of them']], def: 'SHA-256' }],
+                    async run(input, _b, o) {
+                        const digest = async algo => {
+                            const buf = await crypto.subtle.digest(algo, new TextEncoder().encode(input));
+                            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+                        };
+                        if (o.algo !== 'all') return await digest(o.algo);
+                        const algos = ['SHA-1', 'SHA-256', 'SHA-384', 'SHA-512'];
+                        const rows = await Promise.all(algos.map(async a => `${a.padEnd(8)} ${await digest(a)}`));
+                        return rows.join('\n');
+                    }
+                },
+                {
+                    id: 'jwt', label: 'JWT', icon: 'shield', title: 'JWT Decoder',
+                    desc: 'Reads header and payload locally. Signatures are not verified — never paste a live production token.',
+                    placeholder: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.signature', live: true,
+                    run(input) {
+                        const parts = input.trim().split('.');
+                        if (parts.length < 2) throw new Error('A JWT needs at least a header and a payload separated by dots.');
+                        const decode = seg => {
+                            let s = seg.replace(/-/g, '+').replace(/_/g, '/');
+                            while (s.length % 4) s += '=';
+                            return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0))));
+                        };
+                        const header = decode(parts[0]);
+                        const payload = decode(parts[1]);
+                        const lines = [
+                            '── Header ──', JSON.stringify(header, null, 2),
+                            '', '── Payload ──', JSON.stringify(payload, null, 2)
+                        ];
+                        const stamp = (key, name) => {
+                            if (typeof payload[key] === 'number') {
+                                const when = new Date(payload[key] * 1000);
+                                lines.push(`${name}: ${when.toISOString()} (${when.toLocaleString()})`);
+                            }
+                        };
+                        lines.push('', '── Claims ──');
+                        stamp('iat', 'Issued at');
+                        stamp('nbf', 'Not before');
+                        stamp('exp', 'Expires');
+                        if (typeof payload.exp === 'number') {
+                            lines.push(payload.exp * 1000 < Date.now() ? 'Status: EXPIRED' : 'Status: still valid');
+                        }
+                        lines.push('Signature: present but not verified (this tool never contacts a server).');
+                        return lines.join('\n');
+                    }
+                },
+                {
+                    id: 'uuid', label: 'UUID', icon: 'fingerprint', title: 'UUID Generator',
+                    desc: 'Version 4 UUIDs from a cryptographically secure random source.',
+                    placeholder: 'No input needed — press Run.', noInput: true,
+                    opts: [
+                        { key: 'count', label: 'How many', type: 'number', def: 5, min: 1, max: 500 },
+                        { key: 'upper', label: 'Uppercase', type: 'toggle', def: false }
+                    ],
+                    run(_i, _b, o) {
+                        const n = Math.min(Math.max(parseInt(o.count, 10) || 1, 1), 500);
+                        const list = Array.from({ length: n }, () => app.dtUUID());
+                        return (o.upper ? list.map(u => u.toUpperCase()) : list).join('\n');
+                    }
+                },
+                {
+                    id: 'password', label: 'Password', icon: 'key-round', title: 'Password Generator',
+                    desc: 'Random passwords drawn from crypto.getRandomValues, with a rough strength estimate.',
+                    placeholder: 'No input needed — press Run.', noInput: true,
+                    opts: [
+                        { key: 'length', label: 'Length', type: 'number', def: 20, min: 6, max: 128 },
+                        { key: 'count', label: 'How many', type: 'number', def: 5, min: 1, max: 100 },
+                        { key: 'digits', label: 'Digits', type: 'toggle', def: true },
+                        { key: 'symbols', label: 'Symbols', type: 'toggle', def: true }
+                    ],
+                    run(_i, _b, o) {
+                        const len = Math.min(Math.max(parseInt(o.length, 10) || 20, 6), 128);
+                        const count = Math.min(Math.max(parseInt(o.count, 10) || 1, 1), 100);
+                        const list = Array.from({ length: count }, () => app.dtPassword(len, o.digits, o.symbols));
+                        let pool = 52;
+                        if (o.digits) pool += 10;
+                        if (o.symbols) pool += 24;
+                        const bits = Math.round(len * Math.log2(pool));
+                        const verdict = bits >= 128 ? 'excellent' : bits >= 80 ? 'strong' : bits >= 60 ? 'reasonable' : 'weak';
+                        return list.join('\n') + `\n\n≈ ${bits} bits of entropy each (${verdict}).`;
+                    }
+                },
+                {
+                    id: 'case', label: 'Case', icon: 'case-sensitive', title: 'Case Converter',
+                    desc: 'Every common casing of your text at once — pick the line you need.',
+                    placeholder: 'hello brave new world', live: true,
+                    run(input) {
+                        const words = input.trim().split(/[\s_\-.]+|(?<=[a-z0-9])(?=[A-Z])/).filter(Boolean).map(w => w.toLowerCase());
+                        if (!words.length) return '';
+                        const cap = w => w.charAt(0).toUpperCase() + w.slice(1);
+                        const rows = [
+                            ['camelCase',     words[0] + words.slice(1).map(cap).join('')],
+                            ['PascalCase',    words.map(cap).join('')],
+                            ['snake_case',    words.join('_')],
+                            ['CONSTANT_CASE', words.join('_').toUpperCase()],
+                            ['kebab-case',    words.join('-')],
+                            ['dot.case',      words.join('.')],
+                            ['Title Case',    words.map(cap).join(' ')],
+                            ['Sentence case', cap(words.join(' '))],
+                            ['lower case',    words.join(' ')],
+                            ['UPPER CASE',    words.join(' ').toUpperCase()],
+                            ['slug',          words.join('-').replace(/[^a-z0-9-]/g, '')]
+                        ];
+                        const pad = Math.max(...rows.map(r => r[0].length));
+                        return rows.map(([name, value]) => `${name.padEnd(pad)}  ${value}`).join('\n');
+                    }
+                },
+                {
+                    id: 'diff', label: 'Diff', icon: 'git-compare', title: 'Text Diff',
+                    desc: 'Line-by-line comparison using a longest-common-subsequence walk.',
+                    placeholder: 'Original text…', two: true, live: true,
+                    run(a, b) { return app.dtDiff(a, b); }
+                },
+                {
+                    id: 'regex', label: 'Regex', icon: 'regex', title: 'Regex Tester',
+                    desc: 'Pattern in the first box, sample text in the second. Capture groups are listed per match.',
+                    placeholder: '\\b(\\w+)@(\\w+\\.\\w+)\\b', two: true, live: true,
+                    opts: [{ key: 'flags', label: 'Flags', type: 'text', def: 'g', size: 5 }],
+                    run(pattern, text, o) {
+                        if (!pattern) return '';
+                        let flags = (o.flags || '').replace(/[^gimsuy]/g, '');
+                        if (!flags.includes('g')) flags += 'g';
+                        const re = new RegExp(pattern, flags);
+                        const matches = Array.from(text.matchAll(re));
+                        if (!matches.length) return 'No matches.';
+                        return `${matches.length} match${matches.length === 1 ? '' : 'es'}\n\n` + matches.map((m, i) => {
+                            const groups = m.slice(1).map((g, gi) => `      group ${gi + 1}: ${g === undefined ? '(unmatched)' : g}`);
+                            return `#${i + 1} at index ${m.index}: ${m[0]}` + (groups.length ? '\n' + groups.join('\n') : '');
+                        }).join('\n');
+                    }
+                },
+                {
+                    id: 'timestamp', label: 'Timestamp', icon: 'calendar-clock', title: 'Unix Timestamp Converter',
+                    desc: 'Paste a Unix timestamp or any date string; leave it empty for "right now".',
+                    placeholder: '1700000000', live: true,
+                    run(input) {
+                        const raw = input.trim();
+                        let date;
+                        if (!raw) date = new Date();
+                        else if (/^-?\d{1,11}$/.test(raw)) date = new Date(parseInt(raw, 10) * 1000);
+                        else if (/^-?\d{12,}$/.test(raw)) date = new Date(parseInt(raw, 10));
+                        else date = new Date(raw);
+                        if (isNaN(date.getTime())) throw new Error('That is not a timestamp or a date this browser recognises.');
+                        const diff = Math.round((date.getTime() - Date.now()) / 1000);
+                        const abs = Math.abs(diff);
+                        const unit = abs < 60 ? [abs, 'second'] : abs < 3600 ? [Math.round(abs / 60), 'minute']
+                            : abs < 86400 ? [Math.round(abs / 3600), 'hour'] : [Math.round(abs / 86400), 'day'];
+                        const relative = `${unit[0]} ${unit[1]}${unit[0] === 1 ? '' : 's'} ${diff < 0 ? 'ago' : 'from now'}`;
+                        return [
+                            `Unix (seconds)  ${Math.floor(date.getTime() / 1000)}`,
+                            `Unix (millis)   ${date.getTime()}`,
+                            `ISO 8601        ${date.toISOString()}`,
+                            `UTC             ${date.toUTCString()}`,
+                            `Local           ${date.toLocaleString()}`,
+                            `Relative        ${relative}`
+                        ].join('\n');
+                    }
+                },
+                {
+                    id: 'lorem', label: 'Lorem', icon: 'text', title: 'Lorem Ipsum Generator',
+                    desc: 'Filler copy for mockups, in sentences of varying length.',
+                    placeholder: 'No input needed — press Run.', noInput: true,
+                    opts: [
+                        { key: 'paragraphs', label: 'Paragraphs', type: 'number', def: 3, min: 1, max: 50 },
+                        { key: 'classic', label: 'Start with "Lorem ipsum"', type: 'toggle', def: true }
+                    ],
+                    run(_i, _b, o) { return app.dtLorem(parseInt(o.paragraphs, 10) || 3, o.classic); }
+                },
+                {
+                    id: 'qr', label: 'QR code', icon: 'qr-code', title: 'QR Code Generator',
+                    desc: 'Turn a link, Wi-Fi string or note into a QR code and save it as a PNG.',
+                    placeholder: 'https://webdesks.app', visual: true,
+                    opts: [
+                        { key: 'size', label: 'Size', type: 'select', values: [['256', 'Small'], ['512', 'Medium'], ['1024', 'Large']], def: '512' },
+                        { key: 'ec', label: 'Error correction', type: 'select', values: [['L', 'L — 7%'], ['M', 'M — 15%'], ['Q', 'Q — 25%'], ['H', 'H — 30%']], def: 'M' }
+                    ],
+                    async run(input, _b, o) { return await app.dtQR(input, o); }
+                }
+            ],
+
+            dtUUID() {
+                if (crypto.randomUUID) return crypto.randomUUID();
+                const bytes = crypto.getRandomValues(new Uint8Array(16));
+                bytes[6] = (bytes[6] & 0x0f) | 0x40;
+                bytes[8] = (bytes[8] & 0x3f) | 0x80;
+                const hex = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+                return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+            },
+
+            dtPassword(length, digits, symbols) {
+                let alphabet = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+                if (digits) alphabet += '23456789';
+                if (symbols) alphabet += '!@#$%^&*()-_=+[]{};:,.?';
+                const picks = crypto.getRandomValues(new Uint32Array(length));
+                return Array.from(picks, n => alphabet[n % alphabet.length]).join('');
+            },
+
+            dtLorem(paragraphs, classic) {
+                const words = ('lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum').split(' ');
+                const pick = () => words[Math.floor(Math.random() * words.length)];
+                const out = [];
+                for (let p = 0; p < paragraphs; p++) {
+                    const sentences = [];
+                    const count = 4 + Math.floor(Math.random() * 3);
+                    for (let s = 0; s < count; s++) {
+                        const len = 8 + Math.floor(Math.random() * 10);
+                        const sentence = Array.from({ length: len }, pick).join(' ');
+                        sentences.push(sentence.charAt(0).toUpperCase() + sentence.slice(1) + '.');
+                    }
+                    out.push(sentences.join(' '));
+                }
+                if (classic && out.length) {
+                    out[0] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' + out[0];
+                }
+                return out.join('\n\n');
+            },
+
+            dtDiff(a, b) {
+                const left = (a || '').split('\n');
+                const right = (b || '').split('\n');
+                const n = left.length, m = right.length;
+                // LCS table — guarded so a huge paste cannot lock the tab up.
+                if (n * m > 4000000) throw new Error('Those inputs are too large to diff in the browser.');
+                const table = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+                for (let i = n - 1; i >= 0; i--) {
+                    for (let j = m - 1; j >= 0; j--) {
+                        table[i][j] = left[i] === right[j] ? table[i + 1][j + 1] + 1 : Math.max(table[i + 1][j], table[i][j + 1]);
+                    }
+                }
+                const rows = [];
+                let i = 0, j = 0, added = 0, removed = 0;
+                while (i < n && j < m) {
+                    if (left[i] === right[j]) { rows.push('  ' + left[i]); i++; j++; }
+                    else if (table[i + 1][j] >= table[i][j + 1]) { rows.push('- ' + left[i]); removed++; i++; }
+                    else { rows.push('+ ' + right[j]); added++; j++; }
+                }
+                while (i < n) { rows.push('- ' + left[i++]); removed++; }
+                while (j < m) { rows.push('+ ' + right[j++]); added++; }
+                if (!added && !removed) return 'The two inputs are identical.';
+                return `${added} line${added === 1 ? '' : 's'} added, ${removed} removed\n\n` + rows.join('\n');
+            },
+
+            async dtQR(text, o) {
+                if (!text.trim()) return '';
+                await this._loadScript('https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js');
+                const size = parseInt(o.size, 10) || 512;
+                const canvas = document.createElement('canvas');
+                await window.QRCode.toCanvas(canvas, text, {
+                    width: size, margin: 2, errorCorrectionLevel: o.ec || 'M',
+                    color: { dark: '#0f172a', light: '#ffffff' }
+                });
+                const host = document.getElementById('dt-visual');
+                host.innerHTML = '';
+                canvas.className = 'rounded-2xl shadow-lg max-w-full h-auto';
+                canvas.style.maxWidth = '320px';
+                const save = document.createElement('button');
+                save.className = 'mt-3 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-black hover:bg-indigo-700 transition-colors block mx-auto';
+                save.textContent = 'Save PNG';
+                save.onclick = () => {
+                    canvas.toBlob(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'webdesks-qr.png';
+                        link.click();
+                        setTimeout(() => URL.revokeObjectURL(url), 1000);
+                    });
+                };
+                const box = document.createElement('div');
+                box.appendChild(canvas);
+                box.appendChild(save);
+                host.appendChild(box);
+                return `QR code ready — ${size}×${size}px, error correction ${o.ec || 'M'}.`;
+            },
+
+            initDevTools() {
+                const chips = document.getElementById('dt-chips');
+                if (!chips) return;
+                chips.innerHTML = this.dtTools.map(t => `
+                    <button onclick="app.dtSelect('${t.id}')" data-dt="${t.id}"
+                        class="dt-chip px-3.5 py-2 rounded-full text-xs font-bold glass hover:bg-white/50 transition-all flex items-center gap-1.5">
+                        <i data-lucide="${t.icon}" class="w-3.5 h-3.5"></i>${t.label}
+                    </button>`).join('');
+
+                let debounce;
+                const onEdit = () => {
+                    const tool = this.dtTools.find(t => t.id === this.dtCurrent);
+                    if (!tool || !tool.live) return;
+                    clearTimeout(debounce);
+                    debounce = setTimeout(() => this.dtRun(true), 220);
+                };
+                document.getElementById('dt-input').addEventListener('input', onEdit);
+                document.getElementById('dt-input-b').addEventListener('input', onEdit);
+
+                this.dtSelect(this.dtCurrent);
+            },
+
+            dtSelect(id) {
+                const tool = this.dtTools.find(t => t.id === id);
+                if (!tool) return;
+                this.dtCurrent = id;
+                this.dtLastOutput = '';
+
+                document.querySelectorAll('.dt-chip').forEach(chip => {
+                    const on = chip.dataset.dt === id;
+                    chip.classList.toggle('bg-indigo-600', on);
+                    chip.classList.toggle('text-white', on);
+                    chip.classList.toggle('glass', !on);
+                });
+
+                document.getElementById('dt-title').textContent = tool.title;
+                document.getElementById('dt-desc').textContent = tool.desc;
+                document.getElementById('dt-input').placeholder = tool.placeholder || '';
+                document.getElementById('dt-input-label').textContent = tool.two ? (id === 'regex' ? 'Pattern' : 'Original') : 'Input';
+                document.getElementById('dt-input-wrap').classList.toggle('hidden', !!tool.noInput);
+                document.getElementById('dt-input-b-wrap').classList.toggle('hidden', !tool.two);
+                document.getElementById('dt-output').textContent = '';
+                document.getElementById('dt-status').textContent = '';
+                const visual = document.getElementById('dt-visual');
+                visual.innerHTML = '';
+                visual.classList.toggle('hidden', !tool.visual);
+                visual.classList.toggle('flex', !!tool.visual);
+
+                this.dtOptValues[id] = this.dtOptValues[id] || {};
+                (tool.opts || []).forEach(opt => {
+                    if (this.dtOptValues[id][opt.key] === undefined) this.dtOptValues[id][opt.key] = opt.def;
+                });
+                this.dtRenderOptions(tool);
+                this._rebuildIcons();
+
+                if (tool.noInput) this.dtRun(true);
+            },
+
+            dtRenderOptions(tool) {
+                const host = document.getElementById('dt-options');
+                const values = this.dtOptValues[tool.id];
+                host.innerHTML = (tool.opts || []).map(opt => {
+                    const common = `onchange="app.dtSetOption('${opt.key}', this)" class="glass px-2.5 py-1.5 rounded-lg text-xs font-bold focus:outline-none dark:bg-slate-800/50"`;
+                    if (opt.type === 'select') {
+                        const options = opt.values.map(([v, l]) => `<option value="${v}" ${values[opt.key] === v ? 'selected' : ''}>${l}</option>`).join('');
+                        return `<label class="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-slate-400">${opt.label}<select ${common}>${options}</select></label>`;
+                    }
+                    if (opt.type === 'toggle') {
+                        return `<label class="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-slate-400 cursor-pointer">
+                            <input type="checkbox" ${values[opt.key] ? 'checked' : ''} onchange="app.dtSetOption('${opt.key}', this)" class="accent-indigo-600 w-3.5 h-3.5">${opt.label}</label>`;
+                    }
+                    if (opt.type === 'number') {
+                        return `<label class="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-slate-400">${opt.label}
+                            <input type="number" value="${values[opt.key]}" min="${opt.min || 0}" max="${opt.max || 9999}" oninput="app.dtSetOption('${opt.key}', this)" class="glass px-2 py-1.5 rounded-lg text-xs font-bold w-20 focus:outline-none dark:bg-slate-800/50"></label>`;
+                    }
+                    return `<label class="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-slate-400">${opt.label}
+                        <input type="text" value="${values[opt.key]}" size="${opt.size || 8}" oninput="app.dtSetOption('${opt.key}', this)" class="glass px-2 py-1.5 rounded-lg text-xs font-mono w-20 focus:outline-none dark:bg-slate-800/50"></label>`;
+                }).join('');
+            },
+
+            dtSetOption(key, el) {
+                const values = this.dtOptValues[this.dtCurrent];
+                values[key] = el.type === 'checkbox' ? el.checked : el.value;
+                const tool = this.dtTools.find(t => t.id === this.dtCurrent);
+                if (tool && (tool.live || tool.noInput)) this.dtRun(true);
+            },
+
+            async dtRun(quiet) {
+                const tool = this.dtTools.find(t => t.id === this.dtCurrent);
+                if (!tool) return;
+                const out = document.getElementById('dt-output');
+                const status = document.getElementById('dt-status');
+                const a = document.getElementById('dt-input').value;
+                const b = document.getElementById('dt-input-b').value;
+
+                if (!tool.noInput && !a.trim()) {
+                    out.textContent = '';
+                    this.dtLastOutput = '';
+                    status.textContent = '';
+                    if (tool.visual) document.getElementById('dt-visual').innerHTML = '';
+                    return;
+                }
+
+                try {
+                    const result = await tool.run.call(tool, a, b, this.dtOptValues[tool.id] || {});
+                    this.dtLastOutput = result || '';
+                    out.textContent = this.dtLastOutput;
+                    status.textContent = 'Done';
+                    status.className = 'text-xs font-bold ml-auto text-emerald-500';
+                } catch (err) {
+                    this.dtLastOutput = '';
+                    out.textContent = '';
+                    status.textContent = err && err.message ? err.message : 'Something went wrong';
+                    status.className = 'text-xs font-bold ml-auto text-red-500 text-right max-w-xs';
+                    if (!quiet) this.vibrate([40]);
+                }
+            },
+
+            dtClear() {
+                document.getElementById('dt-input').value = '';
+                document.getElementById('dt-input-b').value = '';
+                document.getElementById('dt-output').textContent = '';
+                document.getElementById('dt-status').textContent = '';
+                document.getElementById('dt-visual').innerHTML = '';
+                this.dtLastOutput = '';
+            },
+
+            dtCopyOutput() {
+                if (!this.dtLastOutput) { this.showToast('There is no result to copy yet'); return; }
+                this.copyText(this.dtLastOutput, 'Result copied to clipboard');
+            },
+
+            dtDownloadOutput() {
+                if (!this.dtLastOutput) { this.showToast('There is no result to download yet'); return; }
+                const ext = this.dtCurrent === 'json' ? 'json' : 'txt';
+                this.downloadText(this.dtLastOutput, `webdesks-${this.dtCurrent}.${ext}`);
+            },
+
+            // ═══════════════════════════════════════════════════════
+            // IMAGE TO TEXT (OCR) — tesseract.js in a WebAssembly worker
+            // ═══════════════════════════════════════════════════════
+
+            _ocrFile: null,
+            _ocrBusy: false,
+
+            initOCR() {
+                const drop = document.getElementById('ocr-drop');
+                const input = document.getElementById('ocr-file');
+                if (!drop || !input) return;
+
+                drop.addEventListener('click', () => input.click());
+                drop.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+                });
+                input.addEventListener('change', () => {
+                    if (input.files && input.files[0]) this.ocrAccept(input.files[0]);
+                });
+                ['dragenter', 'dragover'].forEach(evt => drop.addEventListener(evt, e => {
+                    e.preventDefault();
+                    drop.classList.add('border-indigo-500');
+                }));
+                ['dragleave', 'drop'].forEach(evt => drop.addEventListener(evt, e => {
+                    e.preventDefault();
+                    drop.classList.remove('border-indigo-500');
+                }));
+                drop.addEventListener('drop', e => {
+                    const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+                    if (file) this.ocrAccept(file);
+                });
+                document.addEventListener('paste', e => {
+                    if (this.currentTab !== 'ocr' || !e.clipboardData) return;
+                    const item = Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'));
+                    if (item) this.ocrAccept(item.getAsFile());
+                });
+            },
+
+            ocrAccept(file) {
+                if (!file || !file.type.startsWith('image/')) {
+                    this.showToast('That file is not an image');
+                    return;
+                }
+                this._ocrFile = file;
+                const img = document.getElementById('ocr-preview');
+                if (img.src && img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+                img.src = URL.createObjectURL(file);
+                document.getElementById('ocr-preview-wrap').classList.remove('hidden');
+                document.getElementById('ocr-run-btn').disabled = false;
+                this.showToast('Image ready — press “Extract text”');
+            },
+
+            async ocrRun() {
+                if (!this._ocrFile || this._ocrBusy) return;
+                const btn = document.getElementById('ocr-run-btn');
+                const wrap = document.getElementById('ocr-progress-wrap');
+                const bar = document.getElementById('ocr-bar');
+                const pct = document.getElementById('ocr-pct');
+                const phase = document.getElementById('ocr-phase');
+
+                this._ocrBusy = true;
+                btn.disabled = true;
+                wrap.classList.remove('hidden');
+                phase.textContent = 'Loading the recognition engine…';
+                bar.style.width = '2%';
+                pct.textContent = '2%';
+
+                try {
+                    await this._loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+                    const lang = document.getElementById('ocr-lang').value;
+                    const result = await window.Tesseract.recognize(this._ocrFile, lang, {
+                        logger: m => {
+                            if (typeof m.progress !== 'number') return;
+                            const value = Math.round(m.progress * 100);
+                            bar.style.width = value + '%';
+                            pct.textContent = value + '%';
+                            phase.textContent = (m.status || 'Working').replace(/^\w/, c => c.toUpperCase());
+                        }
+                    });
+                    const text = (result && result.data && result.data.text ? result.data.text : '').trim();
+                    document.getElementById('ocr-output').value = text;
+                    bar.style.width = '100%';
+                    pct.textContent = '100%';
+                    phase.textContent = 'Done';
+                    this.showToast(text ? `Read ${text.split(/\s+/).length} words` : 'No readable text found in that image');
+                } catch (err) {
+                    phase.textContent = 'Recognition failed';
+                    this.showToast('OCR failed — check your connection, the language pack loads once from a CDN');
+                } finally {
+                    this._ocrBusy = false;
+                    btn.disabled = false;
+                }
+            },
+
+            ocrReset() {
+                const img = document.getElementById('ocr-preview');
+                if (img.src && img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+                img.removeAttribute('src');
+                this._ocrFile = null;
+                document.getElementById('ocr-file').value = '';
+                document.getElementById('ocr-preview-wrap').classList.add('hidden');
+                document.getElementById('ocr-progress-wrap').classList.add('hidden');
+                document.getElementById('ocr-output').value = '';
+                document.getElementById('ocr-run-btn').disabled = true;
+            },
+
+            ocrCopy() {
+                const text = document.getElementById('ocr-output').value;
+                if (!text.trim()) { this.showToast('Nothing to copy yet'); return; }
+                this.copyText(text, 'Extracted text copied');
+            },
+
+            ocrDownload() {
+                const text = document.getElementById('ocr-output').value;
+                if (!text.trim()) { this.showToast('Nothing to download yet'); return; }
+                this.downloadText(text, 'webdesks-ocr.txt');
+            },
+
+            ocrToScratchpad() {
+                const text = document.getElementById('ocr-output').value;
+                if (!text.trim()) { this.showToast('Nothing to send yet'); return; }
+                const note = document.getElementById('note-area');
+                note.value = (note.value ? note.value + '\n\n' : '') + text;
+                localStorage.setItem('wd_scratch', note.value);
+                this.updateNotePreview();
+                this.switchTab('scratchpad');
+                this.showToast('Added to your Notepad');
+            },
+
             // Utilities
             showToast(message) {
                 const toast = document.createElement('div');
@@ -6267,14 +7310,15 @@
             // ═══════════════════════════════════════════════════════
 
             // ── Mobile Tab Order (for swipe + More drawer) ──────────
-            tabOrder: ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder','mediaconv'],
+            tabOrder: ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder','mediaconv','devtools','ocr'],
             tabIcons: {
                 dashboard:'home', scratchpad:'file-text', tasks:'check-circle-2',
                 board:'columns', whiteboard:'pencil', clock:'clock', timer:'hourglass',
                 stopwatch:'timer', focustown:'building-2', audio:'headphones',
                 breathing:'wind', calculator:'calculator', converter:'arrow-left-right',
                 colorpicker:'palette', pdf:'file-stack', zones:'globe-2',
-                onair:'radio', recorder:'video', mediaconv:'file-cog'
+                onair:'radio', recorder:'video', mediaconv:'file-cog',
+                devtools:'terminal', ocr:'scan-text'
             },
             tabLabels: {
                 dashboard:'Home', scratchpad:'Notepad', tasks:'Tasks',
@@ -6282,7 +7326,8 @@
                 stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Mixer',
                 breathing:'Breathing', calculator:'Calc', converter:'Convert',
                 colorpicker:'Colors', pdf:'PDF', zones:'Zones',
-                onair:'On Air', recorder:'Record', mediaconv:'Media'
+                onair:'On Air', recorder:'Record', mediaconv:'Media',
+                devtools:'Dev Tools', ocr:'Image → Text'
             },
 
             // ── More Drawer ──────────────────────────────────────────

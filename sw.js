@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'webdesks-v18.8';
+const CACHE_VERSION = 'webdesks-v21.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -39,6 +39,10 @@ self.addEventListener('fetch', (e) => {
   if (
     url.includes('cdn.tailwindcss.com') ||
     url.includes('unpkg.com') ||
+    // jsdelivr serves marked, highlight.js and the lazily-loaded
+    // qrcode + tesseract.js bundles — cache them so the Dev Toolkit
+    // and OCR keep working offline after the first visit.
+    url.includes('cdn.jsdelivr.net') ||
     url.includes('fonts.googleapis.com') ||
     url.includes('fonts.gstatic.com')
   ) {
