@@ -351,7 +351,10 @@
             v: 1, seed, name: 'Hearthvale', coins: 60, food: 20, pop: 2, happy: 60, grow: 0, starve: 0,
             buildings: [{ t: 'campfire', x: c, y: c, v: 0 }, { t: 'house', x: c - 1, y: c - 1, v: 0 }, { t: 'farm', x: c + 1, y: c - 1, v: 0 }, { t: 'tree', x: c - 2, y: c + 1, v: 1 }],
             cleared: [], quest: 0, stats: { sessions: 0, focusMin: 0, built: 0, earned: 0 },
-            lastTick: Date.now(), daily: { date: '', streak: 0 }, log: []
+            lastTick: Date.now(), daily: { date: '', streak: 0 }, log: [],
+            // Untouched starter town: Desk sync treats it as a default value so it
+            // never overwrites a town saved from another device.
+            fresh: true
         };
     }
 
@@ -364,6 +367,7 @@
             const oldName = localStorage.getItem('wd_ft_townname');
             if (oldName) st.name = oldName.slice(0, 24);
             if (oldMin > 0) {
+                delete st.fresh;
                 const bonus = Math.min(2000, oldMin * 2);
                 st.coins += bonus;
                 st.stats.focusMin = oldMin;
@@ -373,7 +377,8 @@
             save();
         }
     }
-    function save() { try { st.lastTick = st.lastTick || Date.now(); localStorage.setItem(SAVE_KEY, JSON.stringify(st)); } catch (e) {} }
+    let savedAt = Date.now();
+    function save() { savedAt = Date.now(); try { st.lastTick = st.lastTick || Date.now(); localStorage.setItem(SAVE_KEY, JSON.stringify(st)); } catch (e) {} }
     const saveSoon = () => { clearTimeout(saveTimer); saveTimer = setTimeout(save, 800); };
 
     async function makeTerrain() {
@@ -437,7 +442,9 @@
         if (level() > lvl) levelUp();
         checkQuest();
         renderHud();
-        if (now - (st._saved || 0) > 60000) { st._saved = now; save(); }
+        // Periodic save is infrequent: each save is a Desk sync for signed-in users.
+        // Actions save straight away and pagehide saves on close.
+        if (now - savedAt > 300000) save();
     }
 
     function welcomeBack(mins) {
@@ -485,6 +492,7 @@
     function claimQuest() {
         const q = QUESTS[st.quest];
         if (!q || !q.test(st)) return;
+        delete st.fresh;
         st.coins += q.reward;
         st.quest++;
         st._questReady = false;
@@ -497,6 +505,7 @@
     // Rewards from the rest of WebDesks.
     function reward(coins, why) {
         if (!st) return;
+        delete st.fresh;
         st.coins += coins;
         note(`${why} +🪙 ${coins} for ${st.name}`);
         saveSoon();
@@ -719,6 +728,7 @@
         const def = B[type];
         if (st.coins < def.cost) return note(`Need 🪙 ${fmt(def.cost - st.coins)} more for a ${def.name}.`, true);
         if (!canPlace(type, x, y)) return note('Can\'t build there.', true);
+        delete st.fresh;
         st.coins -= def.cost;
         st.buildings.push({ t: type, x, y, v: Math.floor(Math.random() * 9) });
         st.stats.built++;
@@ -780,6 +790,7 @@
             <button class="town-btn primary w-full" data-act="treat">Give a treat 🍞 <span class="opacity-70">(1 food)</span></button>`);
         $('town-pop').querySelector('[data-act=treat]').onclick = () => {
             if (st.food < 1) return note('No food to give — build a field.', true);
+            delete st.fresh;
             st.food -= 1; st.happy = Math.min(100, st.happy + 1.5); v.hearts = 1.5;
             renderHud(); saveSoon(); hidePop();
         };
@@ -933,7 +944,7 @@
         ctx = canvas.getContext('2d');
         const nameInput = $('town-name');
         nameInput.value = st.name;
-        nameInput.onchange = () => { st.name = nameInput.value.trim().slice(0, 24) || 'Hearthvale'; nameInput.value = st.name; save(); };
+        nameInput.onchange = () => { delete st.fresh; st.name = nameInput.value.trim().slice(0, 24) || 'Hearthvale'; nameInput.value = st.name; save(); };
         // Tap/click to act; drag to pan (useful when zoomed in on phones).
         let down = null;
         canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y, moved: false }; });
@@ -962,6 +973,7 @@
             renderHud();
         });
         root.querySelector('[data-act=feed]').onclick = () => {
+            delete st.fresh;
             if (st.coins < 10) return note('Not enough coins.', true);
             const cap = rates().foodCap;
             if (st.food >= cap) return note('Granary is full! Build fields or a bakery for more storage.', true);

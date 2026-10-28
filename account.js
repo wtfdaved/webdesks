@@ -62,7 +62,9 @@
     // Values the tools write as empty defaults on a fresh start, plus date-only
     // housekeeping keys. These never count as real data.
     const NOISE = new Set(['webdesks_theme', 'wd_water_date', 'wd_mood_date', 'wd_ft_lastdate']);
-    const isTrivial = (k, v) => NOISE.has(k) || /^(\[\]|\{\}|0|null|false|true|)$/.test(String(v ?? '').trim());
+    // An untouched Focus Town (it saves as soon as it opens) is a default too.
+    const freshTown = (k, v) => k === 'wd_town' && /"fresh":true/.test(String(v));
+    const isTrivial = (k, v) => NOISE.has(k) || freshTown(k, v) || /^(\[\]|\{\}|0|null|false|true|)$/.test(String(v ?? '').trim());
 
     // A key appearing with only a default value is stamped as oldest, so a
     // freshly started (or just signed-out) browser can never overwrite real
@@ -80,7 +82,7 @@
             const prev = ls.getItem(k);
             const changed = prev !== String(v);
             rawSet.call(this, k, v);
-            if (changed) stamp(k, prev === null && isTrivial(k, v));
+            if (changed) stamp(k, (prev === null && isTrivial(k, v)) || freshTown(k, v));
             return;
         }
         return rawSet.call(this, k, v);
