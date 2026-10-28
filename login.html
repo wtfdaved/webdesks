@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Sign in — WebDesks</title>
+    <meta name="description" content="Sign in to WebDesks to save your Desk — tasks, calendar, chores, bills, pages and settings — to your account and use it on any device.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="canonical" href="https://webdesks.app/login">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+    <script>
+        // Match the app's theme before first paint.
+        try {
+            const t = localStorage.getItem('webdesks_theme');
+            if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+        } catch (e) {}
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .bg-app { background: linear-gradient(-45deg, #eef2ff, #f8fafc, #f5f3ff, #f8fafc); }
+        .dark .bg-app { background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #0f172a); }
+        .field { width: 100%; border-radius: 0.75rem; padding: 0.75rem 1rem; background: rgba(255,255,255,0.8); border: 1px solid #e2e8f0; outline: none; }
+        .dark .field { background: rgba(30,41,59,0.8); border-color: #334155; color: #f1f5f9; }
+        .field:focus { box-shadow: 0 0 0 2px #6366f1; border-color: transparent; }
+        [hidden] { display: none !important; }
+    </style>
+</head>
+<body class="bg-app min-h-screen text-slate-800 dark:text-slate-100 flex flex-col">
+
+    <header class="max-w-5xl w-full mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 font-black text-lg">
+            <span class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center text-white text-sm">🖥️</span>
+            WebDesks
+        </a>
+        <a href="/" class="text-sm font-semibold text-slate-500 hover:text-indigo-600">← Back to my Desk</a>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-8">
+        <div class="w-full max-w-md">
+            <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur rounded-3xl shadow-2xl shadow-indigo-500/10 border border-white/60 dark:border-slate-800 p-6 sm:p-8">
+
+                <div id="msg" role="alert" aria-live="polite" class="hidden mb-5 rounded-2xl px-4 py-3 text-sm"></div>
+
+                <!-- Not configured -->
+                <section id="view-disabled" hidden>
+                    <h1 class="text-2xl font-black mb-2">Accounts are coming soon</h1>
+                    <p class="text-slate-500 mb-6">Sign-in isn't switched on for this site yet. Everything still works — your Desk is saved in this browser.</p>
+                    <a href="/" class="block text-center bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold">Go to WebDesks</a>
+                </section>
+
+                <!-- Loading -->
+                <section id="view-loading">
+                    <div class="flex items-center gap-3 text-slate-500"><span class="w-4 h-4 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin"></span> Loading…</div>
+                </section>
+
+                <!-- Already signed in -->
+                <section id="view-signedin" hidden>
+                    <h1 class="text-2xl font-black mb-1">You're signed in</h1>
+                    <p class="text-slate-500 mb-6">as <b id="signedin-email"></b></p>
+                    <a id="signedin-go" href="/" class="block text-center bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold mb-3">Open my Desk</a>
+                    <button id="signedin-out" class="w-full py-3 rounded-xl font-bold text-slate-500 hover:text-indigo-600">Use a different account</button>
+                </section>
+
+                <!-- Sign in / Create account -->
+                <section id="view-auth" hidden>
+                    <h1 id="auth-title" class="text-2xl font-black mb-1">Welcome back</h1>
+                    <p id="auth-sub" class="text-slate-500 mb-6 text-sm">Sign in to open your Desk on any device.</p>
+
+                    <div class="grid grid-cols-2 gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 mb-6" role="tablist">
+                        <button id="tab-signin" role="tab" class="py-2 rounded-lg text-sm font-bold">Sign in</button>
+                        <button id="tab-signup" role="tab" class="py-2 rounded-lg text-sm font-bold">Create account</button>
+                    </div>
+
+                    <div id="oauth" class="space-y-2 mb-5" hidden></div>
+                    <div id="oauth-or" class="flex items-center gap-3 text-xs text-slate-400 mb-5" hidden><span class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></span>or with email<span class="flex-1 h-px bg-slate-200 dark:bg-slate-700"></span></div>
+
+                    <form id="form-auth" novalidate>
+                        <label id="name-wrap" class="block mb-3" hidden>
+                            <span class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Name</span>
+                            <input id="f-name" class="field" autocomplete="name" maxlength="60" placeholder="What should we call you?">
+                        </label>
+                        <label class="block mb-3">
+                            <span class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Email</span>
+                            <input id="f-email" type="email" class="field" autocomplete="email" required placeholder="you@example.com">
+                        </label>
+                        <label class="block mb-1">
+                            <span class="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Password <button type="button" id="go-forgot" class="normal-case tracking-normal font-semibold text-indigo-500 hover:underline">Forgot?</button></span>
+                            <input id="f-password" type="password" class="field" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
+                        </label>
+                        <p id="pw-hint" class="text-xs text-slate-400 mb-3" hidden>Use 8+ characters. A short phrase is easiest to remember.</p>
+                        <label id="consent-wrap" class="flex items-start gap-2 text-sm text-slate-500 mt-3" hidden>
+                            <input id="f-consent" type="checkbox" class="mt-1 w-4 h-4 accent-indigo-600">
+                            <span>I'm at least 13 years old and agree to the <a href="/terms" target="_blank" class="text-indigo-500 underline">Terms</a> and <a href="/privacy" target="_blank" class="text-indigo-500 underline">Privacy Policy</a>.</span>
+                        </label>
+                        <button id="auth-submit" type="submit" class="w-full mt-5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white py-3 rounded-xl font-bold transition-colors">Sign in</button>
+                    </form>
+                    <button id="magic" class="w-full mt-3 py-2 text-sm font-semibold text-slate-500 hover:text-indigo-600">✉️ Email me a sign-in link instead</button>
+                </section>
+
+                <!-- Forgot password -->
+                <section id="view-forgot" hidden>
+                    <h1 class="text-2xl font-black mb-1">Reset your password</h1>
+                    <p class="text-slate-500 mb-6 text-sm">We'll email you a link to choose a new one.</p>
+                    <form id="form-forgot" novalidate>
+                        <label class="block mb-4">
+                            <span class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Email</span>
+                            <input id="r-email" type="email" class="field" autocomplete="email" required>
+                        </label>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white py-3 rounded-xl font-bold">Send reset link</button>
+                    </form>
+                    <button data-back class="w-full mt-3 py-2 text-sm font-semibold text-slate-500 hover:text-indigo-600">← Back to sign in</button>
+                </section>
+
+                <!-- Set a new password -->
+                <section id="view-update" hidden>
+                    <h1 class="text-2xl font-black mb-1">Choose a new password</h1>
+                    <p class="text-slate-500 mb-6 text-sm">For <b id="update-email"></b></p>
+                    <form id="form-update" novalidate>
+                        <label class="block mb-3">
+                            <span class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">New password</span>
+                            <input id="u-password" type="password" class="field" autocomplete="new-password" required minlength="8">
+                        </label>
+                        <label class="block mb-4">
+                            <span class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">Confirm it</span>
+                            <input id="u-password2" type="password" class="field" autocomplete="new-password" required minlength="8">
+                        </label>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white py-3 rounded-xl font-bold">Save password</button>
+                    </form>
+                </section>
+
+                <!-- Check your inbox -->
+                <section id="view-sent" hidden>
+                    <div class="text-5xl mb-3">📬</div>
+                    <h1 class="text-2xl font-black mb-1">Check your inbox</h1>
+                    <p class="text-slate-500 mb-2 text-sm" id="sent-text"></p>
+                    <p class="text-slate-400 mb-6 text-xs">Open the link in this same browser. Nothing there? Check spam, or try again in a minute.</p>
+                    <button id="resend" class="w-full py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 mb-2" hidden>Resend email</button>
+                    <button data-back class="w-full py-2 text-sm font-semibold text-slate-500 hover:text-indigo-600">← Back to sign in</button>
+                </section>
+            </div>
+
+            <p class="text-center text-xs text-slate-400 mt-6 leading-relaxed">
+                Signing in is optional. Your Desk is stored in this browser either way; an account keeps a copy in the cloud so you can open it anywhere.
+                <a href="/privacy#accounts" class="underline hover:text-indigo-500">How we handle your data</a>.
+            </p>
+        </div>
+    </main>
+
+    <footer class="text-center text-xs text-slate-400 pb-6 space-x-3">
+        <a href="/about" class="hover:text-indigo-500">About</a>
+        <a href="/privacy" class="hover:text-indigo-500">Privacy</a>
+        <a href="/terms" class="hover:text-indigo-500">Terms</a>
+        <a href="/contact" class="hover:text-indigo-500">Contact</a>
+    </footer>
+
+    <script src="/supabase-config.js"></script>
+    <script>
+    (() => {
+        const CFG = window.WEBDESKS_SUPABASE || {};
+        const SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js';
+        const $ = id => document.getElementById(id);
+        const params = new URLSearchParams(location.search);
+        const hashParams = new URLSearchParams(location.hash.replace(/^#/, ''));
+        let mode = params.get('mode') || 'signin';
+        let sb = null;
+        let lastEmail = { email: '', type: '' };
+
+        // Only ever send people back to a page on this site.
+        const safeNext = (() => {
+            const n = params.get('next') || '';
+            return /^\/(?!\/)[\w\-./#?=&%]*$/.test(n) && !n.startsWith('/login') ? n : '/#today';
+        })();
+        const goNext = () => {
+            const url = new URL(safeNext, location.origin);
+            url.searchParams.set('signedin', '1');
+            location.replace(url.pathname + url.search + url.hash);
+        };
+        const here = extra => {
+            const u = new URL('/login', location.origin);
+            if (safeNext !== '/#today') u.searchParams.set('next', safeNext);
+            Object.entries(extra || {}).forEach(([k, v]) => u.searchParams.set(k, v));
+            return u.toString();
+        };
+
+        const views = ['disabled', 'loading', 'signedin', 'auth', 'forgot', 'update', 'sent'];
+        const show = v => views.forEach(x => { $('view-' + x).hidden = x !== v; });
+        const msg = (text, kind = 'error') => {
+            const el = $('msg');
+            if (!text) { el.className = 'hidden'; return; }
+            el.textContent = text;
+            el.className = 'mb-5 rounded-2xl px-4 py-3 text-sm ' + (kind === 'error'
+                ? 'bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300'
+                : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300');
+        };
+        const busy = (form, on) => form.querySelectorAll('button, input').forEach(el => { el.disabled = on; });
+        const friendly = e => {
+            const m = (e && (e.message || e.error_description || e)) + '';
+            if (/invalid login credentials/i.test(m)) return 'That email and password don\'t match. Try again, or reset your password.';
+            if (/email not confirmed/i.test(m)) return 'Please confirm your email first — we\'ve sent you a link. You can resend it below.';
+            if (/already registered|already exists/i.test(m)) return 'There\'s already an account with that email. Sign in instead.';
+            if (/code verifier|both auth code and code verifier/i.test(m)) return 'That link was opened in a different browser than the one you requested it from. Request a new link here, or sign in with your password.';
+            if (/expired|invalid.*(token|otp|link)|otp_expired/i.test(m)) return 'That link has expired or was already used. Request a new one.';
+            if (/rate limit|too many/i.test(m)) return 'Too many attempts. Please wait a minute and try again.';
+            if (/password.*(short|least|weak)/i.test(m)) return 'Please choose a longer password (8+ characters).';
+            if (/fetch|network/i.test(m)) return 'Can\'t reach the sign-in service. Check your connection and try again.';
+            return m;
+        };
+
+        const setMode = m => {
+            mode = m;
+            msg('');
+            if (m === 'forgot') { $('r-email').value = $('f-email').value; show('forgot'); return; }
+            show('auth');
+            const signup = m === 'signup';
+            $('auth-title').textContent = signup ? 'Create your Desk' : 'Welcome back';
+            $('auth-sub').textContent = signup ? 'Free forever. Your tasks, calendar, chores, bills and pages on every device.' : 'Sign in to open your Desk on any device.';
+            $('tab-signin').className = 'py-2 rounded-lg text-sm font-bold ' + (!signup ? 'bg-white dark:bg-slate-700 shadow' : 'text-slate-500');
+            $('tab-signup').className = 'py-2 rounded-lg text-sm font-bold ' + (signup ? 'bg-white dark:bg-slate-700 shadow' : 'text-slate-500');
+            $('tab-signin').setAttribute('aria-selected', String(!signup));
+            $('tab-signup').setAttribute('aria-selected', String(signup));
+            $('name-wrap').hidden = !signup;
+            $('consent-wrap').hidden = !signup;
+            $('pw-hint').hidden = !signup;
+            $('go-forgot').hidden = signup;
+            $('f-password').autocomplete = signup ? 'new-password' : 'current-password';
+            $('auth-submit').textContent = signup ? 'Create account' : 'Sign in';
+            history.replaceState(null, '', here(signup ? { mode: 'signup' } : {}));
+        };
+
+        const sent = (text, email, type) => {
+            lastEmail = { email, type };
+            $('sent-text').textContent = text;
+            $('resend').hidden = !type;
+            msg('');
+            show('sent');
+        };
+
+        const loadSdk = () => new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = SDK;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error('network: could not load the sign-in library'));
+            document.head.appendChild(s);
+        });
+
+        const PROVIDERS = {
+            google: { label: 'Continue with Google', icon: '<svg viewBox="0 0 48 48" class="w-5 h-5"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>' },
+            github: { label: 'Continue with GitHub', icon: '<svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.3 4.6 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>' },
+            apple: { label: 'Continue with Apple', icon: '<svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.4.8 2.2-1.3 3.1-2.5c1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.7-4.1zM13.9 5c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>' },
+            azure: { label: 'Continue with Microsoft', icon: '<svg viewBox="0 0 24 24" class="w-5 h-5"><path fill="#F25022" d="M1 1h10v10H1z"/><path fill="#7FBA00" d="M13 1h10v10H13z"/><path fill="#00A4EF" d="M1 13h10v10H1z"/><path fill="#FFB900" d="M13 13h10v10H13z"/></svg>' }
+        };
+
+        const init = async () => {
+            if (!CFG.url || !CFG.anonKey) { show('disabled'); return; }
+            try { await loadSdk(); } catch (e) { show('auth'); setMode(mode === 'signup' ? 'signup' : 'signin'); msg(friendly(e)); return; }
+            sb = window.supabase.createClient(CFG.url, CFG.anonKey, {
+                // Same storage key as account.js so the app picks the session up.
+                auth: { storageKey: 'sb-webdesks-auth', flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+            });
+
+            // Errors handed back by an email link or social login.
+            const urlError = params.get('error_description') || hashParams.get('error_description') || params.get('error');
+            const hadCode = params.has('code');
+
+            const { data: { session }, error } = await sb.auth.getSession();
+            // Strip ?code / errors from the address bar once handled.
+            if (hadCode || urlError) history.replaceState(null, '', here(mode === 'update' ? { mode: 'update' } : {}));
+
+            if (mode === 'update') {
+                if (!session) { setMode('forgot'); msg(friendly(error || urlError || 'Your reset link has expired. Request a new one.')); return; }
+                $('update-email').textContent = session.user.email;
+                show('update');
+                return;
+            }
+            if (session && (hadCode || params.has('confirmed'))) { goNext(); return; }
+            if (session) {
+                $('signedin-email').textContent = session.user.email;
+                $('signedin-go').href = safeNext;
+                show('signedin');
+                return;
+            }
+            setMode(mode === 'signup' ? 'signup' : mode === 'forgot' ? 'forgot' : 'signin');
+            if (urlError || error) msg(friendly(urlError || error));
+
+            const providers = (CFG.providers || []).filter(p => PROVIDERS[p]);
+            if (providers.length) {
+                $('oauth').hidden = false;
+                $('oauth-or').hidden = false;
+                $('oauth').innerHTML = providers.map(p => `<button type="button" data-provider="${p}" class="w-full flex items-center justify-center gap-3 py-3 rounded-xl font-bold border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">${PROVIDERS[p].icon}${PROVIDERS[p].label}</button>`).join('');
+                $('oauth').querySelectorAll('[data-provider]').forEach(b => b.onclick = async () => {
+                    if (mode === 'signup' && !$('f-consent').checked) { msg('Please confirm you\'re 13+ and agree to the Terms and Privacy Policy.'); return; }
+                    b.disabled = true;
+                    const { error } = await sb.auth.signInWithOAuth({ provider: b.dataset.provider, options: { redirectTo: here() } });
+                    if (error) { b.disabled = false; msg(friendly(error)); }
+                });
+            }
+        };
+
+        $('tab-signin').onclick = () => setMode('signin');
+        $('tab-signup').onclick = () => setMode('signup');
+        $('go-forgot').onclick = () => setMode('forgot');
+        document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => setMode('signin'));
+
+        $('form-auth').onsubmit = async e => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const email = $('f-email').value.trim();
+            const password = $('f-password').value;
+            if (!/^\S+@\S+\.\S+$/.test(email)) { msg('Please enter a valid email address.'); $('f-email').focus(); return; }
+            if (password.length < 8) { msg('Passwords need at least 8 characters.'); $('f-password').focus(); return; }
+            if (mode === 'signup' && !$('f-consent').checked) { msg('Please confirm you\'re 13+ and agree to the Terms and Privacy Policy.'); return; }
+            busy(form, true);
+            msg('');
+            try {
+                if (mode === 'signup') {
+                    const display_name = $('f-name').value.trim().slice(0, 60);
+                    const { data, error } = await sb.auth.signUp({
+                        email, password,
+                        options: { data: display_name ? { display_name } : {}, emailRedirectTo: here({ confirmed: '1' }) }
+                    });
+                    if (error) throw error;
+                    // With "Confirm email" on, Supabase returns no session yet.
+                    if (data.session) { goNext(); return; }
+                    // An existing, confirmed email comes back with no identities (no enumeration).
+                    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+                        setMode('signin');
+                        $('f-email').value = email;
+                        msg('There\'s already an account with that email. Sign in instead, or reset your password.');
+                        return;
+                    }
+                    sent(`We sent a confirmation link to ${email}. Click it to finish creating your account.`, email, 'signup');
+                } else {
+                    const { error } = await sb.auth.signInWithPassword({ email, password });
+                    if (error) {
+                        if (/email not confirmed/i.test(error.message)) { lastEmail = { email, type: 'signup' }; $('resend').hidden = false; }
+                        throw error;
+                    }
+                    goNext();
+                }
+            } catch (err) {
+                msg(friendly(err));
+            } finally {
+                busy(form, false);
+            }
+        };
+
+        $('magic').onclick = async () => {
+            const email = $('f-email').value.trim();
+            if (!/^\S+@\S+\.\S+$/.test(email)) { msg('Enter your email above first, then tap the link option.'); $('f-email').focus(); return; }
+            if (mode === 'signup' && !$('f-consent').checked) { msg('Please confirm you\'re 13+ and agree to the Terms and Privacy Policy.'); return; }
+            $('magic').disabled = true;
+            const display_name = $('f-name').value.trim().slice(0, 60);
+            const { error } = await sb.auth.signInWithOtp({
+                email,
+                options: { emailRedirectTo: here(), shouldCreateUser: mode === 'signup', data: display_name ? { display_name } : undefined }
+            });
+            $('magic').disabled = false;
+            if (error) {
+                msg(/signups not allowed|user not found/i.test(error.message) ? 'No account with that email yet — switch to "Create account".' : friendly(error));
+                return;
+            }
+            sent(`We sent a sign-in link to ${email}.`, email, '');
+        };
+
+        $('resend').onclick = async () => {
+            if (!lastEmail.email) return;
+            $('resend').disabled = true;
+            const { error } = await sb.auth.resend({ type: 'signup', email: lastEmail.email, options: { emailRedirectTo: here({ confirmed: '1' }) } });
+            $('resend').disabled = false;
+            if (error) msg(friendly(error)); else msg('Sent again — check your inbox.', 'ok');
+        };
+
+        $('form-forgot').onsubmit = async e => {
+            e.preventDefault();
+            const email = $('r-email').value.trim();
+            if (!/^\S+@\S+\.\S+$/.test(email)) { msg('Please enter a valid email address.'); return; }
+            const form = e.currentTarget;
+            busy(form, true);
+            const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: here({ mode: 'update' }) });
+            busy(form, false);
+            // Same message whether or not the account exists.
+            if (error && !/not found/i.test(error.message)) { msg(friendly(error)); return; }
+            sent(`If ${email} has a WebDesks account, a reset link is on its way.`, '', '');
+        };
+
+        $('form-update').onsubmit = async e => {
+            e.preventDefault();
+            const a = $('u-password').value, b = $('u-password2').value;
+            if (a.length < 8) { msg('Passwords need at least 8 characters.'); return; }
+            if (a !== b) { msg('Those passwords don\'t match.'); return; }
+            const form = e.currentTarget;
+            busy(form, true);
+            const { error } = await sb.auth.updateUser({ password: a });
+            busy(form, false);
+            if (error) { msg(friendly(error)); return; }
+            msg('Password updated. Taking you to your Desk…', 'ok');
+            setTimeout(goNext, 900);
+        };
+
+        $('signedin-out').onclick = async () => {
+            // Hand off to the app so it saves and clears the current Desk properly.
+            location.href = '/?signout=1';
+        };
+
+        init().catch(e => { show('auth'); setMode('signin'); msg(friendly(e)); });
+    })();
+    </script>
+</body>
+</html>
