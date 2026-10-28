@@ -54,6 +54,24 @@ The planner is built to be the tab you open every morning. It lives in
 - **Back up / Restore** (in the Pages sidebar) saves every planner store to one
   JSON file.
 
+## Everyday helpers (`extras.js`)
+
+- **Smart quick add** — type "pay rent next friday 5pm" in Tasks, the
+  dashboard, Today's brain dump or the ⌘K palette and it becomes a task dated
+  Fri 5:00 PM titled "Pay rent". A live hint shows what was understood.
+- **Search everything** — ⌘K finds tasks, events, pages (including their
+  text), chores and bills as well as tools, typo-tolerant, and can add what
+  you typed as a task.
+- **Touch drag & drop** — reorder tasks and move board cards with a finger
+  (HTML5 drag events never fire on phones).
+- **Reminders** — timed tasks and events (at the time or up to an hour
+  before), all-day events, bills due today/tomorrow and chore time. System
+  notifications when allowed, otherwise an in-app alert with a chime. They run
+  while WebDesks is open; on iPhone, system notifications need WebDesks added
+  to the Home Screen.
+- **Undo** — deleting a task, event, bill, chore, page or board card shows an
+  Undo button for a few seconds.
+
 ## Accounts & Desk sync
 
 Signing in is optional. Guests keep everything in `localStorage` exactly as
@@ -112,6 +130,21 @@ clears this browser's copy.
    `SUPABASE_EMAIL_ENABLED` in the Netlify site's environment variables and the
    build step writes them for you.
 
+## Design & performance
+
+v0.24 replaced the frosted-glass look with solid "paper" cards, a static
+background and roomier spacing (`<style id="wd-design">` in `index.html`). It
+also fixed iOS Safari's "A problem repeatedly occurred" crash loop: every tab
+used to stay painted as an invisible full-screen layer full of
+`backdrop-filter` blurs over an animated background, roughly 790 MB of layer
+memory on a 3× iPhone. Now only the active tab is painted (`visibility:
+hidden` on the rest), there's no blur on touch devices, the background is
+static and Focus Town only animates while it's on screen (about 57 MB).
+
+The sidebar groups (Life Planner, Workspace, Focus, Tools) collapse on desktop;
+Focus and Tools start collapsed and open automatically when you jump to one of
+their tools.
+
 ## Architecture
 
 Everything lives in `index.html`:
@@ -142,6 +175,9 @@ the features is theirs, and they are worth your stars:
 
 | Project | Stars | What we took from it |
 | --- | --- | --- |
+| [wanasit/chrono](https://github.com/wanasit/chrono) | ~5k | Powers smart quick add (natural-language dates); loaded on first use |
+| [krisk/Fuse](https://github.com/krisk/Fuse) | ~21k | Powers "search everything" in the ⌘K palette |
+| [SortableJS/Sortable](https://github.com/SortableJS/Sortable) | ~31k | Touch-friendly drag & drop for Tasks and the Project Board |
 | [fullcalendar/fullcalendar](https://github.com/fullcalendar/fullcalendar) | ~21k | Powers the Calendar's month/week/day/agenda views; loaded lazily |
 | [codex-team/editor.js](https://github.com/codex-team/editor.js) | ~32k | Powers Pages, the Notion-style block editor, plus its official header/list/checklist/quote/table/marker plugins |
 | [catdad/canvas-confetti](https://github.com/catdad/canvas-confetti) | ~13k | The celebration when you finish a chore, task or bill |
@@ -158,7 +194,6 @@ the features is theirs, and they are worth your stars:
 | [ffmpegwasm/ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) | ~15k | Powers the Media Converter |
 | [soldair/node-qrcode](https://github.com/soldair/node-qrcode) | ~8k | Powers the QR code generator |
 | [Hopding/pdf-lib](https://github.com/Hopding/pdf-lib) | ~8k | Powers the PDF Merger |
-| [krisk/Fuse](https://github.com/krisk/Fuse) | ~19k | Scoring model behind the command palette's fuzzy search |
 
 The command palette itself follows the launcher pattern popularised by VS Code
 and adopted by it-tools: substring matches rank first, then subsequence matches
