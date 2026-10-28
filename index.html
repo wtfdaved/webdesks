@@ -16,11 +16,11 @@
     
     <!-- Primary SEO -->
     <title>WebDesks | Free Online Alarm Clock, Pomodoro Timer, PDF Merger, Image to Text OCR, JSON Formatter &amp; 18 More Tools</title>
-    <meta name="description" content="23 free browser tools in one tab: alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, free online OCR (image to text), developer toolkit (JSON formatter, Base64, SHA hash, JWT decoder, UUID, QR code), audio mixer, WebM to MP4 converter, whiteboard, kanban board & more. No download. 100% private.">
-    <meta name="keywords" content="free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
+    <meta name="description" content="28 free browser tools in one tab: daily planner with calendar (month, week, day), ADHD chore organizer, bill tracker, Notion-style pages, alarm clock, Pomodoro timer, stopwatch, PDF merger, screen recorder, free online OCR (image to text), developer toolkit (JSON formatter, Base64, SHA hash, JWT decoder, UUID, QR code), audio mixer, WebM to MP4 converter, whiteboard, kanban board & more. No download. 100% private.">
+    <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.21.0">
+    <meta name="generator" content="WebDesks v0.22.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -30,7 +30,7 @@
     <meta property="og:url" content="https://webdesks.app/">
     <meta property="og:site_name" content="WebDesks">
     <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="WebDesks | 23 Free Online Productivity &amp; Developer Tools in One Tab">
+    <meta property="og:title" content="WebDesks | 28 Free Online Productivity, Planner &amp; Developer Tools in One Tab">
     <meta property="og:description" content="Alarm clock, Pomodoro timer, PDF merger, screen recorder, image-to-text OCR, dev toolkit, whiteboard, kanban board &amp; more — free, no download, 100% private.">
     <meta property="og:image" content="https://webdesks.app/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -41,7 +41,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@webdesks">
     <meta name="twitter:url" content="https://webdesks.app/">
-    <meta name="twitter:title" content="WebDesks | 23 Free Online Tools in One Browser Tab">
+    <meta name="twitter:title" content="WebDesks | 28 Free Online Tools in One Browser Tab">
     <meta name="twitter:description" content="Alarm clock, PDF merger, screen recorder, image-to-text OCR, JSON formatter, QR generator &amp; 17 more free tools. No download.">
     <meta name="twitter:image" content="https://webdesks.app/og-image.png">
     <meta name="twitter:image:alt" content="WebDesks productivity suite preview">
@@ -942,6 +942,44 @@
         }
         .sidebar-legal a:hover { color: #4f46e5; }
         .dark .sidebar-legal a:hover { color: #818cf8; }
+
+        /* ── Life planner: FullCalendar + Editor.js theming ───────── */
+        #cal-root {
+            --fc-border-color: rgba(148, 163, 184, 0.3);
+            --fc-today-bg-color: rgba(99, 102, 241, 0.08);
+            --fc-page-bg-color: transparent;
+            --fc-neutral-bg-color: rgba(148, 163, 184, 0.12);
+            --fc-list-event-hover-bg-color: rgba(99, 102, 241, 0.1);
+            --fc-button-bg-color: #4f46e5;
+            --fc-button-border-color: #4f46e5;
+            --fc-button-hover-bg-color: #4338ca;
+            --fc-button-hover-border-color: #4338ca;
+            --fc-button-active-bg-color: #3730a3;
+            --fc-button-active-border-color: #3730a3;
+            --fc-now-indicator-color: #ef4444;
+            font-size: 0.85rem;
+        }
+        #cal-root .fc-toolbar-title { font-size: 1.25rem; font-weight: 900; }
+        #cal-root .fc-button { border-radius: 0.75rem; font-weight: 700; text-transform: capitalize; box-shadow: none !important; }
+        #cal-root .fc-event { border-radius: 0.4rem; padding: 0 2px; cursor: pointer; }
+        #cal-root .fc-done { opacity: 0.7; text-decoration: line-through; }
+        #cal-root .fc-daygrid-day-number, #cal-root .fc-col-header-cell-cushion { color: inherit; text-decoration: none; }
+        .dark #cal-root .fc-list-day-cushion { background: rgba(30, 41, 59, 0.8); }
+        .dark #cal-root .fc-theme-standard .fc-popover { background: #0f172a; }
+        @media (max-width: 640px) { #cal-root .fc-toolbar-title { font-size: 1rem; } #cal-root .fc-button { padding: 0.3rem 0.5rem; font-size: 0.75rem; } }
+        .life-editor .ce-block__content, .life-editor .ce-toolbar__content { max-width: 52rem; }
+        .life-editor h1.ce-header { font-size: 2rem; font-weight: 900; }
+        .life-editor h2.ce-header { font-size: 1.5rem; font-weight: 800; }
+        .life-editor h3.ce-header { font-size: 1.2rem; font-weight: 700; }
+        .life-editor .cdx-quote__text { min-height: 0; font-style: italic; }
+        .life-editor .cdx-checklist__item--checked .cdx-checklist__item-text { text-decoration: line-through; opacity: 0.6; }
+        .dark .life-editor .ce-toolbar__plus, .dark .life-editor .ce-toolbar__settings-btn { color: #cbd5e1; background: transparent; }
+        .dark .life-editor .ce-toolbar__plus:hover, .dark .life-editor .ce-toolbar__settings-btn:hover { background: rgba(148, 163, 184, 0.2); }
+        .dark .life-editor .ce-block--selected .ce-block__content { background: rgba(99, 102, 241, 0.25); }
+        .dark .life-editor .cdx-input, .dark .life-editor .tc-table, .dark .life-editor .tc-row, .dark .life-editor .tc-cell { border-color: rgba(148, 163, 184, 0.3); }
+        .dark .life-editor .ce-popover, .dark .life-editor .ce-inline-toolbar, .dark .life-editor .ce-conversion-toolbar { color: #0f172a; }
+        .dark .life-editor .cdx-marker { background: rgba(250, 204, 21, 0.35); color: inherit; }
+        .dark .life-editor .tc-add-row:hover, .dark .life-editor .tc-add-column:hover, .dark .life-editor .tc-add-row:hover:before { background: rgba(148, 163, 184, 0.15); }
     </style>
     
     <script>
@@ -1014,7 +1052,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.21.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.22.0</span>
             </div>
             <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="trophy" class="w-4 h-4"></i>
@@ -1057,7 +1095,34 @@
     <aside role="navigation" aria-label="Main navigation" class="order-last md:order-first w-full md:w-20 lg:w-64 glass md:m-3 rounded-none md:rounded-3xl flex md:flex-col shrink-0 z-50 transition-all duration-300 h-20 md:h-auto overflow-hidden border-t md:border-t-0 border-white/20">
         <!-- Navigation -->
         <nav class="flex-1 flex md:flex-col overflow-x-auto md:overflow-y-auto p-2 md:p-3 space-x-1 md:space-x-0 md:space-y-1 no-scrollbar items-center md:items-stretch">
-            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-2 tracking-widest">Workspace</div>
+            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-2 tracking-widest">Life Planner</div>
+
+            <button onclick="app.switchTab('today')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="today">
+                <i data-lucide="sun" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Today</span>
+            </button>
+
+            <button onclick="app.switchTab('calendar')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="calendar">
+                <i data-lucide="calendar-days" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Calendar</span>
+            </button>
+
+            <button onclick="app.switchTab('pages')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="pages">
+                <i data-lucide="notebook-pen" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Pages</span>
+            </button>
+
+            <button onclick="app.switchTab('chores')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="chores">
+                <i data-lucide="sparkles" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Chores</span>
+            </button>
+
+            <button onclick="app.switchTab('bills')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="bills">
+                <i data-lucide="receipt" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Bills</span>
+            </button>
+
+            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Workspace</div>
             
             <button onclick="app.switchTab('dashboard')" class="nav-btn active flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="dashboard">
                 <i data-lucide="home" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
@@ -1240,7 +1305,7 @@
                 <div class="glass p-2 rounded-[1.5rem] relative z-30">
                     <div class="flex items-center px-4 py-2">
                         <i data-lucide="search" class="w-5 h-5 text-slate-400 mr-3"></i>
-                        <input type="text" id="dash-search" placeholder="Search 23 tools — or press ⌘K for the command palette..." 
+                        <input type="text" id="dash-search" placeholder="Search 28 tools — or press ⌘K for the command palette..." 
                             class="bg-transparent border-none w-full text-lg font-medium focus:ring-0 placeholder:text-slate-400 text-slate-800 dark:text-slate-100"
                             oninput="app.handleSearch(this.value)">
                         <button onclick="app.openPalette()" title="Open the command palette (Ctrl/Cmd+K)" aria-label="Open the command palette"
@@ -1248,6 +1313,9 @@
                     </div>
                     <div id="search-results" class="hidden border-t border-slate-200 dark:border-slate-700/50 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
+
+                <!-- Morning check-in shortcut (filled by life.js) -->
+                <div id="life-dash-card"></div>
 
                 <!-- Hero: Focus Input -->
                 <div class="glass p-8 md:p-10 rounded-2xl relative overflow-hidden">
@@ -1419,6 +1487,74 @@
             </div>
         </div>
 
+        <!-- TODAY (morning check-in) — rendered by life.js -->
+        <div id="today" class="tab-content">
+            <div id="today-root"></div>
+        </div>
+
+        <!-- CALENDAR — FullCalendar, rendered by life.js -->
+        <div id="calendar" class="tab-content">
+            <div class="h-full flex flex-col gap-4 max-w-7xl mx-auto pb-20 md:pb-0">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h2 class="text-2xl font-black">Calendar</h2>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="app.toggleCalLayer('event')" data-cal-layer="event" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass text-xs font-bold transition-opacity"><span class="w-2.5 h-2.5 rounded-full" style="background:#6366f1"></span>Events</button>
+                        <button onclick="app.toggleCalLayer('task')" data-cal-layer="task" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass text-xs font-bold transition-opacity"><span class="w-2.5 h-2.5 rounded-full" style="background:#0ea5e9"></span>Tasks</button>
+                        <button onclick="app.toggleCalLayer('chore')" data-cal-layer="chore" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass text-xs font-bold transition-opacity"><span class="w-2.5 h-2.5 rounded-full" style="background:#10b981"></span>Chores</button>
+                        <button onclick="app.toggleCalLayer('bill')" data-cal-layer="bill" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full glass text-xs font-bold transition-opacity"><span class="w-2.5 h-2.5 rounded-full" style="background:#f59e0b"></span>Bills</button>
+                        <button onclick="app.exportICS()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all" title="Export events and bills as .ics (Google / Apple / Outlook)" aria-label="Export calendar"><i data-lucide="download" class="w-4 h-4"></i></button>
+                        <button onclick="app.openEventModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-1.5"><i data-lucide="plus" class="w-4 h-4"></i> Add</button>
+                    </div>
+                </div>
+                <div class="flex-1 min-h-[520px] glass rounded-[2rem] p-3 md:p-5 overflow-hidden">
+                    <div id="cal-root" class="h-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGES — Notion-style block editor (Editor.js), rendered by life.js -->
+        <div id="pages" class="tab-content">
+            <div class="h-full flex flex-col md:flex-row gap-4 max-w-7xl mx-auto pb-20 md:pb-0">
+                <div class="md:w-64 shrink-0 glass rounded-2xl p-3 flex flex-col max-h-[40vh] md:max-h-none">
+                    <div class="flex items-center justify-between px-2 mb-2">
+                        <h2 class="text-xl font-black">Pages</h2>
+                        <button onclick="app.openNewPageModal()" class="p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700" title="New page" aria-label="New page"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                    </div>
+                    <input id="pages-search" oninput="app.renderPagesList()" placeholder="Search pages…" class="w-full bg-white/60 dark:bg-slate-800/60 rounded-xl px-3 py-2 text-sm mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <div id="pages-list" class="flex-1 overflow-y-auto space-y-0.5"></div>
+                    <div class="flex gap-2 pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-700/60 text-[11px] font-bold text-slate-400">
+                        <button onclick="app.exportLife()" class="hover:text-indigo-500" title="Download a backup of tasks, calendar, chores, bills, pages and moods">Back up planner</button>
+                        <span>·</span>
+                        <label class="hover:text-indigo-500 cursor-pointer">Restore<input type="file" accept="application/json" class="hidden" onchange="app.importLife(this)"></label>
+                    </div>
+                </div>
+                <div class="flex-1 min-w-0 glass rounded-[2rem] flex flex-col overflow-hidden">
+                    <div class="flex items-center gap-2 px-6 md:px-12 pt-6">
+                        <button id="page-icon" onclick="app.cyclePageIcon()" class="text-4xl hover:scale-110 transition-transform" title="Change icon">📝</button>
+                        <div class="flex-1"></div>
+                        <span id="page-meta" class="text-[11px] text-slate-400 hidden sm:inline"></span>
+                        <button id="page-fav" onclick="app.togglePageFav()" class="p-2 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-700/60" title="Favourite" aria-label="Favourite page"><i data-lucide="star" class="w-4 h-4"></i></button>
+                        <button onclick="app.exportPageMarkdown()" class="p-2 rounded-lg hover:bg-slate-200/60 dark:hover:bg-slate-700/60" title="Export as Markdown" aria-label="Export page as Markdown"><i data-lucide="download" class="w-4 h-4"></i></button>
+                        <button onclick="app.deletePage()" class="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-red-500" title="Delete page" aria-label="Delete page"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                    <input id="page-title" oninput="app.renamePage(this.value)" placeholder="Untitled" class="bg-transparent px-6 md:px-12 pt-2 text-3xl md:text-4xl font-black focus:outline-none w-full">
+                    <div class="flex-1 overflow-y-auto px-6 md:px-12 pb-10 pt-4">
+                        <div id="page-editor" class="life-editor"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHORES (ADHD organiser) — rendered by life.js -->
+        <div id="chores" class="tab-content">
+            <div id="chores-root"></div>
+        </div>
+
+        <!-- BILLS — rendered by life.js -->
+        <div id="bills" class="tab-content">
+            <div id="bills-root"></div>
+        </div>
+
         <!-- SCRATCHPAD -->
         <div id="scratchpad" class="tab-content">
             <div class="h-full flex flex-col gap-4 max-w-5xl mx-auto">
@@ -1508,7 +1644,8 @@
                 
                 <div class="glass p-2 rounded-2xl flex gap-2 mb-6 shadow-xl">
                     <input type="text" id="task-input" placeholder="What needs to be done?" class="flex-1 bg-transparent px-6 py-4 focus:outline-none text-lg" onkeypress="if(event.key==='Enter') app.addTask()">
-                    <input type="time" id="task-time" class="bg-transparent border-l border-slate-300 dark:border-slate-700 px-4 text-sm text-slate-500 focus:outline-none hidden md:block">
+                    <input type="date" id="task-date" class="bg-transparent border-l border-slate-300 dark:border-slate-700 px-3 text-sm text-slate-500 focus:outline-none w-36" title="Due date — dated tasks show on the calendar" aria-label="Due date">
+                    <input type="time" id="task-time" class="bg-transparent border-l border-slate-300 dark:border-slate-700 px-4 text-sm text-slate-500 focus:outline-none hidden md:block" aria-label="Time">
                     <button onclick="app.addTask()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-bold transition-colors flex items-center gap-2">
                         <i data-lucide="plus" class="w-5 h-5"></i>
                         <span class="hidden md:inline">Add</span>
@@ -1518,7 +1655,11 @@
                 <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
                     <button onclick="app.filterTasks('all')" class="filter-btn active px-4 py-2 rounded-full text-xs font-bold uppercase bg-indigo-600 text-white" data-filter="all">All</button>
                     <button onclick="app.filterTasks('active')" class="filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase glass hover:bg-white/50" data-filter="active">Active</button>
+                    <button onclick="app.filterTasks('today')" class="filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase glass hover:bg-white/50" data-filter="today">Today</button>
+                    <button onclick="app.filterTasks('upcoming')" class="filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase glass hover:bg-white/50" data-filter="upcoming">Upcoming</button>
+                    <button onclick="app.filterTasks('inbox')" class="filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase glass hover:bg-white/50" data-filter="inbox">Inbox</button>
                     <button onclick="app.filterTasks('completed')" class="filter-btn px-4 py-2 rounded-full text-xs font-bold uppercase glass hover:bg-white/50" data-filter="completed">Completed</button>
+                    <button onclick="app.switchTab('calendar')" class="ml-auto px-4 py-2 rounded-full text-xs font-bold uppercase glass hover:bg-white/50 flex items-center gap-1.5 whitespace-nowrap"><i data-lucide="calendar-days" class="w-3.5 h-3.5"></i> Calendar</button>
                 </div>
 
                 <div class="flex-1 overflow-y-auto space-y-3 pr-2" id="task-list">
@@ -2785,10 +2926,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
             <span>Focus</span>
         </button>
-        <!-- Sound Studio -->
-        <button class="mob-tab" data-tab="audio" onclick="app.switchTab('audio')" aria-label="Sound Studio">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-            <span>Sounds</span>
+        <!-- Today (morning check-in) -->
+        <button class="mob-tab" data-tab="today" onclick="app.switchTab('today')" aria-label="Today">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            <span>Today</span>
         </button>
         <!-- More -->
         <button class="mob-tab" id="mob-more-btn" onclick="app.openMoreDrawer()" aria-label="More tools" aria-haspopup="dialog">
@@ -2928,6 +3069,11 @@
             ],
             searchItems: [
                 { id: 'dashboard', label: 'Dashboard', icon: 'home', keywords: 'home start' },
+                { id: 'today', label: 'Today — Morning Check-in', icon: 'sun', keywords: 'today morning check in daily planner mood energy priorities agenda routine' },
+                { id: 'calendar', label: 'Calendar', icon: 'calendar-days', keywords: 'calendar month week day agenda schedule events appointments planner' },
+                { id: 'pages', label: 'Pages (Notion-style)', icon: 'notebook-pen', keywords: 'notion pages notes docs journal mood board block editor wiki writing' },
+                { id: 'chores', label: 'Chores (ADHD Organizer)', icon: 'sparkles', keywords: 'adhd chores cleaning routine habits household chore chart schedule premade' },
+                { id: 'bills', label: 'Bills', icon: 'receipt', keywords: 'bills budget money payments due dates rent utilities subscriptions finance' },
                 { id: 'scratchpad', label: 'Scratchpad', icon: 'file-text', keywords: 'notes write text editor' },
                 { id: 'tasks', label: 'Task Manager', icon: 'check-circle-2', keywords: 'todo list jobs' },
                 { id: 'board', label: 'Project Board', icon: 'columns', keywords: 'kanban agile trello' },
@@ -3121,6 +3267,9 @@
                 this.initPalette();
                 this.initDevTools();
                 this.initOCR();
+                this.initLife();
+                if (this.currentTab === 'calendar' || this.currentTab === 'pages') this.onLifeTab(this.currentTab);
+                this.lifeMorningRedirect();
 
                 // Mobile v0.18.7 features
                 this.initMoreDrawer();
@@ -3248,6 +3397,9 @@
                 // Update document title for the active tab
                 const tabTitles = {
                     dashboard: 'WebDesks', scratchpad: 'Scratchpad | WebDesks',
+                    today: 'Today — Morning Check-in | WebDesks', calendar: 'Calendar & Planner | WebDesks',
+                    pages: 'Pages — Notion-style Notes | WebDesks', chores: 'ADHD Chore Organizer | WebDesks',
+                    bills: 'Bill Tracker | WebDesks',
                     tasks: 'Task Manager | WebDesks', board: 'Project Board | WebDesks',
                     whiteboard: 'Whiteboard | WebDesks', clock: 'Alarm Clock | WebDesks',
                     timer: 'Focus Timer | WebDesks', stopwatch: 'Stopwatch | WebDesks',
@@ -3261,6 +3413,9 @@
                     ocr: 'Image to Text — Free Online OCR | WebDesks'
                 };
                 document.title = tabTitles[tabId] || 'WebDesks';
+
+                // Life planner tabs lazy-load their libraries on first open
+                if (this.onLifeTab) this.onLifeTab(tabId);
 
                 // Focus Town animation loop lifecycle
                 if (tabId === 'focustown') {
@@ -3782,6 +3937,10 @@
                 let filtered = this.tasks;
                 if (this.taskFilter === 'active') filtered = this.tasks.filter(t => !t.done);
                 if (this.taskFilter === 'completed') filtered = this.tasks.filter(t => t.done);
+                const todayYmd = this._todayYmd();
+                if (this.taskFilter === 'today') filtered = this.tasks.filter(t => t.date && (t.date === todayYmd || (!t.done && t.date < todayYmd)));
+                if (this.taskFilter === 'upcoming') filtered = this.tasks.filter(t => !t.done && t.date > todayYmd).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+                if (this.taskFilter === 'inbox') filtered = this.tasks.filter(t => !t.done && !t.date);
                 
                 const activeCount = this.tasks.filter(t => !t.done).length;
                 stats.textContent = `${activeCount} active • ${this.tasks.length} total`;
@@ -3808,6 +3967,7 @@
                                 </button>
                                 <div class="flex-1">
                                     <span class="font-medium ${t.done ? 'line-through text-slate-400' : ''}">${this.escapeHtml(t.text)}</span>
+                                    ${t.date ? `<span class="ml-2 text-[10px] font-bold ${!t.done && t.date < todayYmd ? 'text-rose-500 bg-rose-50 dark:bg-rose-900/30' : 'text-sky-600 bg-sky-50 dark:bg-sky-900/30'} px-2 py-1 rounded-full">${t.date === todayYmd ? 'Today' : new Date(t.date + 'T00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>` : ''}
                                     ${t.time ? `<span class="ml-2 text-[10px] font-bold text-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 rounded-full">${t.time}</span>` : ''}
                                 </div>
                             </div>
@@ -3821,11 +3981,19 @@
                 localStorage.setItem('wd_tasks', JSON.stringify(this.tasks));
                 this._rebuildIcons();
                 this.updateTaskProgress();
+                // Keep Today, the calendar and the dashboard card in step (life.js).
+                if (this._lifeReady) this.lifeRefresh();
+            },
+
+            _todayYmd() {
+                const d = new Date();
+                return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
             },
 
             addTask() {
                 const input = document.getElementById('task-input');
                 const timeInput = document.getElementById('task-time');
+                const dateInput = document.getElementById('task-date');
                 const text = input.value.trim();
                 
                 if (!text) return;
@@ -3833,12 +4001,15 @@
                 this.tasks.push({ 
                     text, 
                     time: timeInput.value, 
+                    // A time with no date means today, so it lands on the calendar.
+                    date: dateInput.value || (timeInput.value ? this._todayYmd() : ''),
                     done: false,
-                    id: Date.now()
+                    id: this._taskId ? this._taskId() : Date.now()
                 });
                 
                 input.value = '';
                 timeInput.value = '';
+                dateInput.value = '';
                 this.renderTasks();
             },
 
@@ -4360,7 +4531,7 @@
                 const existing = history.findIndex(d => d.date === today);
                 if (existing >= 0) history[existing].mood = level;
                 else history.push({ date: today, mood: level });
-                history = history.slice(-7);
+                history = history.slice(-400);
                 localStorage.setItem('wd_mood_history', JSON.stringify(history));
                 document.querySelectorAll('.mood-btn').forEach(btn => {
                     const btnLevel = parseInt(btn.dataset.level);
@@ -7310,9 +7481,10 @@
             // ═══════════════════════════════════════════════════════
 
             // ── Mobile Tab Order (for swipe + More drawer) ──────────
-            tabOrder: ['dashboard','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder','mediaconv','devtools','ocr'],
+            tabOrder: ['dashboard','today','calendar','pages','chores','bills','scratchpad','tasks','board','whiteboard','clock','timer','stopwatch','focustown','audio','breathing','calculator','converter','colorpicker','pdf','zones','onair','recorder','mediaconv','devtools','ocr'],
             tabIcons: {
-                dashboard:'home', scratchpad:'file-text', tasks:'check-circle-2',
+                dashboard:'home', today:'sun', calendar:'calendar-days', pages:'notebook-pen',
+                chores:'sparkles', bills:'receipt', scratchpad:'file-text', tasks:'check-circle-2',
                 board:'columns', whiteboard:'pencil', clock:'clock', timer:'hourglass',
                 stopwatch:'timer', focustown:'building-2', audio:'headphones',
                 breathing:'wind', calculator:'calculator', converter:'arrow-left-right',
@@ -7321,7 +7493,8 @@
                 devtools:'terminal', ocr:'scan-text'
             },
             tabLabels: {
-                dashboard:'Home', scratchpad:'Notepad', tasks:'Tasks',
+                dashboard:'Home', today:'Today', calendar:'Calendar', pages:'Pages',
+                chores:'Chores', bills:'Bills', scratchpad:'Notepad', tasks:'Tasks',
                 board:'Board', whiteboard:'Draw', clock:'Clock', timer:'Timer',
                 stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Mixer',
                 breathing:'Breathing', calculator:'Calc', converter:'Convert',
@@ -7571,7 +7744,7 @@
                     btn.classList.toggle('active', btn.dataset.tab === tabId);
                 });
                 // If it's a tab not in the primary 4, highlight "More"
-                const primaryTabs = ['dashboard','tasks','timer','audio'];
+                const primaryTabs = ['dashboard','tasks','timer','today'];
                 const moreBtn = document.getElementById('mob-more-btn');
                 if (moreBtn) moreBtn.classList.toggle('active', !primaryTabs.includes(tabId));
             }
@@ -7580,5 +7753,7 @@
         // Initialize on load
         window.addEventListener('load', () => app.init());
     </script>
+    <!-- Life planner: Today, Calendar, Pages, Chores, Bills -->
+    <script src="life.js"></script>
 </body>
 </html>
