@@ -1,9 +1,10 @@
-const CACHE_VERSION = 'webdesks-v23.0';
+const CACHE_VERSION = 'webdesks-v24.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/life.js',
   '/account.js',
+  '/extras.js',
   '/login.html',
   '/manifest.json',
   '/about.html',

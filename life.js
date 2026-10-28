@@ -393,17 +393,24 @@
             this._saveCheckins();
         },
 
-        todayQuickAdd(e) {
+        async todayQuickAdd(e) {
             if (e && e.key && e.key !== 'Enter') return;
             const input = document.getElementById('today-capture');
             const text = input.value.trim();
             if (!text) return;
             const when = document.getElementById('today-capture-when').value;
-            const date = when === 'today' ? todayStr() : when === 'tomorrow' ? addDays(todayStr(), 1) : '';
-            this.tasks.push({ text, time: '', date, done: false, id: this._taskId() });
+            let date = when === 'today' ? todayStr() : when === 'tomorrow' ? addDays(todayStr(), 1) : '';
+            let time = '';
+            let title = text;
+            // A date typed into the text ("dentist thursday 3pm") wins over the dropdown.
+            if (this.smartParse) {
+                const p = await this.smartParse(text);
+                if (p.date) { date = p.date; time = p.time; title = p.title; }
+            }
+            this.tasks.push({ text: title, time, date, done: false, id: this._taskId() });
             input.value = '';
             this.renderTasks();
-            this.showToast(date ? `Added to ${when}` : 'Added to your inbox');
+            this.showToast(date ? `Added for ${date === todayStr() ? 'today' : fmtDay(date)}${time ? ' at ' + fmtTime(time) : ''}` : 'Added to your inbox');
         },
 
         todayToggleTask(id) {
@@ -466,8 +473,8 @@
                 <button onclick="app.todaySetEnergy(${l})" class="flex-1 py-3 rounded-2xl font-bold text-sm transition-all ${c.energy === l ? 'ring-2 ring-indigo-400 bg-indigo-50 dark:bg-indigo-900/40' : 'opacity-60 hover:opacity-100 hover:bg-slate-100 dark:hover:bg-slate-800/50'}">${ENERGY[l].icon} ${ENERGY[l].label}</button>`).join('');
 
             root.innerHTML = `
-            <div class="max-w-6xl mx-auto space-y-6 pb-24 md:pb-10">
-                <div class="glass p-6 md:p-8 rounded-[2rem] relative overflow-hidden">
+            <div class="max-w-6xl mx-auto space-y-8 pb-24 md:pb-10">
+                <div class="glass p-6 md:p-10 rounded-[2rem] relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-amber-400/10 via-pink-400/5 to-indigo-500/10 pointer-events-none"></div>
                     <div class="relative flex flex-wrap items-end justify-between gap-4">
                         <div>
@@ -482,8 +489,8 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="space-y-6 lg:col-span-1">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="space-y-8 lg:col-span-1">
                         <div class="glass p-5 rounded-2xl">
                             <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">1 · How are you feeling?</div>
                             <div class="flex gap-1">${moodBtns}</div>
@@ -501,7 +508,7 @@
                         </div>
                     </div>
 
-                    <div class="space-y-6 lg:col-span-2">
+                    <div class="space-y-8 lg:col-span-2">
                         <div class="glass p-5 rounded-2xl">
                             <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">2 · Today's top 3</div>
                             ${c.top.map((x, i) => `
@@ -529,7 +536,7 @@
                             </div>
                             ${!events.length && !dueTasks.length && !overdue.length ? '<p class="text-sm text-slate-400 py-2">Nothing scheduled. Add something below or drag tasks onto today in the calendar.</p>' : ''}
                             <div class="flex gap-2 mt-4">
-                                <input id="today-capture" onkeydown="app.todayQuickAdd(event)" placeholder="Brain dump — type a task and hit Enter" class="${this._inputBase} flex-1 min-w-0">
+                                <input id="today-capture" onkeydown="app.todayQuickAdd(event)" placeholder="Brain dump — “dentist thursday 3pm” and hit Enter" class="${this._inputBase} flex-1 min-w-0">
                                 <select id="today-capture-when" class="${this._inputBase} shrink-0" aria-label="When">
                                     <option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="inbox">Inbox</option>
                                 </select>
@@ -555,12 +562,16 @@
                         </div>
                     </div>
                 </div>
-                <label class="flex items-center gap-2 text-xs text-slate-400 justify-center">
+                <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-slate-400">
+                <button data-reminder-btn onclick="app.openReminderSettings()" class="glass px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 hover:ring-2 hover:ring-indigo-400"></button>
+                <label class="flex items-center gap-2">
                     <input type="checkbox" ${load('wd_today_prefs', { autoOpen: true }).autoOpen ? 'checked' : ''} onchange="localStorage.setItem('wd_today_prefs', JSON.stringify({autoOpen:this.checked}))" class="accent-indigo-500">
                     Open this check-in automatically the first time I visit each day
                 </label>
+                </div>
             </div>`;
             this._rebuildIcons();
+            if (this.renderReminderButtons) this.renderReminderButtons();
         },
 
         _moodGrid(days, cellCls) {
