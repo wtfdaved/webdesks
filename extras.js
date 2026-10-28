@@ -43,6 +43,7 @@
         deleteEvent: app.deleteEvent,
         deleteBill: app.deleteBill,
         removeChore: app.removeChore,
+        renderAccountButton: app.renderAccountButton,
         init: app.init
     };
 
@@ -500,8 +501,26 @@
             });
         },
 
+        // Home hero: today's date, the signed-in name, and the sign-up card for guests.
+        renderHomeHeader() {
+            const date = document.getElementById('home-date');
+            if (date) date.textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+            const nameEl = document.getElementById('home-name');
+            const name = (this.profile && this.profile.display_name) || '';
+            if (nameEl) nameEl.textContent = name ? `, ${name.split(' ')[0]}` : '';
+            const guest = document.getElementById('home-guest');
+            if (guest) guest.hidden = !this.accountEnabled || !!this.account;
+        },
+
+        renderAccountButton() {
+            orig.renderAccountButton.call(this);
+            this.renderHomeHeader && this.renderHomeHeader();
+        },
+
         init() {
             orig.init.call(this);
+            this.renderHomeHeader();
+            setInterval(() => this.renderHomeHeader(), 60000);
             // Smart-date hints under the quick-add boxes.
             const taskInput = document.getElementById('task-input');
             if (taskInput && !document.getElementById('task-smart-hint')) {

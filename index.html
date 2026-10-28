@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.24.0">
+    <meta name="generator" content="WebDesks v0.25.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -68,7 +68,7 @@
     <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bricolage+Grotesque:wght@600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root { 
@@ -1218,6 +1218,132 @@
             .tab-content, .tab-content.active { transition: none; transform: none; }
         }
     </style>
+    <!-- HOME v0.25 — hero, toolkit tiles, bento widgets, floating mobile nav -->
+    <style id="wd-home">
+        .font-display { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; }
+        .home > * + * { margin-top: 2.5rem; }
+        @media (max-width: 767px) { .home > * + * { margin-top: 1.75rem; } }
+
+        /* Hero: static layered gradients — vivid but cheap to paint (no blur, no animation). */
+        .home-hero {
+            position: relative; overflow: hidden; color: #fff;
+            border-radius: 2rem; padding: 2.5rem 2.75rem 2.25rem;
+            background:
+                radial-gradient(700px 380px at 100% 0%, rgba(244, 114, 182, .55), transparent 60%),
+                radial-gradient(600px 400px at 0% 100%, rgba(56, 189, 248, .45), transparent 60%),
+                linear-gradient(135deg, #4338ca 0%, #6d28d9 55%, #9333ea 100%);
+            box-shadow: 0 30px 60px -30px rgba(76, 29, 149, .55);
+        }
+        .dark .home-hero { background:
+                radial-gradient(700px 380px at 100% 0%, rgba(236, 72, 153, .35), transparent 60%),
+                radial-gradient(600px 400px at 0% 100%, rgba(14, 165, 233, .25), transparent 60%),
+                linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4c1d95 100%); }
+        .hero-glow { position: absolute; right: -6rem; top: -6rem; width: 22rem; height: 22rem; border-radius: 999px;
+            background: radial-gradient(circle, rgba(255,255,255,.22), transparent 65%); pointer-events: none; }
+        .hero-eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+        .hero-title { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-weight: 800; letter-spacing: -.03em;
+            font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1.02; margin-top: .4rem; }
+        #greeting { text-transform: none; }
+        .hero-weather { display: flex; align-items: center; gap: .5rem; padding: .55rem .9rem; border-radius: 999px;
+            background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.25); color: #fff; flex-shrink: 0; }
+        .hero-weather svg, .hero-weather i { color: #fde68a !important; }
+        .hero-focus { margin-top: 1.75rem; display: flex; align-items: center; gap: .75rem; padding: 1rem 1.25rem;
+            border-radius: 1.25rem; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); }
+        .hero-focus:focus-within { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.5); }
+        .hero-focus input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: #fff;
+            font-size: clamp(1.05rem, 2vw, 1.35rem); font-weight: 600; }
+        .hero-focus input::placeholder { color: rgba(255,255,255,.7); }
+        .hero-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+        .hero-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .8rem; border-radius: 999px;
+            background: rgba(255,255,255,.14); font-size: .85rem; font-weight: 600; }
+        .hero-chip b { font-weight: 800; }
+        .hero-ctas { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+        .hero-cta { display: inline-flex; align-items: center; gap: .5rem; padding: .8rem 1.25rem; border-radius: 1rem; font-weight: 800; }
+        .hero-cta.primary { background: #fff; color: #3730a3; box-shadow: 0 10px 25px -12px rgba(0,0,0,.4); }
+        .hero-cta.primary:hover { background: #eef2ff; }
+        .hero-cta.ghost { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.28); }
+        .hero-cta.ghost:hover { background: rgba(255,255,255,.22); }
+
+        .home-search { background: var(--surface); border: 1px solid var(--border); border-radius: 1.25rem; box-shadow: var(--shadow-card); }
+        .home-search:focus-within { box-shadow: 0 0 0 3px rgba(99,102,241,.25), var(--shadow-card); }
+
+        .home-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+        .home-section-head h2 { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -.02em; }
+        .home-link { display: inline-flex; align-items: center; gap: .3rem; font-weight: 700; font-size: .85rem; color: var(--accent); }
+        .home-link:hover { text-decoration: underline; }
+
+        .app-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+        @media (max-width: 1023px) { .app-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 639px)  { .app-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; } }
+        .app-tile { display: flex; align-items: center; gap: .9rem; text-align: left; padding: 1rem 1.1rem; border-radius: 1.25rem;
+            background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); transition: transform .15s ease, box-shadow .15s ease, border-color .15s; }
+        @media (hover: hover) { .app-tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--border-strong); } }
+        .app-tile:active { transform: scale(.98); }
+        .app-icon { width: 2.75rem; height: 2.75rem; border-radius: .9rem; display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 8px 16px -10px rgba(0,0,0,.45); }
+        .app-title { display: block; font-weight: 800; font-size: .98rem; letter-spacing: -.01em; }
+        .app-sub { display: block; font-size: .78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .new-badge { display: inline-block; vertical-align: middle; margin-left: .25rem; padding: .05rem .4rem; border-radius: 999px; background: #fef3c7; color: #b45309; font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+        /* Phones: compact two-column launcher rows (icon + name), like an app drawer. */
+        @media (max-width: 639px) {
+            .app-tile { gap: .65rem; padding: .7rem .75rem; border-radius: 1.1rem; }
+            .app-icon { width: 2.3rem; height: 2.3rem; border-radius: .75rem; }
+            .app-icon svg { width: 1.1rem; height: 1.1rem; }
+            .app-title { font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .app-sub { display: none; }
+            .new-badge { display: none; }
+        }
+
+        .bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+        @media (max-width: 1023px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bento > .lg\:col-span-2 { grid-column: span 2; } }
+        @media (max-width: 639px) { .bento { grid-template-columns: minmax(0, 1fr); gap: .85rem; } .bento > .lg\:col-span-2 { grid-column: auto; } }
+        .widget { background: var(--surface); border: 1px solid var(--border); border-radius: 1.5rem; padding: 1.35rem 1.4rem; box-shadow: var(--shadow-card); min-width: 0; }
+        .widget-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; }
+        .widget-label { font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+        .widget-input { border-radius: 1rem; padding: .8rem 1rem; background: var(--bg); border: 1px solid var(--border); outline: none; }
+        .widget-input:focus { box-shadow: 0 0 0 3px rgba(16,185,129,.25); }
+        .widget-quote { background: linear-gradient(135deg, var(--surface), var(--accent-soft)); }
+        #mood-buttons .mood-btn { font-size: 1.6rem; }
+        #water-grid > * { flex: 0 0 auto; }
+
+        .home-guest { border-radius: 2rem; padding: 2rem; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); }
+        .guest-perk { display: flex; align-items: center; gap: .6rem; padding: .9rem 1rem; border-radius: 1rem; background: var(--bg); font-weight: 600; }
+        .guest-perk span { font-size: 1.2rem; }
+
+        @media (max-width: 767px) {
+            .home-hero { border-radius: 1.6rem; padding: 1.5rem 1.25rem 1.4rem; }
+            .hero-focus { margin-top: 1.25rem; padding: .85rem 1rem; }
+            .hero-ctas { margin-top: 1.1rem; }
+            .hero-cta.primary { flex: 1 1 auto; justify-content: center; padding: .85rem 1rem; }
+            .hero-cta.ghost { flex: 0 0 auto; padding: .85rem 1rem; }
+            .hero-cta .cta-long { display: none; }
+            .hero-chip { font-size: .8rem; padding: .35rem .7rem; }
+            /* Brand name back in the compact header. */
+            #app-header .hidden.sm\:block { display: block !important; }
+            #app-header .hidden.sm\:block > span:last-child { display: none; }
+            .hero-weather { padding: .45rem .7rem; font-size: .85rem; }
+            .home-guest { padding: 1.4rem; border-radius: 1.6rem; }
+
+            /* Header: compact brand + actions; the big clock lives on the Clock tab. */
+            #app-header { min-height: 3.5rem; padding-top: env(safe-area-inset-top); }
+            #app-header > div:nth-child(2) { display: none; }
+
+            /* Floating bottom bar with a pill highlight on the active tab. */
+            #mobile-nav {
+                left: .75rem !important; right: .75rem !important;
+                bottom: calc(.6rem + env(safe-area-inset-bottom, 0px)) !important;
+                height: 4.1rem !important; padding: .35rem !important; gap: .15rem;
+                border-radius: 1.5rem !important; border: 1px solid var(--border) !important;
+                box-shadow: 0 18px 40px -16px rgba(15, 23, 42, .35) !important;
+            }
+            .mob-tab { border-radius: 1.1rem !important; font-size: 10.5px !important; text-transform: none !important; letter-spacing: 0 !important; font-weight: 700; color: var(--muted) !important; }
+            .mob-tab.active { background: var(--accent-soft) !important; color: var(--accent) !important; }
+            #mob-more-btn { background: transparent !important; }
+            #mob-more-btn.active { background: var(--accent-soft) !important; }
+            main { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important; }
+            /* Toasts float above the bottom bar instead of covering it. */
+            body > .fixed.bottom-8[role="status"] { bottom: calc(5.8rem + env(safe-area-inset-bottom, 0px)) !important; max-width: calc(100vw - 2rem); text-align: center; border-radius: 1.25rem; }
+        }
+    </style>
 </head>
 <body class="text-slate-800 dark:text-slate-100 h-screen flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
 
@@ -1233,7 +1359,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.24.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.25.0</span>
             </div>
             <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="trophy" class="w-4 h-4"></i>
@@ -1481,169 +1607,178 @@
             <i data-lucide="minimize-2" class="w-5 h-5"></i>
         </button>
         
-        <!-- DASHBOARD -->
+        <!-- DASHBOARD (home) -->
         <div id="dashboard" class="tab-content active">
-            <div class="dash-wrap max-w-6xl mx-auto space-y-8 pb-24 md:pb-16">
-                <!-- Search Bar -->
-                <div class="glass p-2 rounded-[1.5rem] relative z-30">
-                    <div class="flex items-center px-4 py-2">
-                        <i data-lucide="search" class="w-5 h-5 text-slate-400 mr-3"></i>
-                        <input type="text" id="dash-search" placeholder="Search 28 tools — or press ⌘K for the command palette..." 
-                            class="bg-transparent border-none w-full text-lg font-medium focus:ring-0 placeholder:text-slate-400 text-slate-800 dark:text-slate-100"
-                            oninput="app.handleSearch(this.value)">
-                        <button onclick="app.openPalette()" title="Open the command palette (Ctrl/Cmd+K)" aria-label="Open the command palette"
-                            class="hidden md:flex items-center gap-1 text-[10px] font-bold text-slate-400 border border-slate-300 dark:border-slate-600 rounded px-1.5 py-0.5 hover:text-indigo-500 hover:border-indigo-400 transition-colors">⌘K</button>
+            <div class="home max-w-6xl mx-auto pb-28 md:pb-16">
+
+                <!-- Hero: greeting, today's focus, what's on today -->
+                <section class="home-hero">
+                    <div class="hero-glow" aria-hidden="true"></div>
+                    <div class="relative">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="min-w-0">
+                                <div id="home-date" class="hero-eyebrow"></div>
+                                <h1 class="hero-title"><span id="greeting">Hello</span><span id="home-name"></span></h1>
+                            </div>
+                            <button class="hero-weather" onclick="app.toggleWeatherUnit()" title="Tap to switch °C/°F">
+                                <span id="weather-icon"><i data-lucide="cloud-sun" class="w-7 h-7"></i></span>
+                                <span id="weather-temp" class="font-bold">--°F</span>
+                            </button>
+                        </div>
+                        <label class="hero-focus">
+                            <span class="text-xl" aria-hidden="true">🎯</span>
+                            <input type="text" id="daily-focus" placeholder="What would make today great?" aria-label="Today's main focus">
+                        </label>
+                        <!-- Today's counts + call to action (life.js) -->
+                        <div id="life-dash-card"></div>
+                    </div>
+                </section>
+
+                <!-- Search -->
+                <div class="home-search relative z-30">
+                    <div class="flex items-center gap-3 px-5 py-3.5">
+                        <i data-lucide="search" class="w-5 h-5 text-slate-400 shrink-0"></i>
+                        <input type="text" id="dash-search" placeholder="Search tools, tasks, pages… (⌘K)" class="bg-transparent border-none w-full text-base md:text-lg font-medium focus:ring-0 focus:outline-none placeholder:text-slate-400" oninput="app.handleSearch(this.value)">
+                        <button onclick="app.openPalette()" title="Open the command palette (Ctrl/Cmd+K)" aria-label="Open the command palette" class="hidden md:flex items-center text-[11px] font-bold text-slate-400 border border-slate-300 dark:border-slate-600 rounded-md px-1.5 py-0.5 hover:text-indigo-500">⌘K</button>
                     </div>
                     <div id="search-results" class="hidden border-t border-slate-200 dark:border-slate-700/50 p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
                 </div>
 
-                <!-- Two-column dashboard: what matters today on the left, glanceable widgets on the right -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                    <div class="lg:col-span-2 space-y-8">
-                        <!-- Hero: Focus Input -->
-                        <div class="glass p-8 md:p-10 rounded-2xl relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 pointer-events-none"></div>
-                            <div class="relative z-10">
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest" id="greeting">Good Morning</span>
-                                </div>
-                                <input type="text" id="daily-focus" placeholder="What's your main focus today?"
-                                    class="bg-transparent border-none p-0 text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:ring-0 w-full transition-all">
-                            </div>
-                        </div>
+                <!-- Toolkit -->
+                <section>
+                    <div class="home-section-head">
+                        <h2>Your toolkit</h2>
+                        <button onclick="app.openMoreDrawer ? (window.innerWidth < 768 ? app.openMoreDrawer() : app.openPalette()) : app.openPalette()" class="home-link">All 28 tools <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+                    </div>
+                    <div class="app-grid">
+                        <button onclick="app.switchTab('today')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-amber-400 to-orange-500"><i data-lucide="sun" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Today</span><span class="app-sub">Your morning check-in</span></span>
+                        </button>
+                        <button onclick="app.switchTab('calendar')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-sky-500 to-indigo-500"><i data-lucide="calendar-days" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Calendar</span><span class="app-sub">Month, week & day</span></span>
+                        </button>
+                        <button onclick="app.switchTab('tasks')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-emerald-400 to-teal-500"><i data-lucide="check-circle-2" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Tasks</span><span class="app-sub">Smart dates & reminders</span></span>
+                        </button>
+                        <button onclick="app.switchTab('pages')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-violet-500 to-fuchsia-500"><i data-lucide="notebook-pen" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Pages</span><span class="app-sub">Notes, journal, mood board</span></span>
+                        </button>
+                        <button onclick="app.switchTab('chores')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-pink-500 to-rose-500"><i data-lucide="sparkles" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Chores</span><span class="app-sub">ADHD-friendly routines</span></span>
+                        </button>
+                        <button onclick="app.switchTab('bills')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-lime-500 to-emerald-600"><i data-lucide="receipt" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Bills</span><span class="app-sub">Never miss a due date</span></span>
+                        </button>
+                        <button onclick="app.switchTab('timer')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-indigo-500 to-purple-600"><i data-lucide="hourglass" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Focus timer</span><span class="app-sub">Pomodoro & Focus Town</span></span>
+                        </button>
+                        <button onclick="app.switchTab('feud')" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-yellow-400 to-amber-500"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></span>
+                            <span class="min-w-0"><span class="app-title">Survey Says <span class="new-badge">New</span></span><span class="app-sub">Game show for your team</span></span>
+                        </button>
+                    </div>
+                </section>
 
-                        <!-- Morning check-in shortcut (filled by life.js) -->
-                        <div id="life-dash-card"></div>
-
-                        <!-- Task Progress + Quick Add -->
-                        <div class="glass p-5 rounded-2xl">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Today's Tasks</div>
-                                <button onclick="app.switchTab('tasks')" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-600 transition-colors flex items-center gap-1">
-                                    View All <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
-                                    <div id="task-progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width:0%"></div>
-                                </div>
-                                <div id="task-progress-label" class="text-xs font-bold text-slate-500 shrink-0 w-16 text-right">0 / 0</div>
+                <!-- Widgets -->
+                <section>
+                    <div class="home-section-head"><h2>At a glance</h2></div>
+                    <div class="bento">
+                        <!-- Tasks -->
+                        <div class="widget lg:col-span-2">
+                            <div class="widget-head"><span class="widget-label text-emerald-600 dark:text-emerald-400">Today's tasks</span>
+                                <button onclick="app.switchTab('tasks')" class="home-link text-xs">View all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button></div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="flex-1 bg-slate-200/70 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden"><div id="task-progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width:0%"></div></div>
+                                <div id="task-progress-label" class="text-sm font-bold text-slate-500 shrink-0">0 / 0</div>
                             </div>
                             <div class="flex gap-2">
-                                <input type="text" id="dash-task-input" placeholder="Quick add a task..."
-                                    class="flex-1 bg-slate-100 dark:bg-slate-800/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 border-none text-slate-800 dark:text-slate-100"
-                                    onkeypress="if(event.key==='Enter') app.dashAddTask()">
-                                <button onclick="app.dashAddTask()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition-colors shadow-lg shadow-emerald-500/30 flex items-center justify-center" aria-label="Add task">
-                                    <i data-lucide="plus" class="w-4 h-4"></i>
-                                </button>
+                                <input type="text" id="dash-task-input" placeholder="Quick add — “call mom tomorrow 6pm”" class="widget-input flex-1 min-w-0" onkeypress="if(event.key==='Enter') app.dashAddTask()">
+                                <button onclick="app.dashAddTask()" class="w-12 shrink-0 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white grid place-items-center" aria-label="Add task"><i data-lucide="plus" class="w-5 h-5"></i></button>
                             </div>
                         </div>
 
-                        <!-- Focus Stats -->
-                        <div class="glass p-5 rounded-2xl">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="text-[10px] font-black uppercase tracking-widest text-indigo-500">Today's Focus</div>
-                                <button onclick="app.switchTab('timer')" class="text-[10px] font-bold text-indigo-500 hover:text-indigo-600 transition-colors flex items-center gap-1">
-                                    Start Session <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </button>
-                            </div>
-                            <div class="grid grid-cols-3 gap-4 text-center">
-                                <div>
-                                    <div id="dash-sessions" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">0</div>
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Sessions</div>
-                                </div>
-                                <div>
-                                    <div id="dash-focus-mins" class="text-2xl font-black text-indigo-600 dark:text-indigo-400">0m</div>
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Focus Time</div>
-                                </div>
-                                <div>
-                                    <div id="dash-streak" class="text-2xl font-black text-orange-500">0</div>
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Day Streak 🔥</div>
-                                </div>
+                        <!-- Focus timer -->
+                        <div class="widget cursor-pointer select-none" onclick="app.dashTimerTap()">
+                            <div class="widget-head"><span class="widget-label text-indigo-600 dark:text-indigo-400">Focus timer</span><span id="dash-timer-hint" class="text-xs text-slate-400 md:hidden">Tap to start</span></div>
+                            <div id="mini-timer" class="text-5xl font-black timer-font text-indigo-600 dark:text-indigo-400 tracking-tight">25:00</div>
+                            <div class="grid grid-cols-3 gap-2 mt-4 text-center">
+                                <div><div id="dash-sessions" class="text-lg font-black">0</div><div class="text-[11px] text-slate-400">sessions</div></div>
+                                <div><div id="dash-focus-mins" class="text-lg font-black">0m</div><div class="text-[11px] text-slate-400">focused</div></div>
+                                <div><div id="dash-streak" class="text-lg font-black text-orange-500">0</div><div class="text-[11px] text-slate-400">day streak</div></div>
                             </div>
                         </div>
 
-                        <!-- Quick Actions -->
-                        <div class="glass p-6 rounded-2xl">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-xs font-black uppercase tracking-widest text-slate-400">Quick Actions</h3>
-                                <button onclick="app.openPinManager()" class="text-xs font-bold text-indigo-500 hover:text-indigo-600 transition-colors flex items-center gap-1">
-                                    <i data-lucide="plus-circle" class="w-3 h-3"></i> Customize
-                                </button>
-                            </div>
-                            <div id="quick-actions-grid" class="flex flex-wrap gap-3 min-h-[40px]"></div>
-                            <p class="text-[10px] text-slate-400 mt-3 italic opacity-50">Double-click a pin to edit or remove.</p>
+                        <!-- Mood -->
+                        <div class="widget">
+                            <div class="widget-head"><span class="widget-label text-purple-600 dark:text-purple-400">How are you feeling?</span><div id="mood-week" class="flex gap-1 items-center"></div></div>
+                            <div class="flex justify-between gap-1" id="mood-buttons"></div>
                         </div>
 
+                        <!-- Water -->
+                        <div class="widget">
+                            <div class="widget-head"><span class="widget-label text-sky-600 dark:text-sky-400">Hydration</span>
+                                <div class="flex gap-1.5">
+                                    <button onclick="app.removeWater()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold" aria-label="Remove one glass of water">−</button>
+                                    <button onclick="app.addWater()" class="h-8 px-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold" aria-label="Add one glass of water">+ Glass</button>
+                                </div></div>
+                            <div class="flex flex-wrap gap-1.5" id="water-grid"></div>
+                        </div>
+
+                        <!-- Alarm -->
+                        <div class="widget cursor-pointer" onclick="app.switchTab('clock')">
+                            <div class="widget-head"><span class="widget-label text-orange-600 dark:text-orange-400">Next alarm</span><i data-lucide="alarm-clock" class="w-4 h-4 text-orange-500"></i></div>
+                            <div id="dash-alarm-status" class="text-3xl font-black timer-font">--:--</div>
+                            <div class="text-xs text-slate-400 mt-1">Tap to set an alarm</div>
+                        </div>
+
+                        <!-- Latest note -->
+                        <div class="widget lg:col-span-2 cursor-pointer" onclick="app.switchTab('scratchpad')">
+                            <div class="widget-head"><span class="widget-label text-slate-500">Latest note</span><i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i></div>
+                            <div id="dash-note-preview" class="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">Start writing...</div>
+                        </div>
+
+                        <!-- Quote -->
+                        <div class="widget lg:col-span-2 widget-quote">
+                            <i data-lucide="quote" class="w-6 h-6 text-indigo-300 dark:text-indigo-500/60 mb-2"></i>
+                            <p id="daily-quote" class="text-lg font-semibold leading-snug">"Loading inspiration..."</p>
+                            <p id="quote-author" class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">- WebDesks</p>
+                        </div>
+
+                        <!-- Quick actions -->
+                        <div class="widget lg:col-span-2">
+                            <div class="widget-head"><span class="widget-label text-slate-500">Quick actions</span>
+                                <button onclick="app.openPinManager()" class="home-link text-xs"><i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Customize</button></div>
+                            <div id="quick-actions-grid" class="flex flex-wrap gap-2 min-h-[40px]"></div>
+                        </div>
                     </div>
-                    <div class="space-y-8">
-                        <!-- Stats + Weather Row -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <!-- Alarm -->
-                            <div class="glass p-5 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-orange-300 border border-transparent transition-colors" onclick="app.switchTab('clock')">
-                                <div class="text-[10px] font-black uppercase tracking-widest text-orange-500">Next Alarm</div>
-                                <div id="dash-alarm-status" class="text-2xl font-black timer-font">--:--</div>
-                                <div class="text-[10px] text-slate-400 uppercase font-medium">Set Alarm →</div>
-                            </div>
+                </section>
 
-                            <!-- Focus Timer (tap to quick-start on mobile, navigate on desktop) -->
-                            <div class="glass p-5 rounded-2xl flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-indigo-300 border border-transparent transition-colors select-none" onclick="app.dashTimerTap()">
-                                <div class="text-[10px] font-black uppercase tracking-widest text-indigo-500">Focus Timer</div>
-                                <div id="mini-timer" class="text-2xl font-black timer-font text-indigo-600">25:00</div>
-                                <div class="text-[10px] text-slate-400 uppercase font-medium md:hidden" id="dash-timer-hint">Tap to start</div>
-                                <div class="text-[10px] text-slate-400 uppercase font-medium hidden md:block">Pomodoro</div>
-                            </div>
-
-                            <!-- Note Preview -->
-                            <div class="glass p-5 rounded-2xl flex flex-col justify-between cursor-pointer hover:border-slate-300 border border-transparent transition-colors" onclick="app.switchTab('scratchpad')">
-                                <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Latest Note</div>
-                                <div id="dash-note-preview" class="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 italic leading-relaxed">Start writing...</div>
-                                <div class="text-[10px] text-indigo-500 font-bold mt-2 flex items-center gap-1">Open Editor <i data-lucide="arrow-right" class="w-3 h-3"></i></div>
-                            </div>
-
-                            <!-- Weather -->
-                            <div class="glass p-5 rounded-2xl flex flex-col items-center justify-center text-center">
-                                <div id="weather-icon" class="mb-2">
-                                    <i data-lucide="cloud-sun" class="w-10 h-10 text-orange-500"></i>
-                                </div>
-                                <div id="weather-temp" class="text-2xl font-black cursor-pointer" onclick="app.toggleWeatherUnit()" title="Click to toggle °C/°F">--°F</div>
-                                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">Weather</p>
+                <!-- Guests: why sign up (account.js / extras.js show it) -->
+                <section id="home-guest" class="home-guest" hidden>
+                    <div class="grid md:grid-cols-[1.2fr_1fr] gap-6 items-center">
+                        <div>
+                            <h2 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight mb-2">Your whole day, on every device.</h2>
+                            <p class="text-slate-500 dark:text-slate-400 mb-5">WebDesks works right away with nothing to install. Create a free account to keep your tasks, calendar, chores, bills and pages in sync on your phone and computer.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="/login?mode=signup" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold">Create free account</a>
+                                <a href="/login" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl font-bold border border-slate-300 dark:border-slate-600">Sign in</a>
                             </div>
                         </div>
-
-                        <!-- Mood Tracker -->
-                        <div class="glass p-5 rounded-2xl">
-                            <div class="flex items-center justify-between mb-3">
-                                <div class="text-[10px] font-black uppercase tracking-widest text-purple-500">How Are You Feeling?</div>
-                                <div id="mood-week" class="flex gap-1.5 items-center"></div>
-                            </div>
-                            <div class="flex justify-between gap-2" id="mood-buttons">
-                                <!-- Rendered by JS -->
-                            </div>
-                        </div>
-
-                        <!-- Hydration -->
-                        <div class="glass p-5 rounded-2xl flex flex-wrap items-center gap-4">
-                            <div class="text-[10px] font-black uppercase tracking-widest text-blue-500 w-full">Hydration</div>
-                            <div class="flex gap-1.5 flex-1 min-w-[9rem]" id="water-grid"></div>
-                            <div class="flex gap-2 shrink-0">
-                                <button onclick="app.removeWater()" class="text-[10px] bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 px-3 py-2 rounded-xl font-bold transition-colors" aria-label="Remove one glass of water">−</button>
-                                <button onclick="app.addWater()" class="text-[10px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl font-bold transition-colors shadow-lg shadow-blue-500/30" aria-label="Add one glass of water">+ Glass</button>
-                            </div>
-                        </div>
-
-                        <!-- Daily Quote -->
-                        <div class="glass p-4 rounded-2xl flex items-start gap-3 relative overflow-hidden">
-                            <i data-lucide="quote" class="w-5 h-5 text-slate-300 dark:text-slate-600 shrink-0 mt-0.5"></i>
-                            <div class="flex-1 min-w-0">
-                                <p id="daily-quote" class="text-sm font-medium text-slate-600 dark:text-slate-300 italic leading-relaxed">"Loading inspiration..."</p>
-                                <p id="quote-author" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">- WebDesks</p>
-                            </div>
-                        </div>
-
+                        <ul class="grid grid-cols-2 gap-3 text-sm">
+                            <li class="guest-perk"><span>🔒</span>Private by default</li>
+                            <li class="guest-perk"><span>⚡</span>No install, opens instantly</li>
+                            <li class="guest-perk"><span>☁️</span>Free sync across devices</li>
+                            <li class="guest-perk"><span>💸</span>Free forever</li>
+                        </ul>
                     </div>
-                </div>
+                </section>
 
                 <!-- Below-the-fold Banner Ad (safe zone: below all tool controls) -->
                 <div class="text-center py-2">
@@ -1664,15 +1799,11 @@
                 </div>
 
                 <!-- App footer: compliance links -->
-                <div class="flex flex-wrap justify-center gap-x-5 gap-y-1 pb-4 text-[10px] text-slate-400">
-                    <a href="/about" class="hover:text-indigo-500 transition-colors">About WebDesks</a>
-                    <span class="opacity-30">·</span>
-                    <a href="/privacy" class="hover:text-indigo-500 transition-colors">Privacy Policy</a>
-                    <span class="opacity-30">·</span>
-                    <a href="/terms" class="hover:text-indigo-500 transition-colors">Terms of Service</a>
-                    <span class="opacity-30">·</span>
-                    <a href="/contact" class="hover:text-indigo-500 transition-colors">Contact Us</a>
-                    <span class="opacity-30">·</span>
+                <div class="flex flex-wrap justify-center gap-x-5 gap-y-1 pb-4 text-xs text-slate-400">
+                    <a href="/about" class="hover:text-indigo-500">About WebDesks</a>
+                    <a href="/privacy" class="hover:text-indigo-500">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-indigo-500">Terms of Service</a>
+                    <a href="/contact" class="hover:text-indigo-500">Contact Us</a>
                     <span>&copy; 2026 WebDesks</span>
                 </div>
             </div>
@@ -3865,10 +3996,10 @@
                     document.getElementById('full-date').textContent = dateStr;
 
                     // Greeting
-                    let greeting = "Good Morning";
-                    if (h >= 12) greeting = "Good Afternoon";
-                    if (h >= 17) greeting = "Good Evening";
-                    if (h >= 21) greeting = "Good Night";
+                    let greeting = "Good morning";
+                    if (h >= 12) greeting = "Good afternoon";
+                    if (h >= 17) greeting = "Good evening";
+                    if (h >= 21) greeting = "Good night";
                     const greetEl = document.getElementById('greeting');
                     if (greetEl) greetEl.textContent = greeting;
 
@@ -7396,7 +7527,7 @@
 
             async dtQR(text, o) {
                 if (!text.trim()) return '';
-                await this._loadScript('https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js');
+                await this._loadScript('https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js');
                 const size = parseInt(o.size, 10) || 512;
                 const canvas = document.createElement('canvas');
                 await window.QRCode.toCanvas(canvas, text, {

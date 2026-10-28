@@ -2,739 +2,770 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Says Game | Free Online Party Game | WebDesks</title>
-    <meta name="description" content="Play Survey Says - a fun survey-based party game online. Create questions, share voting links with friends, set up teams, and play together. Perfect for streaming on Zoom or Teams. Free, no signup required.">
-    <meta name="keywords" content="survey says game, survey game online, party game, trivia game, survey voting game, streaming game, group game, team game, free online game, answer survey">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <title>Survey Says — Free Online Survey Party Game | WebDesks</title>
+    <meta name="description" content="Host a Survey Says game like the TV show: write 3–5 questions, send one link, collect answers, then screen-share the board and reveal the top answers live. Free, works on Zoom, Teams and Meet.">
+    <meta name="keywords" content="survey says game, family feud online, survey party game, zoom game, teams meeting game, icebreaker game, online game show, team building game">
     <meta name="author" content="WebDesks">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/family-feud">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://webdesks.app/family-feud">
     <meta property="og:site_name" content="WebDesks">
-    <meta property="og:title" content="Survey Says — Free Online Party Game | WebDesks">
-    <meta property="og:description" content="Create survey questions, gather votes from friends, and play Survey Says online. Stream to your group. Perfect for Zoom, Teams, and streaming.">
+    <meta property="og:title" content="Survey Says — Host a survey game show for your team">
+    <meta property="og:description" content="Write 3–5 questions, share one link, then reveal the top answers live on a game-show board.">
     <meta property="og:image" content="https://webdesks.app/og-image.png">
-
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Survey Says — Free Online Party Game">
-    <meta name="twitter:description" content="Create survey questions, gather votes from friends, and play Survey Says online. Stream to your group.">
+    <meta name="twitter:title" content="Survey Says — Free online survey game show">
+    <meta name="twitter:description" content="Collect answers with one link, then play the board live over screen share.">
     <meta name="twitter:image" content="https://webdesks.app/og-image.png">
-
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
-
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
     <meta name="google-adsense-account" content="ca-pub-8626644983261966">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                }
-            }
-        }
+        try {
+            const t = localStorage.getItem('webdesks_theme');
+            if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+        } catch (e) {}
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], display: ['"Bricolage Grotesque"', 'Inter', 'sans-serif'] } } } };</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-hero { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); }
+        :root { --bg: #f6f5f1; --surface: #fff; --border: #e8e5de; --muted: #6b7280; }
+        .dark { --bg: #0f1218; --surface: #171b24; --border: #252b37; --muted: #9aa3b4; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); -webkit-font-smoothing: antialiased; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1.25rem; box-shadow: 0 1px 2px rgba(28,25,23,.04), 0 10px 30px -18px rgba(28,25,23,.18); }
+        .field { width: 100%; border-radius: .85rem; padding: .75rem 1rem; background: var(--bg); border: 1px solid var(--border); outline: none; }
+        .field:focus { box-shadow: 0 0 0 2px #6366f1; border-color: transparent; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: .85rem; padding: .7rem 1.15rem; font-weight: 700; transition: background-color .15s, transform .1s; }
+        .btn:active { transform: scale(.97); }
+        .btn-primary { background: #4f46e5; color: #fff; } .btn-primary:hover { background: #4338ca; }
+        .btn-ghost { background: var(--bg); border: 1px solid var(--border); } .btn-ghost:hover { border-color: #a5b4fc; }
+        .btn-danger { color: #dc2626; } .btn-danger:hover { background: rgba(220,38,38,.08); }
+        .pill { display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .65rem; border-radius: 999px; font-size: .75rem; font-weight: 700; }
+        [hidden] { display: none !important; }
 
-        .btn-primary {
-            background-color: #4f46e5;
-            color: white;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary:hover { background-color: #4338ca; }
-        .btn-primary:active { transform: scale(0.95); }
-        .dark .btn-primary { background-color: #4f46e5; }
-
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: #1e293b;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-secondary:hover { background-color: #cbd5e1; }
-        .dark .btn-secondary {
-            background-color: #334155;
-            color: white;
-        }
-        .dark .btn-secondary:hover { background-color: #475569; }
-
-        .card {
-            background-color: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-        .dark .card {
-            background-color: #1e293b;
-            border-color: #334155;
-        }
-
-        .input-base {
-            width: 100%;
-            padding: 0.625rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid #cbd5e1;
-            background-color: white;
-            color: #1e293b;
-            font-size: 1rem;
-        }
-        .input-base:focus {
-            outline: none;
-            ring: 2px solid #4f46e5;
-            border-color: #4f46e5;
-        }
-        .dark .input-base {
-            background-color: #1e293b;
-            border-color: #475569;
-            color: white;
-        }
-
-        .fade-in { animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .screen { display: none; }
-        .screen:not(.hidden) { display: flex; }
+        /* ── Game board (shared by the host screen and the presenter window) ── */
+        .stage { background: radial-gradient(1200px 700px at 50% -10%, #2b3fb8 0%, #14206b 45%, #0a0f3d 100%); color: #fff; }
+        .board { background: linear-gradient(180deg, #0f1c73, #0a1452); border: 6px solid #f5c542; border-radius: 1.75rem; box-shadow: 0 0 0 4px #0a0f3d, 0 30px 80px -30px #000, inset 0 0 40px rgba(0,0,0,.5); }
+        .tile { perspective: 900px; height: clamp(2.75rem, 8.5vh, 5.2rem); }
+        @media (max-width: 639px) { .tile { height: 2.9rem; } .tile-front .num { width: 2rem !important; height: 2rem !important; font-size: 1rem !important; } }
+        body.playing #toast { bottom: 9.5rem; }
+        .tile-inner { position: relative; width: 100%; height: 100%; transition: transform .6s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
+        .tile.revealed .tile-inner { transform: rotateX(180deg); }
+        .tile-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: .9rem; display: flex; align-items: center; }
+        .tile-front { background: linear-gradient(180deg, #2a46e0, #1a2fa6); border: 2px solid #5f7bff; justify-content: center; }
+        .tile-front .num { width: 2.6rem; height: 2.6rem; border-radius: 999px; background: #0a1452; border: 2px solid #f5c542; display: grid; place-items: center; font-weight: 900; font-size: 1.3rem; color: #f5c542; }
+        .tile-back { transform: rotateX(180deg); background: linear-gradient(180deg, #fff7d1, #f5c542); color: #0a1452; justify-content: space-between; padding: 0 1rem 0 1.25rem; font-weight: 900; text-transform: uppercase; letter-spacing: .02em; }
+        .tile-back .pts { background: #0a1452; color: #f5c542; border-radius: .6rem; padding: .25rem .65rem; font-size: 1.25rem; min-width: 3rem; text-align: center; }
+        .tile.empty .tile-front { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+        .tile.empty .num { display: none; }
+        .strike-x { font-family: 'Bricolage Grotesque', sans-serif; color: #ef4444; font-weight: 800; text-shadow: 0 0 30px rgba(239,68,68,.6); }
+        @keyframes pop { 0% { transform: scale(.4); opacity: 0 } 50% { transform: scale(1.15); opacity: 1 } 100% { transform: scale(1); opacity: 1 } }
+        .pop { animation: pop .35s ease-out both; }
+        @keyframes shake { 0%,100% { transform: translateX(0) } 25% { transform: translateX(-8px) } 75% { transform: translateX(8px) } }
+        .shake { animation: shake .3s ease-in-out 2; }
+        /* 1–4 down the left, 5–8 down the right, like the show; a single column in order on phones. */
+        @media (min-width: 640px) { .tiles { grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); } }
+        .scorebox { background: rgba(10,15,61,.7); border: 2px solid rgba(245,197,66,.6); border-radius: 1.25rem; }
+        .scorebox.lead { border-color: #f5c542; box-shadow: 0 0 30px -6px rgba(245,197,66,.6); }
+        @media (prefers-reduced-motion: reduce) { .tile-inner { transition: none; } .pop, .shake { animation: none; } }
     </style>
-
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Survey Says Game",
-      "url": "https://webdesks.app/family-feud",
-      "description": "Free online survey-based party game with question creation, voting, and team gameplay.",
-      "applicationCategory": "GameApplication",
-      "operatingSystem": "Any",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-    }
+    { "@context": "https://schema.org", "@type": "WebApplication", "name": "Survey Says", "url": "https://webdesks.app/family-feud",
+      "description": "Host a survey game show: collect answers with one link, then reveal the top answers live over screen share.",
+      "applicationCategory": "GameApplication", "operatingSystem": "Any", "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" } }
     </script>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+<body class="min-h-screen text-slate-800 dark:text-slate-100">
 
-    <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-        <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600 dark:text-indigo-400">
-                🖥️ WebDesks
-            </a>
-            <div class="flex items-center gap-4">
-                <a href="/#dashboard" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                    All Tools
-                </a>
-                <button onclick="location.reload()" class="btn-secondary text-sm px-4 py-2">
-                    Reset
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Container -->
-    <main class="flex-1 relative">
-
-        <!-- Screen 1: Home -->
-        <div id="screen-home" class="screen w-full h-screen flex flex-col items-center justify-center p-4">
-            <div class="max-w-2xl w-full text-center fade-in">
-                <h1 class="text-6xl font-black mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                    Survey Says
-                </h1>
-                <p class="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-8">
-                    The Party Game for Teams
-                </p>
-                <p class="text-lg text-slate-600 dark:text-slate-400 mb-12 leading-relaxed">
-                    Create fun survey questions, gather votes from friends, and play an exciting team-based game. Perfect for streaming on Zoom or Teams!
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button onclick="app.goToScreen('setup')" class="btn-primary text-lg py-4">
-                        Start New Game
-                    </button>
-                    <button onclick="app.loadFromVoteLink()" class="btn-secondary text-lg py-4">
-                        Have Votes Ready?
-                    </button>
+    <!-- Host chrome (hidden while the board is on screen) -->
+    <div id="chrome">
+        <header class="sticky top-0 z-40 border-b" style="background: color-mix(in srgb, var(--bg) 92%, transparent); border-color: var(--border)">
+            <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+                <a href="#/" class="flex items-center gap-2 font-black text-lg"><span class="text-2xl">🏆</span> Survey Says</a>
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="/" class="hidden sm:inline font-semibold text-slate-500 hover:text-indigo-600">WebDesks</a>
+                    <span id="who" class="hidden sm:inline text-slate-400"></span>
+                    <a id="signin-link" href="/login?next=%2Ffamily-feud" class="btn btn-primary !py-2 text-sm" hidden>Sign in</a>
                 </div>
-            </div>
-        </div>
+            </nav>
+        </header>
+        <main id="view" class="max-w-6xl mx-auto px-4 py-8 sm:py-12"></main>
+        <footer class="text-center text-xs text-slate-400 pb-10 space-x-3">
+            <a href="/" class="hover:text-indigo-500">WebDesks</a><a href="/privacy" class="hover:text-indigo-500">Privacy</a><a href="/terms" class="hover:text-indigo-500">Terms</a><a href="/contact" class="hover:text-indigo-500">Contact</a>
+        </footer>
+    </div>
 
-        <!-- Screen 2: Setup Questions -->
-        <div id="screen-setup" class="screen w-full h-screen flex flex-col p-4 hidden">
-            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
-                <div class="mb-6">
-                    <h2 class="text-3xl font-bold mb-2">Create Your Game</h2>
-                    <p class="text-slate-600 dark:text-slate-400">Add questions and answer options</p>
-                </div>
+    <!-- Full-screen game board -->
+    <div id="stage" class="stage fixed inset-0 z-50 flex flex-col" hidden></div>
 
-                <div class="flex-1 overflow-y-auto mb-6 space-y-4">
-                    <div class="card">
-                        <label class="block text-sm font-semibold mb-2">Number of Questions</label>
-                        <div class="flex gap-2">
-                            <input type="number" id="num-questions" value="5" min="1" max="20" class="input-base w-24">
-                            <button onclick="app.generateQuestionFields()" class="btn-secondary">Generate</button>
-                        </div>
-                    </div>
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-bold shadow-2xl transition-opacity opacity-0 pointer-events-none" role="status" aria-live="polite"></div>
 
-                    <div id="questions-container" class="space-y-4">
-                        <!-- Questions will be generated here -->
-                    </div>
-                </div>
-
-                <div class="flex gap-4 justify-between">
-                    <button onclick="app.goToScreen('home')" class="btn-secondary">Back</button>
-                    <button onclick="app.goToScreen('voting')" class="btn-primary">Next: Share Votes</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Screen 3: Voting Share -->
-        <div id="screen-voting" class="screen w-full h-screen flex flex-col p-4 hidden">
-            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
-                <div class="mb-6">
-                    <h2 class="text-3xl font-bold mb-2">Share Voting Link</h2>
-                    <p class="text-slate-600 dark:text-slate-400">Send this link to friends to vote on answers</p>
-                </div>
-
-                <div class="flex-1 flex flex-col gap-6">
-                    <div class="card">
-                        <label class="block text-sm font-semibold mb-4">Voting Link</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="vote-link" readonly class="input-base flex-1 bg-slate-100 dark:bg-slate-700 cursor-pointer">
-                            <button onclick="app.copyVotingLink()" class="btn-primary px-4">Copy</button>
-                        </div>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
-                            Share this link with friends. They'll vote on the best answers.
-                        </p>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="font-semibold mb-4">Your Questions</h3>
-                        <div id="questions-preview" class="space-y-3">
-                            <!-- Questions preview -->
-                        </div>
-                    </div>
-
-                    <div class="card bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-                        <p class="text-sm font-medium text-blue-900 dark:text-blue-300">
-                            💡 Open the voting link in another tab to gather responses while setting up your game.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex gap-4 justify-between mt-6">
-                    <button onclick="app.goToScreen('setup')" class="btn-secondary">Back</button>
-                    <button onclick="app.goToScreen('team-setup')" class="btn-primary">Next: Create Teams</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Screen 4: Voting (when accessed via link) -->
-        <div id="screen-vote" class="screen w-full h-screen flex flex-col p-4 hidden">
-            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
-                <div class="mb-6 text-center">
-                    <h1 class="text-4xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                        Survey Says
-                    </h1>
-                    <p class="text-slate-600 dark:text-slate-400">Vote on the best answers</p>
-                </div>
-
-                <div id="current-vote-question" class="card mb-6">
-                    <h3 id="vote-question-text" class="text-2xl font-bold mb-6"></h3>
-                    <div id="vote-answers-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <!-- Answer buttons will be generated -->
-                    </div>
-                </div>
-
-                <div class="card bg-slate-100 dark:bg-slate-700">
-                    <div id="vote-progress" class="text-sm font-medium">
-                        Question <span id="vote-current">1</span> of <span id="vote-total">5</span>
-                    </div>
-                    <div class="w-full bg-slate-300 dark:bg-slate-600 rounded-full h-2 mt-3">
-                        <div id="vote-progress-bar" class="h-full bg-indigo-600 rounded-full transition-all"></div>
-                    </div>
-                </div>
-
-                <button id="vote-next-btn" onclick="app.nextVoteQuestion()" class="btn-primary w-full mt-6">
-                    Next Question
-                </button>
-            </div>
-        </div>
-
-        <!-- Screen 5: Team Setup -->
-        <div id="screen-team-setup" class="screen w-full h-screen flex flex-col p-4 hidden">
-            <div class="max-w-4xl w-full mx-auto flex flex-col h-full">
-                <div class="mb-6">
-                    <h2 class="text-3xl font-bold mb-2">Create Teams</h2>
-                    <p class="text-slate-600 dark:text-slate-400">Add team names and players</p>
-                </div>
-
-                <div class="flex-1 overflow-y-auto mb-6">
-                    <div id="teams-container" class="space-y-4">
-                        <!-- Teams will be generated here -->
-                    </div>
-                    <button onclick="app.addTeam()" class="btn-secondary w-full mt-4">
-                        + Add Another Team
-                    </button>
-                </div>
-
-                <div class="flex gap-4 justify-between">
-                    <button onclick="app.goToScreen('voting')" class="btn-secondary">Back</button>
-                    <button onclick="app.goToScreen('game')" class="btn-primary">Start Game</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Screen 6: Game Play -->
-        <div id="screen-game" class="screen w-full h-screen flex flex-col p-4 hidden">
-            <div class="max-w-6xl w-full mx-auto flex flex-col h-full">
-                <!-- Score Board -->
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6" id="scoreboard">
-                    <!-- Teams will be rendered here -->
-                </div>
-
-                <!-- Current Question -->
-                <div class="card flex-1 mb-6 flex flex-col">
-                    <h3 id="game-question" class="text-3xl font-bold mb-6"></h3>
-
-                    <!-- Answers Grid -->
-                    <div id="game-answers" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 flex-1">
-                        <!-- Answers will be rendered here -->
-                    </div>
-                </div>
-
-                <!-- Host Input -->
-                <div class="card">
-                    <label class="block text-sm font-semibold mb-3">Host: Enter the answer given</label>
-                    <div class="flex gap-2 mb-4">
-                        <input type="text" id="host-answer-input" placeholder="Type the answer..." class="input-base flex-1" onkeypress="if(event.key==='Enter') app.checkAnswer()">
-                        <button onclick="app.checkAnswer()" class="btn-primary px-6">Check</button>
-                    </div>
-                    <div id="answer-feedback" class="text-sm font-medium mb-4" style="display:none;"></div>
-                </div>
-
-                <!-- Game Controls -->
-                <div class="flex gap-3 mt-6 justify-between">
-                    <button onclick="app.previousQuestion()" class="btn-secondary">← Previous</button>
-                    <button onclick="app.endGame()" class="btn-secondary">End Game</button>
-                    <button onclick="app.nextQuestion()" class="btn-primary">Next Question →</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Screen 7: Results -->
-        <div id="screen-results" class="screen w-full h-screen flex flex-col items-center justify-center p-4 hidden">
-            <div class="max-w-2xl w-full text-center">
-                <h1 class="text-5xl font-black mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                    The Survey Says...
-                </h1>
-
-                <div id="final-results" class="space-y-4 mb-12">
-                    <!-- Results will be rendered here -->
-                </div>
-
-                <div class="flex gap-4 justify-center">
-                    <button onclick="app.goToScreen('home')" class="btn-primary">
-                        Play Again
-                    </button>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
+    <script src="/supabase-config.js"></script>
+    <script src="/survey-logic.js"></script>
     <script>
-        const app = {
-            gameId: Date.now().toString(36),
-            questions: [],
-            answers: [],
-            votes: {},
-            teams: [],
-            currentQuestionIndex: 0,
-            currentVoteQuestionIndex: 0,
-            scores: {},
+    (() => {
+        const CFG = window.WEBDESKS_SUPABASE || {};
+        const SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js';
+        const QR = 'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js';
+        const L = window.SurveyLogic;
+        const $ = id => document.getElementById(id);
+        const view = $('view');
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const surveyUrl = code => `${location.origin}/survey?g=${encodeURIComponent(code)}`;
+        let sb = null, user = null, pollTimer = null;
+        const cache = { games: [], questions: {}, responses: {} };
 
-            init() {
-                this.loadGame();
-                this.generateVotingLink();
-            },
-
-            saveGame() {
-                const gameData = {
-                    gameId: this.gameId,
-                    questions: this.questions,
-                    answers: this.answers,
-                    votes: this.votes,
-                    teams: this.teams,
-                    scores: this.scores
-                };
-                localStorage.setItem(`game-${this.gameId}`, JSON.stringify(gameData));
-            },
-
-            loadGame() {
-                const saved = localStorage.getItem(`game-${this.gameId}`);
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    this.questions = data.questions;
-                    this.answers = data.answers;
-                    this.votes = data.votes;
-                    this.teams = data.teams;
-                    this.scores = data.scores;
-                }
-            },
-
-            goToScreen(screenName) {
-                document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
-                const targetScreen = document.getElementById(`screen-${screenName}`);
-                if (targetScreen) {
-                    targetScreen.classList.remove('hidden');
-                }
-
-                if (screenName === 'voting') {
-                    this.displayQuestionsPreview();
-                }
-                if (screenName === 'team-setup') {
-                    this.displayTeamSetup();
-                }
-                if (screenName === 'game') {
-                    this.startGame();
-                }
-            },
-
-            generateQuestionFields() {
-                const num = parseInt(document.getElementById('num-questions').value);
-                this.questions = Array(num).fill(null).map(() => '');
-                this.answers = Array(num).fill(null).map(() => []);
-                this.votes = {};
-
-                const container = document.getElementById('questions-container');
-                container.innerHTML = '';
-
-                this.questions.forEach((_, idx) => {
-                    const div = document.createElement('div');
-                    div.className = 'card';
-                    div.innerHTML = `
-                        <h3 class="font-semibold mb-4">Question ${idx + 1}</h3>
-                        <input type="text" placeholder="Enter question..." class="input-base mb-4 question-input" data-index="${idx}">
-                        <div class="space-y-2" id="answers-${idx}">
-                            <div class="flex gap-2">
-                                <input type="text" placeholder="Answer option..." class="input-base flex-1 answer-input" data-index="${idx}" data-answer="0">
-                                <button onclick="app.removeAnswer(${idx}, 0)" class="btn-secondary px-4">Remove</button>
-                            </div>
-                        </div>
-                        <button onclick="app.addAnswer(${idx})" class="btn-secondary w-full mt-3">+ Add Answer Option</button>
-                    `;
-                    container.appendChild(div);
-                });
-
-                document.querySelectorAll('.question-input').forEach(el => {
-                    el.addEventListener('change', (e) => {
-                        const idx = e.target.dataset.index;
-                        this.questions[idx] = e.target.value;
-                        this.saveGame();
-                    });
-                });
-
-                this.attachAnswerListeners();
-            },
-
-            addAnswer(questionIdx) {
-                if (!this.answers[questionIdx]) this.answers[questionIdx] = [];
-                this.answers[questionIdx].push('');
-
-                const answerIdx = this.answers[questionIdx].length - 1;
-                const container = document.getElementById(`answers-${questionIdx}`);
-
-                const div = document.createElement('div');
-                div.className = 'flex gap-2';
-                div.id = `answer-${questionIdx}-${answerIdx}`;
-                div.innerHTML = `
-                    <input type="text" placeholder="Answer option..." class="input-base flex-1 answer-input" data-index="${questionIdx}" data-answer="${answerIdx}">
-                    <button onclick="app.removeAnswer(${questionIdx}, ${answerIdx})" class="btn-secondary px-4">Remove</button>
-                `;
-
-                container.appendChild(div);
-                this.attachAnswerListeners();
-            },
-
-            removeAnswer(questionIdx, answerIdx) {
-                this.answers[questionIdx].splice(answerIdx, 1);
-                document.getElementById(`answer-${questionIdx}-${answerIdx}`)?.remove();
-                this.saveGame();
-            },
-
-            attachAnswerListeners() {
-                document.querySelectorAll('.answer-input').forEach(el => {
-                    el.addEventListener('change', (e) => {
-                        const qIdx = parseInt(e.target.dataset.index);
-                        const aIdx = parseInt(e.target.dataset.answer);
-                        this.answers[qIdx][aIdx] = e.target.value;
-                        this.saveGame();
-                    });
-                });
-            },
-
-            generateVotingLink() {
-                const link = `${window.location.origin}${window.location.pathname}?vote=${this.gameId}`;
-                document.getElementById('vote-link').value = link;
-            },
-
-            copyVotingLink() {
-                const link = document.getElementById('vote-link');
-                link.select();
-                document.execCommand('copy');
-                alert('Voting link copied!');
-            },
-
-            displayQuestionsPreview() {
-                const preview = document.getElementById('questions-preview');
-                preview.innerHTML = this.questions.map((q, idx) => `
-                    <div class="text-sm p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-                        <strong>Q${idx + 1}:</strong> ${q || '(empty)'}
-                    </div>
-                `).join('');
-            },
-
-            displayTeamSetup() {
-                const container = document.getElementById('teams-container');
-
-                if (this.teams.length === 0) {
-                    this.teams = [
-                        { name: 'Team 1', players: ['', ''], score: 0, strikes: 0 },
-                        { name: 'Team 2', players: ['', ''], score: 0, strikes: 0 }
-                    ];
-                }
-
-                container.innerHTML = this.teams.map((team, tIdx) => `
-                    <div class="card">
-                        <h3 class="font-semibold mb-4">Team ${tIdx + 1}</h3>
-                        <input type="text" value="${team.name}" placeholder="Team name..." class="input-base mb-4 team-name-input" data-index="${tIdx}">
-                        <div class="space-y-2">
-                            ${team.players.map((player, pIdx) => `
-                                <input type="text" value="${player}" placeholder="Player ${pIdx + 1}..." class="input-base team-player-input" data-team="${tIdx}" data-player="${pIdx}">
-                            `).join('')}
-                        </div>
-                    </div>
-                `).join('');
-
-                document.querySelectorAll('.team-name-input').forEach(el => {
-                    el.addEventListener('change', (e) => {
-                        this.teams[e.target.dataset.index].name = e.target.value;
-                        this.saveGame();
-                    });
-                });
-
-                document.querySelectorAll('.team-player-input').forEach(el => {
-                    el.addEventListener('change', (e) => {
-                        const tIdx = parseInt(e.target.dataset.team);
-                        const pIdx = parseInt(e.target.dataset.player);
-                        this.teams[tIdx].players[pIdx] = e.target.value;
-                        this.saveGame();
-                    });
-                });
-            },
-
-            addTeam() {
-                this.teams.push({ name: `Team ${this.teams.length + 1}`, players: ['', ''], score: 0, strikes: 0 });
-                this.displayTeamSetup();
-                this.saveGame();
-            },
-
-            startGame() {
-                this.currentQuestionIndex = 0;
-                this.teams.forEach(team => {
-                    this.scores[team.name] = { score: 0, strikes: 0 };
-                });
-                this.renderScoreboard();
-                this.renderGameQuestion();
-            },
-
-            renderScoreboard() {
-                const board = document.getElementById('scoreboard');
-                board.innerHTML = this.teams.map(team => {
-                    const score = this.scores[team.name] || { score: 0, strikes: 0 };
-                    return `
-                        <div class="card text-center">
-                            <p class="text-sm font-semibold text-slate-600 dark:text-slate-400">${team.name}</p>
-                            <p class="text-3xl font-black text-indigo-600 dark:text-indigo-400 my-2">${score.score}</p>
-                            <p class="text-xs font-medium">Strikes: <span class="text-red-600">${'X'.repeat(score.strikes)}</span></p>
-                        </div>
-                    `;
-                }).join('');
-            },
-
-            renderGameQuestion() {
-                const q = this.questions[this.currentQuestionIndex];
-                document.getElementById('game-question').textContent = q;
-
-                const answersDiv = document.getElementById('game-answers');
-                answersDiv.innerHTML = this.answers[this.currentQuestionIndex].map((answer, idx) => {
-                    const voteCount = this.votes[`${this.currentQuestionIndex}-${idx}`] || 0;
-                    return `
-                        <div class="bg-slate-100 dark:bg-slate-700 p-4 rounded-lg border-2 border-transparent" id="answer-${idx}">
-                            <div class="font-semibold text-slate-900 dark:text-white">${answer}</div>
-                            <div class="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-2">${voteCount}</div>
-                            <div class="text-xs text-slate-500 dark:text-slate-400">votes</div>
-                        </div>
-                    `;
-                }).join('');
-
-                document.getElementById('host-answer-input').value = '';
-                document.getElementById('answer-feedback').style.display = 'none';
-            },
-
-            checkAnswer() {
-                const input = document.getElementById('host-answer-input').value.toLowerCase().trim();
-                if (!input) return;
-
-                const feedback = document.getElementById('answer-feedback');
-                const q = this.currentQuestionIndex;
-
-                let found = false;
-                let foundIdx = -1;
-
-                for (let i = 0; i < this.answers[q].length; i++) {
-                    if (this.answers[q][i].toLowerCase().trim() === input) {
-                        found = true;
-                        foundIdx = i;
-                        break;
-                    }
-                }
-
-                if (found) {
-                    feedback.style.display = 'block';
-                    feedback.className = 'text-sm font-medium mb-4 text-green-600 dark:text-green-400';
-                    feedback.textContent = '✓ CORRECT! Answer is on the board.';
-                    document.getElementById(`answer-${foundIdx}`).classList.add('border-green-500', 'border-2', 'bg-green-50', 'dark:bg-green-900/20');
-                } else {
-                    feedback.style.display = 'block';
-                    feedback.className = 'text-sm font-medium mb-4 text-red-600 dark:text-red-400';
-                    feedback.textContent = '✗ NOT on the board! Strike!';
-                }
-            },
-
-            nextQuestion() {
-                if (this.currentQuestionIndex < this.questions.length - 1) {
-                    this.currentQuestionIndex++;
-                    this.renderGameQuestion();
-                } else {
-                    this.endGame();
-                }
-            },
-
-            previousQuestion() {
-                if (this.currentQuestionIndex > 0) {
-                    this.currentQuestionIndex--;
-                    this.renderGameQuestion();
-                }
-            },
-
-            endGame() {
-                const results = document.getElementById('final-results');
-                const sorted = [...this.teams].sort((a, b) =>
-                    (this.scores[b.name]?.score || 0) - (this.scores[a.name]?.score || 0)
-                );
-
-                results.innerHTML = sorted.map((team, idx) => {
-                    const score = this.scores[team.name] || { score: 0, strikes: 0 };
-                    return `
-                        <div class="card text-center">
-                            <p class="text-lg font-bold">${idx === 0 ? '🏆' : idx === 1 ? '🥈' : '🥉'} ${team.name}</p>
-                            <p class="text-4xl font-black text-indigo-600 dark:text-indigo-400 my-3">${score.score}</p>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Points</p>
-                        </div>
-                    `;
-                }).join('');
-
-                this.goToScreen('results');
-            },
-
-            loadFromVoteLink() {
-                const params = new URLSearchParams(window.location.search);
-                if (params.has('vote')) {
-                    this.gameId = params.get('vote');
-                    this.loadGame();
-                    this.displayVoteScreen();
-                } else {
-                    alert('No voting session found. Start a new game first.');
-                }
-            },
-
-            displayVoteScreen() {
-                if (this.questions.length === 0) {
-                    alert('Game not ready yet. Please ask the host to create questions.');
-                    return;
-                }
-                this.currentVoteQuestionIndex = 0;
-                this.renderVoteQuestion();
-                this.goToScreen('vote');
-            },
-
-            renderVoteQuestion() {
-                const q = this.questions[this.currentVoteQuestionIndex];
-                document.getElementById('vote-question-text').textContent = q;
-                document.getElementById('vote-current').textContent = this.currentVoteQuestionIndex + 1;
-                document.getElementById('vote-total').textContent = this.questions.length;
-
-                const bar = document.getElementById('vote-progress-bar');
-                bar.style.width = ((this.currentVoteQuestionIndex + 1) / this.questions.length * 100) + '%';
-
-                const grid = document.getElementById('vote-answers-grid');
-                grid.innerHTML = this.answers[this.currentVoteQuestionIndex].map((answer, idx) => `
-                    <button onclick="app.voteForAnswer(${idx})" class="p-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-all active:scale-95">
-                        ${answer}
-                    </button>
-                `).join('');
-            },
-
-            voteForAnswer(answerIdx) {
-                const key = `${this.currentVoteQuestionIndex}-${answerIdx}`;
-                this.votes[key] = (this.votes[key] || 0) + 1;
-                this.saveGame();
-
-                if (this.currentVoteQuestionIndex < this.questions.length - 1) {
-                    this.nextVoteQuestion();
-                } else {
-                    alert('Thank you for voting!');
-                }
-            },
-
-            nextVoteQuestion() {
-                if (this.currentVoteQuestionIndex < this.questions.length - 1) {
-                    this.currentVoteQuestionIndex++;
-                    this.renderVoteQuestion();
-                } else {
-                    document.getElementById('vote-next-btn').textContent = 'Voting Complete!';
-                }
-            }
+        const toast = msg => {
+            const t = $('toast');
+            t.textContent = msg;
+            t.style.opacity = '1';
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => { t.style.opacity = '0'; }, 2600);
+        };
+        const loadScript = src => new Promise((res, rej) => {
+            if (document.querySelector(`script[src="${src}"]`)?.dataset.loaded) return res();
+            const s = document.createElement('script');
+            s.src = src;
+            s.onload = () => { s.dataset.loaded = '1'; res(); };
+            s.onerror = () => rej(new Error('Could not load ' + src));
+            document.head.appendChild(s);
+        });
+        const isOpen = g => g.status === 'open' && (!g.closes_at || new Date(g.closes_at) > new Date());
+        const timeLeft = iso => {
+            const ms = new Date(iso) - Date.now();
+            if (ms <= 0) return 'now';
+            const m = Math.round(ms / 60000);
+            if (m < 60) return `${m} min`;
+            const h = Math.floor(m / 60);
+            if (h < 48) return `${h} h ${m % 60} min`;
+            return `${Math.round(h / 24)} days`;
         };
 
-        // Check if this is a voting link
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('vote')) {
-            app.gameId = params.get('vote');
-            app.loadGame();
-            if (app.questions.length > 0) {
-                app.displayVoteScreen();
+        // ── Data ───────────────────────────────────────────────────────
+        async function client() {
+            if (sb) return sb;
+            await loadScript(SDK);
+            sb = window.supabase.createClient(CFG.url, CFG.anonKey, {
+                auth: { storageKey: 'sb-webdesks-auth', flowType: 'pkce', persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+            });
+            return sb;
+        }
+        const must = ({ data, error }) => { if (error) throw error; return data; };
+
+        async function loadGames() {
+            const c = await client();
+            const games = must(await c.from('survey_games').select('id, code, title, status, closes_at, min_count, board, created_at').order('created_at', { ascending: false }));
+            cache.games = games;
+            const ids = games.map(g => g.id);
+            cache.questions = {}; cache.responses = {};
+            if (ids.length) {
+                must(await c.from('survey_questions').select('game_id, position, prompt').in('game_id', ids)).forEach(q => {
+                    (cache.questions[q.game_id] = cache.questions[q.game_id] || [])[q.position] = q.prompt;
+                });
+                must(await c.from('survey_responses').select('game_id, answers').in('game_id', ids)).forEach(r => {
+                    (cache.responses[r.game_id] = cache.responses[r.game_id] || []).push(r.answers);
+                });
+            }
+            return games;
+        }
+        async function refreshResponses(id) {
+            const c = await client();
+            cache.responses[id] = must(await c.from('survey_responses').select('answers').eq('game_id', id)).map(r => r.answers);
+            return cache.responses[id];
+        }
+        async function saveGame(id, title, questions, closesAt, minCount) {
+            const c = await client();
+            let game;
+            if (id) {
+                game = must(await c.from('survey_games').update({ title, closes_at: closesAt, min_count: minCount }).eq('id', id).select().single());
+                must(await c.from('survey_questions').delete().eq('game_id', id));
+            } else {
+                game = must(await c.from('survey_games').insert({ title, closes_at: closesAt, min_count: minCount }).select().single());
+            }
+            must(await c.from('survey_questions').insert(questions.map((prompt, position) => ({ game_id: game.id, position, prompt }))));
+            return game;
+        }
+        async function patchGame(id, fields) {
+            const c = await client();
+            return must(await c.from('survey_games').update(fields).eq('id', id).select().single());
+        }
+
+        // Groups for each question, with the host's saved edits applied.
+        function questionGroups(game, qi) {
+            const raw = (cache.responses[game.id] || []).map(a => a[qi]).filter(Boolean);
+            return L.applySaved((game.board || {})[qi], raw);
+        }
+        function boardFor(game, qi) {
+            const raw = (cache.responses[game.id] || []).map(a => a[qi]).filter(Boolean);
+            return L.buildBoard(questionGroups(game, qi), game.min_count || 2, raw.length);
+        }
+
+        // ── Views ──────────────────────────────────────────────────────
+        function route() {
+            clearInterval(pollTimer);
+            const [, page, id] = (location.hash.replace(/^#/, '') || '/').split('/');
+            if (page === 'board') return presenterWindow(id);
+            $('stage').hidden = true;
+            $('chrome').hidden = false;
+            if (page === 'play' && id === 'demo') return startPlay(DEMO);
+            if (!user) return page ? signedOutView() : homeView();
+            if (page === 'new') return editView();
+            if (page === 'edit') return editView(id);
+            if (page === 'game') return gameView(id);
+            if (page === 'play') return playGame(id);
+            return homeView();
+        }
+
+        function signedOutView() {
+            view.innerHTML = `<div class="card p-8 max-w-lg mx-auto text-center">
+                <div class="text-5xl mb-3">🔐</div>
+                <h1 class="text-2xl font-black mb-2">Sign in to host</h1>
+                <p class="text-slate-500 mb-6">Your games and everyone's answers are saved to your free WebDesks account.</p>
+                <a href="/login?next=${encodeURIComponent('/family-feud' + location.hash)}" class="btn btn-primary">Sign in or create an account</a>
+            </div>`;
+        }
+
+        async function homeView() {
+            const hero = `
+                <section class="relative overflow-hidden rounded-[2rem] p-8 sm:p-12 mb-10 text-white" style="background: radial-gradient(900px 500px at 80% -20%, #4f46e5, transparent 60%), radial-gradient(700px 400px at 0% 120%, #db2777, transparent 55%), #14206b">
+                    <div class="max-w-2xl relative">
+                        <span class="pill bg-white/15 text-amber-200 mb-4">🎉 Party game · Free</span>
+                        <h1 class="font-display text-4xl sm:text-6xl font-extrabold leading-[1.02] tracking-tight mb-4">Survey says… <span class="text-amber-300">your team</span> decides the answers.</h1>
+                        <p class="text-lg text-indigo-100/90 mb-7">Write 3–5 questions, send one link, and close it when you're ready. Then share your screen and reveal the most popular answers on a real game-show board.</p>
+                        <div class="flex flex-wrap gap-3">
+                            ${user ? '<a href="#/new" class="btn bg-amber-400 hover:bg-amber-300 text-slate-900 text-base">＋ Create a game</a>' : `<a href="/login?next=%2Ffamily-feud" class="btn bg-amber-400 hover:bg-amber-300 text-slate-900 text-base">Sign in to create a game</a>`}
+                            <a href="#/play/demo" class="btn bg-white/10 hover:bg-white/20 text-white text-base">▶ Try the demo board</a>
+                        </div>
+                    </div>
+                    <div aria-hidden="true" class="hidden lg:grid absolute right-10 top-1/2 -translate-y-1/2 w-80 grid-cols-1 gap-2 rotate-3">
+                        ${['Coffee', 'Snooze button', 'Shower', '', ''].map((a, i) => `<div class="rounded-xl px-4 py-3 font-black uppercase flex justify-between ${a ? 'bg-amber-300 text-indigo-950' : 'bg-indigo-500/60 border border-indigo-300/40 text-amber-300 justify-center'}">${a ? `<span>${a}</span><span>${[42, 27, 13][i]}</span>` : i + 1}</div>`).join('')}
+                    </div>
+                </section>`;
+            const steps = `
+                <section class="grid sm:grid-cols-3 gap-4 mb-12">
+                    ${[['✍️', 'Write 3–5 questions', '“Name something people do first thing in the morning.”'], ['🔗', 'Send one link', 'People answer on any phone, no sign-up. Close it any time, or set a timer.'], ['📺', 'Host the show', 'Share your screen, type what teams guess, and the board reveals it if enough people said it.']]
+                        .map(([e, t, d], i) => `<div class="card p-6"><div class="text-3xl mb-3">${e}</div><div class="text-xs font-bold text-indigo-500 mb-1">STEP ${i + 1}</div><div class="font-black text-lg mb-1">${t}</div><p class="text-sm text-slate-500">${d}</p></div>`).join('')}
+                </section>`;
+            if (!user) { view.innerHTML = hero + steps; return; }
+            view.innerHTML = hero + `<div class="flex items-center justify-between mb-4"><h2 class="text-2xl font-black">Your games</h2><a href="#/new" class="btn btn-primary">＋ New game</a></div><div id="games" class="grid md:grid-cols-2 gap-4"><div class="text-slate-400">Loading…</div></div>` + steps;
+            try { await loadGames(); } catch (e) { $('games').innerHTML = errorBox(e); return; }
+            const list = $('games');
+            if (!cache.games.length) {
+                list.innerHTML = `<div class="card p-8 text-center md:col-span-2"><div class="text-4xl mb-2">🎤</div><div class="font-black text-lg mb-1">No games yet</div><p class="text-slate-500 mb-4">Create your first one — it takes about a minute.</p><a href="#/new" class="btn btn-primary">Create a game</a></div>`;
+                return;
+            }
+            list.innerHTML = cache.games.map(g => {
+                const n = (cache.responses[g.id] || []).length;
+                const open = isOpen(g);
+                return `<a href="#/game/${g.id}" class="card p-6 hover:border-indigo-300 transition-colors block">
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                        <div class="font-black text-lg leading-tight">${esc(g.title)}</div>
+                        <span class="pill ${open ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'}">${open ? '● Collecting' : 'Closed'}</span>
+                    </div>
+                    <div class="text-sm text-slate-500">${(cache.questions[g.id] || []).length} questions · <b class="text-slate-700 dark:text-slate-200">${n}</b> ${n === 1 ? 'response' : 'responses'}${open && g.closes_at ? ` · closes in ${timeLeft(g.closes_at)}` : ''}</div>
+                </a>`;
+            }).join('');
+        }
+
+        const CLOSE_OPTIONS = [['15', '15 minutes'], ['30', '30 minutes'], ['60', '1 hour'], ['180', '3 hours'], ['1440', '24 hours'], ['4320', '3 days'], ['10080', '1 week'], ['', 'No timer — I\'ll close it myself']];
+
+        async function editView(id) {
+            let game = null, qs = ['', '', ''];
+            if (id) {
+                if (!cache.games.length) await loadGames().catch(() => {});
+                game = cache.games.find(g => g.id === id);
+                if (!game) return notFound();
+                qs = cache.questions[id] ? [...cache.questions[id]] : qs;
+            }
+            const responses = id ? (cache.responses[id] || []).length : 0;
+            view.innerHTML = `
+                <a href="${id ? '#/game/' + id : '#/'}" class="text-sm font-semibold text-slate-500 hover:text-indigo-600">← Back</a>
+                <h1 class="text-3xl font-black mt-3 mb-8">${id ? 'Edit game' : 'Create a game'}</h1>
+                <form id="f" class="grid lg:grid-cols-3 gap-6" novalidate>
+                    <div class="lg:col-span-2 card p-6 sm:p-8">
+                        <label class="block mb-6"><span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Game name</span>
+                            <input id="f-title" class="field text-lg font-bold" maxlength="100" placeholder="Friday team social" value="${esc(game?.title || '')}" required></label>
+                        <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-wider text-slate-400">Questions (3–5)</span><span id="q-count" class="text-xs text-slate-400"></span></div>
+                        ${responses ? `<p class="text-xs text-amber-600 mb-3">This game already has ${responses} responses. Changing or reordering questions will mix up existing answers.</p>` : ''}
+                        <div id="qs" class="space-y-3"></div>
+                        <button type="button" id="add-q" class="btn btn-ghost mt-4 text-sm">＋ Add a question</button>
+                        <details class="mt-6 text-sm text-slate-500"><summary class="cursor-pointer font-semibold">Need ideas?</summary>
+                            <div class="flex flex-wrap gap-2 mt-3">${IDEAS.map(i => `<button type="button" class="idea pill bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 !font-semibold !text-xs">${esc(i)}</button>`).join('')}</div>
+                        </details>
+                    </div>
+                    <div class="card p-6 sm:p-8 h-fit">
+                        <label class="block mb-5"><span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Stop collecting answers after</span>
+                            <select id="f-close" class="field">${game ? `<option value="keep" selected>Keep as is (${isOpen(game) ? (game.closes_at ? 'closes in ' + timeLeft(game.closes_at) : 'open, no timer') : 'closed'})</option>` : ''}${CLOSE_OPTIONS.map(([v, t]) => `<option value="${v}" ${(!game && v === '1440') ? 'selected' : ''}>${game ? (v ? 'Reopen for ' + t : 'Reopen with no timer') : t}</option>`).join('')}</select></label>
+                        <label class="block mb-6"><span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">An answer makes the board if at least</span>
+                            <div class="flex items-center gap-2"><input id="f-min" type="number" min="1" max="50" class="field w-24" value="${game?.min_count || 2}"><span class="text-sm text-slate-500">people said it</span></div></label>
+                        <button class="btn btn-primary w-full text-base" id="f-save">${id ? 'Save changes' : 'Create & get link'}</button>
+                        <p id="f-msg" class="text-sm text-rose-600 mt-3"></p>
+                    </div>
+                </form>`;
+            const box = $('qs');
+            const renderQs = () => {
+                box.innerHTML = qs.map((q, i) => `<div class="flex items-center gap-2">
+                    <span class="w-8 h-8 shrink-0 rounded-full bg-indigo-600 text-white grid place-items-center font-black text-sm">${i + 1}</span>
+                    <input data-q="${i}" class="field" maxlength="200" placeholder="${esc(PLACEHOLDERS[i])}" value="${esc(q)}">
+                    <button type="button" data-rm="${i}" class="btn btn-danger !px-3 ${qs.length <= 3 ? 'invisible' : ''}" aria-label="Remove question ${i + 1}">✕</button>
+                </div>`).join('');
+                $('q-count').textContent = `${qs.length} of 5`;
+                $('add-q').hidden = qs.length >= 5;
+                box.querySelectorAll('[data-q]').forEach(el => el.oninput = () => { qs[+el.dataset.q] = el.value; });
+                box.querySelectorAll('[data-rm]').forEach(el => el.onclick = () => { qs.splice(+el.dataset.rm, 1); renderQs(); });
+            };
+            renderQs();
+            $('add-q').onclick = () => { if (qs.length < 5) { qs.push(''); renderQs(); box.querySelector(`[data-q="${qs.length - 1}"]`).focus(); } };
+            view.querySelectorAll('.idea').forEach(b => b.onclick = () => {
+                const empty = qs.findIndex(q => !q.trim());
+                if (empty >= 0) qs[empty] = b.textContent; else if (qs.length < 5) qs.push(b.textContent); else return toast('You already have 5 questions');
+                renderQs();
+            });
+            $('f').onsubmit = async e => {
+                e.preventDefault();
+                const title = $('f-title').value.trim();
+                const questions = qs.map(q => q.trim()).filter(Boolean);
+                const msg = $('f-msg');
+                if (!title) { msg.textContent = 'Give your game a name.'; return $('f-title').focus(); }
+                if (questions.length < 3) { msg.textContent = 'Add at least 3 questions.'; return; }
+                const close = $('f-close').value;
+                const closesAt = close === 'keep' ? game.closes_at : close ? new Date(Date.now() + Number(close) * 60000).toISOString() : null;
+                const minCount = Math.min(50, Math.max(1, parseInt($('f-min').value, 10) || 2));
+                $('f-save').disabled = true;
+                msg.textContent = '';
+                try {
+                    const saved = await saveGame(id, title, questions, closesAt, minCount);
+                    if (id && close !== 'keep' && game.status === 'closed') await patchGame(id, { status: 'open' });
+                    await loadGames();
+                    location.hash = '#/game/' + saved.id;
+                    toast(id ? 'Saved' : 'Game created — share the link!');
+                } catch (err) {
+                    msg.textContent = friendly(err);
+                    $('f-save').disabled = false;
+                }
+            };
+        }
+
+        async function gameView(id) {
+            if (!cache.games.find(g => g.id === id)) { try { await loadGames(); } catch (e) { view.innerHTML = errorBox(e); return; } }
+            const game = cache.games.find(g => g.id === id);
+            if (!game) return notFound();
+            const qs = cache.questions[id] || [];
+            const url = surveyUrl(game.code);
+            const draw = () => {
+                const n = (cache.responses[id] || []).length;
+                const open = isOpen(game);
+                view.innerHTML = `
+                    <a href="#/" class="text-sm font-semibold text-slate-500 hover:text-indigo-600">← All games</a>
+                    <div class="flex flex-wrap items-end justify-between gap-4 mt-3 mb-8">
+                        <div>
+                            <h1 class="text-3xl sm:text-4xl font-black">${esc(game.title)}</h1>
+                            <div class="mt-2 flex flex-wrap items-center gap-2 text-sm">
+                                <span class="pill ${open ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}">${open ? '● Collecting answers' : 'Closed'}</span>
+                                ${open && game.closes_at ? `<span class="text-slate-500">closes in ${timeLeft(game.closes_at)}</span>` : ''}
+                                ${!open && game.status === 'open' ? '<span class="text-slate-500">timer ended</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#/edit/${id}" class="btn btn-ghost">Edit</a>
+                            ${open ? '<button id="close" class="btn btn-ghost">⏹ Close survey</button>' : '<button id="reopen" class="btn btn-ghost">↺ Reopen</button>'}
+                            <a href="#/play/${id}" class="btn btn-primary ${n ? '' : 'opacity-50 pointer-events-none'}">▶ Play the game</a>
+                        </div>
+                    </div>
+                    <div class="grid lg:grid-cols-3 gap-6 mb-10">
+                        <div class="card p-6 lg:col-span-2">
+                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Share this link</div>
+                            <div class="flex flex-col sm:flex-row gap-2 mb-4">
+                                <input id="url" readonly class="field font-mono text-sm" value="${esc(url)}" onclick="this.select()">
+                                <button id="copy" class="btn btn-primary shrink-0">Copy link</button>
+                                ${navigator.share ? '<button id="share" class="btn btn-ghost shrink-0">Share…</button>' : ''}
+                            </div>
+                            <p class="text-sm text-slate-500">Anyone with the link can answer once per device — no account needed. ${open ? 'Close the survey when you\'re ready to play.' : 'The survey is closed, so new answers are turned away.'}</p>
+                        </div>
+                        <div class="card p-6 flex items-center gap-5">
+                            <canvas id="qr" width="132" height="132" class="rounded-lg bg-white shrink-0"></canvas>
+                            <div><div class="text-4xl font-black" id="count">${n}</div><div class="text-sm text-slate-500">${n === 1 ? 'person has' : 'people have'} answered</div>${open ? '<div class="text-xs text-emerald-600 mt-1">● Updates live</div>' : ''}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <h2 class="text-2xl font-black">Answers & board</h2>
+                        <p class="text-sm text-slate-500">Up to 8 answers said by at least <b>${game.min_count}</b> ${game.min_count === 1 ? 'person' : 'people'} make the board. Merge answers that mean the same thing, rename, or hide.</p>
+                    </div>
+                    <div id="qresults" class="space-y-6"></div>
+                    <div class="mt-10 text-center"><button id="del" class="btn btn-danger text-sm">Delete this game and all its answers</button></div>`;
+                $('copy').onclick = () => navigator.clipboard.writeText(url).then(() => toast('Link copied')).catch(() => { $('url').select(); document.execCommand('copy'); toast('Link copied'); });
+                if ($('share')) $('share').onclick = () => navigator.share({ title: game.title, text: `Answer a few quick questions for “${game.title}”`, url }).catch(() => {});
+                if ($('close')) $('close').onclick = async () => { await patchGame(id, { status: 'closed' }).then(g => Object.assign(game, g)).catch(e => toast(friendly(e))); toast('Survey closed — time to play!'); draw(); };
+                if ($('reopen')) $('reopen').onclick = async () => { await patchGame(id, { status: 'open', closes_at: null }).then(g => Object.assign(game, g)).catch(e => toast(friendly(e))); toast('Collecting answers again'); draw(); };
+                $('del').onclick = async () => {
+                    if (!confirm(`Delete “${game.title}” and all ${n} responses? This can't be undone.`)) return;
+                    try {
+                        const c = await client();
+                        must(await c.from('survey_games').delete().eq('id', id));
+                        cache.games = cache.games.filter(g => g.id !== id);
+                        location.hash = '#/';
+                        toast('Game deleted');
+                    } catch (e) { toast(friendly(e)); }
+                };
+                loadScript(QR).then(() => window.QRCode.toCanvas($('qr'), url, { width: 132, margin: 1 })).catch(() => {});
+                drawResults();
+            };
+            const drawResults = () => {
+                const holder = $('qresults');
+                if (!holder) return;
+                const n = (cache.responses[id] || []).length;
+                if (!n) { holder.innerHTML = `<div class="card p-8 text-center text-slate-500">No answers yet. Send the link and they'll show up here.</div>`; return; }
+                holder.innerHTML = qs.map((prompt, qi) => {
+                    const groups = questionGroups(game, qi);
+                    const board = boardFor(game, qi).map(b => b.label);
+                    return `<div class="card p-6" data-qi="${qi}">
+                        <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+                            <div><div class="text-xs font-bold text-indigo-500 mb-1">QUESTION ${qi + 1}</div><div class="font-black text-lg">${esc(prompt)}</div></div>
+                            <div class="flex gap-2"><button class="merge btn btn-ghost text-sm" disabled>Merge selected</button>${(game.board || {})[qi] ? '<button class="reset btn btn-ghost text-sm">Reset</button>' : ''}</div>
+                        </div>
+                        <div class="divide-y" style="border-color: var(--border)">
+                            ${groups.map((g, gi) => {
+                                const on = board.includes(g.label) && !g.hidden;
+                                return `<div class="flex items-center gap-3 py-2.5 ${g.hidden ? 'opacity-40' : ''}">
+                                    <input type="checkbox" class="sel w-4 h-4 accent-indigo-600" data-gi="${gi}" aria-label="Select ${esc(g.label)}">
+                                    <input class="label bg-transparent font-semibold flex-1 min-w-0 rounded-lg px-2 py-1 hover:bg-black/5 focus:bg-black/5 outline-none" data-gi="${gi}" value="${esc(g.label)}" maxlength="40">
+                                    ${g.aliases.length > 1 ? `<span class="hidden sm:inline text-xs text-slate-400 truncate max-w-[12rem]" title="${esc(g.aliases.join(', '))}">${g.aliases.length} spellings</span>` : ''}
+                                    <span class="pill ${on ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'}">${g.count} · ${on ? 'on board' : 'not on board'}</span>
+                                    <button class="hide text-xs font-bold text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 w-12" data-gi="${gi}">${g.hidden ? 'Show' : 'Hide'}</button>
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    </div>`;
+                }).join('');
+                holder.querySelectorAll('[data-qi]').forEach(card => {
+                    const qi = +card.dataset.qi;
+                    const groups = questionGroups(game, qi);
+                    const save = async next => {
+                        const board = { ...(game.board || {}) };
+                        if (next) board[qi] = next.map(g => ({ label: g.label, aliases: g.aliases, hidden: !!g.hidden })); else delete board[qi];
+                        game.board = board;
+                        drawResults();
+                        try { await patchGame(id, { board }); } catch (e) { toast(friendly(e)); }
+                    };
+                    const mergeBtn = card.querySelector('.merge');
+                    card.querySelectorAll('.sel').forEach(c => c.onchange = () => { mergeBtn.disabled = card.querySelectorAll('.sel:checked').length < 2; });
+                    mergeBtn.onclick = () => {
+                        // The most-said answer keeps its name; the rest fold into it.
+                        const picked = [...card.querySelectorAll('.sel:checked')].map(c => +c.dataset.gi).sort((a, b) => groups[b].count - groups[a].count || a - b);
+                        const keep = groups[picked[0]];
+                        picked.slice(1).forEach(i => { keep.aliases.push(...groups[i].aliases); keep.count += groups[i].count; });
+                        save(groups.filter((g, i) => !picked.slice(1).includes(i)));
+                        toast('Merged');
+                    };
+                    card.querySelectorAll('.label').forEach(inp => inp.onchange = () => {
+                        const g = groups[+inp.dataset.gi];
+                        g.label = inp.value.trim() || g.label;
+                        save(groups);
+                    });
+                    card.querySelectorAll('.hide').forEach(b => b.onclick = () => { const g = groups[+b.dataset.gi]; g.hidden = !g.hidden; save(groups); });
+                    const reset = card.querySelector('.reset');
+                    if (reset) reset.onclick = () => save(null);
+                });
+            };
+            draw();
+            // Live response count while collecting.
+            pollTimer = setInterval(async () => {
+                if (document.hidden || !isOpen(game)) return;
+                const before = (cache.responses[id] || []).length;
+                await refreshResponses(id).catch(() => {});
+                const after = (cache.responses[id] || []).length;
+                if (after !== before) {
+                    if ($('count')) $('count').textContent = after;
+                    if (!document.activeElement || !document.activeElement.closest('#qresults')) drawResults();
+                }
+            }, 8000);
+        }
+
+        async function playGame(id) {
+            if (!cache.games.find(g => g.id === id)) { try { await loadGames(); } catch (e) { view.innerHTML = errorBox(e); return; } }
+            const game = cache.games.find(g => g.id === id);
+            if (!game) return notFound();
+            await refreshResponses(id).catch(() => {});
+            const qs = cache.questions[id] || [];
+            startPlay({ id, title: game.title, questions: qs.map((prompt, qi) => ({ prompt, board: boardFor(game, qi), total: (cache.responses[id] || []).filter(a => a[qi]).length })) });
+        }
+
+        function notFound() { view.innerHTML = `<div class="card p-8 text-center"><div class="text-4xl mb-2">🤷</div><div class="font-black text-lg mb-4">Game not found</div><a href="#/" class="btn btn-primary">Back to your games</a></div>`; }
+        function errorBox(e) { return `<div class="card p-6 text-rose-600 md:col-span-2">${esc(friendly(e))}</div>`; }
+        function friendly(e) {
+            const m = (e && (e.message || e.error_description)) || String(e);
+            if (/relation .*survey_|does not exist|schema cache/i.test(m)) return 'Survey Says isn\'t set up in the database yet. Run supabase/migrations/20261029120000_survey_says.sql in the Supabase SQL Editor.';
+            if (/JWT|not authenticated|401/i.test(m)) return 'Your session expired — please sign in again.';
+            if (/fetch|network/i.test(m)) return 'Can\'t reach the server. Check your connection.';
+            return m;
+        }
+
+        // ── The game show ──────────────────────────────────────────────
+        // One state object drives the board; a presenter window (for screen
+        // sharing just the board) mirrors it over BroadcastChannel.
+        let S = null;
+        const channel = 'BroadcastChannel' in window ? new BroadcastChannel('survey-says') : null;
+
+        function startPlay(game) {
+            const saved = (() => { try { return JSON.parse(sessionStorage.getItem('ss-play-' + game.id)); } catch (e) { return null; } })();
+            S = saved && saved.title === game.title ? saved : {
+                id: game.id, title: game.title, questions: game.questions,
+                qi: 0, revealed: game.questions.map(() => []), strikes: 0, pot: 0, awarded: game.questions.map(() => false),
+                teams: [{ name: 'Team 1', score: 0 }, { name: 'Team 2', score: 0 }], active: 0, done: false
+            };
+            S.questions = game.questions; // fresh boards
+            $('chrome').hidden = true;
+            $('stage').hidden = false;
+            document.body.style.overflow = 'hidden';
+            document.body.classList.add('playing');
+            renderStage(true);
+            keyHandler.on = true;
+        }
+
+        function persist() {
+            try { sessionStorage.setItem('ss-play-' + S.id, JSON.stringify(S)); } catch (e) {}
+            if (channel) channel.postMessage({ type: 'state', state: S });
+        }
+
+        function boardHtml(st, flash) {
+            const q = st.questions[st.qi];
+            const board = q.board;
+            const slots = Math.max(4, Math.min(8, board.length % 2 ? board.length + 1 : board.length));
+            const lead = st.teams[0].score === st.teams[1].score ? -1 : st.teams[0].score > st.teams[1].score ? 0 : 1;
+            const tile = i => {
+                const b = board[i];
+                const shown = b && st.revealed[st.qi].includes(i);
+                return `<div class="tile ${b ? '' : 'empty'} ${shown ? 'revealed' : ''}" data-tile="${i}">
+                    <div class="tile-inner">
+                        <div class="tile-face tile-front"><span class="num">${i + 1}</span></div>
+                        <div class="tile-face tile-back"><span class="truncate text-[clamp(.9rem,2.2vw,1.6rem)]">${b ? esc(b.label) : ''}</span><span class="pts">${b ? b.points : ''}</span></div>
+                    </div></div>`;
+            };
+            if (st.done) {
+                const w = lead < 0 ? null : st.teams[lead];
+                return `<div class="flex-1 flex flex-col items-center justify-center text-center px-6">
+                    <div class="text-7xl mb-4 pop">🏆</div>
+                    <div class="font-display text-[clamp(2rem,6vw,5rem)] font-extrabold text-amber-300 leading-none mb-4">${w ? esc(w.name) + ' wins!' : 'It\'s a tie!'}</div>
+                    <div class="text-2xl font-bold text-indigo-100">${esc(st.teams[0].name)} ${st.teams[0].score} — ${st.teams[1].score} ${esc(st.teams[1].name)}</div>
+                </div>`;
+            }
+            return `
+                <div class="px-[3vw] pt-[2.5vh] flex items-center justify-between gap-4">
+                    <div class="text-sm font-bold uppercase tracking-[.2em] text-amber-300/90 truncate">${esc(st.title)}</div>
+                    <div class="text-sm font-bold text-indigo-200">Question ${st.qi + 1} of ${st.questions.length}${q.total ? ` · ${q.total} surveyed` : ''}</div>
+                </div>
+                <div class="px-[3vw] pt-[1.5vh] text-center">
+                    <div class="font-display font-extrabold leading-tight text-[clamp(1.4rem,3.6vw,3.2rem)] max-w-5xl mx-auto">${esc(q.prompt)}</div>
+                </div>
+                <div class="flex-1 min-h-0 overflow-y-auto flex items-start sm:items-center justify-center gap-[2vw] px-[3vw] py-[2vh]">
+                    <div class="scorebox ${lead === 0 ? 'lead' : ''} ${st.active === 0 ? 'ring-4 ring-white/30' : ''} hidden md:flex flex-col items-center justify-center w-[14vw] min-w-[9rem] py-6">
+                        <div class="text-sm font-bold uppercase tracking-wider text-indigo-200 text-center px-2 truncate max-w-full">${esc(st.teams[0].name)}</div>
+                        <div class="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold text-amber-300 tabular-nums">${st.teams[0].score}</div>
+                    </div>
+                    <div class="board relative w-full max-w-5xl p-[clamp(.75rem,2vw,1.75rem)]">
+                        <div class="flex justify-center -mt-2 mb-3"><div class="bg-[#0a0f3d] border-2 border-amber-300 rounded-xl px-6 py-1 font-display font-extrabold text-amber-300 text-[clamp(1.4rem,3vw,2.6rem)] tabular-nums" title="Points in play">${st.pot}</div></div>
+                        <div class="tiles grid grid-cols-1 sm:grid-cols-2 gap-[clamp(.5rem,1.2vw,1rem)]" style="--rows:${slots / 2}">${Array.from({ length: slots }, (_, i) => tile(i)).join('')}</div>
+                        <div id="strikes" class="absolute inset-0 flex items-center justify-center gap-6 pointer-events-none ${flash === 'strike' ? '' : 'hidden'}">${'<span class="strike-x pop text-[clamp(6rem,18vw,16rem)]">✕</span>'.repeat(Math.max(1, st.strikes))}</div>
+                    </div>
+                    <div class="scorebox ${lead === 1 ? 'lead' : ''} ${st.active === 1 ? 'ring-4 ring-white/30' : ''} hidden md:flex flex-col items-center justify-center w-[14vw] min-w-[9rem] py-6">
+                        <div class="text-sm font-bold uppercase tracking-wider text-indigo-200 text-center px-2 truncate max-w-full">${esc(st.teams[1].name)}</div>
+                        <div class="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold text-amber-300 tabular-nums">${st.teams[1].score}</div>
+                    </div>
+                </div>
+                <div class="md:hidden flex justify-center gap-6 pb-2 text-center">
+                    ${st.teams.map((t, i) => `<div><div class="text-xs font-bold text-indigo-200">${esc(t.name)}</div><div class="text-3xl font-extrabold text-amber-300">${t.score}</div></div>`).join('')}
+                </div>
+                <div class="flex justify-center gap-3 pb-[1.5vh]" aria-label="Strikes">${[0, 1, 2].map(i => `<span class="w-10 h-10 rounded-lg grid place-items-center font-black text-xl ${i < st.strikes ? 'bg-red-600 text-white' : 'bg-white/10 text-white/25'}">✕</span>`).join('')}</div>`;
+        }
+
+        function renderStage(fresh, flash) {
+            const stage = $('stage');
+            const q = S.questions[S.qi];
+            const allShown = q.board.every((b, i) => S.revealed[S.qi].includes(i));
+            stage.innerHTML = `<div id="boardwrap" class="flex-1 min-h-0 flex flex-col">${boardHtml(S, flash)}</div>
+                <div id="controls" class="border-t border-white/10 bg-[#070b2e]/95 px-3 sm:px-6 py-3" ${S.done ? '' : ''}>
+                    ${S.done ? `<div class="flex flex-wrap justify-center gap-2"><button data-act="restart" class="btn bg-white/10 hover:bg-white/20">↺ Play again</button><button data-act="exit" class="btn bg-white/10 hover:bg-white/20">Exit</button></div>` : `
+                    <form id="guess-form" class="flex gap-2 max-w-3xl mx-auto mb-2" autocomplete="off">
+                        <input id="guess" class="flex-1 min-w-0 rounded-xl px-4 py-3 bg-white text-slate-900 font-semibold text-lg outline-none focus:ring-4 focus:ring-amber-300" placeholder="Type the answer you heard, then Enter" aria-label="Answer given">
+                        <button class="btn bg-amber-400 hover:bg-amber-300 text-slate-900">Check</button>
+                    </form>
+                    <div class="flex flex-wrap items-center justify-center gap-2 text-sm">
+                        <button data-act="strike" class="btn !py-2 bg-red-600 hover:bg-red-500" title="X">✕ Strike</button>
+                        <button data-act="award0" class="btn !py-2 bg-white/10 hover:bg-white/20" ${S.pot && !S.awarded[S.qi] ? '' : 'disabled'}>Give ${S.pot} to ${esc(S.teams[0].name)}</button>
+                        <button data-act="award1" class="btn !py-2 bg-white/10 hover:bg-white/20" ${S.pot && !S.awarded[S.qi] ? '' : 'disabled'}>Give ${S.pot} to ${esc(S.teams[1].name)}</button>
+                        <button data-act="revealall" class="btn !py-2 bg-white/10 hover:bg-white/20" ${allShown ? 'disabled' : ''}>Reveal rest</button>
+                        <button data-act="prev" class="btn !py-2 bg-white/10 hover:bg-white/20" ${S.qi ? '' : 'disabled'}>←</button>
+                        <button data-act="next" class="btn !py-2 bg-indigo-500 hover:bg-indigo-400">${S.qi === S.questions.length - 1 ? 'Finish' : 'Next question →'}</button>
+                        <details class="relative"><summary class="btn !py-2 bg-white/10 hover:bg-white/20 list-none cursor-pointer">⋯</summary>
+                            <div class="absolute bottom-12 right-0 w-72 rounded-2xl bg-white text-slate-800 p-4 shadow-2xl space-y-3 z-10">
+                                <label class="block text-xs font-bold">Team names
+                                    <div class="flex gap-2 mt-1"><input data-team="0" class="field !py-2" value="${esc(S.teams[0].name)}"><input data-team="1" class="field !py-2" value="${esc(S.teams[1].name)}"></div></label>
+                                <div class="text-xs font-bold">Playing now: <button data-act="swap" class="underline">${esc(S.teams[S.active].name)} (switch)</button></div>
+                                <button data-act="present" class="btn btn-primary w-full !py-2 text-sm">Open board in its own window</button>
+                                <p class="text-[11px] text-slate-500">Share that window on your call and keep these controls private. Keys: Enter check · 1–8 reveal · X strike.</p>
+                                <button data-act="exit" class="btn btn-ghost w-full !py-2 text-sm">Exit game</button>
+                            </div>
+                        </details>
+                    </div>`}
+                </div>`;
+            if (flash === 'strike') setTimeout(() => { const s = $('strikes'); if (s) s.classList.add('hidden'); }, 1100);
+            const form = $('guess-form');
+            if (form) {
+                form.onsubmit = e => { e.preventDefault(); checkGuess($('guess').value); };
+                if (!fresh || window.innerWidth > 640) setTimeout(() => $('guess')?.focus(), 30);
+            }
+            stage.querySelectorAll('[data-act]').forEach(b => b.onclick = () => act(b.dataset.act));
+            stage.querySelectorAll('[data-team]').forEach(inp => inp.onchange = () => { S.teams[+inp.dataset.team].name = inp.value.trim().slice(0, 24) || `Team ${+inp.dataset.team + 1}`; persist(); renderStage(); });
+            stage.querySelectorAll('[data-tile]').forEach(t => t.onclick = () => reveal(+t.dataset.tile, true));
+            persist();
+        }
+
+        function reveal(i, byHost) {
+            const board = S.questions[S.qi].board;
+            if (!board[i] || S.revealed[S.qi].includes(i)) return false;
+            S.revealed[S.qi].push(i);
+            if (!S.awarded[S.qi]) S.pot += board[i].points;
+            sound('ding');
+            renderStage();
+            if (byHost) toast(`#${i + 1} ${board[i].label} — ${board[i].points}`);
+            return true;
+        }
+
+        function checkGuess(text) {
+            const g = text.trim();
+            if (!g) return;
+            const board = S.questions[S.qi].board;
+            const i = SurveyLogic.matchGuess(g, board);
+            if (i >= 0 && !S.revealed[S.qi].includes(i)) { reveal(i); }
+            else if (i >= 0) { toast(`“${board[i].label}” is already up`); $('guess').value = ''; }
+            else strike(`No “${g}” on the board`);
+            const inp = $('guess'); if (inp) inp.value = '';
+        }
+
+        function strike(msg) {
+            S.strikes = Math.min(3, S.strikes + 1);
+            sound('buzz');
+            renderStage(false, 'strike');
+            if (msg) toast(msg);
+            if (S.strikes === 3) setTimeout(() => toast(`3 strikes — ${S.teams[1 - S.active].name} can steal!`), 1200);
+        }
+
+        function act(a) {
+            if (a === 'strike') return strike();
+            if (a === 'award0' || a === 'award1') {
+                const t = +a.slice(-1);
+                S.teams[t].score += S.pot;
+                S.awarded[S.qi] = true;
+                toast(`${S.pot} points to ${S.teams[t].name}!`);
+                S.pot = 0;
+                sound('win');
+                return renderStage();
+            }
+            if (a === 'revealall') { S.questions[S.qi].board.forEach((b, i) => { if (!S.revealed[S.qi].includes(i)) S.revealed[S.qi].push(i); }); sound('ding'); return renderStage(); }
+            if (a === 'next') {
+                if (S.qi === S.questions.length - 1) { S.done = true; sound('win'); return renderStage(); }
+                S.qi++; S.strikes = 0; S.pot = 0; S.active = 1 - S.active;
+                return renderStage(true);
+            }
+            if (a === 'prev') { S.qi--; S.strikes = 0; S.pot = 0; return renderStage(true); }
+            if (a === 'swap') { S.active = 1 - S.active; return renderStage(); }
+            if (a === 'present') {
+                const w = window.open(`${location.pathname}#/board/${S.id}`, 'survey-says-board', 'popup,width=1280,height=760');
+                if (!w) toast('Allow pop-ups to open the board window');
+                return;
+            }
+            if (a === 'restart') { sessionStorage.removeItem('ss-play-' + S.id); const g = { id: S.id, title: S.title, questions: S.questions }; return startPlay(g); }
+            if (a === 'exit') {
+                keyHandler.on = false;
+                document.body.style.overflow = '';
+                document.body.classList.remove('playing');
+                location.hash = S.id === 'demo' ? '#/' : '#/game/' + S.id;
+                route();
             }
         }
 
-        app.init();
-    </script>
+        const keyHandler = e => {
+            if (!keyHandler.on || !S || S.done) return;
+            const typing = document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName);
+            if (typing) return;
+            if (/^[1-8]$/.test(e.key)) reveal(+e.key - 1, true);
+            else if (e.key.toLowerCase() === 'x') strike();
+        };
+        document.addEventListener('keydown', keyHandler);
 
+        // Presenter window: shows only the board, follows the host's controls.
+        function presenterWindow() {
+            $('chrome').hidden = true;
+            const stage = $('stage');
+            stage.hidden = false;
+            document.body.style.overflow = 'hidden';
+            stage.innerHTML = '<div class="flex-1 grid place-items-center text-indigo-200">Waiting for the host…</div>';
+            if (!channel) { stage.innerHTML = '<div class="flex-1 grid place-items-center text-indigo-200 p-6 text-center">This browser can\'t mirror the board. Share the main window instead.</div>'; return; }
+            let last = null;
+            channel.onmessage = ev => {
+                if (ev.data?.type !== 'state') return;
+                const st = ev.data.state;
+                const strikeFlash = last && st.strikes > last.strikes && st.qi === last.qi;
+                const newReveal = last && st.qi === last.qi && st.revealed[st.qi].length > last.revealed[last.qi].length;
+                stage.innerHTML = `<div class="flex-1 min-h-0 flex flex-col">${boardHtml(st, strikeFlash ? 'strike' : '')}</div>`;
+                if (strikeFlash) { sound('buzz'); setTimeout(() => { const s = $('strikes'); if (s) s.classList.add('hidden'); }, 1100); }
+                if (newReveal) sound('ding');
+                last = st;
+            };
+            channel.postMessage({ type: 'hello' });
+            document.title = 'Survey Says — Board';
+        }
+        if (channel) channel.addEventListener('message', ev => { if (ev.data?.type === 'hello' && S && !$('stage').hidden && location.hash.indexOf('#/board') !== 0) persist(); });
+
+        // Tiny synthesized sounds (no audio files to load).
+        let ac = null;
+        function sound(kind) {
+            try {
+                ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+                const now = ac.currentTime;
+                const tone = (f, t, d, type = 'sine', vol = .15) => {
+                    const o = ac.createOscillator(), g = ac.createGain();
+                    o.type = type; o.frequency.setValueAtTime(f, now + t);
+                    g.gain.setValueAtTime(vol, now + t); g.gain.exponentialRampToValueAtTime(.001, now + t + d);
+                    o.connect(g); g.connect(ac.destination); o.start(now + t); o.stop(now + t + d);
+                };
+                if (kind === 'ding') { tone(880, 0, .25); tone(1320, .08, .35); }
+                if (kind === 'buzz') { tone(110, 0, .7, 'square', .12); tone(116, 0, .7, 'sawtooth', .08); }
+                if (kind === 'win') { [523, 659, 784, 1047].forEach((f, i) => tone(f, i * .12, .3, 'triangle')); }
+            } catch (e) {}
+        }
+
+        // Demo board so anyone can try the show without an account.
+        const DEMO = { id: 'demo', title: 'Demo game', questions: [
+            { prompt: 'Name something people do right after waking up', total: 100, board: [['Check phone', 31], ['Brush teeth', 22], ['Use the bathroom', 17], ['Make coffee', 12], ['Shower', 8], ['Snooze alarm', 5]] },
+            { prompt: 'Name something you bring to the beach', total: 100, board: [['Towel', 29], ['Sunscreen', 24], ['Umbrella', 14], ['Cooler', 11], ['Chair', 9], ['Book', 6], ['Ball', 4], ['Sunglasses', 3]] },
+            { prompt: 'Name a reason a meeting runs late', total: 100, board: [['Talking too much', 34], ['Started late', 21], ['Tech problems', 18], ['No agenda', 13], ['Questions', 8]] }
+        ].map(q => ({ ...q, board: q.board.map(([label, points]) => ({ label, points, aliases: [SurveyLogic.normalize(label)] })) })) };
+
+        const PLACEHOLDERS = ['Name something people do first thing in the morning', 'Name something you\'d find in a junk drawer', 'Name a reason someone might be late to work', 'Name a popular pizza topping', 'Name something people do on a Friday night'];
+        const IDEAS = ['Name a snack you\'d find at a movie theater', 'Name something people forget when they travel', 'Name a chore everyone hates', 'Name something you do on a lunch break', 'Name an excuse for missing a meeting', 'Name a word your boss says too often', 'Name something you\'d take to a desert island', 'Name a popular holiday tradition', 'Name a fast food restaurant', 'Name something people collect'];
+
+        // ── Boot ───────────────────────────────────────────────────────
+        window.addEventListener('hashchange', route);
+        (async () => {
+            const page = (location.hash.split('/')[1] || '');
+            if (page === 'board' || (page === 'play' && location.hash.endsWith('/demo'))) return route();
+            if (CFG.url && CFG.anonKey && localStorage.getItem('sb-webdesks-auth')) {
+                try {
+                    const c = await client();
+                    const { data } = await c.auth.getSession();
+                    user = data.session?.user || null;
+                } catch (e) { /* offline: fall through as signed out */ }
+            }
+            $('who').textContent = user ? user.email : '';
+            $('signin-link').hidden = !!user || !CFG.url;
+            route();
+        })();
+    })();
+    </script>
 </body>
 </html>

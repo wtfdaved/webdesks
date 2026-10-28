@@ -2,7 +2,7 @@
   "name": "WebDesks OS",
   "short_name": "WebDesks",
   "description": "28 free productivity tools in one browser tab — daily planner, calendar, ADHD chore organizer, bills, Notion-style pages and more",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "any",
@@ -40,9 +40,9 @@
       "description": "Start a Pomodoro session"
     },
     {
-      "name": "Dev Toolkit",
-      "url": "index.html#devtools",
-      "description": "JSON, Base64, hashes, JWT, UUID and QR codes"
+      "name": "Survey Says",
+      "url": "family-feud",
+      "description": "Host a survey game show"
     }
   ],
   "icons": [

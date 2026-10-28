@@ -621,15 +621,18 @@
             const bills = this._billsBetween(today, addDays(today, 7)).filter(b => !b.paid).length;
             const events = this._eventsOn(today).length;
             const checked = this.checkins[today]?.checked;
+            const chip = (icon, n, one, many) => `<span class="hero-chip">${icon} <b>${n}</b> ${n === 1 ? one : many}</span>`;
             el.innerHTML = `
-                <button onclick="app.switchTab('today')" class="w-full text-left glass p-5 rounded-2xl flex flex-wrap items-center gap-4 hover:shadow-lg transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-pink-500 flex items-center justify-center text-2xl shrink-0">☀️</div>
-                    <div class="flex-1 min-w-[12rem]">
-                        <div class="font-black text-lg">${checked ? 'Today at a glance' : 'Start your morning check-in'}</div>
-                        <div class="text-sm text-slate-500">${events} event${events === 1 ? '' : 's'} · ${tasks} task${tasks === 1 ? '' : 's'} · ${chores} chore${chores === 1 ? '' : 's'} · ${bills} bill${bills === 1 ? '' : 's'} due this week</div>
-                    </div>
-                    <i data-lucide="arrow-right" class="w-5 h-5 text-slate-400 group-hover:translate-x-1 transition-transform"></i>
-                </button>`;
+                <div class="hero-chips">
+                    ${chip('📅', events, 'event', 'events')}
+                    ${chip('✅', tasks, 'task due', 'tasks due')}
+                    ${chip('🧹', chores, 'chore', 'chores')}
+                    ${chip('💸', bills, 'bill this week', 'bills this week')}
+                </div>
+                <div class="hero-ctas">
+                    <button onclick="app.switchTab('today')" class="hero-cta primary">${checked ? 'Open today' : 'Start <span class="cta-long">my morning&nbsp;</span>check-in'} <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+                    <button onclick="app.switchTab('calendar')" class="hero-cta ghost"><i data-lucide="calendar-days" class="w-4 h-4"></i> Calendar</button>
+                </div>`;
             this._rebuildIcons();
         },
 
