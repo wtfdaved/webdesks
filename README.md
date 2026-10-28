@@ -12,7 +12,7 @@ file operation done locally.
 | Group | Tools |
 | --- | --- |
 | **Life planner** | **Today** (morning check-in), **Calendar** (month / week / day / agenda), **Pages** (Notion-style), **Chores** (ADHD organiser), **Bills** |
-| Focus | Focus Timer (Pomodoro), Focus Town, Breathing Guide, On Air, Audio Mixer, Desk Clock, Stopwatch |
+| Focus | Focus Timer (Pomodoro), **Focus Town**, **Sounds** (ad-free Lo-fi + ambience mixer), Breathing Guide, On Air, Desk Clock, Stopwatch |
 | Work | Scratchpad, Task Manager, Project Board, Whiteboard, Time Zones |
 | Files & media | PDF Merger, Screen Recorder, Media Converter (WebM → MP4, image resize) |
 | Utilities | Calculator, Unit Converter, Colour Picker, **Dev Toolkit**, **Image to Text (OCR)** |
@@ -83,6 +83,44 @@ lives in `survey_games`, `survey_questions` and `survey_responses`
 own rows through row-level security. Respondents never touch the tables; they
 call `get_survey(code)` and `submit_survey(code, token, answers)`, which only
 accept answers while the game is open.
+
+## Focus Town (`town.js`)
+
+A cozy isometric town that grows while WebDesks is open. Coins come in every
+minute (4× while a focus session runs, plus bonuses for finished Pomodoros,
+tasks and chores); spend them on houses, farms, bakeries, a windmill, a
+fountain, a town hall and more. Villagers move in when there's housing and
+food, wander the streets, and can be tapped for a treat. The town keeps
+growing at a quarter speed while you're away (up to 12 h), there's a daily
+gift with a streak, a sequence of quests, day/night lighting from your clock,
+and six levels from Campsite to Capital that expand the island. Terrain is
+shaped with [simplex-noise](https://github.com/jwagner/simplex-noise.js); the
+town is saved under `wd_town` and syncs with your Desk.
+
+## Sounds (`sound.js`)
+
+The old Lo-Fi button streamed a third-party station that inserted ads (and
+paid us nothing). It's replaced by two ad-free sources:
+
+- **WebDesks Lo-fi** — four stations (Lo-fi Beats, Jazzy Café, Night Chill,
+  Deep Focus) composed live by [Tone.js](https://github.com/Tonejs/Tone.js):
+  jazz chord progressions with voice-leading, Rhodes-style keys, swung drums,
+  walking or lo-fi bass, a repeating melody motif, tape wobble, vinyl crackle
+  and a low-pass "dusty" filter. Every track gets a new key, tempo and name and
+  it works offline once cached.
+- **Radio** — five listener-supported [SomaFM](https://somafm.com) channels
+  (Fluid, Groove Salad, Lush, Drone Zone, Deep Space One) played with
+  [howler.js](https://github.com/goldfire/howler.js), with host failover and
+  now-playing titles.
+
+The **ambience mixer** synthesises 14 sounds procedurally (rain with
+droplets, rolling thunder, individual ocean waves, wind gusts, a bubbling
+creek, a crackling fireplace, café chatter with cup clinks, bird calls,
+crickets, a fan, vinyl, white/pink/brown noise). Beds are rendered offline as
+seamless stereo loops and one-shot events are scheduled at random, so it
+never audibly repeats. There are eight presets, saved mixes (`wd_mixes`), a
+sleep timer that fades out over the last minute, and Media Session controls
+(lock screen, media keys).
 
 ## Everyday helpers (`extras.js`)
 
@@ -163,6 +201,9 @@ clears this browser's copy.
 
 ## Design & performance
 
+v0.26 rebuilt Focus Town as a growing isometric town and replaced the ad-supported
+Lo-Fi stream and the old mixer with the ad-free Sounds tab (see above).
+
 v0.25 redesigned the home screen: a gradient hero with your greeting, today's
 focus, counts of events, tasks, chores and bills due and a check-in button; a
 "toolkit" grid of the main tools; and an "At a glance" bento of widgets. On
@@ -233,6 +274,9 @@ the features is theirs, and they are worth your stars:
 | [ffmpegwasm/ffmpeg.wasm](https://github.com/ffmpegwasm/ffmpeg.wasm) | ~15k | Powers the Media Converter |
 | [soldair/node-qrcode](https://github.com/soldair/node-qrcode) | ~8k | Powers the QR code generator |
 | [Hopding/pdf-lib](https://github.com/Hopding/pdf-lib) | ~8k | Powers the PDF Merger |
+| [Tonejs/Tone.js](https://github.com/Tonejs/Tone.js) | ~14k | Powers the generative WebDesks Lo-fi stations; loaded on first play |
+| [goldfire/howler.js](https://github.com/goldfire/howler.js) | ~24k | Plays the SomaFM radio streams; loaded on first play |
+| [jwagner/simplex-noise.js](https://github.com/jwagner/simplex-noise.js) | ~1.7k | Shapes Focus Town's island terrain |
 
 The command palette itself follows the launcher pattern popularised by VS Code
 and adopted by it-tools: substring matches rank first, then subsequence matches
