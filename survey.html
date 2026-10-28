@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <title>Answer the survey — Survey Says | WebDesks</title>
+    <meta name="description" content="Answer a few quick questions for a Survey Says game. No account needed.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="You're invited to a Survey Says game 🏆">
+    <meta property="og:description" content="Answer a few quick questions — your answers end up on the game board.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], display: ['"Bricolage Grotesque"', 'Inter', 'sans-serif'] } } } };</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Bricolage+Grotesque:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(900px 600px at 100% -10%, #4f46e5, transparent 60%), radial-gradient(700px 500px at -10% 110%, #db2777, transparent 55%), #14206b; min-height: 100dvh; -webkit-font-smoothing: antialiased; }
+        .card { background: #fff; border-radius: 1.75rem; box-shadow: 0 30px 80px -30px rgba(0,0,0,.6); }
+        @keyframes rise { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
+        .rise { animation: rise .3s ease-out both; }
+        [hidden] { display: none !important; }
+        @media (prefers-reduced-motion: reduce) { .rise { animation: none; } }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col">
+    <header class="px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-2 flex items-center justify-between text-white/90">
+        <div class="flex items-center gap-2 font-black"><span class="text-2xl">🏆</span> Survey Says</div>
+        <div id="timer" class="text-xs font-bold bg-white/10 rounded-full px-3 py-1" hidden></div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center px-4 py-6">
+        <div id="app" class="w-full max-w-lg">
+            <div class="card p-8 text-center text-slate-400">Loading…</div>
+        </div>
+    </main>
+
+    <footer class="text-center text-[11px] text-white/50 pb-[max(1rem,env(safe-area-inset-bottom))] px-4">
+        Answers are anonymous and only the game host sees them. <a href="/privacy" class="underline">Privacy</a> · Made with <a href="/" class="underline">WebDesks</a>
+    </footer>
+
+    <script src="/supabase-config.js"></script>
+    <script>
+    (() => {
+        const CFG = window.WEBDESKS_SUPABASE || {};
+        const code = new URLSearchParams(location.search).get('g') || '';
+        const app = document.getElementById('app');
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const doneKey = 'ss-done-' + code;
+        const draftKey = 'ss-draft-' + code;
+        let survey = null, step = 0, answers = [];
+
+        // One random token per browser so the host gets one set of answers per person.
+        const respondent = (() => {
+            try {
+                let t = localStorage.getItem('ss-respondent');
+                if (!t) { t = (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)).replace(/-/g, ''); localStorage.setItem('ss-respondent', t); }
+                return t;
+            } catch (e) { return 'anon' + Math.random().toString(36).slice(2, 12); }
+        })();
+
+        // Talk to the two public database functions directly (no library needed).
+        const rpc = async (fn, body) => {
+            const res = await fetch(`${CFG.url}/rest/v1/rpc/${fn}`, {
+                method: 'POST',
+                // apikey only: Supabase then runs the call as an anonymous visitor (new publishable keys aren't JWTs).
+                headers: { 'Content-Type': 'application/json', apikey: CFG.anonKey },
+                body: JSON.stringify(body)
+            });
+            const data = await res.json().catch(() => null);
+            if (!res.ok) throw new Error((data && (data.message || data.hint)) || `Request failed (${res.status})`);
+            return data;
+        };
+
+        const screen = html => { app.innerHTML = `<div class="card p-7 sm:p-9 rise">${html}</div>`; };
+        const message = (emoji, title, body) => screen(`<div class="text-center"><div class="text-6xl mb-4">${emoji}</div><h1 class="font-display text-3xl font-extrabold text-indigo-950 mb-2">${title}</h1><p class="text-slate-500">${body}</p></div>`);
+
+        function render() {
+            const qs = survey.questions;
+            if (step >= qs.length) return review();
+            const pct = Math.round((step / qs.length) * 100);
+            screen(`
+                <div class="flex items-center justify-between text-xs font-bold text-slate-400 mb-2"><span>${esc(survey.title)}</span><span>${step + 1} / ${qs.length}</span></div>
+                <div class="h-2 rounded-full bg-slate-100 overflow-hidden mb-7"><div class="h-full rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 transition-all" style="width:${pct}%"></div></div>
+                <form id="qf" autocomplete="off">
+                    <label for="a" class="block font-display text-[1.65rem] leading-tight font-extrabold text-indigo-950 mb-5">${esc(qs[step])}</label>
+                    <input id="a" maxlength="80" enterkeyhint="${step === qs.length - 1 ? 'done' : 'next'}" autocapitalize="sentences" class="w-full text-lg rounded-2xl px-5 py-4 bg-slate-100 outline-none focus:ring-4 focus:ring-indigo-200" placeholder="Your first thought…" value="${esc(answers[step] || '')}">
+                    <p class="text-xs text-slate-400 mt-2">Go with your gut — the most common answers win.</p>
+                    <div class="flex gap-3 mt-7">
+                        ${step ? '<button type="button" id="back" class="px-5 py-4 rounded-2xl font-bold bg-slate-100 text-slate-600">Back</button>' : ''}
+                        <button class="flex-1 py-4 rounded-2xl font-bold text-lg bg-indigo-600 text-white active:scale-[.98] transition-transform">${step === qs.length - 1 ? 'Review answers' : 'Next'}</button>
+                    </div>
+                    <button type="button" id="skip" class="w-full mt-3 text-sm font-semibold text-slate-400">Skip this one</button>
+                </form>`);
+            const input = document.getElementById('a');
+            setTimeout(() => input.focus(), 50);
+            input.oninput = () => { answers[step] = input.value; try { sessionStorage.setItem(draftKey, JSON.stringify(answers)); } catch (e) {} };
+            document.getElementById('qf').onsubmit = e => {
+                e.preventDefault();
+                answers[step] = input.value.trim();
+                if (!answers[step]) { input.classList.add('ring-4', 'ring-rose-200'); input.placeholder = 'Type an answer, or tap Skip'; return; }
+                step++; render();
+            };
+            document.getElementById('skip').onclick = () => { answers[step] = ''; step++; render(); };
+            const back = document.getElementById('back');
+            if (back) back.onclick = () => { step--; render(); };
+        }
+
+        function review() {
+            const qs = survey.questions;
+            screen(`
+                <h1 class="font-display text-2xl font-extrabold text-indigo-950 mb-1">Ready to send?</h1>
+                <p class="text-sm text-slate-500 mb-5">Tap an answer to change it.</p>
+                <div class="space-y-2 mb-7">${qs.map((q, i) => `
+                    <button data-i="${i}" class="w-full text-left rounded-2xl bg-slate-50 hover:bg-slate-100 px-4 py-3">
+                        <div class="text-xs text-slate-400 mb-0.5">${esc(q)}</div>
+                        <div class="font-bold ${answers[i] ? 'text-indigo-950' : 'text-slate-300 italic'}">${answers[i] ? esc(answers[i]) : 'Skipped'}</div>
+                    </button>`).join('')}</div>
+                <button id="send" class="w-full py-4 rounded-2xl font-bold text-lg bg-indigo-600 text-white active:scale-[.98] transition-transform disabled:opacity-60">Send my answers</button>
+                <p id="err" class="text-sm text-rose-600 mt-3 text-center"></p>`);
+            app.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { step = +b.dataset.i; render(); });
+            const send = document.getElementById('send');
+            send.onclick = async () => {
+                if (!answers.some(a => a && a.trim())) { document.getElementById('err').textContent = 'Answer at least one question first.'; return; }
+                send.disabled = true;
+                send.textContent = 'Sending…';
+                try {
+                    const result = await rpc('submit_survey', { p_code: code, p_respondent: respondent, p_answers: qs.map((_, i) => (answers[i] || '').trim()) });
+                    if (result === 'ok' || result === 'duplicate') {
+                        try { localStorage.setItem(doneKey, '1'); sessionStorage.removeItem(draftKey); } catch (e) {}
+                        return message('🎉', result === 'ok' ? 'You\'re in!' : 'Already counted', result === 'ok' ? 'Thanks — your answers are on their way to the board. Watch for them when the host plays the game!' : 'Your answers from this device were already recorded. Thanks!');
+                    }
+                    if (result === 'closed') return message('⏰', 'Survey closed', 'Sorry — the host stopped collecting answers just before yours arrived.');
+                    return message('🤷', 'Game not found', 'This survey link doesn\'t exist anymore.');
+                } catch (e) {
+                    send.disabled = false;
+                    send.textContent = 'Try again';
+                    document.getElementById('err').textContent = /fetch|network/i.test(e.message) ? 'No connection — check your internet and try again.' : e.message;
+                }
+            };
+        }
+
+        function tick() {
+            const el = document.getElementById('timer');
+            if (!survey || !survey.closes_at || !survey.open) { el.hidden = true; return; }
+            const ms = new Date(survey.closes_at) - Date.now();
+            if (ms <= 0) { el.textContent = 'Closed'; return; }
+            const m = Math.ceil(ms / 60000);
+            el.textContent = m < 60 ? `Closes in ${m} min` : m < 2880 ? `Closes in ${Math.round(m / 60)} h` : `Closes in ${Math.round(m / 1440)} days`;
+            el.hidden = false;
+        }
+
+        (async () => {
+            if (!code) return message('🔗', 'Missing link', 'Ask the host for the full survey link.');
+            if (!CFG.url || !CFG.anonKey) return message('🛠️', 'Not available', 'Surveys aren\'t switched on for this site yet.');
+            try {
+                survey = await rpc('get_survey', { p_code: code });
+            } catch (e) {
+                return message('📡', 'Can\'t load the survey', /fetch|network/i.test(e.message) ? 'Check your connection and refresh.' : e.message);
+            }
+            if (!survey) return message('🤷', 'Game not found', 'This survey link doesn\'t exist. Double-check it with the host.');
+            document.title = `${survey.title} — Survey Says`;
+            if (!survey.open) return message('⏰', 'This survey is closed', `“${esc(survey.title)}” isn't taking answers anymore. Get ready to play!`);
+            try { if (localStorage.getItem(doneKey)) return message('✅', 'You already answered', 'Thanks! Your answers are in. See you at the game.'); } catch (e) {}
+            try { answers = JSON.parse(sessionStorage.getItem(draftKey)) || []; } catch (e) { answers = []; }
+            screen(`
+                <div class="text-center">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <div class="text-xs font-bold uppercase tracking-[.2em] text-pink-500 mb-2">You're invited</div>
+                    <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-indigo-950 leading-tight mb-3">${esc(survey.title)}</h1>
+                    <p class="text-slate-500 mb-8">${survey.questions.length} quick questions · about a minute · anonymous</p>
+                    <button id="start" class="w-full py-4 rounded-2xl font-bold text-lg bg-indigo-600 text-white active:scale-[.98] transition-transform">Let's go</button>
+                </div>`);
+            document.getElementById('start').onclick = () => { step = 0; render(); };
+            tick();
+            setInterval(tick, 30000);
+        })();
+    })();
+    </script>
+</body>
+</html>

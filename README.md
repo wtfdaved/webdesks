@@ -16,7 +16,7 @@ file operation done locally.
 | Work | Scratchpad, Task Manager, Project Board, Whiteboard, Time Zones |
 | Files & media | PDF Merger, Screen Recorder, Media Converter (WebM → MP4, image resize) |
 | Utilities | Calculator, Unit Converter, Colour Picker, **Dev Toolkit**, **Image to Text (OCR)** |
-| Games | Survey Says |
+| Games | **Survey Says** — a survey game show: collect answers with one link, then play the board live |
 
 Press <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere to open the command
 palette and jump to any tool or action.
@@ -53,6 +53,36 @@ The planner is built to be the tab you open every morning. It lives in
   per due date, overdue alerts, monthly totals and a by-category breakdown.
 - **Back up / Restore** (in the Pages sidebar) saves every planner store to one
   JSON file.
+
+## Survey Says (`/family-feud`, `/survey`)
+
+A Family Feud–style game for meetings and parties.
+
+1. **Create** (signed in): a name, 3–5 questions, when to stop collecting
+   (15 minutes to a week, or no timer) and how many people must give an answer
+   for it to make the board (default 2).
+2. **Share** the link (`/survey?g=<code>`) or show the QR code. People answer on
+   any phone, one question per screen, no account; one set of answers per
+   device. The close time is enforced in the database, and **Close survey** stops
+   it immediately (**Reopen** restarts it).
+3. **Review**: answers are grouped automatically ("Apple", "apples", "an apple"
+   count together, typos like "strawbery" too). Merge answers that mean the same
+   thing, rename them or hide them; edits are saved and still apply to answers
+   that arrive later.
+4. **Play**: a full-screen game-show board. Up to 8 answers, scored out of 100
+   by how many people said them. Type what a team guesses: if it matches an
+   answer on the board the tile flips, otherwise it's a strike (3 strikes and
+   the other team can steal). Award the round's points, then move on to the
+   next question. **Open board in its own window** lets you screen-share just
+   the board and keep the controls private. Keys: Enter = check, 1–8 = reveal,
+   X = strike. A demo board works without an account.
+
+`survey-logic.js` holds the grouping and matching (no dependencies). Data
+lives in `survey_games`, `survey_questions` and `survey_responses`
+(`supabase/migrations/20261029120000_survey_says.sql`). Hosts reach only their
+own rows through row-level security. Respondents never touch the tables; they
+call `get_survey(code)` and `submit_survey(code, token, answers)`, which only
+accept answers while the game is open.
 
 ## Everyday helpers (`extras.js`)
 
@@ -99,7 +129,8 @@ clears this browser's copy.
 
 ### One-time Supabase setup
 
-1. **Database.** Run `supabase/migrations/20261028120000_profiles_and_desks.sql`.
+1. **Database.** Run each file in `supabase/migrations/` in order
+   (`…_profiles_and_desks.sql`, then `…_survey_says.sql`).
    The Supabase GitHub integration applies it on merge to `main` when
    "Deploy to production" is on; otherwise paste it into **SQL Editor → New
    query → Run** (it's safe to run twice).
@@ -131,6 +162,14 @@ clears this browser's copy.
    build step writes them for you.
 
 ## Design & performance
+
+v0.25 redesigned the home screen: a gradient hero with your greeting, today's
+focus, counts of events, tasks, chores and bills due and a check-in button; a
+"toolkit" grid of the main tools; and an "At a glance" bento of widgets. On
+phones the header is compact, the toolkit is a two-column launcher and the
+bottom bar floats with a highlighted active tab. Guests see a short "sync on
+every device" sign-up card.
+
 
 v0.24 replaced the frosted-glass look with solid "paper" cards, a static
 background and roomier spacing (`<style id="wd-design">` in `index.html`). It
