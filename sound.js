@@ -51,7 +51,7 @@
         { id: 'fire', name: 'Fireplace', icon: 'flame', group: 'Indoors', level: 1.6, def: 0.5 },
         { id: 'cafe', name: 'Café', icon: 'coffee', group: 'Indoors', level: 2.5, def: 0.4 },
         { id: 'fan', name: 'Fan', icon: 'fan', group: 'Indoors', level: 2.1, def: 0.4 },
-        { id: 'vinyl', name: 'Vinyl', icon: 'disc-3', group: 'Indoors', level: 2, def: 0.35 },
+        { id: 'vinyl', name: 'Vinyl', icon: 'disc-3', group: 'Indoors', level: 5, def: 0.35 },
         { id: 'white', name: 'White', icon: 'audio-lines', group: 'Noise', level: 3, def: 0.3 },
         { id: 'pink', name: 'Pink', icon: 'audio-lines', group: 'Noise', level: 2.5, def: 0.35 },
         { id: 'brown', name: 'Brown', icon: 'audio-lines', group: 'Noise', level: 1.5, def: 0.45 },
