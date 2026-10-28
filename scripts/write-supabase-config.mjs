@@ -37,6 +37,7 @@ const src = readFileSync(file, 'utf8');
 const out = src
     .replace(/url: '[^']*'/, `url: '${url}'`)
     .replace(/anonKey: '[^']*'/, `anonKey: '${anonKey.replace(/[^A-Za-z0-9._-]/g, '')}'`)
-    .replace(/providers: \[[^\]]*\]/, `providers: [${providers.map(p => `'${p}'`).join(', ')}]`);
+    .replace(/providers: \[[^\]]*\]/, `providers: [${providers.map(p => `'${p}'`).join(', ')}]`)
+    .replace(/emailEnabled: (true|false)/, `emailEnabled: ${/^(1|true|yes)$/i.test(pick('SUPABASE_EMAIL_ENABLED'))}`);
 writeFileSync(file, out);
 console.log(`[supabase-config] Wrote ${url} (providers: ${providers.join(', ') || 'email only'}).`);
