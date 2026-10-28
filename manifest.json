@@ -1,8 +1,8 @@
 {
   "name": "WebDesks OS",
   "short_name": "WebDesks",
-  "description": "23 free productivity and developer tools in one browser tab",
-  "version": "0.21.0",
+  "description": "28 free productivity tools in one browser tab — daily planner, calendar, ADHD chore organizer, bills, Notion-style pages and more",
+  "version": "0.22.0",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "any",
@@ -14,6 +14,21 @@
     "developer"
   ],
   "shortcuts": [
+    {
+      "name": "Today",
+      "url": "index.html#today",
+      "description": "Your morning check-in: mood, top 3, agenda, chores and bills"
+    },
+    {
+      "name": "Calendar",
+      "url": "index.html#calendar",
+      "description": "Month, week and day views of events, tasks, chores and bills"
+    },
+    {
+      "name": "Chores",
+      "url": "index.html#chores",
+      "description": "ADHD-friendly chore organizer"
+    },
     {
       "name": "Command palette",
       "url": "index.html#dashboard",
@@ -28,16 +43,6 @@
       "name": "Dev Toolkit",
       "url": "index.html#devtools",
       "description": "JSON, Base64, hashes, JWT, UUID and QR codes"
-    },
-    {
-      "name": "Image to Text",
-      "url": "index.html#ocr",
-      "description": "Run OCR on a screenshot or scan"
-    },
-    {
-      "name": "Tasks",
-      "url": "index.html#tasks",
-      "description": "View your task list"
     }
   ],
   "icons": [
