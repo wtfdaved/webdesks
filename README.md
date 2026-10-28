@@ -1,7 +1,7 @@
 # WebDesks
 
-A browser-native productivity suite: 28 tools in a single tab, no account, no
-upload, no build step. `index.html` is the whole application — vanilla JS on top
+A browser-native productivity suite: 28 tools in a single tab, no required
+account, no upload, no bundler. `index.html` is the whole application — vanilla JS on top
 of Tailwind and Lucide, with everything persisted to `localStorage` and every
 file operation done locally.
 
@@ -53,6 +53,55 @@ The planner is built to be the tab you open every morning. It lives in
   per due date, overdue alerts, monthly totals and a by-category breakdown.
 - **Back up / Restore** (in the Pages sidebar) saves every planner store to one
   JSON file.
+
+## Accounts & Desk sync
+
+Signing in is optional. Guests keep everything in `localStorage` exactly as
+before; an account keeps a copy of that **Desk** in Supabase so it follows you
+to any browser.
+
+| File | Role |
+| --- | --- |
+| `login.html` (`/login`) | Sign in, create account (13+ consent), email magic link, forgot / set new password, Google sign-in, email-link callbacks (PKCE) |
+| `account.js` | Header account button and menu (profile, sync status, download my data, change password, sign out, delete account) and the sync engine |
+| `supabase-config.js` | Public project URL + anon key. Empty = accounts hidden, site runs guest-only |
+| `supabase/migrations/` | `profiles` + `desks` tables, row-level security, sign-up trigger, `delete_my_account()` |
+| `scripts/write-supabase-config.mjs` + `netlify.toml` | Netlify build step that writes the keys from environment variables |
+
+**How sync works.** `account.js` timestamps every write to a `wd_*` /
+`webdesks_*` key. A sync reads the user's single `desks` row, keeps the newest
+value of each key from either side, and writes back using an optimistic
+`version` check (retrying if another device saved in between). Changes are
+pushed 2 s after you stop editing, when the tab is hidden, and pulled on focus
+and every 5 minutes. When newer data arrives the page reloads to pick it up,
+or shows a "Load it" bar if you're mid-typing. On first sign-in in a browser
+that already has guest data you choose: combine (cloud wins per tool), use the
+cloud Desk, or overwrite the cloud with this browser. Signing out saves, then
+clears this browser's copy.
+
+### One-time Supabase setup
+
+1. **Database.** Run `supabase/migrations/20261028120000_profiles_and_desks.sql`.
+   The Supabase GitHub integration applies it on merge to `main` when
+   "Deploy to production" is on; otherwise paste it into **SQL Editor → New
+   query → Run** (it's safe to run twice).
+2. **Auth URLs** (Authentication → URL Configuration): Site URL
+   `https://webdesks.app`; Redirect URLs `https://webdesks.app/**` (add
+   `https://*--<your-netlify-site>.netlify.app/**` to test deploy previews).
+3. **Email** (Authentication → Sign In / Providers → Email): keep *Confirm
+   email* on and set the minimum password length to 8. Supabase's built-in
+   mailer only delivers to your own team's addresses and is heavily rate
+   limited, so add **custom SMTP** (Authentication → Emails → SMTP, e.g.
+   Resend, Postmark or SES) before opening sign-ups to the public.
+4. **Google sign-in (optional).** Create an OAuth client in Google Cloud with
+   redirect URI `https://<project-ref>.supabase.co/auth/v1/callback`, paste
+   its ID and secret into Authentication → Providers → Google, then set
+   `SUPABASE_AUTH_PROVIDERS=google`.
+5. **Keys.** In Netlify → Site configuration → Environment variables add
+   `SUPABASE_URL` (`https://<project-ref>.supabase.co`) and
+   `SUPABASE_ANON_KEY` (the **anon / publishable** key from Project Settings →
+   API — never the `service_role` / secret key; the build refuses it), then
+   redeploy. Or paste the two values into `supabase-config.js` directly.
 
 ## Architecture
 
@@ -108,8 +157,9 @@ with a penalty proportional to how scattered the letters are.
 
 ## Privacy
 
-No analytics beyond AdSense, no backend, no file ever leaves the device.
-Planner data (tasks, events, chores, bills, pages, moods) stays in
-`localStorage` too; use Back up in Pages to move it between browsers. The
-only network calls are CDN assets, the weather and quote APIs on the dashboard,
+No analytics beyond AdSense and no file ever leaves the device. For guests,
+planner data (tasks, events, chores, bills, pages, moods) stays in
+`localStorage` too. Signed-in users' Desks are stored in Supabase behind
+row-level security; see `privacy.html` §2.5 for exactly what is stored and the
+in-app download and delete controls. The only other network calls are CDN assets, the weather and quote APIs on the dashboard,
 and the one-time OCR language pack download.

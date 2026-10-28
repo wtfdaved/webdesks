@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
     <link rel="dns-prefetch" href="https://api.open-meteo.com">
     <link rel="dns-prefetch" href="https://api.quotable.io">
@@ -20,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.22.0">
+    <meta name="generator" content="WebDesks v0.23.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -1052,7 +1053,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.22.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.23.0</span>
             </div>
             <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="trophy" class="w-4 h-4"></i>
@@ -1085,6 +1086,8 @@
             <button onclick="app.togglePrivacy()" class="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center" title="Privacy Mode (Alt+P)" aria-label="Activate Privacy Mode (Alt+P)">
                 <i data-lucide="shield-alert" class="w-4 h-4" aria-hidden="true"></i>
             </button>
+            <!-- Account: Sign in button or profile menu (account.js) -->
+            <div id="account-slot" class="flex items-center ml-1"></div>
         </div>
     </header>
 
@@ -3270,6 +3273,7 @@
                 this.initLife();
                 if (this.currentTab === 'calendar' || this.currentTab === 'pages') this.onLifeTab(this.currentTab);
                 this.lifeMorningRedirect();
+                this.initAccount();
 
                 // Mobile v0.18.7 features
                 this.initMoreDrawer();
@@ -7755,5 +7759,8 @@
     </script>
     <!-- Life planner: Today, Calendar, Pages, Chores, Bills -->
     <script src="life.js"></script>
+    <!-- Accounts + Desk sync (Supabase). Inert until supabase-config.js has keys. -->
+    <script src="supabase-config.js"></script>
+    <script src="account.js"></script>
 </body>
 </html>

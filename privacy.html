@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy | WebDesks</title>
-    <meta name="description" content="WebDesks Privacy Policy — learn how we handle your data, cookies, and third-party advertising including Google AdSense, AADS, and the DoubleClick cookie. Your files never leave your browser.">
+    <meta name="description" content="WebDesks Privacy Policy — learn how we handle your data, cookies, and third-party advertising including Google AdSense, AADS, and the DoubleClick cookie. Your files never leave your browser; accounts and Desk sync are optional.">
     <meta name="author" content="WebDesks">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/privacy">
@@ -47,7 +47,7 @@
       "description": "Privacy Policy for WebDesks free browser-based productivity tools. All file processing happens locally in your browser.",
       "url": "https://webdesks.app/privacy",
       "publisher": { "@type": "Organization", "name": "WebDesks", "url": "https://webdesks.app" },
-      "dateModified": "2026-03-17"
+      "dateModified": "2026-10-28"
     }
     </script>
 </head>
@@ -78,7 +78,7 @@
                 🔒 Legal
             </div>
             <h1 class="text-4xl md:text-5xl font-black mb-3">Privacy Policy</h1>
-            <p class="text-white/80 text-lg">Last updated: March 17, 2026</p>
+            <p class="text-white/80 text-lg">Last updated: October 28, 2026</p>
         </div>
     </section>
 
@@ -86,11 +86,11 @@
     <main class="max-w-4xl mx-auto px-4 py-12 prose-content">
 
         <div class="update-badge">
-            ✅ Updated March 17, 2026 — added CCPA section, AADS advertising disclosure, and data subject rights detail
+            ✅ Updated October 28, 2026 — added optional accounts and Desk sync (Section 2.5), Supabase as our account and database provider, the Life Planner tools, and in-app data download and account deletion
         </div>
 
         <div class="highlight-box">
-            <p class="text-indigo-800 font-medium mb-0"><strong>Privacy-first by design.</strong> WebDesks tools (PDF Merger, Screen Recorder, Media Converter, etc.) process all files and data <strong>entirely within your browser</strong>. Nothing you work on is ever uploaded to our servers. This privacy policy primarily covers website analytics, cookies, and our use of advertising networks.</p>
+            <p class="text-indigo-800 font-medium mb-0"><strong>Privacy-first by design.</strong> WebDesks tools (PDF Merger, Screen Recorder, Media Converter, etc.) process files <strong>entirely within your browser</strong> — files are never uploaded. Accounts are <strong>optional</strong>: without one, everything you create stays on your device. If you choose to sign in, a copy of your Desk (your tool data and settings) is stored with our database provider so you can open it on any device — see <a href="#accounts">Section 2.5</a>. This policy also covers website analytics, cookies, and our use of advertising networks.</p>
         </div>
 
         <!-- Privacy at a glance -->
@@ -102,13 +102,13 @@
             </div>
             <div class="privacy-stat">
                 <span class="icon">🔑</span>
-                <div class="value">None</div>
-                <div class="label">Account or login required</div>
+                <div class="value">Optional</div>
+                <div class="label">Account — only to sync your Desk</div>
             </div>
             <div class="privacy-stat">
                 <span class="icon">💾</span>
-                <div class="value">Local only</div>
-                <div class="label">Your notes &amp; tasks storage</div>
+                <div class="value">Local first</div>
+                <div class="label">Cloud copy only if you sign in</div>
             </div>
             <div class="privacy-stat">
                 <span class="icon">📅</span>
@@ -122,6 +122,7 @@
             <p class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Table of Contents</p>
             <a href="#who-we-are" class="toc-link">1. Who We Are</a>
             <a href="#information-we-collect" class="toc-link">2. Information We Collect</a>
+            <a href="#accounts" class="toc-link" style="padding-left: 1.25rem;">2.5 Accounts and Desk Sync</a>
             <a href="#cookies" class="toc-link">3. Cookies</a>
             <a href="#third-party" class="toc-link">4. Third-Party Services</a>
             <a href="#advertising" class="toc-link">5. Advertising Networks</a>
@@ -138,13 +139,14 @@
         </div>
 
         <h2 id="who-we-are">1. Who We Are</h2>
-        <p>WebDesks (<a href="https://webdesks.app">webdesks.app</a>) is a free, browser-based productivity suite offering over 20 tools including a Pomodoro timer, PDF merger, screen recorder, audio mixer, kanban board, and more. WebDesks is operated as an independent project. For questions about this policy, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>.</p>
+        <p>WebDesks (<a href="https://webdesks.app">webdesks.app</a>) is a free, browser-based productivity suite offering over 25 tools including a daily planner, calendar, chore organizer, bill tracker, Pomodoro timer, PDF merger, screen recorder, audio mixer, kanban board, and more. WebDesks is operated as an independent project. For questions about this policy, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>.</p>
 
         <h2 id="information-we-collect">2. Information We Collect</h2>
 
         <h3>2.1 Information You Provide</h3>
-        <p>We do not require account registration and we do not collect personal information (name, email address, etc.) simply to use WebDesks tools. The only situation in which we actively collect your personal information is:</p>
+        <p>You never need an account to use WebDesks tools, and we do not collect personal information (name, email address, etc.) simply to use them. We actively collect personal information only when you:</p>
         <ul>
+            <li><strong>Create an optional account:</strong> your email address, a password (stored only as a salted hash by our authentication provider — we never see it), an optional display name and avatar, and the Desk data you choose to sync. Details in <a href="#accounts">Section 2.5</a>.</li>
             <li><strong>Contact form:</strong> We collect your name, email address, and message content solely to respond to your inquiry. This data is not used for marketing.</li>
         </ul>
 
@@ -159,17 +161,35 @@
             <li><strong>Country-level location</strong> — derived from IP address for regional usage statistics. Precise location is not collected.</li>
         </ul>
 
-        <h3>2.3 LocalStorage Data (On-Device Only)</h3>
-        <p>WebDesks stores your preferences and tool data (tasks, kanban board state, scratchpad notes, timer settings, Focus Town progress, audio mixer presets, and UI themes) in your browser's <strong>localStorage</strong>. This data <strong>never leaves your device</strong>. It is not accessible to us and is deleted when you clear your browser's site data for webdesks.app. We do not have any visibility into this data.</p>
+        <h3>2.3 LocalStorage Data (On-Device)</h3>
+        <p>WebDesks stores your preferences and tool data (tasks, calendar events, chores, bills, pages, mood check-ins, kanban board, scratchpad notes, timer settings, Focus Town progress, audio mixer presets and UI themes) in your browser's localStorage. If you don't sign in, this data <strong>never leaves your device</strong>, is not accessible to us, and is deleted when you clear your browser's site data for webdesks.app.</p>
+        <p>If you sign in, the same data is also synced to your account as described in <a href="#accounts">Section 2.5</a>, and your sign-in session token is kept in localStorage so you stay signed in. Signing out removes the session token and your Desk data from that browser.</p>
 
         <h3>2.4 Files Processed by Tools</h3>
         <p>Files you process with WebDesks tools — PDFs you merge, videos you convert, screens you record — are handled <strong>entirely within your browser's memory</strong>. These files are never transmitted to our servers. We have no technical access to the content of files you process.</p>
+
+        <h3 id="accounts">2.5 Accounts and Desk Sync (Optional)</h3>
+        <p>Creating an account lets you open the same Desk on any device. If you never create one, nothing in this section applies to you.</p>
+        <p><strong>What we store for an account:</strong></p>
+        <ul>
+            <li><strong>Account details:</strong> email address; a salted password hash (if you use a password); sign-in method; account creation and last sign-in times. If you sign in with Google or another provider, we receive the name, email address and profile picture URL that provider shares with us.</li>
+            <li><strong>Profile:</strong> the optional display name and avatar emoji you choose.</li>
+            <li><strong>Your Desk:</strong> the WebDesks data in your browser — tasks, calendar events, chores, bills (names, amounts and due dates), pages and journal entries, mood and energy check-ins, kanban board, scratchpad, timer stats, Focus Town progress and settings. Files you process with tools (PDFs, recordings, conversions) are <strong>never</strong> included.</li>
+            <li><strong>Security logs:</strong> our authentication provider records sign-in events, IP address and browser user agent to protect accounts from abuse.</li>
+        </ul>
+        <p><strong>Sensitive information you choose to enter.</strong> Mood check-ins, journal pages and bill amounts can reveal information about your health or finances. We store them only so you can access your own Desk; we never analyse, profile, advertise on, sell or share them, and we never use them to train AI models. If you'd rather keep them off our servers, use WebDesks without an account — everything still works on your device.</p>
+        <p><strong>Why (legal basis):</strong> to provide the sync service you asked for (performance of a contract); for sign-in security and abuse prevention (legitimate interest); and, for any special-category data you choose to enter, your explicit choice to store it in your synced Desk (consent, which you can withdraw at any time by deleting the data or your account).</p>
+        <p><strong>Who processes it:</strong> accounts and Desk data are hosted by <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase, Inc.</a>, which acts as our data processor (authentication and database) and runs on Amazon Web Services infrastructure. Transactional emails (account confirmation, sign-in links, password resets) are sent through Supabase or our email delivery provider. Account data is <strong>never</strong> shared with our advertising partners.</p>
+        <p><strong>How it's protected:</strong> data is encrypted in transit (HTTPS/TLS) and at rest by our provider; database row-level security means each signed-in account can only read and change its own profile and Desk. Desk data is not end-to-end encrypted, so it is technically accessible to our database administrators; we access it only when needed to operate the service, to help you at your request, or where required by law.</p>
+        <p><strong>Your controls:</strong> from the account menu in the app you can edit your profile, <strong>Download my data</strong> (a complete JSON copy of your Desk and profile), <strong>Sign out</strong> (which also clears your Desk from that browser), and <strong>Delete account</strong>, which immediately and permanently deletes your account, profile and cloud Desk. You can also email <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> to exercise any right in Section 9.</p>
+        <p><strong>Emails:</strong> we only send emails you trigger (confirming your address, sign-in links, password resets). We do not send marketing email.</p>
 
         <h2 id="cookies">3. Cookies</h2>
         <p>Cookies are small text files placed on your device by websites you visit. We use cookies in the following ways:</p>
 
         <h3>3.1 Essential Cookies</h3>
         <p>These cookies are necessary for the website to function and cannot be switched off. They are set in response to your actions such as setting your privacy preferences or navigating between pages. They do not store personally identifiable information.</p>
+        <p>If you sign in, your session is kept in your browser's localStorage (not a cookie) under the key <code>sb-webdesks-auth</code>. It is strictly necessary to keep you signed in, is never used for advertising or tracking, and is removed when you sign out.</p>
 
         <h3>3.2 Analytics Cookies</h3>
         <p>We may use analytics services to understand how visitors interact with WebDesks in aggregate. These cookies collect anonymised information (e.g., page views, popular tools, session duration) and do not identify individual users. Where we use such services, we configure them in a privacy-preserving manner and do not allow them to build user profiles linked to personal identity.</p>
@@ -201,6 +221,10 @@
             <li><strong>pdf-lib (via CDN)</strong> — PDF processing library that runs entirely in your browser. No document data is transmitted.</li>
             <li><strong>FFmpeg.wasm</strong> — media conversion library that runs entirely in your browser. No media data is transmitted.</li>
             <li><strong>Marked.js / Highlight.js</strong> — Markdown and code rendering libraries delivered via CDN. No content data is transmitted.</li>
+            <li><strong>jsDelivr CDN</strong> — delivers FullCalendar (Calendar), Editor.js (Pages), canvas-confetti and the Supabase sign-in library. These run in your browser; jsDelivr may log IP addresses as part of standard request logging. No content data is transmitted.</li>
+            <li><strong>Supabase</strong> (only if you create an account) — authentication and database hosting for accounts and Desk sync, acting as our processor. <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase Privacy Policy</a></li>
+            <li><strong>Google Sign-In</strong> (only if you choose "Continue with Google") — Google shares your name, email and profile picture with us to create your account. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+            <li><strong>Netlify</strong> — hosts the WebDesks website and processes standard request logs.</li>
         </ul>
 
         <h2 id="advertising">5. Advertising Networks — Summary</h2>
@@ -218,19 +242,21 @@
         <p>The limited information collected is used to:</p>
         <ul>
             <li>Operate and maintain the WebDesks website and ensure reliable delivery of tools.</li>
+            <li>If you create an account: sign you in, keep your account secure, sync your Desk between your devices, and send the emails you trigger (confirmation, sign-in links, password resets).</li>
             <li>Understand aggregate usage patterns to improve our tools and prioritise new features.</li>
             <li>Serve advertisements through Google AdSense and AADS to fund free access to WebDesks.</li>
             <li>Respond to your contact form submissions and support requests.</li>
             <li>Prevent and investigate abuse, security incidents, and technical problems.</li>
             <li>Comply with legal obligations.</li>
         </ul>
-        <p>We do not use your data for automated decision-making, profiling, or training machine learning models. We do not use your data for email marketing (we do not collect your email unless you contact us).</p>
+        <p>We do not use your data for automated decision-making, profiling, or training machine learning models. We do not use your data for email marketing (we only have your email if you contact us or create an account, and account emails are strictly transactional). The contents of your Desk are never used for advertising.</p>
 
         <h2 id="data-sharing">7. Data Sharing and Disclosure</h2>
         <p>We do not sell, trade, or rent your personal information to third parties. We may share information in the following limited circumstances:</p>
         <ul>
             <li><strong>With advertising partners</strong> — Google AdSense and AADS receive cookie and usage data as described in Sections 3.3 and 3.4. This is not a sale of personal information.</li>
             <li><strong>With our hosting provider</strong> — standard server logs (IP address, request data) are processed by our hosting infrastructure.</li>
+            <li><strong>With Supabase</strong> — if you create an account, Supabase stores your account and Desk data on our behalf under a data processing agreement. Supabase may only process it to provide the service to us.</li>
             <li><strong>For legal compliance</strong> — if required by law, court order, or governmental authority, we may disclose information we hold.</li>
             <li><strong>To protect rights</strong> — if necessary to protect the rights, property, or safety of WebDesks, our users, or the public.</li>
             <li><strong>Business transfer</strong> — in the unlikely event of a merger, acquisition, or asset sale, user data may be transferred as part of that transaction. We will notify users via a prominent notice on this page.</li>
@@ -241,24 +267,25 @@
             <li><strong>Server access logs:</strong> Retained for up to 90 days for security and debugging purposes, then automatically deleted.</li>
             <li><strong>Contact form submissions:</strong> Retained for up to 12 months, then deleted.</li>
             <li><strong>Advertising analytics:</strong> Data shared with Google AdSense and AADS is subject to their respective retention policies.</li>
-            <li><strong>LocalStorage data:</strong> Remains on your device until you clear your browser's site data for webdesks.app. We have no control over or access to this data.</li>
+            <li><strong>LocalStorage data:</strong> Remains on your device until you clear your browser's site data for webdesks.app or sign out. We have no access to this data in your browser.</li>
+            <li><strong>Account and cloud Desk data:</strong> Kept for as long as you have an account. When you delete your account in the app, your account, profile and cloud Desk are deleted from our live database immediately; copies in our provider's encrypted backups are overwritten within their backup cycle (up to 30 days). Authentication security logs are kept by Supabase for a limited period for abuse prevention. Accounts with no sign-in for 24 months may be deleted after an email notice.</li>
             <li><strong>File processing data:</strong> Files you process with WebDesks tools (PDFs, videos, recordings) are handled in-browser and are never retained by us — not even temporarily on our servers.</li>
         </ul>
 
         <h2 id="your-rights">9. Your Rights (GDPR and General)</h2>
         <p>Depending on your location, you may have the following rights regarding your personal data. We aim to honour these rights for all users regardless of jurisdiction:</p>
         <ul>
-            <li><strong>Access</strong> — request a copy of the personal data we hold about you. For most users, this will be minimal (contact form data, if applicable).</li>
-            <li><strong>Deletion (Right to be Forgotten)</strong> — request that we delete your personal data. We will fulfil this within 30 days, subject to legal retention obligations.</li>
+            <li><strong>Access</strong> — request a copy of the personal data we hold about you. If you have an account, use <strong>Download my data</strong> in the account menu for an instant copy; otherwise this will be minimal (contact form data, if applicable).</li>
+            <li><strong>Deletion (Right to be Forgotten)</strong> — request that we delete your personal data. Account holders can do this instantly with <strong>Delete account</strong> in the account menu; email requests are fulfilled within 30 days, subject to legal retention obligations.</li>
             <li><strong>Correction</strong> — request correction of inaccurate or incomplete personal data we hold.</li>
-            <li><strong>Portability</strong> — request your personal data in a structured, machine-readable format.</li>
+            <li><strong>Portability</strong> — request your personal data in a structured, machine-readable format. <strong>Download my data</strong> exports your Desk as JSON, and Pages export to Markdown.</li>
             <li><strong>Objection</strong> — object to our processing of your personal data where we rely on legitimate interest as our legal basis.</li>
             <li><strong>Restriction</strong> — request that we restrict processing of your personal data in certain circumstances.</li>
             <li><strong>Opt-out of personalised advertising</strong> — opt out of personalised ads via <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
             <li><strong>Do Not Track</strong> — we honour Do Not Track browser signals where technically feasible.</li>
         </ul>
         <p>To exercise any of these rights, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a>. We will respond within 30 days (or as required by applicable law). You may also have the right to lodge a complaint with your local data protection supervisory authority.</p>
-        <p><strong>For EEA/UK users (GDPR):</strong> Our legal basis for processing the limited data we collect is legitimate interest (operating and improving WebDesks) and our contractual obligation to respond to your contact requests. For advertising-related processing, Google's and AADS's legal bases are governed by their own policies. You can withdraw consent for personalised ads at any time using the opt-out links above.</p>
+        <p><strong>For EEA/UK users (GDPR):</strong> Our legal basis for processing the limited data we collect is legitimate interest (operating and improving WebDesks), our contractual obligation to respond to your contact requests and, if you create an account, performance of our contract with you to provide sign-in and Desk sync (see Section 2.5). For advertising-related processing, Google's and AADS's legal bases are governed by their own policies. You can withdraw consent for personalised ads at any time using the opt-out links above.</p>
 
         <h2 id="ccpa">10. California Privacy Rights (CCPA / CPRA)</h2>
         <p>If you are a California resident, the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA) grants you specific rights:</p>
@@ -266,11 +293,12 @@
         <h3>Categories of Personal Information Collected</h3>
         <p>In the past 12 months, we may have collected the following categories of personal information:</p>
         <ul>
-            <li><strong>Identifiers</strong> — IP address (automatically), name and email address (only if you contact us via the contact form).</li>
+            <li><strong>Identifiers</strong> — IP address (automatically), name and email address (only if you contact us via the contact form or create an account).</li>
+            <li><strong>Account and customer records</strong> — if you create an account: email, display name, sign-in method, and the Desk content you choose to sync (which may include information you enter about bills, mood or other personal matters).</li>
             <li><strong>Internet or Network Activity</strong> — pages visited, referring URLs, browser type, device type.</li>
             <li><strong>Inferences</strong> — country-level location derived from IP address.</li>
         </ul>
-        <p>We have <strong>not</strong> collected: Social Security numbers, financial information, health information, biometric data, geolocation data beyond country-level, or the content of files you process with our tools.</p>
+        <p>We have <strong>not</strong> collected: Social Security numbers, bank or card account numbers, biometric data, geolocation data beyond country-level, or the content of files you process with our tools. We do not ask for financial or health information; if you have an account and choose to record bills or mood entries in your Desk, we store that content only to provide it back to you and never use it to infer characteristics about you.</p>
 
         <h3>Your California Rights</h3>
         <ul>
@@ -278,24 +306,25 @@
             <li><strong>Right to Delete:</strong> You may request deletion of personal information we have collected from you, subject to certain exceptions (e.g., security logs required by law).</li>
             <li><strong>Right to Correct:</strong> You may request correction of inaccurate personal information.</li>
             <li><strong>Right to Opt-Out of Sale or Sharing:</strong> WebDesks does not sell personal information. We do share limited data with Google AdSense and AADS for advertising purposes, which may be considered "sharing" under CPRA. You may opt out via <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
-            <li><strong>Right to Limit Use of Sensitive Personal Information:</strong> We do not collect sensitive personal information as defined by CPRA.</li>
+            <li><strong>Right to Limit Use of Sensitive Personal Information:</strong> We do not request sensitive personal information as defined by CPRA. Account passwords are handled only as hashes by our authentication provider, and anything sensitive you choose to write in your Desk (such as mood entries) is used solely to provide it back to you — a permitted purpose — and never to infer characteristics about you.</li>
             <li><strong>Right to Non-Discrimination:</strong> We will not deny you service, charge different prices, or provide different service quality if you exercise your CCPA/CPRA rights. All WebDesks tools remain free to use.</li>
         </ul>
         <p>To exercise California privacy rights, contact us at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> with the subject line "California Privacy Rights Request." We will respond within 45 days as required by CCPA. Requests can be made up to twice per 12-month period at no charge.</p>
 
         <h2 id="childrens-privacy">11. Children's Privacy</h2>
-        <p>WebDesks is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> and we will take steps to delete that information promptly.</p>
+        <p>WebDesks is not directed to children under the age of 13. You must be at least 13 to create an account (or older where your country requires — for example, 16 in some EU countries unless a parent or guardian consents). We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately at <a href="mailto:privacy@webdesks.app">privacy@webdesks.app</a> and we will take steps to delete that information promptly.</p>
         <p>If you are between 13 and 16 years old and located in California, you have the right to opt-out of the "sharing" of your personal information for targeted advertising. Contact us at the email above to exercise this right.</p>
 
         <h2 id="international">12. International Users</h2>
-        <p>WebDesks is operated from infrastructure that may be located in various countries. If you are accessing WebDesks from outside the United States, please be aware that information collected by our hosting provider may be processed in the US, where privacy laws may differ from your jurisdiction.</p>
-        <p>For users in the European Economic Area (EEA) and the United Kingdom: We collect minimal personal data and rely on legitimate interest as our primary legal basis. Because all tool data (files, notes, tasks) stays on your device, GDPR obligations relating to data processor agreements do not apply to that data. For the limited server log data we do hold, you have full data subject rights as described in Section 9.</p>
+        <p>WebDesks is operated from infrastructure that may be located in various countries. If you are accessing WebDesks from outside the United States, please be aware that information collected by our hosting provider may be processed in the US, where privacy laws may differ from your jurisdiction. Account and Desk data is stored in the region of our Supabase project; where it is transferred out of the EEA or UK, it is protected by the European Commission's Standard Contractual Clauses included in Supabase's data processing agreement.</p>
+        <p>For users in the European Economic Area (EEA) and the United Kingdom: We collect minimal personal data. Without an account, all tool data (files, notes, tasks) stays on your device and is never processed by us. If you create an account, Supabase processes your account and Desk data as our processor under a data processing agreement, and you have full data subject rights over it, as well as over the limited server log data we hold, as described in Section 9.</p>
         <p>For users in Canada (PIPEDA): We collect only the minimum personal data necessary for legitimate operational purposes and do not use it beyond those purposes. You may request access to or correction of your personal data at any time.</p>
         <p>For users in Australia (Privacy Act): We comply with the Australian Privacy Principles. You have the right to access and correct personal information we hold about you and to make a privacy complaint to the Office of the Australian Information Commissioner.</p>
 
         <h2 id="security">13. Security</h2>
         <p>We implement industry-standard security measures to protect the WebDesks website and any personal data we hold, including encrypted connections (HTTPS), access controls, and regular security reviews.</p>
-        <p>Because your tool data (files, notes, tasks, recordings) is stored entirely in your browser's localStorage and memory, and is never transmitted to us, the primary security responsibility for that data rests with your device, browser, and operating system security. We recommend keeping your browser updated and using trusted devices.</p>
+        <p>Without an account, your tool data (files, notes, tasks, recordings) is stored entirely in your browser's localStorage and memory and is never transmitted to us, so its security rests with your device, browser, and operating system. We recommend keeping your browser updated and using trusted devices.</p>
+        <p>If you create an account, your Desk is sent over HTTPS and stored encrypted at rest by Supabase. Database row-level security restricts every account to its own data, passwords are stored only as salted hashes by Supabase Auth, and the sign-in page cannot be embedded in other sites. Use a unique password, and sign out on shared computers — signing out also removes your Desk from that browser.</p>
         <p>If you discover a security vulnerability in WebDesks, please report it responsibly to <a href="mailto:security@webdesks.app">security@webdesks.app</a>. We take all security reports seriously and will respond within 72 hours.</p>
 
         <h2 id="changes">14. Changes to This Policy</h2>
