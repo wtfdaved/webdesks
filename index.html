@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.25.0">
+    <meta name="generator" content="WebDesks v0.26.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -281,77 +281,152 @@
             animation: ring 2s ease-in-out infinite;
         }
 
-        /* Focus Town v0.19 — Canvas Pixel Art */
-        .ft-noscroll { overflow: hidden !important; }
-        .ft-scene-hero {
-            position: relative; background: #0a0e1a;
-            min-height: 220px; flex-shrink: 0;
+        /* Sounds (sound.js) */
+        .snd { max-width: 64rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1.1rem; }
+        .snd-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+        .snd-head h2 { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+        .snd-head p { color: var(--muted, #6b7280); font-size: .9rem; margin-top: .2rem; }
+        .snd-head-actions { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+        .snd-card { background: var(--surface, #fff); border: 1px solid var(--border, #e5e7eb); border-radius: 1.5rem; padding: 1.2rem; box-shadow: var(--shadow-card); }
+        .snd-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem .9rem; border-radius: .9rem; font-weight: 700; font-size: .82rem; background: var(--surface-2, #f8fafc); border: 1px solid var(--border, #e5e7eb); color: inherit; transition: border-color .15s, transform .1s; }
+        .snd-btn:hover { border-color: var(--accent, #5850ec); }
+        .snd-btn:active { transform: scale(.97); }
+        .snd-sleep { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .4rem .3rem .75rem; border-radius: .9rem; background: var(--surface-2, #f8fafc); border: 1px solid var(--border, #e5e7eb); font-size: .82rem; font-weight: 700; }
+        .snd-sleep select { background: transparent; border: 0; font-weight: 700; color: inherit; padding: .25rem; outline: none; }
+        .snd-sleep span:empty { display: none; }
+        .snd-sleep span { font-variant-numeric: tabular-nums; color: var(--accent, #5850ec); padding-right: .4rem; }
+        .snd-player { display: grid; grid-template-columns: 11rem 1fr; gap: 1.4rem; align-items: center; }
+        .snd-art { --c1: #6d5dfc; --c2: #f472b6; aspect-ratio: 1; border-radius: 1.4rem; background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.35), transparent 55%), linear-gradient(135deg, var(--c1), var(--c2)); box-shadow: 0 18px 40px -22px var(--c1); overflow: hidden; transition: background .6s; }
+        .snd-art canvas { width: 100%; height: 100%; display: block; }
+        .snd-eyebrow { font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent, #5850ec); }
+        .snd-np-title { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-size: clamp(1.3rem, 2.6vw, 1.8rem); font-weight: 800; letter-spacing: -.01em; line-height: 1.15; margin-top: .15rem; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .snd-np-sub { color: var(--muted, #6b7280); font-size: .88rem; margin-top: .15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .snd-controls { display: flex; align-items: center; gap: .7rem; margin: .9rem 0 .8rem; }
+        .snd-ctl { width: 2.75rem; height: 2.75rem; border-radius: 999px; display: grid; place-items: center; background: var(--surface-2, #f8fafc); border: 1px solid var(--border, #e5e7eb); color: inherit; transition: transform .1s, border-color .15s; }
+        .snd-ctl:hover { border-color: var(--accent, #5850ec); }
+        .snd-ctl:active { transform: scale(.94); }
+        .snd-ctl.snd-play { width: 3.75rem; height: 3.75rem; background: var(--accent, #5850ec); border-color: transparent; color: #fff; box-shadow: 0 12px 24px -12px var(--accent, #5850ec); }
+        .snd-vol { display: flex; align-items: center; gap: .6rem; color: var(--muted, #6b7280); max-width: 22rem; }
+        .snd-vol input, .snd-tile input { flex: 1; width: 100%; accent-color: var(--accent, #5850ec); }
+        .snd-vol span { font-size: .75rem; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 2.4rem; text-align: right; }
+        .snd-sec-title { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin-bottom: .7rem; }
+        .snd-sec-title span { font-weight: 800; font-size: 1rem; }
+        .snd-sec-title small { color: var(--muted, #6b7280); font-size: .78rem; }
+        .snd-sec-title a { color: var(--accent, #5850ec); font-weight: 700; }
+        .snd-stations { display: grid; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); gap: .6rem; }
+        .snd-station { --c1: #6d5dfc; --c2: #f472b6; display: flex; align-items: center; gap: .7rem; padding: .6rem .75rem .6rem .6rem; border-radius: 1.1rem; border: 1.5px solid var(--border, #e5e7eb); background: var(--surface-2, #f8fafc); text-align: left; color: inherit; transition: border-color .15s, transform .12s, box-shadow .15s; min-width: 0; }
+        .snd-station:hover { transform: translateY(-1px); border-color: var(--c1); }
+        .snd-station.is-selected { border-color: var(--c1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c1) 18%, transparent); }
+        .snd-station-art { width: 2.6rem; height: 2.6rem; border-radius: .8rem; flex-shrink: 0; background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.4), transparent 60%), linear-gradient(135deg, var(--c1), var(--c2)); }
+        .snd-station-txt { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .snd-station-txt b { font-size: .9rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .snd-station-txt small { font-size: .74rem; color: var(--muted, #6b7280); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .snd-station-eq { display: none; align-items: flex-end; gap: 2px; height: 1rem; }
+        .snd-station-eq i { width: 3px; background: var(--c1); border-radius: 2px; animation: snd-eq 1s ease-in-out infinite; }
+        .snd-station-eq i:nth-child(2) { animation-delay: -.35s; }
+        .snd-station-eq i:nth-child(3) { animation-delay: -.7s; }
+        .snd-station.is-playing .snd-station-eq { display: flex; }
+        .snd-station.is-loading .snd-station-art { animation: snd-pulse 1s ease-in-out infinite; }
+        @keyframes snd-eq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
+        @keyframes snd-pulse { 50% { opacity: .45; } }
+        .snd-mixhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+        .snd-master { min-width: min(16rem, 100%); }
+        .snd-presets { display: flex; gap: .45rem; flex-wrap: wrap; margin: .2rem 0 .4rem; }
+        .snd-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 700; background: var(--surface-2, #f8fafc); border: 1px solid var(--border, #e5e7eb); color: inherit; transition: border-color .15s, transform .1s; white-space: nowrap; }
+        .snd-chip:hover { border-color: var(--accent, #5850ec); }
+        .snd-chip:active { transform: scale(.97); }
+        .snd-x { margin-left: .1rem; width: 1.1rem; height: 1.1rem; border-radius: 999px; display: grid; place-items: center; color: var(--muted, #6b7280); font-size: .9rem; line-height: 1; }
+        .snd-x:hover { background: rgba(239,68,68,.15); color: #ef4444; }
+        .snd-group { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted, #6b7280); margin: 1rem 0 .5rem; }
+        .snd-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); column-gap: 1.2rem; }
+        .snd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); gap: .6rem; }
+        .snd-tile { display: flex; flex-direction: column; gap: .45rem; padding: .55rem .6rem .7rem; border-radius: 1.1rem; border: 1.5px solid var(--border, #e5e7eb); background: var(--surface-2, #f8fafc); transition: border-color .15s, background .15s, box-shadow .15s; }
+        .snd-tile-btn { display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: .45rem 0 .1rem; color: var(--muted, #6b7280); font-weight: 700; font-size: .82rem; background: none; border: 0; border-radius: .8rem; }
+        .snd-tile input { opacity: .45; transition: opacity .15s; }
+        .snd-tile.on { border-color: var(--accent, #5850ec); background: var(--accent-soft, #eef0ff); box-shadow: 0 8px 22px -16px var(--accent, #5850ec); }
+        .snd-tile.on .snd-tile-btn { color: var(--accent, #5850ec); }
+        .snd-tile.on input { opacity: 1; }
+        .snd-saved { display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px dashed var(--border, #e5e7eb); }
+        .snd-empty { font-size: .8rem; color: var(--muted, #6b7280); }
+        @media (max-width: 640px) {
+            .snd-card { padding: 1rem; border-radius: 1.25rem; }
+            .snd-player { grid-template-columns: 6.5rem 1fr; gap: 1rem; }
+            .snd-controls { margin: .6rem 0; gap: .5rem; }
+            .snd-ctl { width: 2.4rem; height: 2.4rem; }
+            .snd-ctl.snd-play { width: 3.1rem; height: 3.1rem; }
+            .snd-stations { grid-template-columns: 1fr 1fr; }
+            .snd-station { padding: .5rem; gap: .5rem; }
+            .snd-station-art { width: 2.1rem; height: 2.1rem; }
+            .snd-station-txt small { display: none; }
+            .snd-groups { grid-template-columns: 1fr; }
+            .snd-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+            .snd-presets { flex-wrap: nowrap; overflow-x: auto; margin-left: -1rem; margin-right: -1rem; padding: 0 1rem .2rem; scrollbar-width: none; }
+            .snd-presets::-webkit-scrollbar { display: none; }
+            .snd-head-actions { width: 100%; }
         }
-        #ft-canvas {
-            display: block; width: 100%; height: auto;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            image-rendering: -webkit-optimize-contrast;
-            min-height: 220px;
+
+        /* Focus Town (town.js) */
+        .town-name { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 800; letter-spacing: -.02em; background: transparent; border: 0; outline: none; width: min(22ch, 70vw); border-bottom: 2px dashed transparent; }
+        .town-name:hover, .town-name:focus { border-bottom-color: var(--border-strong, #cbd5e1); }
+        .town-hud { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .75rem; }
+        .town-stat { display: flex; align-items: center; gap: .6rem; padding: .75rem 1rem; border-radius: 1.1rem; background: var(--surface, #fff); border: 1px solid var(--border, #e5e7eb); box-shadow: var(--shadow-card); min-width: 0; }
+        .town-stat > span { font-size: 1.3rem; }
+        .town-stat b { font-size: 1.05rem; font-weight: 800; white-space: nowrap; }
+        .town-stat small { display: block; font-size: .72rem; color: var(--muted, #6b7280); white-space: nowrap; }
+        .town-stat small.neg { color: #ef4444; font-weight: 700; }
+        .town-stat:not(.wide) { flex-wrap: wrap; column-gap: .45rem; row-gap: 0; }
+        .town-stat:not(.wide) small { flex-basis: 100%; padding-left: 1.9rem; margin-top: -.15rem; }
+        .town-stage { position: relative; height: min(66vh, 640px); min-height: 380px; border-radius: 1.75rem; overflow: hidden; border: 1px solid var(--border, #e5e7eb); box-shadow: var(--shadow-card); background: #cfeaff; touch-action: manipulation; }
+        .town-stage canvas { display: block; width: 100%; height: 100%; cursor: pointer; }
+        .town-stage canvas { touch-action: none; }
+        .town-zoom { position: absolute; right: .8rem; bottom: .8rem; display: flex; flex-direction: column; gap: .35rem; }
+        .town-zoom button { width: 2.4rem; height: 2.4rem; border-radius: .8rem; background: rgba(255,255,255,.92); color: #1f2937; font-weight: 800; font-size: 1.1rem; box-shadow: 0 6px 16px -8px rgba(0,0,0,.4); }
+        .town-zoom button:hover { background: #fff; }
+        .town-banner { position: absolute; top: .9rem; left: 50%; transform: translateX(-50%); padding: .45rem 1rem; border-radius: 999px; background: rgba(79, 70, 229, .92); color: #fff; font-weight: 800; font-size: .85rem; box-shadow: 0 8px 20px -8px rgba(79,70,229,.6); white-space: nowrap; }
+        .town-notes { position: absolute; left: .9rem; bottom: .9rem; display: flex; flex-direction: column-reverse; gap: .4rem; max-width: min(24rem, calc(100% - 1.8rem)); pointer-events: none; }
+        .town-note { background: rgba(255,255,255,.95); color: #1f2937; border-radius: .9rem; padding: .55rem .85rem; font-size: .82rem; font-weight: 600; box-shadow: 0 8px 20px -10px rgba(0,0,0,.35); transition: opacity .4s; }
+        .town-note.warn { background: #fff1f2; color: #be123c; }
+        .town-pop { position: absolute; width: 14rem; background: rgba(255,255,255,.98); color: #1f2937; border-radius: 1rem; padding: .85rem; box-shadow: 0 16px 40px -14px rgba(0,0,0,.45); z-index: 5; }
+        .town-card { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(15, 23, 42, .35); z-index: 6; padding: 1rem; }
+        .town-card[hidden] { display: none; }
+        .town-card-inner { width: min(26rem, 100%); background: #fff; color: #1f2937; border-radius: 1.4rem; padding: 1.4rem; box-shadow: 0 30px 60px -20px rgba(0,0,0,.5); }
+        .town-panel { background: var(--surface, #fff); border: 1px solid var(--border, #e5e7eb); border-radius: 1.4rem; padding: 1.1rem 1.2rem; box-shadow: var(--shadow-card); }
+        .town-btn { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; padding: .6rem .95rem; border-radius: .9rem; font-weight: 700; font-size: .85rem; background: var(--bg, #f3f4f6); border: 1px solid var(--border, #e5e7eb); color: inherit; transition: transform .1s, background .15s; }
+        .town-btn:hover { border-color: #a5b4fc; }
+        .town-btn:active { transform: scale(.97); }
+        .town-btn.primary { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+        .town-btn.primary:hover { background: #4338ca; }
+        .town-card .town-btn:not(.primary), .town-pop .town-btn:not(.primary) { background: #f3f4f6; border-color: #e5e7eb; color: #1f2937; }
+        .town-palette { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+        .town-item { display: flex; flex-direction: column; align-items: center; gap: .1rem; padding: .45rem .3rem .55rem; border-radius: 1rem; border: 1.5px solid var(--border, #e5e7eb); background: var(--bg, #f8fafc); transition: transform .12s, border-color .12s, box-shadow .12s; }
+        .town-item img { width: 3.4rem; height: 3.4rem; }
+        .town-item .name { font-size: .72rem; font-weight: 700; line-height: 1.1; text-align: center; }
+        .town-item .cost { font-size: .7rem; font-weight: 700; color: #b45309; }
+        .town-item:hover:not([disabled]) { transform: translateY(-2px); border-color: #a5b4fc; }
+        .town-item.active { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,.2); background: rgba(79,70,229,.06); }
+        .town-item.poor:not(.locked) .cost { color: #ef4444; }
+        .town-item.poor:not(.locked) img { opacity: .55; }
+        .town-item.locked { opacity: .45; filter: grayscale(.8); cursor: not-allowed; }
+        .town-item.locked .cost { color: var(--muted, #6b7280); }
+        @media (max-width: 1023px) {
+            .town-hud { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .town-palette { grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); }
         }
-        .ft-progress-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 1.25rem 1rem 0.875rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
-            pointer-events: none;
-        }
-        #ft-town-label {
-            position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; font-weight: 700;
-            letter-spacing: 0.22em; text-transform: uppercase;
-            color: rgba(255,255,255,0.75); text-shadow: 0 1px 8px rgba(0,0,0,0.8);
-            pointer-events: none; white-space: nowrap;
-            background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 99px;
-        }
-        #ft-unlock-flash {
-            position: absolute; inset: 0; border-radius: 1.5rem;
-            pointer-events: none; opacity: 0; transition: opacity 0.7s;
-            background: rgba(255,221,51,0.22);
-        }
-        #ft-town-name-input {
-            background: transparent; border: none; outline: none;
-            font-family: 'Inter', sans-serif; font-weight: 900;
-            font-size: 1.5rem; color: inherit;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.2s; cursor: pointer; max-width: 220px;
-        }
-        #ft-town-name-input:focus { border-bottom-color: #4f46e5; cursor: text; }
-        .ft-achievement {
-            display: flex; align-items: center; gap: 0.5rem;
-            padding: 0.4rem 0.6rem; border-radius: 0.65rem;
-            font-size: 0.64rem; font-weight: 700; transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-        .ft-achievement.ft-locked { opacity: 0.3; filter: grayscale(1); }
-        .ft-achievement.ft-unlocked {
-            background: rgba(99,102,241,0.12); color: #4f46e5;
-            border-color: rgba(99,102,241,0.25);
-        }
-        .dark .ft-achievement.ft-unlocked { background: rgba(99,102,241,0.2); color: #818cf8; }
-        .ft-weather-btn {
-            padding: 0.25rem 0.5rem; border-radius: 9999px;
-            font-size: 0.75rem; cursor: pointer; transition: all 0.15s;
-            background: transparent; border: 1px solid transparent;
-        }
-        .ft-weather-btn.ft-active {
-            background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.4);
-        }
-        #ft-milestones-row { display: flex; flex-wrap: wrap; gap: 0.375rem; }
-        @keyframes ft-stage-up {
-            0%,100% { transform: scale(1); filter: brightness(1); }
-            40% { transform: scale(1.03); filter: brightness(1.3); }
-        }
-        @media (max-width: 768px) {
-            .ft-scene-hero { min-height: 180px; }
-            #ft-canvas { min-height: 180px; }
-            #ft-town-label { font-size: 0.48rem; top: 6px; }
-            #ft-town-name-input { font-size: 1.2rem; max-width: 160px; }
+        @media (max-width: 639px) {
+            /* Compact four-up stats so the town gets the screen. */
+            .town-hud { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; }
+            .town-stat { flex-direction: column; align-items: center; justify-content: center; gap: .1rem; padding: .5rem .3rem; border-radius: .9rem; text-align: center; }
+            .town-stat > span { font-size: 1.05rem; }
+            .town-stat b { font-size: .92rem; }
+            .town-stat small { display: none; }
+            .town-stat:not(.wide) small { padding-left: 0; }
+            .town-stat.wide > div { width: 100%; }
+            .town-stat.wide:nth-child(4) small { display: block; font-size: .65rem; }
+            .town-stat.wide:last-child { grid-column: span 4; flex-direction: row; gap: .6rem; padding: .5rem .8rem; }
+            .town-stat.wide:last-child small { display: block; text-align: left; }
+            .town-stage { height: auto; aspect-ratio: 1 / 0.86; min-height: 0; border-radius: 1.4rem; }
+            .town-palette { display: flex; overflow-x: auto; gap: .5rem; padding-bottom: .25rem; scroll-snap-type: x mandatory; }
+            .town-item { flex: 0 0 5.6rem; scroll-snap-align: start; }
         }
 
         /* On Air Overlay */
@@ -557,10 +632,6 @@
             .grid.grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
         }
 
-        /* 10. Focus Town canvas — don't dominate narrow tablet viewports */
-        @media (min-width: 600px) and (max-width: 900px) {
-            #ft-canvas { min-height: min(240px, 38vw); }
-        }
 
         /* ── v0.18.7 Mobile Overhaul ─────────────────────────────── */
 
@@ -1019,7 +1090,7 @@
         "Pomodoro Focus Timer (25/45/60/custom minutes)",
         "Online Stopwatch with lap tracking",
         "Focus Town — RPG gamified focus timer",
-        "Multi-Channel Audio Mixer — lo-fi, rain, pink noise, coffee shop",
+        "Ad-free Lo-fi music (generative + SomaFM radio) and a procedural ambience mixer",
         "Guided Breathing Exercises (box, 4-7-8, coherence)",
         "Free PDF Merger — combine PDFs in browser",
         "Screen Recorder — no install required",
@@ -1359,7 +1430,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.25.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.26.0</span>
             </div>
             <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="trophy" class="w-4 h-4"></i>
@@ -1482,7 +1553,7 @@
 
             <button onclick="app.switchTab('audio')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="audio">
                 <i data-lucide="headphones" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
-                <span class="hidden lg:block ml-3 font-medium text-sm">Audio Mixer</span>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Sounds</span>
             </button>
             
             <button onclick="app.switchTab('breathing')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="breathing">
@@ -1551,8 +1622,8 @@
                     <canvas id="music-viz" width="40" height="40" class="absolute inset-0 opacity-0 transition-opacity duration-300"></canvas>
                 </div>
                 <div class="overflow-hidden flex-1 min-w-0 hidden lg:block">
-                    <div class="text-xs font-bold truncate">Lo-Fi Radio</div>
-                    <div class="text-[10px] text-slate-400 truncate">Focus Beats</div>
+                    <div class="text-xs font-bold truncate" id="sidebar-track-title">Lo-Fi &amp; Radio</div>
+                    <div class="text-[10px] text-slate-400 truncate" id="sidebar-track-sub">Ad-free music</div>
                 </div>
                 <button onclick="app.toggleMusic()" id="sidebar-play-btn" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 flex items-center justify-center transition-colors shrink-0 mx-auto lg:mx-0">
                     <i data-lucide="play" class="w-4 h-4 fill-current"></i>
@@ -2172,217 +2243,8 @@
             </div>
         </div>
 
-        <!-- SOUND STUDIO -->
-        <div id="audio" class="tab-content">
-            <div class="max-w-3xl mx-auto flex flex-col gap-6">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h2 class="text-2xl font-black">Audio Mixer</h2>
-                        <p class="text-sm text-slate-400">Blend multiple sounds — all generated in your browser</p>
-                    </div>
-                    <button onclick="app.mixerStopAll()" class="glass px-4 py-2 rounded-xl text-xs font-bold uppercase hover:bg-red-500 hover:text-white transition-all flex items-center gap-2">
-                        <i data-lucide="square" class="w-4 h-4"></i> Stop All
-                    </button>
-                </div>
-
-                <!-- Mixer Channels -->
-                <div class="space-y-3" id="mixer-channels">
-
-                    <!-- Lo-Fi Vinyl -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="lofi">
-                        <button onclick="app.mixerToggle('lofi')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/40" id="mixer-btn-lofi" title="Toggle Lo-Fi Vinyl">
-                            <i data-lucide="disc-3" class="w-5 h-5 text-slate-400" id="mixer-icon-lofi"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Lo-Fi Vinyl</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400 flex items-center gap-1" id="mixer-badge-lofi">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.4" oninput="app.mixerSetVol('lofi', this.value)" class="w-full accent-indigo-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-lofi">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-lofi">40%</span>
-                    </div>
-
-                    <!-- Rain -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="rain">
-                        <button onclick="app.mixerToggle('rain')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40" id="mixer-btn-rain" title="Toggle Rain">
-                            <i data-lucide="cloud-rain" class="w-5 h-5 text-slate-400" id="mixer-icon-rain"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Ambient Rain</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400 flex items-center gap-1" id="mixer-badge-rain">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('rain', this.value)" class="w-full accent-blue-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-rain">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-rain">30%</span>
-                    </div>
-
-                    <!-- Pink Noise -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="pink">
-                        <button onclick="app.mixerToggle('pink')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-pink-100 dark:hover:bg-pink-900/40" id="mixer-btn-pink" title="Toggle Pink Noise">
-                            <i data-lucide="activity" class="w-5 h-5 text-slate-400" id="mixer-icon-pink"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Pink Noise</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-pink-100 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400 flex items-center gap-1" id="mixer-badge-pink">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.25" oninput="app.mixerSetVol('pink', this.value)" class="w-full accent-pink-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-pink">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-pink">25%</span>
-                    </div>
-
-                    <!-- Coffee Shop -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="coffee">
-                        <button onclick="app.mixerToggle('coffee')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-amber-900/40" id="mixer-btn-coffee" title="Toggle Coffee Shop">
-                            <i data-lucide="coffee" class="w-5 h-5 text-slate-400" id="mixer-icon-coffee"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Coffee Shop</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 flex items-center gap-1" id="mixer-badge-coffee">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('coffee', this.value)" class="w-full accent-amber-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-coffee">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-coffee">30%</span>
-                    </div>
-
-                    <!-- White Noise -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="white">
-                        <button onclick="app.mixerToggle('white')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700" id="mixer-btn-white" title="Toggle White Noise">
-                            <i data-lucide="wind" class="w-5 h-5 text-slate-400" id="mixer-icon-white"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">White Noise</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300 flex items-center gap-1" id="mixer-badge-white">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-slate-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.2" oninput="app.mixerSetVol('white', this.value)" class="w-full accent-slate-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-white">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-white">20%</span>
-                    </div>
-
-                    <!-- Brown Noise -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="brown">
-                        <button onclick="app.mixerToggle('brown')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-orange-100 dark:hover:bg-orange-900/40" id="mixer-btn-brown" title="Toggle Brown Noise">
-                            <i data-lucide="waves" class="w-5 h-5 text-slate-400" id="mixer-icon-brown"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Brown Noise</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 flex items-center gap-1" id="mixer-badge-brown">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('brown', this.value)" class="w-full accent-orange-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-brown">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-brown">30%</span>
-                    </div>
-
-                    <!-- Ocean Waves -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="ocean">
-                        <button onclick="app.mixerToggle('ocean')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-cyan-100 dark:hover:bg-cyan-900/40" id="mixer-btn-ocean" title="Toggle Ocean Waves">
-                            <i data-lucide="sailboat" class="w-5 h-5 text-slate-400" id="mixer-icon-ocean"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Ocean Waves</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-400 flex items-center gap-1" id="mixer-badge-ocean">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.35" oninput="app.mixerSetVol('ocean', this.value)" class="w-full accent-cyan-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-ocean">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-ocean">35%</span>
-                    </div>
-
-                    <!-- Forest -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="forest">
-                        <button onclick="app.mixerToggle('forest')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-green-100 dark:hover:bg-green-900/40" id="mixer-btn-forest" title="Toggle Forest">
-                            <i data-lucide="trees" class="w-5 h-5 text-slate-400" id="mixer-icon-forest"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Forest</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 flex items-center gap-1" id="mixer-badge-forest">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.3" oninput="app.mixerSetVol('forest', this.value)" class="w-full accent-green-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-forest">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-forest">30%</span>
-                    </div>
-
-                    <!-- Fireplace -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="fire">
-                        <button onclick="app.mixerToggle('fire')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-900/40" id="mixer-btn-fire" title="Toggle Fireplace">
-                            <i data-lucide="flame" class="w-5 h-5 text-slate-400" id="mixer-icon-fire"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Fireplace</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 flex items-center gap-1" id="mixer-badge-fire">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.35" oninput="app.mixerSetVol('fire', this.value)" class="w-full accent-red-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-fire">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-fire">35%</span>
-                    </div>
-
-                    <!-- Fan -->
-                    <div class="glass p-4 rounded-2xl flex items-center gap-4 mixer-channel" data-channel="fan">
-                        <button onclick="app.mixerToggle('fan')" class="w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-sky-900/40" id="mixer-btn-fan" title="Toggle Fan">
-                            <i data-lucide="fan" class="w-5 h-5 text-slate-400" id="mixer-icon-fan"></i>
-                        </button>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1.5">
-                                <span class="text-sm font-bold">Fan</span>
-                                <span class="mixer-badge hidden text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-400 flex items-center gap-1" id="mixer-badge-fan">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse inline-block"></span> playing
-                                </span>
-                            </div>
-                            <input type="range" min="0" max="1" step="0.01" value="0.25" oninput="app.mixerSetVol('fan', this.value)" class="w-full accent-sky-500 h-1.5 rounded-lg appearance-none cursor-pointer bg-slate-200 dark:bg-slate-700" id="mixer-vol-fan">
-                        </div>
-                        <span class="text-xs font-mono w-8 text-right text-slate-400 shrink-0" id="mixer-pct-fan">25%</span>
-                    </div>
-                </div>
-
-                <!-- Master Volume -->
-                <div class="glass p-4 rounded-2xl flex items-center gap-4">
-                    <i data-lucide="volume-2" class="w-5 h-5 text-slate-400 shrink-0"></i>
-                    <div class="flex-1">
-                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1.5">Master Volume</div>
-                        <input type="range" min="0" max="1" step="0.01" value="0.8" oninput="app.mixerSetMaster(this.value)" class="w-full accent-indigo-500 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                    </div>
-                    <span class="text-xs font-mono w-8 text-right shrink-0" id="mixer-master-pct">80%</span>
-                </div>
-
-                <!-- Presets -->
-                <div class="glass p-4 rounded-2xl">
-                    <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Quick Presets</div>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="app.mixerPreset('focus')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-indigo-500 hover:text-white transition-all">🎯 Deep Focus</button>
-                        <button onclick="app.mixerPreset('cafe')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-amber-500 hover:text-white transition-all">☕ Café Vibe</button>
-                        <button onclick="app.mixerPreset('rain')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-blue-500 hover:text-white transition-all">🌧️ Rainy Day</button>
-                        <button onclick="app.mixerPreset('sleep')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-purple-500 hover:text-white transition-all">🌙 Sleep</button>
-                        <button onclick="app.mixerPreset('nature')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-green-500 hover:text-white transition-all">🌿 Nature Walk</button>
-                        <button onclick="app.mixerPreset('cozy')" class="px-4 py-2 rounded-full text-xs font-bold glass hover:bg-red-500 hover:text-white transition-all">🔥 Cozy Cabin</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- SOUNDS — music + ambience mixer, rendered by sound.js -->
+        <div id="audio" class="tab-content"></div>
 
         <!-- BREATHING GUIDE -->
         <div id="breathing" class="tab-content flex flex-col items-center justify-center">
@@ -2858,142 +2720,8 @@
             </div>
         </div>
 
-        <!-- FOCUS TOWN v0.19 -->
-        <div id="focustown" class="tab-content flex flex-col gap-3 ft-noscroll">
-
-            <!-- Header: Town identity + weather controls -->
-            <div class="flex items-center justify-between gap-2 flex-wrap">
-                <div class="flex items-center gap-3">
-                    <span id="ft-stage-emoji" class="text-2xl select-none">⛺</span>
-                    <div>
-                        <input id="ft-town-name-input" type="text" maxlength="24" value="My Town"
-                            onchange="app.ftSaveTownName(this.value)" title="Click to rename your town"
-                            class="text-slate-800 dark:text-slate-100 leading-tight">
-                        <div class="flex items-center gap-2 mt-0.5 flex-wrap">
-                            <span id="ft-stage-badge" class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400">Campsite</span>
-                            <span id="ft-total-chip" class="text-[10px] font-bold text-slate-400">0 min total</span>
-                            <span id="ft-streak-badge" class="hidden text-[10px] font-black text-orange-500">🔥 <span id="ft-streak-val">0</span> day streak</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="flex gap-1 glass px-2 py-1 rounded-full">
-                        <button class="ft-weather-btn ft-active" data-weather="clear" onclick="app.ftSetWeather('clear')" title="Clear">☀️</button>
-                        <button class="ft-weather-btn" data-weather="rain" onclick="app.ftSetWeather('rain')" title="Rain">🌧️</button>
-                        <button class="ft-weather-btn" data-weather="snow" onclick="app.ftSetWeather('snow')" title="Snow">❄️</button>
-                        <button class="ft-weather-btn" data-weather="fog" onclick="app.ftSetWeather('fog')" title="Fog">🌫️</button>
-                    </div>
-                    <button onclick="app.ftResetProgress()" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium px-3 py-1.5 rounded-lg glass">Reset</button>
-                </div>
-            </div>
-
-            <!-- Main body: canvas hero + right panel -->
-            <div class="flex flex-col lg:flex-row gap-3 flex-1 min-h-0">
-
-                <!-- Left: Canvas hero with overlaid progress -->
-                <div class="flex flex-col gap-3 lg:flex-1 min-h-0">
-                    <div id="ft-scene-wrapper" class="relative rounded-3xl overflow-hidden ft-scene-hero">
-                        <canvas id="ft-canvas" width="480" height="192"></canvas>
-                        <div id="ft-town-label">My Town</div>
-                        <div id="ft-unlock-flash"></div>
-                        <!-- Stage progress overlaid on canvas -->
-                        <div class="ft-progress-overlay">
-                            <div class="flex items-center justify-between mb-1.5">
-                                <div class="flex items-center gap-1.5">
-                                    <span id="ft-stage-name" class="text-xs font-black text-white drop-shadow-sm">Campsite</span>
-                                    <span class="text-white/50 text-xs">→</span>
-                                    <span id="ft-next-stage-name" class="text-xs text-white/80 font-semibold">Hamlet</span>
-                                </div>
-                                <span id="ft-progress-label" class="text-[10px] text-white/70 font-medium">10 min to unlock</span>
-                            </div>
-                            <div class="h-1.5 bg-white/20 rounded-full overflow-hidden">
-                                <div id="ft-progress-bar" class="h-full rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 transition-all duration-700" style="width:0%"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Milestones: flex-wrap, no scroll -->
-                    <div class="glass p-3 rounded-2xl">
-                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Milestones</div>
-                        <div id="ft-milestones-row" class="flex flex-wrap gap-1.5">
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="0">⛺ Campsite</div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="1">🌾 Hamlet <span class="text-slate-400 font-normal ml-0.5">10m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="2">🏡 Village <span class="text-slate-400 font-normal ml-0.5">20m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="3">🏘️ Settlement <span class="text-slate-400 font-normal ml-0.5">30m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="4">🏚️ Borough <span class="text-slate-400 font-normal ml-0.5">40m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="5">🏠 Township <span class="text-slate-400 font-normal ml-0.5">50m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="6">🏙️ Town <span class="text-slate-400 font-normal ml-0.5">60m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="7">🌆 City <span class="text-slate-400 font-normal ml-0.5">70m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="8">🌇 Metropolis <span class="text-slate-400 font-normal ml-0.5">80m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="9">🌃 Megalopolis <span class="text-slate-400 font-normal ml-0.5">90m</span></div>
-                            <div class="ft-milestone flex items-center gap-1 px-2 py-1 rounded-xl text-[10px] font-bold whitespace-nowrap" data-stage="10">✨ Utopia <span class="text-slate-400 font-normal ml-0.5">100m</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Timer + Stats + Achievements -->
-                <div class="flex flex-col gap-3 lg:w-64 xl:w-72">
-                    <!-- Timer card -->
-                    <div class="glass p-4 rounded-2xl flex flex-col gap-4">
-                        <div class="flex flex-wrap items-center justify-center gap-2">
-                            <div class="inline-flex gap-1 p-1 rounded-full glass">
-                                <button onclick="app.ftSetMode(25)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white" data-time="25">25m</button>
-                                <button onclick="app.ftSetMode(45)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="45">45m</button>
-                                <button onclick="app.ftSetMode(60)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="60">60m</button>
-                                <button onclick="app.ftSetMode(90)" class="ft-mode-btn px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:bg-white/20" data-time="90">90m</button>
-                            </div>
-                            <div class="flex items-center gap-2 glass px-3 py-1.5 rounded-full">
-                                <span class="text-xs text-slate-400 font-medium">Custom</span>
-                                <input type="number" id="ft-custom-input" min="1" max="480" value="25"
-                                    class="w-12 bg-transparent text-sm font-bold text-center focus:outline-none text-slate-800 dark:text-slate-100"
-                                    oninput="app.ftSetCustom(this.value)">
-                                <span class="text-xs text-slate-400">min</span>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <div id="ft-timer-display" class="text-5xl xl:text-6xl font-black timer-font text-slate-800 dark:text-slate-100 leading-none">25:00</div>
-                            <p id="ft-timer-status" class="text-xs font-black uppercase tracking-[0.3em] text-indigo-500 mt-2">Ready to Focus</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button id="ft-btn" onclick="app.ftToggleTimer()" class="flex-1 btn-primary text-white py-3.5 rounded-2xl font-bold text-base">
-                                Start Focusing
-                            </button>
-                            <button onclick="app.ftResetTimer()" class="glass w-12 rounded-2xl flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-500">
-                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Stats: 2×2 compact grid -->
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="glass p-3 rounded-2xl text-center">
-                            <div id="ft-citizen-count" class="text-xl font-black text-indigo-600 dark:text-indigo-400">2</div>
-                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Citizens</div>
-                        </div>
-                        <div class="glass p-3 rounded-2xl text-center">
-                            <div id="ft-sessions-count" class="text-xl font-black text-purple-600 dark:text-purple-400">0</div>
-                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Sessions</div>
-                        </div>
-                        <div class="glass p-3 rounded-2xl text-center">
-                            <div id="ft-total-min" class="text-xl font-black text-green-600 dark:text-green-400">0m</div>
-                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Total Focus</div>
-                        </div>
-                        <div class="glass p-3 rounded-2xl text-center">
-                            <div id="ft-streak-stat" class="text-xl font-black text-orange-500">0</div>
-                            <div class="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-0.5">Day Streak 🔥</div>
-                        </div>
-                    </div>
-
-                    <!-- Achievements -->
-                    <div class="glass p-4 rounded-2xl flex-1">
-                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Achievements</div>
-                        <div id="ft-achievements-grid" class="grid grid-cols-1 gap-1.5">
-                            <!-- Rendered by ftRenderAchievements() -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- FOCUS TOWN — rendered by town.js -->
+        <div id="focustown" class="tab-content"></div>
 
         <!-- DEV TOOLKIT — client-side utility belt (inspired by CorentinTh/it-tools & gchq/CyberChef) -->
         <div id="devtools" class="tab-content flex flex-col p-4 overflow-y-auto">
@@ -3285,10 +3013,10 @@
             <div class="text-xs font-bold text-slate-800 dark:text-slate-100 truncate" id="mob-track-name">Lo-Fi Radio</div>
             <div class="text-[10px] text-slate-400 flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse inline-block"></span>
-                Now playing
+                <span id="mob-track-sub" class="truncate">Now playing</span>
             </div>
         </div>
-        <button onclick="app.toggleMusic()" id="mob-play-btn" class="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white shadow shadow-indigo-500/30 hover:bg-indigo-600 transition-colors" aria-label="Play/Pause music">
+        <button onclick="app.soundToggleAll()" id="mob-play-btn" class="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white shadow shadow-indigo-500/30 hover:bg-indigo-600 transition-colors" aria-label="Play/Pause music">
             <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </button>
     </div>
@@ -3330,10 +3058,6 @@
             currentTab: 'dashboard',
             alarmTime: localStorage.getItem('wd_alarm') || null,
             musicPlaying: false,
-            musicAudio: null,
-            musicCtx: null,
-            musicAnalyser: null,
-            vizAnimation: null,
             alarmTriggered: false,
             waterCount: (() => {
                 const lastDate = localStorage.getItem('wd_water_date');
@@ -3352,9 +3076,7 @@
             wbHistory: [],
             wbHistoryStep: -1,
             audioCtx: null,
-            noiseNode: null,
             gainNode: null,
-            currentNoise: null,
             mixerChannels: {},
             mixerMasterGain: null,
             timerInterval: null,
@@ -3403,7 +3125,7 @@
                 { id: 'feud', label: 'Survey Says', icon: 'trophy', link: '/family-feud', keywords: 'survey says party game survey voting team game streaming group game' },
                 { id: 'clock', label: 'Desk Clock', icon: 'clock', keywords: 'time alarm watch' },
                 { id: 'timer', label: 'Focus Timer', icon: 'hourglass', keywords: 'pomodoro countdown focus' },
-                { id: 'audio', label: 'Audio Mixer', icon: 'headphones', keywords: 'noise ambient music lofi rain coffee mixer multi-channel' },
+                { id: 'audio', label: 'Sounds', icon: 'headphones', keywords: 'audio mixer noise ambient music lofi radio rain thunder ocean fire cafe birds sleep timer' },
                 { id: 'breathing', label: 'Breathing Guide', icon: 'wind', keywords: 'meditate relax stress box breathing' },
                 { id: 'calculator', label: 'Calculator', icon: 'calculator', keywords: 'math numbers' },
                 { id: 'pdf', label: 'PDF Merger', icon: 'file-stack', keywords: 'combine join documents' },
@@ -3460,50 +3182,6 @@
             cpColor: { r: 79, g: 70, b: 229 },
             cpSwatches: [],
 
-            // Focus Town State
-            ftMinutes: parseInt(localStorage.getItem('wd_ft_minutes') || '0'),
-            ftRunning: false,
-            ftInterval: null,
-            ftMode: 25,
-            ftTime: 25 * 60,
-            ftSessions: parseInt(localStorage.getItem('wd_ft_sessions') || '0'),
-            ftTownName: localStorage.getItem('wd_ft_townname') || 'My Town',
-            ftStreak: parseInt(localStorage.getItem('wd_ft_streak') || '0'),
-            ftLastSessionDate: localStorage.getItem('wd_ft_lastdate') || '',
-            ftAchievements: (()=>{ try{ return JSON.parse(localStorage.getItem('wd_ft_achievements')||'[]'); }catch(e){ return []; } })(),
-            ftWeather: 'clear',
-            ftAnimFrame: null,
-            ftScale: 3,
-            ftCanvasTime: 0,
-            ftConstructing: false,
-            ftParticles: [],
-            ftStageNames: ['Campsite','Hamlet','Village','Settlement','Borough','Township','Town','City','Metropolis','Megalopolis','Utopia'],
-            ftStageEmoji: ['⛺','🌾','🏡','🏘️','🏚️','🏠','🏙️','🌆','🌇','🌃','✨'],
-            ftStageThresholds: [0,10,20,30,40,50,60,70,80,90,100],
-            ftAchievementDefs: [
-                { id:'first',   icon:'🎯', label:'First Brick',  desc:'Complete first session',   condition:(s)=>s.ftSessions>=1 },
-                { id:'five',    icon:'🔥', label:'On a Roll',    desc:'Complete 5 sessions',      condition:(s)=>s.ftSessions>=5 },
-                { id:'ten',     icon:'💪', label:'Dedicated',    desc:'Complete 10 sessions',     condition:(s)=>s.ftSessions>=10 },
-                { id:'hour',    icon:'⏰', label:'Deep Work',    desc:'60 min focus total',       condition:(s)=>s.ftMinutes>=60 },
-                { id:'named',   icon:'✏️', label:'City Planner', desc:'Give your town a name',   condition:(s)=>s.ftTownName!=='My Town' },
-                { id:'streak3', icon:'📅', label:'Habit Forming',desc:'3-day streak',             condition:(s)=>s.ftStreak>=3 },
-                { id:'streak7', icon:'🗓️', label:'Week Warrior', desc:'7-day streak',             condition:(s)=>s.ftStreak>=7 },
-                { id:'utopia',  icon:'✨', label:'Utopian',      desc:'Reach Utopia (100 min)',   condition:(s)=>s.ftMinutes>=100 },
-                { id:'fifty',   icon:'👑', label:'Legendary',    desc:'50 sessions completed',    condition:(s)=>s.ftSessions>=50 },
-            ],
-            ftPalettes: [
-                { skyTop:'#f4a261',skyBot:'#e9c46a',ground:'#8B7355',groundAccent:'#6b5a3e',road:'#5a4a35',roadLine:'#7a6a55',buildingBase:'#8B7355',buildingAccent:'#6b5a3e',roofColor:'#c1440e',windowColor:'#f4d03f',treeColor:'#2d6a4f',treeTrunk:'#8B7355' },
-                { skyTop:'#90e0ef',skyBot:'#caf0f8',ground:'#52b788',groundAccent:'#40916c',road:'#6b705c',roadLine:'#a9b388',buildingBase:'#d4a373',buildingAccent:'#b5835a',roofColor:'#c1440e',windowColor:'#ffd60a',treeColor:'#1b4332',treeTrunk:'#8B7355' },
-                { skyTop:'#74c0fc',skyBot:'#a9d6f5',ground:'#52b788',groundAccent:'#40916c',road:'#868e96',roadLine:'#dee2e6',buildingBase:'#ced4da',buildingAccent:'#adb5bd',roofColor:'#e03131',windowColor:'#ffd43b',treeColor:'#2d6a4f',treeTrunk:'#795548' },
-                { skyTop:'#63c5da',skyBot:'#b7e0ff',ground:'#4caf50',groundAccent:'#388e3c',road:'#78909c',roadLine:'#eceff1',buildingBase:'#b0bec5',buildingAccent:'#90a4ae',roofColor:'#d32f2f',windowColor:'#ffeb3b',treeColor:'#1b5e20',treeTrunk:'#6d4c41' },
-                { skyTop:'#4fc3f7',skyBot:'#b3e5fc',ground:'#43a047',groundAccent:'#2e7d32',road:'#546e7a',roadLine:'#b0bec5',buildingBase:'#9e9e9e',buildingAccent:'#757575',roofColor:'#c62828',windowColor:'#ffe082',treeColor:'#1b5e20',treeTrunk:'#5d4037' },
-                { skyTop:'#29b6f6',skyBot:'#81d4fa',ground:'#388e3c',groundAccent:'#27632a',road:'#455a64',roadLine:'#90a4ae',buildingBase:'#78909c',buildingAccent:'#546e7a',roofColor:'#b71c1c',windowColor:'#ffc107',treeColor:'#1a3c1e',treeTrunk:'#4e342e' },
-                { skyTop:'#2196f3',skyBot:'#64b5f6',ground:'#2e7d32',groundAccent:'#1b5e20',road:'#37474f',roadLine:'#78909c',buildingBase:'#607d8b',buildingAccent:'#455a64',roofColor:'#880e4f',windowColor:'#fff59d',treeColor:'#1a3c1e',treeTrunk:'#3e2723' },
-                { skyTop:'#1565c0',skyBot:'#42a5f5',ground:'#1b5e20',groundAccent:'#003300',road:'#263238',roadLine:'#546e7a',buildingBase:'#546e7a',buildingAccent:'#37474f',roofColor:'#4a148c',windowColor:'#e3f2fd',treeColor:'#1a3c1e',treeTrunk:'#37474f' },
-                { skyTop:'#1a237e',skyBot:'#283593',ground:'#1b5e20',groundAccent:'#003300',road:'#1c1c1c',roadLine:'#424242',buildingBase:'#37474f',buildingAccent:'#263238',roofColor:'#311b92',windowColor:'#fff9c4',treeColor:'#1a3c1e',treeTrunk:'#212121' },
-                { skyTop:'#0d0d2b',skyBot:'#1a1a4e',ground:'#1a1a1a',groundAccent:'#111111',road:'#111111',roadLine:'#e040fb',buildingBase:'#1c1c3e',buildingAccent:'#2a2a6e',roofColor:'#7c4dff',windowColor:'#e040fb',treeColor:'#1a3c1e',treeTrunk:'#111111' },
-                { skyTop:'#000428',skyBot:'#004e92',ground:'#0a3d62',groundAccent:'#0c2461',road:'#0a0a2a',roadLine:'#00d2ff',buildingBase:'#0c2461',buildingAccent:'#1e3799',roofColor:'#e84393',windowColor:'#00d2ff',treeColor:'#0a3d62',treeTrunk:'#0c2461' },
-            ],
 
             // Breathing State
             breathActive: false,
@@ -3733,7 +3411,7 @@
                     tasks: 'Task Manager | WebDesks', board: 'Project Board | WebDesks',
                     whiteboard: 'Whiteboard | WebDesks', clock: 'Alarm Clock | WebDesks',
                     timer: 'Focus Timer | WebDesks', stopwatch: 'Stopwatch | WebDesks',
-                    focustown: 'Focus Town | WebDesks', audio: 'Audio Mixer | WebDesks',
+                    focustown: 'Focus Town | WebDesks', audio: 'Sounds — Lo-fi & Ambience | WebDesks',
                     breathing: 'Breathing | WebDesks', calculator: 'Calculator | WebDesks',
                     pdf: 'PDF Merger | WebDesks', zones: 'Time Zones | WebDesks',
                     onair: 'On Air | WebDesks', recorder: 'Screen Recorder | WebDesks',
@@ -4945,238 +4623,7 @@
                 if (streakEl) streakEl.textContent = streak;
             },
 
-            // ── Audio Mixer ─────────────────────────────────────────
-            _mixerEnsureCtx() {
-                if (!this.audioCtx) {
-                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    this.mixerMasterGain = this.audioCtx.createGain();
-                    this.mixerMasterGain.gain.value = 0.8;
-                    this.mixerMasterGain.connect(this.audioCtx.destination);
-                }
-                if (this.audioCtx.state === 'suspended') this.audioCtx.resume();
-            },
-
-            _mixerBuildBuffer(type) {
-                const rate = this.audioCtx.sampleRate;
-                const bufferSize = 2 * rate;
-                const buffer = this.audioCtx.createBuffer(1, bufferSize, rate);
-                const out = buffer.getChannelData(0);
-                if (type === 'white' || type === 'rain' || type === 'fan') {
-                    // Pure white noise — flat spectrum, correct base for rain and fan
-                    for (let i = 0; i < bufferSize; i++) out[i] = Math.random() * 2 - 1;
-                } else if (type === 'pink' || type === 'coffee' || type === 'forest') {
-                    // Pink noise (Paul Kellett) — -3dB/oct rolloff, natural speech/nature base
-                    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const w = Math.random()*2-1;
-                        b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.9690*b2+w*.153852;
-                        b3=.8665*b3+w*.3104856; b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898;
-                        out[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926;
-                    }
-                } else if (type === 'brown' || type === 'ocean' || type === 'lofi') {
-                    // Brown noise (random walk integrator) — deep -6dB/oct rolloff
-                    let lastOut = 0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const w = Math.random()*2-1;
-                        out[i] = (lastOut + .02*w) / 1.02;
-                        lastOut = out[i];
-                        out[i] *= 3.5;
-                    }
-                } else if (type === 'fire') {
-                    // Brown noise base with random crackle pops for fireplace character
-                    let lastOut = 0;
-                    for (let i = 0; i < bufferSize; i++) {
-                        const w = Math.random()*2-1;
-                        out[i] = (lastOut + .025*w) / 1.025;
-                        lastOut = out[i];
-                        out[i] *= 3.0;
-                        // Occasional sharp crackle pops (~3 per second average)
-                        if (Math.random() < 3 / rate) out[i] += (Math.random() * 2 - 1) * 0.8;
-                    }
-                }
-                return buffer;
-            },
-
-            _mixerBuildSource(type, vol) {
-                this._mixerEnsureCtx();
-                const buffer = this._mixerBuildBuffer(type);
-                const source = this.audioCtx.createBufferSource();
-                source.buffer = buffer;
-                source.loop = true;
-                const gain = this.audioCtx.createGain();
-                gain.gain.value = vol;
-
-                if (type === 'rain') {
-                    // White noise shaped: remove rumble below 200Hz and harshness above 8kHz,
-                    // boost the patter sweet-spot around 1500Hz
-                    const hp = this.audioCtx.createBiquadFilter();
-                    hp.type = 'highpass'; hp.frequency.value = 200; hp.Q.value = 0.7;
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 8000; lp.Q.value = 0.5;
-                    const peak = this.audioCtx.createBiquadFilter();
-                    peak.type = 'peaking'; peak.frequency.value = 1500; peak.gain.value = 9; peak.Q.value = 0.8;
-                    source.connect(hp).connect(lp).connect(peak).connect(gain);
-                } else if (type === 'coffee') {
-                    // Pink noise shaped to capture murmur/chatter: speech-range bandpass 400–3500Hz
-                    const hp = this.audioCtx.createBiquadFilter();
-                    hp.type = 'highpass'; hp.frequency.value = 400; hp.Q.value = 0.6;
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 3500; lp.Q.value = 0.6;
-                    source.connect(hp).connect(lp).connect(gain);
-                } else if (type === 'lofi') {
-                    // Brown noise with warm vinyl character: sub-bass removed, rolled off above 3.5kHz,
-                    // gentle warmth boost at 250Hz
-                    const hp = this.audioCtx.createBiquadFilter();
-                    hp.type = 'highpass'; hp.frequency.value = 60; hp.Q.value = 0.5;
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 3500; lp.Q.value = 0.7;
-                    const warm = this.audioCtx.createBiquadFilter();
-                    warm.type = 'peaking'; warm.frequency.value = 250; warm.gain.value = 5; warm.Q.value = 1.0;
-                    source.connect(hp).connect(lp).connect(warm).connect(gain);
-                } else if (type === 'ocean') {
-                    // Brown noise lowpassed for deep rumble, with slow LFO on gain for wave rhythm
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 600; lp.Q.value = 0.8;
-                    const waveGain = this.audioCtx.createGain();
-                    waveGain.gain.value = 0.5;
-                    // LFO oscillator (~0.08 Hz) creates gentle wave swell
-                    const lfo = this.audioCtx.createOscillator();
-                    lfo.type = 'sine'; lfo.frequency.value = 0.08;
-                    const lfoDepth = this.audioCtx.createGain();
-                    lfoDepth.gain.value = 0.45;
-                    lfo.connect(lfoDepth).connect(waveGain.gain);
-                    lfo.start();
-                    source.connect(lp).connect(waveGain).connect(gain);
-                    // Store lfo on return so it can be stopped later
-                    gain._lfo = lfo;
-                } else if (type === 'forest') {
-                    // Pink noise shaped for rustling leaves and distant birdsong:
-                    // highpass removes rumble, gentle peak at 2.5kHz for that airy presence
-                    const hp = this.audioCtx.createBiquadFilter();
-                    hp.type = 'highpass'; hp.frequency.value = 300; hp.Q.value = 0.6;
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 6000; lp.Q.value = 0.5;
-                    const air = this.audioCtx.createBiquadFilter();
-                    air.type = 'peaking'; air.frequency.value = 2500; air.gain.value = 5; air.Q.value = 1.2;
-                    source.connect(hp).connect(lp).connect(air).connect(gain);
-                } else if (type === 'fire') {
-                    // Brown noise + crackle shaped: lowpassed for warmth, slight low-mid boost
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 3000; lp.Q.value = 0.6;
-                    const warmth = this.audioCtx.createBiquadFilter();
-                    warmth.type = 'peaking'; warmth.frequency.value = 180; warmth.gain.value = 6; warmth.Q.value = 0.9;
-                    source.connect(lp).connect(warmth).connect(gain);
-                } else if (type === 'fan') {
-                    // White noise shaped like a box/desk fan: mechanical hum with strong high-freq roll-off
-                    const hp = this.audioCtx.createBiquadFilter();
-                    hp.type = 'highpass'; hp.frequency.value = 40; hp.Q.value = 0.5;
-                    const lp = this.audioCtx.createBiquadFilter();
-                    lp.type = 'lowpass'; lp.frequency.value = 1800; lp.Q.value = 0.5;
-                    const hum = this.audioCtx.createBiquadFilter();
-                    hum.type = 'peaking'; hum.frequency.value = 120; hum.gain.value = 7; hum.Q.value = 1.5;
-                    source.connect(hp).connect(lp).connect(hum).connect(gain);
-                } else {
-                    source.connect(gain);
-                }
-                gain.connect(this.mixerMasterGain);
-                source.start();
-                return { source, gain };
-            },
-
-            mixerToggle(type) {
-                if (this.mixerChannels[type]) {
-                    // Stop this channel
-                    try { this.mixerChannels[type].source.stop(); } catch(e) {}
-                    try { if (this.mixerChannels[type].gain._lfo) this.mixerChannels[type].gain._lfo.stop(); } catch(e) {}
-                    delete this.mixerChannels[type];
-                    this._mixerUpdateUI(type, false);
-                } else {
-                    // Start this channel
-                    this._mixerEnsureCtx();
-                    const vol = parseFloat(document.getElementById(`mixer-vol-${type}`).value);
-                    this.mixerChannels[type] = this._mixerBuildSource(type, vol);
-                    this._mixerUpdateUI(type, true);
-                }
-                // Update mobile music bar
-                const anyPlaying = Object.keys(this.mixerChannels).length > 0;
-                const bar = document.getElementById('mobile-music-bar');
-                if (bar) bar.classList.toggle('visible', anyPlaying);
-            },
-
-            _mixerUpdateUI(type, active) {
-                const btn = document.getElementById(`mixer-btn-${type}`);
-                const icon = document.getElementById(`mixer-icon-${type}`);
-                const channel = btn?.closest('.mixer-channel');
-                if (active) {
-                    btn?.classList.add('bg-indigo-500', 'text-white');
-                    btn?.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'hover:bg-indigo-100');
-                    icon?.classList.add('text-white');
-                    icon?.classList.remove('text-slate-400');
-                    channel?.classList.add('active');
-                } else {
-                    btn?.classList.remove('bg-indigo-500', 'text-white');
-                    btn?.classList.add('bg-slate-100', 'dark:bg-slate-800', 'hover:bg-indigo-100');
-                    icon?.classList.remove('text-white');
-                    icon?.classList.add('text-slate-400');
-                    channel?.classList.remove('active');
-                }
-            },
-
-            mixerSetVol(type, val) {
-                const pct = Math.round(val * 100);
-                document.getElementById(`mixer-pct-${type}`).textContent = pct + '%';
-                if (this.mixerChannels[type]) {
-                    this.mixerChannels[type].gain.gain.value = parseFloat(val);
-                }
-            },
-
-            mixerSetMaster(val) {
-                document.getElementById('mixer-master-pct').textContent = Math.round(val * 100) + '%';
-                this._mixerEnsureCtx();
-                if (this.mixerMasterGain) this.mixerMasterGain.gain.value = parseFloat(val);
-            },
-
-            mixerStopAll() {
-                Object.keys(this.mixerChannels).forEach(type => {
-                    try { this.mixerChannels[type].source.stop(); } catch(e) {}
-                    try { if (this.mixerChannels[type].gain._lfo) this.mixerChannels[type].gain._lfo.stop(); } catch(e) {}
-                    this._mixerUpdateUI(type, false);
-                });
-                this.mixerChannels = {};
-                const bar = document.getElementById('mobile-music-bar');
-                if (bar) bar.classList.remove('visible');
-            },
-
-            mixerPreset(name) {
-                this.mixerStopAll();
-                const presets = {
-                    focus:  { lofi: .4,  pink: .2 },
-                    cafe:   { lofi: .35, coffee: .4, brown: .1 },
-                    rain:   { rain: .5,  brown: .2, forest: .15 },
-                    sleep:  { ocean: .4, brown: .2, pink: .15 },
-                    nature: { forest: .45, rain: .25, ocean: .2 },
-                    cozy:   { fire: .45, brown: .25, lofi: .2 }
-                };
-                const cfg = presets[name] || {};
-                Object.entries(cfg).forEach(([type, vol]) => {
-                    document.getElementById(`mixer-vol-${type}`).value = vol;
-                    document.getElementById(`mixer-pct-${type}`).textContent = Math.round(vol * 100) + '%';
-                    this._mixerEnsureCtx();
-                    this.mixerChannels[type] = this._mixerBuildSource(type, vol);
-                    this._mixerUpdateUI(type, true);
-                });
-                const bar = document.getElementById('mobile-music-bar');
-                if (bar) bar.classList.toggle('visible', Object.keys(this.mixerChannels).length > 0);
-                const labels = { focus: 'Deep Focus', cafe: 'Café Vibe', rain: 'Rainy Day', sleep: 'Sleep', nature: 'Nature Walk', cozy: 'Cozy Cabin' };
-                const nameEl = document.getElementById('mob-track-name');
-                if (nameEl) nameEl.textContent = labels[name] || 'Mixer';
-                this.showToast(`Preset loaded: ${labels[name] || name}`);
-            },
-
-            // Legacy stubs so old references don't break
-            toggleNoise(type) { this.mixerToggle(type === 'nature' ? 'rain' : type); },
-            stopNoise() { this.mixerStopAll(); },
-            setVolume(val) { this.mixerSetMaster(val); },
+            // Music player + ambience mixer live in sound.js
 
             // Breathing Guide
             setBreathTechnique(tech) {
@@ -5907,86 +5354,6 @@
                 overlay.classList.add('flex');
             },
 
-            // Music Player
-            toggleMusic() {
-                if (!this.musicAudio) {
-                    this.musicAudio = new Audio();
-                    this.musicAudio.crossOrigin = "anonymous";
-                    this.musicAudio.src = 'https://stream.zeno.fm/0r0xa792kwzuv';
-                    this.musicAudio.volume = 0.5;
-                    
-                    // Setup Visualizer
-                    try {
-                        const AudioContext = window.AudioContext || window.webkitAudioContext;
-                        if (!this.musicCtx) this.musicCtx = new AudioContext();
-                        
-                        const source = this.musicCtx.createMediaElementSource(this.musicAudio);
-                        this.musicAnalyser = this.musicCtx.createAnalyser();
-                        this.musicAnalyser.fftSize = 32;
-                        
-                        source.connect(this.musicAnalyser);
-                        this.musicAnalyser.connect(this.musicCtx.destination);
-                    } catch(e) {
-                        console.log("Visualizer setup failed:", e);
-                    }
-                }
-                
-                const btn = document.getElementById('sidebar-play-btn');
-                const icon = document.getElementById('music-icon');
-                const canvas = document.getElementById('music-viz');
-                
-                if (this.musicPlaying) {
-                    this.musicAudio.pause();
-                    this.musicPlaying = false;
-                    btn.innerHTML = '<i data-lucide="play" class="w-4 h-4 fill-current"></i>';
-                    btn.classList.remove('text-indigo-500', 'bg-indigo-50');
-                    
-                    if(icon) icon.classList.remove('opacity-0');
-                    if(canvas) canvas.classList.add('opacity-0');
-                    if(this.vizAnimation) cancelAnimationFrame(this.vizAnimation);
-                } else {
-                    if (this.musicCtx && this.musicCtx.state === 'suspended') this.musicCtx.resume();
-                    this.musicAudio.play().catch(e => this.showToast("Stream unavailable"));
-                    this.musicPlaying = true;
-                    btn.innerHTML = '<i data-lucide="pause" class="w-4 h-4 fill-current"></i>';
-                    btn.classList.add('text-indigo-500', 'bg-indigo-50');
-                    
-                    if(icon) icon.classList.add('opacity-0');
-                    if(canvas) {
-                        canvas.classList.remove('opacity-0');
-                        this.drawVisualizer();
-                    }
-                }
-                this._rebuildIcons();
-                this.updateMobileMusicBar();
-            },
-
-            drawVisualizer() {
-                if (!this.musicPlaying || !this.musicAnalyser) return;
-                const canvas = document.getElementById('music-viz');
-                const ctx = canvas.getContext('2d');
-                const bufferLength = this.musicAnalyser.frequencyBinCount;
-                const dataArray = new Uint8Array(bufferLength);
-                
-                const draw = () => {
-                    if (!this.musicPlaying) return;
-                    this.vizAnimation = requestAnimationFrame(draw);
-                    this.musicAnalyser.getByteFrequencyData(dataArray);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    const barWidth = (canvas.width / bufferLength) * 2.5;
-                    let x = 0;
-                    
-                    for(let i = 0; i < bufferLength; i++) {
-                        const barHeight = (dataArray[i] / 255) * canvas.height;
-                        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-                        x += barWidth + 1;
-                    }
-                };
-                draw();
-            },
-
             // ── STOPWATCH ────────────────────────────────────────────────
             formatSw(ms) {
                 const mins = Math.floor(ms / 60000);
@@ -6267,718 +5634,6 @@
                 return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
             },
 
-            // ── Focus Town ──────────────────────────────────────────────
-            initFocusTown() {
-                this.ftMinutes = parseInt(localStorage.getItem('wd_ft_minutes') || '0');
-                this.ftSessions = parseInt(localStorage.getItem('wd_ft_sessions') || '0');
-                this.ftTownName = localStorage.getItem('wd_ft_townname') || 'My Town';
-                this.ftStreak = parseInt(localStorage.getItem('wd_ft_streak') || '0');
-                this.ftLastSessionDate = localStorage.getItem('wd_ft_lastdate') || '';
-                try { this.ftAchievements = JSON.parse(localStorage.getItem('wd_ft_achievements') || '[]'); } catch(e) { this.ftAchievements = []; }
-                this.ftParticles = [];
-                this.ftCanvasTime = 0;
-                // Sync town name input and label
-                const nameInput = document.getElementById('ft-town-name-input');
-                if (nameInput) nameInput.value = this.ftTownName;
-                const lbl = document.getElementById('ft-town-label');
-                if (lbl) lbl.textContent = this.ftTownName;
-                // Size canvas to container
-                this.ftResizeCanvas();
-                // Only animate while Focus Town is on screen (switchTab starts/stops it);
-                // a loop running behind other tabs drained memory on iPhones.
-                if (this.currentTab === 'focustown') this.ftStartAnimLoop();
-                this.ftUpdateStats();
-                this.ftRenderAchievements();
-                // Responsive canvas sizing
-                const wrapper = document.getElementById('ft-scene-wrapper');
-                if (wrapper && window.ResizeObserver) {
-                    this._ftResizeObs = new ResizeObserver(() => this.ftResizeCanvas());
-                    this._ftResizeObs.observe(wrapper);
-                }
-            },
-
-            ftResizeCanvas() {
-                const canvas = document.getElementById('ft-canvas');
-                const wrapper = document.getElementById('ft-scene-wrapper');
-                if (!canvas || !wrapper) return;
-                const cssWidth = wrapper.offsetWidth || 480;
-                // Virtual grid: 160x80. Scale to fill container width, min 2 max 6
-                const scale = Math.max(2, Math.min(6, Math.floor(cssWidth / 160)));
-                this.ftScale = scale;
-                canvas.width  = 160 * scale;
-                canvas.height = 80  * scale;
-            },
-
-            ftStartAnimLoop() {
-                if (this.ftAnimFrame) return;
-                let lastTs = 0;
-                const loop = (ts) => {
-                    const delta = lastTs ? Math.min(ts - lastTs, 100) : 16;
-                    lastTs = ts;
-                    this.ftCanvasTime += delta;
-                    this.ftDrawFrame(this.ftCanvasTime, delta);
-                    this.ftAnimFrame = requestAnimationFrame(loop);
-                };
-                this.ftAnimFrame = requestAnimationFrame(loop);
-            },
-
-            ftStopAnimLoop() {
-                if (this.ftAnimFrame) {
-                    cancelAnimationFrame(this.ftAnimFrame);
-                    this.ftAnimFrame = null;
-                }
-            },
-
-            ftDrawFrame(time, delta) {
-                const canvas = document.getElementById('ft-canvas');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                const scale = this.ftScale || 3;
-                const vw = 160, vh = 80;
-                const minutes = this.ftEffectiveMin();
-                const stage = this.ftGetStage(minutes);
-                const pal = this.ftPalettes[Math.min(stage.index, this.ftPalettes.length - 1)];
-                const hour = new Date().getHours();
-                const isNight = hour >= 20 || hour < 6;
-                const isDusk  = (hour >= 18 && hour < 20) || (hour >= 6 && hour < 8);
-                ctx.imageSmoothingEnabled = false;
-                this.ftDrawSky(ctx, vw, vh, scale, pal, isNight, isDusk);
-                if (stage.index >= 3) this.ftDrawMountains(ctx, vw, vh, scale, pal, stage.index);
-                this.ftDrawClouds(ctx, vw, vh, scale, time, isNight);
-                this.ftDrawBuildings(ctx, vw, vh, scale, pal, stage.index, this.ftConstructing);
-                this.ftDrawGround(ctx, vw, vh, scale, pal, stage.index);
-                if (stage.index >= 1) this.ftDrawCitizens(ctx, vw, vh, scale, this.ftGetCitizenCount(minutes), time, isNight);
-                if (stage.index >= 4) this.ftDrawVehicles(ctx, vw, vh, scale, pal, stage.index, time);
-                if (this.ftWeather !== 'clear') this.ftDrawWeather(ctx, vw, vh, scale, this.ftWeather, time, delta);
-                if (this.ftWeather === 'fog') this.ftDrawFog(ctx, vw, vh, scale, time);
-                if (isNight) this.ftDrawStars(ctx, vw, vh, scale, stage.index, time);
-                if (stage.index === 10) this.ftDrawUtopiaGlow(ctx, vw, vh, scale, time);
-            },
-
-            ftDrawSky(ctx, vw, vh, scale, pal, isNight, isDusk) {
-                let topColor = pal.skyTop;
-                let botColor = pal.skyBot;
-                if (isNight) { topColor = '#020c1b'; botColor = '#0a1628'; }
-                else if (isDusk) { topColor = '#ff6b35'; botColor = '#ffd166'; }
-                const grad = ctx.createLinearGradient(0, 0, 0, Math.floor(vh * 0.72) * scale);
-                grad.addColorStop(0, topColor);
-                grad.addColorStop(1, botColor);
-                ctx.fillStyle = grad;
-                ctx.fillRect(0, 0, vw * scale, vh * scale);
-                // Sun or moon
-                const sunX = Math.floor(vw * 0.85), sunY = Math.floor(vh * 0.15);
-                const s = scale;
-                if (isNight) {
-                    ctx.fillStyle = '#fffde7';
-                    ctx.beginPath(); ctx.arc(sunX * s, sunY * s, 5 * s, 0, Math.PI * 2); ctx.fill();
-                    ctx.fillStyle = '#020c1b';
-                    ctx.beginPath(); ctx.arc((sunX + 2) * s, (sunY - 1) * s, 4 * s, 0, Math.PI * 2); ctx.fill();
-                } else {
-                    ctx.fillStyle = isDusk ? '#ff9f1c' : '#ffe566';
-                    ctx.fillRect((sunX - 2) * s, sunY * s, 5 * s, s);
-                    ctx.fillRect(sunX * s, (sunY - 2) * s, s, 5 * s);
-                    ctx.fillRect((sunX - 1) * s, (sunY - 1) * s, 3 * s, 3 * s);
-                }
-            },
-
-            ftDrawMountains(ctx, vw, vh, scale, pal, stageIdx) {
-                const groundY = Math.floor(vh * 0.72);
-                ctx.fillStyle = pal.buildingAccent + '66';
-                ctx.beginPath();
-                ctx.moveTo(0, groundY * scale);
-                ctx.lineTo(Math.floor(vw * 0.2) * scale, Math.floor(vh * 0.28) * scale);
-                ctx.lineTo(Math.floor(vw * 0.4) * scale, groundY * scale);
-                ctx.closePath(); ctx.fill();
-                ctx.fillStyle = pal.buildingBase + '55';
-                ctx.beginPath();
-                ctx.moveTo(Math.floor(vw * 0.3) * scale, groundY * scale);
-                ctx.lineTo(Math.floor(vw * 0.55) * scale, Math.floor(vh * 0.22) * scale);
-                ctx.lineTo(Math.floor(vw * 0.78) * scale, groundY * scale);
-                ctx.closePath(); ctx.fill();
-                if (stageIdx >= 7) {
-                    ctx.fillStyle = 'rgba(255,255,255,0.75)';
-                    ctx.beginPath();
-                    ctx.moveTo(Math.floor(vw * 0.2) * scale, Math.floor(vh * 0.28) * scale);
-                    ctx.lineTo(Math.floor(vw * 0.175) * scale, Math.floor(vh * 0.35) * scale);
-                    ctx.lineTo(Math.floor(vw * 0.225) * scale, Math.floor(vh * 0.35) * scale);
-                    ctx.closePath(); ctx.fill();
-                }
-            },
-
-            ftDrawClouds(ctx, vw, vh, scale, time, isNight) {
-                if (isNight) return;
-                ctx.fillStyle = 'rgba(255,255,255,0.82)';
-                const clouds = [
-                    { speed: 0.006, y: 10, w: 18, h: 6, offset: 0   },
-                    { speed: 0.004, y: 16, w: 24, h: 8, offset: 60  },
-                    { speed: 0.007, y: 6,  w: 14, h: 5, offset: 110 },
-                ];
-                clouds.forEach(c => {
-                    const rawX = ((time * c.speed) + c.offset) % (vw + c.w + 10);
-                    const x = Math.floor(rawX - c.w);
-                    ctx.fillRect(x * scale, c.y * scale, c.w * scale, (c.h - 2) * scale);
-                    ctx.fillRect((x + 2) * scale, (c.y - 2) * scale, (c.w - 4) * scale, 2 * scale);
-                    ctx.fillRect((x + 4) * scale, (c.y - 3) * scale, (c.w - 8) * scale, scale);
-                });
-            },
-
-            ftDrawBuildings(ctx, vw, vh, scale, pal, stageIdx, constructing) {
-                const groundY = Math.floor(vh * 0.72);
-                // LCG seeded RNG — must reset seed at top of each call for stable layout
-                let seed = stageIdx * 1337 + 42;
-                const rng = () => { seed = (seed * 1664525 + 1013904223) & 0x7fffffff; return seed / 0x7fffffff; };
-                const hour = new Date().getHours();
-                const isNight = hour >= 20 || hour < 6;
-                const maxBldgH = Math.floor(vh * 0.4 + stageIdx * vh * 0.03);
-                const count = Math.min(3 + Math.floor(stageIdx * 1.3), 14);
-                let x = Math.floor(vw * 0.04);
-                // Stage 0: campsite — tent and fire
-                if (stageIdx === 0) {
-                    // Tent
-                    ctx.fillStyle = '#c1440e';
-                    ctx.beginPath();
-                    ctx.moveTo(20 * scale, groundY * scale);
-                    ctx.lineTo(30 * scale, (groundY - 14) * scale);
-                    ctx.lineTo(40 * scale, groundY * scale);
-                    ctx.closePath(); ctx.fill();
-                    ctx.fillStyle = '#8B7355';
-                    ctx.fillRect(26 * scale, (groundY - 8) * scale, 8 * scale, 8 * scale);
-                    // Campfire
-                    ctx.fillStyle = '#8B7355';
-                    ctx.fillRect(60 * scale, (groundY - 3) * scale, 2 * scale, 3 * scale);
-                    ctx.fillRect(63 * scale, (groundY - 3) * scale, 2 * scale, 3 * scale);
-                    ctx.fillStyle = '#ff6b35';
-                    ctx.fillRect(59 * scale, (groundY - 5) * scale, 6 * scale, 3 * scale);
-                    ctx.fillStyle = '#ffd166';
-                    ctx.fillRect(61 * scale, (groundY - 7) * scale, 2 * scale, 2 * scale);
-                    // Trees
-                    [80, 100, 120].forEach(tx => {
-                        ctx.fillStyle = pal.treeTrunk;
-                        ctx.fillRect(tx * scale, (groundY - 6) * scale, 2 * scale, 6 * scale);
-                        ctx.fillStyle = pal.treeColor;
-                        ctx.fillRect((tx - 3) * scale, (groundY - 12) * scale, 8 * scale, 7 * scale);
-                    });
-                    return;
-                }
-                for (let i = 0; i < count; i++) {
-                    const w = Math.floor(rng() * 10 + 6 + stageIdx * 0.5);
-                    const minH = Math.floor(maxBldgH * 0.35);
-                    const h = Math.floor(rng() * (maxBldgH - minH) + minH);
-                    if (x + w > vw - 6) break;
-                    const by = groundY - h;
-                    // Wall
-                    ctx.fillStyle = pal.buildingBase;
-                    ctx.fillRect(x * scale, by * scale, w * scale, h * scale);
-                    // Accent stripe (top 25%)
-                    ctx.fillStyle = pal.buildingAccent;
-                    ctx.fillRect(x * scale, by * scale, w * scale, Math.max(1, Math.floor(h * 0.25)) * scale);
-                    // Roof line
-                    ctx.fillStyle = pal.roofColor;
-                    ctx.fillRect(x * scale, by * scale, w * scale, scale);
-                    // Windows
-                    for (let wy = by + 2; wy < groundY - 2; wy += 4) {
-                        for (let wx = x + 1; wx < x + w - 1; wx += 4) {
-                            if (rng() > 0.4) {
-                                ctx.fillStyle = isNight ? '#fde68a' : pal.windowColor;
-                                ctx.fillRect(wx * scale, wy * scale, scale, scale);
-                            }
-                        }
-                    }
-                    // Trees between buildings at early stages
-                    if (stageIdx < 5 && i < count - 1 && rng() > 0.55) {
-                        const tx = x + w + 1;
-                        if (tx + 4 < vw - 6) {
-                            ctx.fillStyle = pal.treeTrunk;
-                            ctx.fillRect(tx * scale, (groundY - 5) * scale, scale, 5 * scale);
-                            ctx.fillStyle = pal.treeColor;
-                            ctx.fillRect((tx - 1) * scale, (groundY - 9) * scale, 3 * scale, 5 * scale);
-                            x += 5;
-                        }
-                    }
-                    x += w + Math.floor(rng() * 3 + 1);
-                }
-                // Construction crane when session active and not at max stage
-                if (constructing && stageIdx < 10) {
-                    const craneX = Math.floor(vw * 0.76);
-                    const craneY = Math.floor(vh * 0.18);
-                    ctx.fillStyle = '#f39c12';
-                    ctx.fillRect(craneX * scale, craneY * scale, scale, (groundY - craneY) * scale);
-                    ctx.fillRect((craneX - 8) * scale, craneY * scale, 12 * scale, scale);
-                    ctx.fillStyle = '#bdc3c7';
-                    const swing = Math.floor(Math.sin(this.ftCanvasTime / 600) * 2);
-                    ctx.fillRect((craneX - 4 + swing) * scale, (craneY + 1) * scale, scale, 5 * scale);
-                }
-            },
-
-            ftDrawGround(ctx, vw, vh, scale, pal, stageIdx) {
-                const groundY = Math.floor(vh * 0.72);
-                const groundH = Math.floor(vh * 0.10);
-                const roadY   = groundY + groundH;
-                const roadH   = vh - roadY;
-                // Ground
-                ctx.fillStyle = pal.ground;
-                ctx.fillRect(0, groundY * scale, vw * scale, groundH * scale);
-                ctx.fillStyle = pal.groundAccent;
-                ctx.fillRect(0, groundY * scale, vw * scale, scale);
-                // Sidewalk at stage 5+
-                if (stageIdx >= 5) {
-                    ctx.fillStyle = 'rgba(180,180,180,0.45)';
-                    ctx.fillRect(0, groundY * scale, vw * scale, Math.floor(groundH * 0.35) * scale);
-                }
-                // Road
-                ctx.fillStyle = pal.road;
-                ctx.fillRect(0, roadY * scale, vw * scale, roadH * scale);
-                // Road dashes at stage 4+
-                if (stageIdx >= 4) {
-                    ctx.fillStyle = pal.roadLine;
-                    const lineY = roadY + Math.floor(roadH / 2);
-                    for (let x = 0; x < vw; x += 12) {
-                        ctx.fillRect(x * scale, lineY * scale, 6 * scale, scale);
-                    }
-                }
-            },
-
-            ftDrawCitizens(ctx, vw, vh, scale, count, time, isNight) {
-                const footY = Math.floor(vh * 0.72) - 1;
-                const shirtColors = ['#c0392b','#2980b9','#27ae60','#8e44ad','#e67e22','#16a085','#d35400'];
-                for (let i = 0; i < count; i++) {
-                    const speed  = 0.013 + (i % 5) * 0.004;
-                    const offset = (i * 23.7) % (vw + 12);
-                    const rawX   = ((time * speed) + offset) % (vw + 12);
-                    const dir    = (i % 2 === 0) ? 1 : -1;
-                    const drawX  = dir === 1 ? Math.floor(rawX - 6) : vw - Math.floor(rawX - 6);
-                    if (drawX < -4 || drawX > vw + 4) continue;
-                    const px = drawX * scale, py = (footY - 7) * scale, s = scale;
-                    const col = shirtColors[i % shirtColors.length];
-                    // Head
-                    ctx.fillStyle = isNight ? '#c8956c' : '#f5cba7';
-                    ctx.fillRect(px + s, py, s, s);
-                    // Body
-                    ctx.fillStyle = col;
-                    ctx.fillRect(px, py + s, 3 * s, 3 * s);
-                    // Legs (animate)
-                    const step = Math.floor(time / 220) % 2;
-                    ctx.fillStyle = '#2c3e50';
-                    if (step === 0) {
-                        ctx.fillRect(px, py + 4 * s, s, 3 * s);
-                        ctx.fillRect(px + 2 * s, py + 5 * s, s, 2 * s);
-                    } else {
-                        ctx.fillRect(px, py + 5 * s, s, 2 * s);
-                        ctx.fillRect(px + 2 * s, py + 4 * s, s, 3 * s);
-                    }
-                }
-            },
-
-            ftDrawVehicles(ctx, vw, vh, scale, pal, stageIdx, time) {
-                const roadY  = Math.floor(vh * 0.82);
-                const roadMid = roadY + Math.floor((vh - roadY) * 0.3);
-                const vehicleDefs = [
-                    { speed:0.022, offset:0,   w:12, h:5, color:'#e74c3c', lane:roadMid-3,  dir:1  },
-                    { speed:0.015, offset:70,  w:18, h:6, color:'#3498db', lane:roadMid+1,  dir:-1 },
-                    { speed:0.028, offset:35,  w:10, h:4, color:'#f1c40f', lane:roadMid-3,  dir:1  },
-                    { speed:0.018, offset:110, w:14, h:5, color:'#1abc9c', lane:roadMid+1,  dir:-1 },
-                ];
-                const count = Math.min(1 + Math.floor((stageIdx - 4) * 0.7), vehicleDefs.length);
-                for (let i = 0; i < count; i++) {
-                    const v   = vehicleDefs[i];
-                    const rawX = ((time * v.speed) + v.offset) % (vw + v.w + 10);
-                    const x   = v.dir === 1 ? Math.floor(rawX - v.w) : vw - Math.floor(rawX - v.w);
-                    if (x < -v.w - 2 || x > vw + 2) continue;
-                    const px = x * scale, py = v.lane * scale, s = scale;
-                    ctx.fillStyle = v.color;
-                    ctx.fillRect(px, py, v.w * s, v.h * s);
-                    ctx.fillStyle = 'rgba(0,0,0,0.3)';
-                    ctx.fillRect(px + 2 * s, py - 2 * s, (v.w - 4) * s, 3 * s);
-                    ctx.fillStyle = 'rgba(200,230,255,0.85)';
-                    ctx.fillRect(px + 2 * s, py - s, 2 * s, 2 * s);
-                    ctx.fillRect(px + 6 * s, py - s, 2 * s, 2 * s);
-                    ctx.fillStyle = '#222';
-                    ctx.fillRect(px + 2 * s, (py + v.h * s), 2 * s, s);
-                    ctx.fillRect(px + (v.w - 4) * s, (py + v.h * s), 2 * s, s);
-                }
-            },
-
-            ftDrawWeather(ctx, vw, vh, scale, weather, time, delta) {
-                const MAX = 60;
-                while (this.ftParticles.length < MAX) {
-                    this.ftParticles.push({
-                        x: Math.random() * vw,
-                        y: Math.random() * vh,
-                        vy: weather === 'rain' ? 3 + Math.random() * 4 : 0.5 + Math.random() * 1.5,
-                        vx: weather === 'rain' ? -0.5 - Math.random() * 0.5 : Math.random() * 0.4 - 0.2,
-                        size: weather === 'rain' ? 1 : 1 + Math.random() * 2,
-                        opacity: 0.35 + Math.random() * 0.5,
-                    });
-                }
-                const dt = (delta || 16) / 1000;
-                ctx.save();
-                this.ftParticles.forEach(p => {
-                    p.x += p.vx * dt * 40;
-                    p.y += p.vy * dt * 40;
-                    if (p.y > vh) { p.y = -2; p.x = Math.random() * vw; }
-                    if (p.x < 0) p.x = vw;
-                    if (p.x > vw) p.x = 0;
-                    ctx.globalAlpha = p.opacity;
-                    ctx.fillStyle = weather === 'rain' ? '#74b9ff' : '#dfe6e9';
-                    if (weather === 'rain') {
-                        ctx.fillRect(Math.floor(p.x) * scale, Math.floor(p.y) * scale, scale, 3 * scale);
-                    } else {
-                        ctx.fillRect(Math.floor(p.x) * scale, Math.floor(p.y) * scale, Math.ceil(p.size) * scale, Math.ceil(p.size) * scale);
-                    }
-                });
-                ctx.globalAlpha = 1;
-                ctx.restore();
-            },
-
-            ftDrawFog(ctx, vw, vh, scale, time) {
-                const alpha1 = 0.13 + 0.05 * Math.sin(time / 3000);
-                ctx.fillStyle = `rgba(200,210,220,${alpha1.toFixed(3)})`;
-                ctx.fillRect(0, Math.floor(vh * 0.5) * scale, vw * scale, Math.floor(vh * 0.5) * scale);
-                const alpha2 = 0.08 + 0.04 * Math.sin(time / 4000 + 1);
-                ctx.fillStyle = `rgba(200,210,220,${alpha2.toFixed(3)})`;
-                ctx.fillRect(0, Math.floor(vh * 0.62) * scale, vw * scale, Math.floor(vh * 0.3) * scale);
-            },
-
-            ftDrawStars(ctx, vw, vh, scale, stageIdx, time) {
-                let seed = 42;
-                const lrng = () => { seed = (seed * 1664525 + 1013904223) & 0x7fffffff; return seed / 0x7fffffff; };
-                ctx.save();
-                for (let i = 0; i < 30; i++) {
-                    const x = Math.floor(lrng() * vw);
-                    const y = Math.floor(lrng() * vh * 0.6);
-                    const twinkle = 0.3 + 0.7 * Math.abs(Math.sin(time / 800 + i * 0.7));
-                    ctx.globalAlpha = twinkle;
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(x * scale, y * scale, scale, scale);
-                }
-                // Neon glow at stage 8-10
-                if (stageIdx >= 8) {
-                    ctx.globalAlpha = 0.07 + 0.04 * Math.sin(time / 1200);
-                    ctx.fillStyle = '#e040fb';
-                    ctx.fillRect(0, Math.floor(vh * 0.4) * scale, vw * scale, Math.floor(vh * 0.35) * scale);
-                }
-                ctx.globalAlpha = 1;
-                ctx.restore();
-            },
-
-            ftDrawUtopiaGlow(ctx, vw, vh, scale, time) {
-                const bands = [
-                    { color:'rgba(0,210,255,',  alpha:0.07, y:0.10, h:0.30, phase:0   },
-                    { color:'rgba(232,67,147,', alpha:0.05, y:0.20, h:0.25, phase:1.5 },
-                    { color:'rgba(0,210,255,',  alpha:0.04, y:0.05, h:0.20, phase:3   },
-                ];
-                bands.forEach(b => {
-                    const pulse = b.alpha * (1 + 0.5 * Math.sin(time / 2000 + b.phase));
-                    ctx.fillStyle = b.color + pulse.toFixed(3) + ')';
-                    ctx.fillRect(0, Math.floor(vh * b.y) * scale, vw * scale, Math.floor(vh * b.h) * scale);
-                });
-            },
-
-            ftSaveTownName(val) {
-                const name = (val || '').trim().slice(0, 24) || 'My Town';
-                this.ftTownName = name;
-                localStorage.setItem('wd_ft_townname', name);
-                const lbl = document.getElementById('ft-town-label');
-                if (lbl) lbl.textContent = name;
-                this.ftCheckAchievements();
-            },
-
-            ftSetWeather(weather) {
-                this.ftWeather = weather;
-                this.ftParticles = [];
-                document.querySelectorAll('.ft-weather-btn').forEach(btn => {
-                    btn.classList.toggle('ft-active', btn.dataset.weather === weather);
-                });
-            },
-
-            ftCheckAchievements() {
-                const newlyUnlocked = [];
-                this.ftAchievementDefs.forEach(def => {
-                    if (!this.ftAchievements.includes(def.id) && def.condition(this)) {
-                        this.ftAchievements.push(def.id);
-                        newlyUnlocked.push(def);
-                    }
-                });
-                if (newlyUnlocked.length) {
-                    localStorage.setItem('wd_ft_achievements', JSON.stringify(this.ftAchievements));
-                    newlyUnlocked.forEach(a => this.showToast(`${a.icon} Achievement: ${a.label}!`));
-                    this.ftRenderAchievements();
-                }
-            },
-
-            ftRenderAchievements() {
-                const grid = document.getElementById('ft-achievements-grid');
-                if (!grid) return;
-                grid.innerHTML = this.ftAchievementDefs.map(def => {
-                    const unlocked = this.ftAchievements.includes(def.id);
-                    return `<div class="ft-achievement ${unlocked ? 'ft-unlocked' : 'ft-locked'}">
-                        <span>${def.icon}</span>
-                        <div>
-                            <div class="font-bold" style="font-size:0.68rem">${def.label}</div>
-                            <div style="font-size:0.6rem;opacity:0.7;font-weight:400">${def.desc}</div>
-                        </div>
-                    </div>`;
-                }).join('');
-            },
-
-            ftGetStage(minutes) {
-                const t = this.ftStageThresholds;
-                let idx = 0;
-                for (let i = t.length - 1; i >= 0; i--) {
-                    if (minutes >= t[i]) { idx = i; break; }
-                }
-                return {
-                    index: idx,
-                    name: this.ftStageNames[idx],
-                    emoji: this.ftStageEmoji[idx],
-                    prevAt: t[idx],
-                    nextAt: idx < t.length - 1 ? t[idx + 1] : null,
-                    nextName: idx < t.length - 1 ? this.ftStageNames[idx + 1] : null
-                };
-            },
-
-            ftGetCitizenCount(minutes) {
-                return Math.min(Math.floor(minutes / 2) + 2, 80);
-            },
-
-            ftEffectiveMin() {
-                // While a session is running, show projected minutes in real-time
-                const elapsed = this.ftRunning ? Math.floor((this.ftMode * 60 - this.ftTime) / 60) : 0;
-                return this.ftMinutes + elapsed;
-            },
-
-
-            ftUpdateProgress(minutes) {
-                // Called every second during a session with projected (effective) minutes
-                const stage = this.ftGetStage(minutes);
-                const prog = document.getElementById('ft-progress-bar');
-                const label = document.getElementById('ft-progress-label');
-                const sNameEl = document.getElementById('ft-stage-name');
-                const nNameEl = document.getElementById('ft-next-stage-name');
-                if (sNameEl) sNameEl.textContent = stage.name;
-                if (nNameEl) nNameEl.textContent = stage.nextName || '✓ Max';
-                if (stage.nextAt !== null) {
-                    const span = stage.nextAt - stage.prevAt;
-                    const done = minutes - stage.prevAt;
-                    const pct = Math.min(100, Math.round((done / span) * 100));
-                    if (prog) prog.style.width = pct + '%';
-                    const remaining = stage.nextAt - minutes;
-                    if (label) label.textContent = remaining > 0 ? `${remaining} min to unlock ${stage.nextName}` : 'Unlocking…';
-                } else {
-                    if (prog) prog.style.width = '100%';
-                    if (label) label.textContent = 'Maximum stage reached! 🏆';
-                }
-                // Live citizen count in stat card
-                const ccEl = document.getElementById('ft-citizen-count');
-                if (ccEl) ccEl.textContent = this.ftGetCitizenCount(minutes);
-                // Live chip in header
-                const chipEl = document.getElementById('ft-total-chip');
-                if (chipEl && this.ftRunning) chipEl.textContent = `${minutes} min (live)`;
-            },
-
-            ftUpdateStats() {
-                const stage = this.ftGetStage(this.ftMinutes);
-
-                // Header chips
-                const emojiEl = document.getElementById('ft-stage-emoji');
-                const badgeEl = document.getElementById('ft-stage-badge');
-                const chipEl  = document.getElementById('ft-total-chip');
-                const nameInput = document.getElementById('ft-town-name-input');
-                if (emojiEl) emojiEl.textContent = stage.emoji;
-                if (badgeEl) badgeEl.textContent = stage.name;
-                if (chipEl) chipEl.textContent = `${this.ftMinutes} min total`;
-                if (nameInput) nameInput.value = this.ftTownName;
-
-                // Streak badge
-                const streakBadge = document.getElementById('ft-streak-badge');
-                const streakVal   = document.getElementById('ft-streak-val');
-                const streakStat  = document.getElementById('ft-streak-stat');
-                if (streakBadge) streakBadge.classList.toggle('hidden', this.ftStreak < 2);
-                if (streakVal) streakVal.textContent = this.ftStreak;
-                if (streakStat) streakStat.textContent = this.ftStreak;
-
-                // Static progress bar (committed minutes)
-                this.ftUpdateProgress(this.ftMinutes);
-
-                // Stats cards
-                const scEl = document.getElementById('ft-sessions-count');
-                const tmEl = document.getElementById('ft-total-min');
-                const ccEl = document.getElementById('ft-citizen-count');
-                if (scEl) scEl.textContent = this.ftSessions;
-                if (ccEl) ccEl.textContent = this.ftGetCitizenCount(this.ftMinutes);
-                if (tmEl) {
-                    const h = Math.floor(this.ftMinutes / 60);
-                    const m = this.ftMinutes % 60;
-                    tmEl.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
-                }
-
-                // Milestones highlight
-                document.querySelectorAll('.ft-milestone').forEach(el => {
-                    const s = parseInt(el.dataset.stage);
-                    if (s <= stage.index) {
-                        el.style.background = 'rgba(99,102,241,0.15)';
-                        el.style.color = '#4f46e5';
-                        el.style.opacity = '1';
-                    } else {
-                        el.style.background = '';
-                        el.style.color = '';
-                        el.style.opacity = '0.45';
-                    }
-                });
-            },
-
-            ftSetMode(minutes) {
-                if (this.ftRunning) return; // don't change mode mid-session
-                this.ftMode = minutes;
-                this.ftTime = minutes * 60;
-                this.ftUpdateTimerDisplay();
-                // Sync custom input
-                const ci = document.getElementById('ft-custom-input');
-                if (ci) ci.value = minutes;
-                // Highlight matching preset button
-                document.querySelectorAll('.ft-mode-btn').forEach(btn => {
-                    btn.classList.remove('bg-indigo-600', 'text-white');
-                    btn.classList.add('hover:bg-white/20');
-                    if (parseInt(btn.dataset.time) === minutes) {
-                        btn.classList.add('bg-indigo-600', 'text-white');
-                        btn.classList.remove('hover:bg-white/20');
-                    }
-                });
-            },
-
-            ftSetCustom(val) {
-                const min = Math.max(1, Math.min(480, parseInt(val) || 25));
-                if (this.ftRunning) return;
-                this.ftMode = min;
-                this.ftTime = min * 60;
-                this.ftUpdateTimerDisplay();
-                // Deselect all preset buttons (custom value doesn't match any)
-                document.querySelectorAll('.ft-mode-btn').forEach(btn => {
-                    btn.classList.remove('bg-indigo-600', 'text-white');
-                    btn.classList.add('hover:bg-white/20');
-                    if (parseInt(btn.dataset.time) === min) {
-                        btn.classList.add('bg-indigo-600', 'text-white');
-                        btn.classList.remove('hover:bg-white/20');
-                    }
-                });
-            },
-
-            ftToggleTimer() {
-                if (this.ftRunning) this.ftPause();
-                else this.ftStart();
-            },
-
-            ftStart() {
-                this.ftRunning = true;
-                this.ftConstructing = true;
-                const btn    = document.getElementById('ft-btn');
-                const status = document.getElementById('ft-timer-status');
-                if (btn) btn.textContent = 'Pause Focus';
-                if (status) { status.textContent = 'Focusing…'; status.classList.add('animate-pulse'); }
-                this.ftStartAnimLoop();
-                this.ftInterval = setInterval(() => this.ftTick(), 1000);
-            },
-
-            ftPause() {
-                this.ftRunning = false;
-                this.ftConstructing = false;
-                clearInterval(this.ftInterval);
-                const btn    = document.getElementById('ft-btn');
-                const status = document.getElementById('ft-timer-status');
-                if (btn) btn.textContent = 'Resume Focus';
-                if (status) { status.textContent = 'Paused'; status.classList.remove('animate-pulse'); }
-            },
-
-            ftResetTimer() {
-                this.ftPause();
-                this.ftConstructing = false;
-                this.ftTime = this.ftMode * 60;
-                this.ftUpdateTimerDisplay();
-                const btn    = document.getElementById('ft-btn');
-                const status = document.getElementById('ft-timer-status');
-                if (btn) btn.textContent = 'Start Focusing';
-                if (status) { status.textContent = 'Ready to Focus'; status.classList.remove('animate-pulse'); }
-            },
-
-            ftTick() {
-                this.ftTime--;
-                this.ftUpdateTimerDisplay();
-                const elapsedMin   = Math.floor((this.ftMode * 60 - this.ftTime) / 60);
-                const effectiveMin = this.ftMinutes + elapsedMin;
-                this.ftUpdateProgress(effectiveMin);
-                if (this.ftTime <= 0) this.ftCompleteSession();
-            },
-
-            ftUpdateTimerDisplay() {
-                const el = document.getElementById('ft-timer-display');
-                if (!el) return;
-                const m = Math.floor(this.ftTime / 60);
-                const s = this.ftTime % 60;
-                el.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            },
-
-            ftCompleteSession() {
-                const prevStage = this.ftGetStage(this.ftMinutes).index;
-                this.ftMinutes += this.ftMode;
-                this.ftSessions++;
-                localStorage.setItem('wd_ft_minutes', this.ftMinutes);
-                localStorage.setItem('wd_ft_sessions', this.ftSessions);
-
-                // Streak tracking
-                const today = new Date().toISOString().slice(0, 10);
-                const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-                if (this.ftLastSessionDate === yesterday) {
-                    this.ftStreak++;
-                } else if (this.ftLastSessionDate !== today) {
-                    this.ftStreak = 1;
-                }
-                this.ftLastSessionDate = today;
-                localStorage.setItem('wd_ft_streak', this.ftStreak);
-                localStorage.setItem('wd_ft_lastdate', today);
-
-                const newStage = this.ftGetStage(this.ftMinutes);
-                const stagedUp = newStage.index > prevStage;
-
-                this.ftResetTimer();
-                this.ftUpdateStats();
-                this.ftCheckAchievements();
-
-                if (stagedUp) {
-                    this.showToast(`${newStage.emoji} ${this.ftTownName} grew into a ${newStage.name}!`);
-                    const flash   = document.getElementById('ft-unlock-flash');
-                    const wrapper = document.getElementById('ft-scene-wrapper');
-                    if (flash) {
-                        flash.style.opacity = '1';
-                        setTimeout(() => { flash.style.opacity = '0'; }, 700);
-                    }
-                    if (wrapper) {
-                        wrapper.style.animation = 'ft-stage-up 0.8s ease';
-                        setTimeout(() => { wrapper.style.animation = ''; }, 800);
-                    }
-                } else {
-                    const citizens = this.ftGetCitizenCount(this.ftMinutes);
-                    const streakMsg = this.ftStreak >= 2 ? ` 🔥 ${this.ftStreak}-day streak!` : '';
-                    this.showToast(`Session done! +${this.ftMode} min · ${citizens} citizens${streakMsg}`);
-                }
-            },
-
-            ftResetProgress() {
-                if (!confirm('Reset all Focus Town progress? Your town will go back to a campsite.')) return;
-                this.ftMinutes = 0;
-                this.ftSessions = 0;
-                this.ftStreak = 0;
-                this.ftLastSessionDate = '';
-                this.ftAchievements = [];
-                this.ftTownName = 'My Town';
-                ['wd_ft_minutes','wd_ft_sessions','wd_ft_streak','wd_ft_lastdate','wd_ft_achievements','wd_ft_townname'].forEach(k => localStorage.removeItem(k));
-                const nameInput = document.getElementById('ft-town-name-input');
-                if (nameInput) nameInput.value = 'My Town';
-                const lbl = document.getElementById('ft-town-label');
-                if (lbl) lbl.textContent = 'My Town';
-                this.ftUpdateStats();
-                this.ftRenderAchievements();
-                this.showToast('Focus Town reset. Start building your Campsite! ⛺');
-            },
 
 
             // ═══════════════════════════════════════════════════════
@@ -6998,7 +5653,7 @@
                 { id: 'act-zen',      label: 'Toggle Zen mode',         icon: 'maximize',      keywords: 'fullscreen distraction free focus', run() { app.toggleZenMode(); } },
                 { id: 'act-privacy',  label: 'Panic / privacy screen',  icon: 'eye-off',       keywords: 'boss hide blank panic', run() { app.togglePrivacy(); } },
                 { id: 'act-timer',    label: 'Start or pause the focus timer', icon: 'play',   keywords: 'pomodoro start pause countdown', run() { app.switchTab('timer'); app.toggleTimer(); } },
-                { id: 'act-music',    label: 'Play or pause Lo-Fi radio', icon: 'music',       keywords: 'audio sound beats radio', run() { app.toggleMusic(); } },
+                { id: 'act-music',    label: 'Play or pause Lo-Fi music', icon: 'music',       keywords: 'audio sound beats radio lofi somafm', run() { app.toggleMusic(); } },
                 { id: 'act-uuid',     label: 'Copy a fresh UUID',       icon: 'fingerprint',   keywords: 'guid identifier random generate', run() { app.quickCopyUUID(); } },
                 { id: 'act-password', label: 'Copy a strong password',  icon: 'key-round',     keywords: 'secret random generate credentials', run() { app.quickCopyPassword(); } },
                 { id: 'act-shortcuts',label: 'Show keyboard shortcuts', icon: 'keyboard',      keywords: 'help keys hotkeys', run() { app.openShortcuts(); } }
@@ -8020,20 +6675,6 @@
                 }, 'image/png');
             },
 
-            // ── Mini Mobile Music Player ─────────────────────────────
-            updateMobileMusicBar() {
-                const bar = document.getElementById('mobile-music-bar');
-                if (!bar) return;
-                const btn = document.getElementById('mob-play-btn');
-                if (this.musicPlaying) {
-                    bar.classList.add('visible');
-                    if (btn) btn.innerHTML = '<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-                } else {
-                    bar.classList.remove('visible');
-                    if (btn) btn.innerHTML = '<svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
-                }
-            },
-
             // ── PWA Install Prompt ───────────────────────────────────
             _deferredInstallPrompt: null,
             initPWAInstall() {
@@ -8133,5 +6774,8 @@
     <script src="account.js"></script>
     <!-- Smart dates, search everything, touch drag & drop, reminders, undo -->
     <script src="extras.js"></script>
+    <!-- Focus Town: a cozy village that grows while you work -->
+    <script src="town.js"></script>
+    <script src="sound.js"></script>
 </body>
 </html>

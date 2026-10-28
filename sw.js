@@ -1,10 +1,12 @@
-const CACHE_VERSION = 'webdesks-v25.0';
+const CACHE_VERSION = 'webdesks-v26.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/life.js',
   '/account.js',
   '/extras.js',
+  '/town.js',
+  '/sound.js',
   '/survey-logic.js',
   '/login.html',
   '/manifest.json',
@@ -42,6 +44,9 @@ self.addEventListener('fetch', (e) => {
 
   // Sign-in and Desk sync must always hit the network, never a cache.
   if (e.request.method !== 'GET' || url.includes('.supabase.co') || url.includes('.supabase.in')) return;
+
+  // Live radio streams (and their now-playing lookups) go straight to the network.
+  if (url.includes('somafm.com') || e.request.headers.has('range')) return;
 
   // Public Supabase settings: network first so key changes apply immediately.
   if (new URL(url).pathname === '/supabase-config.js') {
