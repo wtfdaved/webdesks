@@ -165,6 +165,8 @@
     <script>
     (() => {
         const CFG = window.WEBDESKS_SUPABASE || {};
+        // Without an email (SMTP) provider, hide everything that relies on sending mail.
+        const EMAIL = CFG.emailEnabled !== false;
         const SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js';
         const $ = id => document.getElementById(id);
         const params = new URLSearchParams(location.search);
@@ -217,7 +219,8 @@
         const setMode = m => {
             mode = m;
             msg('');
-            if (m === 'forgot') { $('r-email').value = $('f-email').value; show('forgot'); return; }
+            if (m === 'forgot' && EMAIL) { $('r-email').value = $('f-email').value; show('forgot'); return; }
+            if (m === 'forgot') m = mode = 'signin';
             show('auth');
             const signup = m === 'signup';
             $('auth-title').textContent = signup ? 'Create your Desk' : 'Welcome back';
@@ -230,6 +233,7 @@
             $('consent-wrap').hidden = !signup;
             $('pw-hint').hidden = !signup;
             $('go-forgot').hidden = signup;
+            $('magic').hidden = !EMAIL;
             $('f-password').autocomplete = signup ? 'new-password' : 'current-password';
             $('auth-submit').textContent = signup ? 'Create account' : 'Sign in';
             history.replaceState(null, '', here(signup ? { mode: 'signup' } : {}));
@@ -306,7 +310,10 @@
 
         $('tab-signin').onclick = () => setMode('signin');
         $('tab-signup').onclick = () => setMode('signup');
-        $('go-forgot').onclick = () => setMode('forgot');
+        $('go-forgot').onclick = () => {
+            if (EMAIL) { setMode('forgot'); return; }
+            msg('Password reset by email isn\'t available yet. Contact us at support@webdesks.app (from the address on your account) and we\'ll help you get back in.', 'ok');
+        };
         document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => setMode('signin'));
 
         $('form-auth').onsubmit = async e => {
@@ -334,6 +341,11 @@
                         setMode('signin');
                         $('f-email').value = email;
                         msg('There\'s already an account with that email. Sign in instead, or reset your password.');
+                        return;
+                    }
+                    if (!EMAIL) {
+                        // "Confirm email" is still on in Supabase, but no mail can be sent.
+                        msg('Your account was created but needs email confirmation, which isn\'t switched on yet. Please try again later or contact support@webdesks.app.');
                         return;
                     }
                     sent(`We sent a confirmation link to ${email}. Click it to finish creating your account.`, email, 'signup');

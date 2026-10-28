@@ -10,8 +10,12 @@
 // netlify.toml writes them into this file on every deploy.
 // While either is empty, sign-in is hidden and WebDesks runs guest-only.
 window.WEBDESKS_SUPABASE = {
-    url: '',
-    anonKey: '',
+    url: 'https://aggqjzjmiyrbrnuenhvu.supabase.co',
+    anonKey: 'sb_publishable__5MG26x9Lwgvoe9XOfATPA_WO_LPnSF',
     // Social logins switched on in Supabase (Authentication → Providers).
-    providers: []
+    providers: [],
+    // true once Supabase can send email to anyone (custom SMTP set up).
+    // While false, sign-in links and "Forgot password" are hidden, and
+    // "Confirm email" must be OFF in Supabase so new accounts work at once.
+    emailEnabled: false
 };

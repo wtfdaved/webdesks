@@ -88,20 +88,29 @@ clears this browser's copy.
 2. **Auth URLs** (Authentication → URL Configuration): Site URL
    `https://webdesks.app`; Redirect URLs `https://webdesks.app/**` (add
    `https://*--<your-netlify-site>.netlify.app/**` to test deploy previews).
-3. **Email** (Authentication → Sign In / Providers → Email): keep *Confirm
-   email* on and set the minimum password length to 8. Supabase's built-in
-   mailer only delivers to your own team's addresses and is heavily rate
-   limited, so add **custom SMTP** (Authentication → Emails → SMTP, e.g.
-   Resend, Postmark or SES) before opening sign-ups to the public.
-4. **Google sign-in (optional).** Create an OAuth client in Google Cloud with
-   redirect URI `https://<project-ref>.supabase.co/auth/v1/callback`, paste
-   its ID and secret into Authentication → Providers → Google, then set
-   `SUPABASE_AUTH_PROVIDERS=google`.
-5. **Keys.** In Netlify → Site configuration → Environment variables add
-   `SUPABASE_URL` (`https://<project-ref>.supabase.co`) and
-   `SUPABASE_ANON_KEY` (the **anon / publishable** key from Project Settings →
-   API — never the `service_role` / secret key; the build refuses it), then
-   redeploy. Or paste the two values into `supabase-config.js` directly.
+3. **Email.** Supabase's built-in mailer only delivers to your own team's
+   addresses, so until you add an email provider:
+   - In Authentication → Sign In / Providers → Email, turn **Confirm email
+     off** and set the minimum password length to 8. New accounts are signed
+     in straight away.
+   - Leave `emailEnabled: false` in `supabase-config.js`. The login page then
+     hides email sign-in links and "Forgot password" (it points people to
+     support instead). Changing a password from the account menu still works.
+
+   Later, add custom SMTP (Authentication → Emails → SMTP; Resend's free tier
+   or a Gmail app password both work), turn Confirm email back on, and set
+   `emailEnabled: true`.
+4. **Google sign-in (optional, needs no email).** Create an OAuth client in
+   Google Cloud with redirect URI
+   `https://<project-ref>.supabase.co/auth/v1/callback`, paste its ID and
+   secret into Authentication → Providers → Google, and add `'google'` to
+   `providers` in `supabase-config.js`.
+5. **Keys.** Put the Project URL and the **anon / publishable** key (Project
+   Settings → API; never the `service_role` / secret key) into
+   `supabase-config.js` and merge to `main`. Alternatively set
+   `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_AUTH_PROVIDERS` and
+   `SUPABASE_EMAIL_ENABLED` in the Netlify site's environment variables and the
+   build step writes them for you.
 
 ## Architecture
 
