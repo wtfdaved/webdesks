@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light dark">
-    <title>Survey Says — Free Online Survey Party Game | WebDesks</title>
-    <meta name="description" content="Host a Survey Says game like the TV show: write 3–5 questions, send one link, collect answers, then screen-share the board and reveal the top answers live. Free, works on Zoom, Teams and Meet.">
-    <meta name="keywords" content="survey says game, family feud online, survey party game, zoom game, teams meeting game, icebreaker game, online game show, team building game">
+    <title>Host Survey Says — Free Family Feud–Style Game Online | WebDesks</title>
+    <meta name="description" content="Host a free survey game show like Family Feud: write 3–5 questions, send one link or QR code, then reveal the top answers live in Microsoft Teams, Zoom or Meet — or cast the board to your TV. Players need no app or account.">
+    <meta name="keywords" content="survey says game, family feud online free, family feud style game, survey party game, teams meeting game, zoom game, game night on tv, icebreaker game, online game show, team building game">
     <meta name="author" content="WebDesks">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/family-feud">
@@ -22,6 +22,23 @@
     <meta name="twitter:image" content="https://webdesks.app/og-image.png">
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#14206b">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Survey Says by WebDesks",
+      "url": "https://webdesks.app/family-feud",
+      "description": "Free online survey game show for groups: collect answers with one link, then reveal the top answers live over a video call or on a TV.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "isPartOf": { "@type": "CollectionPage", "name": "Group Games", "url": "https://webdesks.app/games/" },
+      "subjectOf": { "@type": "WebPage", "url": "https://webdesks.app/games/survey-says" }
+    }
+    </script>
     <meta name="google-adsense-account" content="ca-pub-8626644983261966">
     <script>
         try {
@@ -83,10 +100,12 @@
 
     <!-- Host chrome (hidden while the board is on screen) -->
     <div id="chrome">
-        <header class="sticky top-0 z-40 border-b" style="background: color-mix(in srgb, var(--bg) 92%, transparent); border-color: var(--border)">
+        <header class="sticky top-0 z-40 border-b" style="background: color-mix(in srgb, var(--bg) 92%, transparent); border-color: var(--border); padding-top: env(safe-area-inset-top, 0px)">
             <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
                 <a href="#/" class="flex items-center gap-2 font-black text-lg"><span class="text-2xl">🏆</span> Survey Says</a>
                 <div class="flex items-center gap-2 text-sm">
+                    <a href="/games/survey-says" class="hidden sm:inline font-semibold text-slate-500 hover:text-indigo-600">How to play</a>
+                    <a href="/games/" class="hidden sm:inline font-semibold text-slate-500 hover:text-indigo-600">Group Games</a>
                     <a href="/" class="hidden sm:inline font-semibold text-slate-500 hover:text-indigo-600">WebDesks</a>
                     <span id="who" class="hidden sm:inline text-slate-400"></span>
                     <a id="signin-link" href="/login?next=%2Ffamily-feud" class="btn btn-primary !py-2 text-sm" hidden>Sign in</a>
@@ -95,7 +114,7 @@
         </header>
         <main id="view" class="max-w-6xl mx-auto px-4 py-8 sm:py-12"></main>
         <footer class="text-center text-xs text-slate-400 pb-10 space-x-3">
-            <a href="/" class="hover:text-indigo-500">WebDesks</a><a href="/privacy" class="hover:text-indigo-500">Privacy</a><a href="/terms" class="hover:text-indigo-500">Terms</a><a href="/contact" class="hover:text-indigo-500">Contact</a>
+            <a href="/games/survey-says" class="hover:text-indigo-500">How to play</a><a href="/games/" class="hover:text-indigo-500">Group Games</a><a href="/" class="hover:text-indigo-500">WebDesks</a><a href="/privacy" class="hover:text-indigo-500">Privacy</a><a href="/terms" class="hover:text-indigo-500">Terms</a><a href="/contact" class="hover:text-indigo-500">Contact</a>
         </footer>
     </div>
 
@@ -211,12 +230,14 @@
             if (page === 'board') return presenterWindow(id);
             $('stage').hidden = true;
             $('chrome').hidden = false;
+            document.body.style.overflow = '';
             if (page === 'play' && id === 'demo') return startPlay(DEMO);
             if (!user) return page ? signedOutView() : homeView();
             if (page === 'new') return editView();
             if (page === 'edit') return editView(id);
             if (page === 'game') return gameView(id);
             if (page === 'play') return playGame(id);
+            if (page === 'join') return joinScreen(id);
             return homeView();
         }
 
@@ -372,6 +393,7 @@
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <a href="#/edit/${id}" class="btn btn-ghost">Edit</a>
+                            ${open ? `<a href="#/join/${id}" class="btn btn-ghost" title="A big QR code and link for the TV or your shared screen">📺 Join screen</a>` : ''}
                             ${open ? '<button id="close" class="btn btn-ghost">⏹ Close survey</button>' : '<button id="reopen" class="btn btn-ghost">↺ Reopen</button>'}
                             <a href="#/play/${id}" class="btn btn-primary ${n ? '' : 'opacity-50 pointer-events-none'}">▶ Play the game</a>
                         </div>
@@ -483,6 +505,54 @@
                     if (!document.activeElement || !document.activeElement.closest('#qresults')) drawResults();
                 }
             }, 8000);
+        }
+
+        // Join screen: a big QR code + link and a live answer count, made to be
+        // cast to a TV or shared on a call while people answer.
+        async function joinScreen(id) {
+            if (!cache.games.find(g => g.id === id)) { try { await loadGames(); } catch (e) { view.innerHTML = errorBox(e); return; } }
+            const game = cache.games.find(g => g.id === id);
+            if (!game) return notFound();
+            const url = surveyUrl(game.code);
+            $('chrome').hidden = true;
+            const stage = $('stage');
+            stage.hidden = false;
+            document.body.style.overflow = 'hidden';
+            const count = () => (cache.responses[id] || []).length;
+            stage.innerHTML = `
+                <div class="flex items-center justify-between p-4 sm:p-6">
+                    <div class="flex items-center gap-2 font-black text-lg"><span class="text-2xl">🏆</span> Survey Says</div>
+                    <div class="flex gap-2">
+                        <a href="#/play/${id}" class="btn" style="background:#f5c542;color:#1a1a2e">▶ Start the game</a>
+                        <a href="#/game/${id}" class="btn" style="background:rgba(255,255,255,.12);color:#fff" aria-label="Close join screen">✕</a>
+                    </div>
+                </div>
+                <div class="flex-1 min-h-0 grid place-items-center px-6 pb-8">
+                    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-14 text-center lg:text-left">
+                        <div class="bg-white rounded-3xl p-4 shadow-2xl" style="width:min(56vh,78vw);height:min(56vh,78vw)"><canvas id="join-qr" style="width:100%;height:100%"></canvas></div>
+                        <div class="max-w-xl">
+                            <div class="text-sm font-black uppercase tracking-[.2em] text-amber-300">Scan to answer</div>
+                            <h1 class="font-display text-4xl sm:text-6xl font-black mt-2 leading-tight">${esc(game.title)}</h1>
+                            <p class="text-indigo-100 text-lg sm:text-2xl mt-4">Point your phone camera at the code, or go to</p>
+                            <p class="font-mono font-bold text-xl sm:text-3xl mt-1 break-all text-white">${esc(url.replace(/^https?:\/\//, ''))}</p>
+                            <div class="mt-8 inline-flex items-center gap-3 rounded-2xl px-5 py-3" style="background:rgba(255,255,255,.1)">
+                                <span class="text-4xl sm:text-5xl font-black tabular-nums" id="join-count">${count()}</span>
+                                <span class="text-indigo-100 text-lg" id="join-label">${count() === 1 ? 'answer so far' : 'answers so far'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            loadScript(QR).then(() => window.QRCode.toCanvas($('join-qr'), url, { width: 640, margin: 1 })).then(() => { const c = $('join-qr'); if (c) { c.style.width = '100%'; c.style.height = '100%'; } }).catch(() => {});
+            const tick = async () => {
+                await refreshResponses(id).catch(() => {});
+                const el = $('join-count');
+                if (!el) return clearInterval(pollTimer);
+                el.textContent = count();
+                $('join-label').textContent = count() === 1 ? 'answer so far' : 'answers so far';
+            };
+            tick();
+            pollTimer = setInterval(() => { if (!document.hidden) tick(); }, 5000);
+            document.title = 'Join — ' + game.title;
         }
 
         async function playGame(id) {

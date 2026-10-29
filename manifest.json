@@ -1,62 +1,140 @@
 {
-  "name": "WebDesks OS",
+  "name": "WebDesks",
   "short_name": "WebDesks",
-  "description": "28 free productivity tools in one browser tab — daily planner, calendar, ADHD chore organizer, bills, Notion-style pages and more",
-  "version": "0.26.0",
-  "start_url": "index.html",
+  "description": "Free daily planner, calendar, ADHD chore organizer, focus timer, group games and 25+ tools in one app — no download, works offline.",
+  "version": "0.27.0",
+  "start_url": "/?source=homescreen",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0f172a",
+  "background_color": "#f6f5f1",
   "theme_color": "#4f46e5",
   "categories": [
     "productivity",
     "utilities",
-    "developer"
+    "lifestyle",
+    "games"
   ],
   "shortcuts": [
     {
       "name": "Today",
-      "url": "index.html#today",
-      "description": "Your morning check-in: mood, top 3, agenda, chores and bills"
+      "url": "/#today",
+      "description": "Your morning check-in: mood, top 3, agenda, chores and bills",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Calendar",
-      "url": "index.html#calendar",
-      "description": "Month, week and day views of events, tasks, chores and bills"
+      "url": "/#calendar",
+      "description": "Month, week and day views of events, tasks, chores and bills",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Chores",
-      "url": "index.html#chores",
-      "description": "ADHD-friendly chore organizer"
+      "url": "/#chores",
+      "description": "ADHD-friendly chore organizer",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Command palette",
-      "url": "index.html#dashboard",
-      "description": "Jump to any tool with Ctrl/Cmd+K"
+      "url": "/#dashboard",
+      "description": "Jump to any tool with Ctrl/Cmd+K",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Focus Timer",
-      "url": "index.html#timer",
-      "description": "Start a Pomodoro session"
+      "url": "/#timer",
+      "description": "Start a Pomodoro session",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Survey Says",
-      "url": "family-feud",
-      "description": "Host a survey game show"
+      "url": "/family-feud",
+      "description": "Host a survey game show for a group",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
   "icons": [
     {
-      "src": "https://webdesks.app/icon-192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://webdesks.app/icon-512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "id": "/",
+  "scope": "/",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/phone-home.png",
+      "sizes": "780x1688",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Your day at a glance"
+    },
+    {
+      "src": "/screenshots/phone-games.png",
+      "sizes": "780x1688",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Survey Says group game"
+    },
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1440x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "WebDesks on desktop"
     }
   ]
 }

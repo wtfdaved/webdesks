@@ -18,3 +18,10 @@
   for = "/supabase-config.js"
   [headers.values]
     Cache-Control = "no-cache"
+
+# The service worker must always be re-checked so new versions roll out.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"
