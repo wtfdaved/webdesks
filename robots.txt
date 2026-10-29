@@ -1,0 +1,8 @@
+# WebDesks — https://webdesks.app
+User-agent: *
+Allow: /
+# Personal survey links and sign-in pages aren't useful in search results.
+Disallow: /survey
+Disallow: /login
+
+Sitemap: https://webdesks.app/sitemap.xml

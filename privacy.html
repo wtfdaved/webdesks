@@ -164,6 +164,7 @@
 
         <h3>2.3 LocalStorage Data (On-Device)</h3>
         <p>WebDesks stores your preferences and tool data (tasks, calendar events, chores, bills, pages, mood check-ins, kanban board, scratchpad notes, timer settings, Focus Town progress, audio mixer presets and UI themes) in your browser's localStorage. If you don't sign in, this data <strong>never leaves your device</strong>, is not accessible to us, and is deleted when you clear your browser's site data for webdesks.app.</p>
+        <p>To work offline, WebDesks also keeps a copy of its own pages and scripts (not your data) in your browser's cache through a service worker, and counts visits on this device (<code>wd-visits</code>) so it only suggests "Add to Home Screen" on a return visit. Neither is sent anywhere.</p>
         <p>If you sign in, the same data is also synced to your account as described in <a href="#accounts">Section 2.5</a>, and your sign-in session token is kept in localStorage so you stay signed in. Signing out removes the session token and your Desk data from that browser.</p>
 
         <h3>2.4 Files Processed by Tools</h3>

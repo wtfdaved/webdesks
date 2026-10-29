@@ -16,7 +16,7 @@ file operation done locally.
 | Work | Scratchpad, Task Manager, Project Board, Whiteboard, Time Zones |
 | Files & media | PDF Merger, Screen Recorder, Media Converter (WebM → MP4, image resize) |
 | Utilities | Calculator, Unit Converter, Colour Picker, **Dev Toolkit**, **Image to Text (OCR)** |
-| Games | **Survey Says** — a survey game show: collect answers with one link, then play the board live |
+| **Group Games** (`/games/`) | **Survey Says** — a survey game show: collect answers with one link, then play the board live in a call or on the TV |
 
 Press <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere to open the command
 palette and jump to any tool or action.
@@ -61,7 +61,9 @@ A Family Feud–style game for meetings and parties.
 1. **Create** (signed in): a name, 3–5 questions, when to stop collecting
    (15 minutes to a week, or no timer) and how many people must give an answer
    for it to make the board (default 2).
-2. **Share** the link (`/survey?g=<code>`) or show the QR code. People answer on
+2. **Share** the link (`/survey?g=<code>`) or show the QR code — **📺 Join
+   screen** puts a giant QR code, the link and a live answer count full-screen
+   for a TV or a shared call window. People answer on
    any phone, one question per screen, no account; one set of answers per
    device. The close time is enforced in the database, and **Close survey** stops
    it immediately (**Reopen** restarts it).
@@ -83,6 +85,38 @@ lives in `survey_games`, `survey_questions` and `survey_responses`
 own rows through row-level security. Respondents never touch the tables; they
 call `get_survey(code)` and `submit_survey(code, token, answers)`, which only
 accept answers while the game is open.
+
+### Group Games & SEO
+
+`/games/` is the Group Games hub (more games will be listed there) and
+`/games/survey-says` is the Survey Says landing page: how it works, playing in
+Microsoft Teams / Zoom / Meet, casting to a TV, question ideas and an FAQ. Both
+are plain HTML with a small shared stylesheet (`games/games.css`, no Tailwind
+runtime) and carry JSON-LD (`WebApplication`, `HowTo`, `FAQPage`,
+`CollectionPage`/`ItemList`, `BreadcrumbList`). Two guides in the blog
+(`survey-game-microsoft-teams-meeting`, `family-game-night-tv-survey-game`)
+link back to them. `sitemap.xml` lists all of them and `robots.txt` points
+crawlers at it and keeps personal `/survey` links and `/login` out of search.
+Survey Says is described as "Family Feud–style" with a non-affiliation note.
+
+## App shell (`shell.js`)
+
+- **More sheet** (phones): every tool grouped like the sidebar, with colourful
+  tiles and quick actions (Add to Home Screen, dark mode, privacy screen).
+  Search opens only when you tap it, full-screen, so the keyboard can't cover
+  the list.
+- **Add to Home Screen**: uses the browser's install prompt where there is one
+  (Android/desktop Chrome and Edge) and step-by-step instructions on
+  iPhone/iPad, from the More sheet, a banner on a return visit, or ⌘K →
+  "Install". The manifest has real icons (`icon-*.png`, maskable, Apple touch
+  icon), screenshots and shortcuts.
+- **Phone header** respects the iPhone safe area (it used to be a fixed 64 px,
+  so the notch padding cut it in half) and shows the tool's name once its title
+  scrolls away.
+- **Offline**: registers `sw.js`, which is network-first for the site's own
+  files (a deploy is live on the next load) and falls back to the cache when
+  offline.
+- The status bar colour follows light/dark mode.
 
 ## Focus Town (`town.js`)
 
@@ -200,6 +234,9 @@ clears this browser's copy.
    build step writes them for you.
 
 ## Design & performance
+
+v0.27 fixed the iPhone header, rebuilt the phone More sheet, added Add to Home
+Screen and offline support, and started the Group Games section (see above).
 
 v0.26 rebuilt Focus Town as a growing isometric town and replaced the ad-supported
 Lo-Fi stream and the old mixer with the ad-free Sounds tab (see above).

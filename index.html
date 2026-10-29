@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.26.0">
+    <meta name="generator" content="WebDesks v0.27.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -47,9 +47,15 @@
     <meta name="twitter:image" content="https://webdesks.app/og-image.png">
     <meta name="twitter:image:alt" content="WebDesks productivity suite preview">
 
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="WebDesks">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <meta name="google-adsense-account" content="ca-pub-8626644983261966">
     <!-- AdSense -->
@@ -744,31 +750,6 @@
         }
         .dark .drawer-handle { background: #334155; }
 
-        /* Tool grid inside drawer */
-        .drawer-tool-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 14px 8px 10px;
-            border-radius: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            transition: background 0.15s, transform 0.1s;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            color: #1e293b;
-        }
-        .dark .drawer-tool-btn { color: #e2e8f0; }
-        .drawer-tool-btn:active { transform: scale(0.93); }
-        .drawer-tool-btn:hover, .drawer-tool-btn:focus-visible {
-            background: rgba(79,70,229,0.09);
-            color: #4f46e5;
-        }
-        .dark .drawer-tool-btn:hover { background: rgba(99,102,241,0.15); color: #818cf8; }
-        .drawer-tool-btn svg { width: 26px; height: 26px; stroke-width: 1.75; }
-        .drawer-tool-btn span { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; text-align: center; line-height: 1.2; }
 
         /* Mini music player (mobile, shown above bottom nav when music plays) */
         #mobile-music-bar {
@@ -804,30 +785,6 @@
                 opacity: 1;
                 pointer-events: auto;
             }
-        }
-
-        /* PWA install banner */
-        #pwa-banner {
-            display: none;
-            position: fixed;
-            bottom: calc(76px + env(safe-area-inset-bottom, 0px));
-            left: 12px; right: 12px;
-            z-index: 58;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-            border-radius: 18px;
-            padding: 14px 16px;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 32px rgba(79,70,229,0.4);
-            animation: slideUpBanner 0.4s cubic-bezier(0.32,0.72,0,1) both;
-        }
-        @media (max-width: 767px) {
-            #pwa-banner { display: flex; }
-        }
-        @keyframes slideUpBanner {
-            from { transform: translateY(80px); opacity: 0; }
-            to   { transform: translateY(0);   opacity: 1; }
         }
 
         /* Swipe progress indicator (brief flash on swipe) */
@@ -1415,6 +1372,109 @@
             body > .fixed.bottom-8[role="status"] { bottom: calc(5.8rem + env(safe-area-inset-bottom, 0px)) !important; max-width: calc(100vw - 2rem); text-align: center; border-radius: 1.25rem; }
         }
     </style>
+    <!-- v0.27 phone polish: safe-area header, no input zoom, grouped More sheet, install sheet -->
+    <style id="wd-mobile">
+        /* The header used to be a fixed 64px; on iPhones the top safe-area
+           padding was taken out of that height and cut the bar in half. */
+        #app-header { height: auto; }
+        @media (max-width: 767px) {
+            #app-header {
+                min-height: calc(3.5rem + env(safe-area-inset-top, 0px));
+                padding: env(safe-area-inset-top, 0px) max(1rem, env(safe-area-inset-right, 0px)) 0 max(1rem, env(safe-area-inset-left, 0px));
+                background: var(--bg);
+            }
+            #app-header button.p-2:not(.hidden) { width: 2.4rem; height: 2.4rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: .9rem; }
+            /* Rarely-needed header buttons move into the More sheet. */
+            #header-privacy-btn, #header-alarm-btn:not(.has-alarm) { display: none !important; }
+            #app-header > div:first-child { min-width: 0; flex: 1; }
+            #app-header > div:first-child > div:nth-child(2) { min-width: 0; overflow: hidden; }
+            #brand-name { font-size: 1.05rem; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+            /* iOS Safari zooms the page into any field under 16px. */
+            input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]), select, textarea { font-size: 16px !important; }
+            html { -webkit-text-size-adjust: 100%; }
+            button, a, [role=button], label { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+            /* Tool headers: title on its own line, actions in a swipeable row. */
+            .tab-content > div > .flex.justify-between:first-child { flex-wrap: wrap; row-gap: .7rem; }
+            .tab-content > div > .flex.justify-between:first-child > h2 { font-size: 1.8rem; line-height: 1.1; letter-spacing: -.02em; }
+            .tab-content > div > .flex.justify-between:first-child > div:last-child:not(:first-child) { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+            .tab-content > div > .flex.justify-between:first-child > div:last-child::-webkit-scrollbar { display: none; }
+            .tab-content button.uppercase { text-transform: none; letter-spacing: 0; }
+
+            /* Tasks: the add row stacks instead of running off-screen. */
+            .glass:has(> #task-input) { flex-wrap: wrap; }
+            #task-input { flex: 1 1 100%; padding: .85rem 1rem; }
+            #task-date { flex: 1; border-left: 0 !important; padding: .6rem .9rem; width: auto; background: var(--bg) !important; border-radius: .8rem; }
+            .glass:has(> #task-input) > button { padding: .7rem 1.2rem; }
+            /* Whiteboard: toolbar scrolls sideways. */
+            #whiteboard .glass.p-2.rounded-xl { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+
+            /* Soft entrance when switching tools. */
+            .tab-content.active { animation: wd-tab-in .22s ease-out; }
+        }
+        @keyframes wd-tab-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) { .tab-content.active { animation: none; } }
+
+        /* ── More sheet ───────────────────────────────────────────── */
+        #more-drawer { background: var(--surface); max-height: 86dvh; color: var(--text); }
+        .dark #more-drawer { background: var(--surface); }
+        #more-drawer.searching { top: 0; max-height: none; border-radius: 0; padding-top: env(safe-area-inset-top, 0px); }
+        #more-drawer.searching .drawer-handle { display: none; }
+        .ms-head { display: flex; align-items: center; gap: .5rem; padding: .35rem 1.1rem .7rem; flex-shrink: 0; }
+        .ms-head h2 { flex: 1; font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-size: 1.35rem; font-weight: 800; letter-spacing: -.01em; }
+        .ms-iconbtn { display: inline-flex; align-items: center; gap: .35rem; height: 2.4rem; padding: 0 .85rem; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); font-weight: 700; font-size: .85rem; color: var(--muted); }
+        .ms-iconbtn.round { width: 2.4rem; padding: 0; justify-content: center; }
+        .ms-search { display: flex; gap: .5rem; padding: .5rem 1.1rem .75rem; flex-shrink: 0; }
+        .ms-search input { flex: 1; min-width: 0; height: 2.75rem; border-radius: .9rem; padding: 0 1rem; background: var(--bg); border: 1px solid var(--border); outline: none; color: inherit; }
+        .ms-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+        .ms-search button { font-weight: 700; color: var(--accent); padding: 0 .4rem; }
+        .ms-body { overflow-y: auto; overscroll-behavior: contain; padding: 0 .9rem 1.25rem; flex: 1; -webkit-overflow-scrolling: touch; }
+        .ms-quick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin: .1rem .2rem 1rem; }
+        .ms-quick button { display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; padding: .7rem .75rem; border-radius: 1rem; background: var(--bg); border: 1px solid var(--border); font-weight: 700; font-size: .78rem; text-align: left; color: inherit; }
+        .ms-quick button svg { width: 1.15rem; height: 1.15rem; color: var(--accent); }
+        .ms-quick button.install { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border-color: transparent; }
+        .ms-quick button.install svg { color: #fff; }
+        .ms-group { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: .6rem .3rem .45rem; }
+        .ms-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .15rem .3rem; margin-bottom: .4rem; }
+        .ms-tile { display: flex; flex-direction: column; align-items: center; gap: .4rem; padding: .55rem .15rem .6rem; border-radius: 1rem; color: inherit; text-decoration: none; transition: transform .1s, background .15s; }
+        .ms-tile:active { transform: scale(.93); background: var(--bg); }
+        .ms-tile .ic { width: 3.2rem; height: 3.2rem; border-radius: 1.05rem; display: grid; place-items: center; color: #fff; background: linear-gradient(140deg, var(--c1), var(--c2)); box-shadow: 0 8px 18px -10px var(--c2); }
+        .ms-tile .ic svg { width: 1.45rem; height: 1.45rem; stroke-width: 2; }
+        .ms-tile span { font-size: .72rem; font-weight: 700; line-height: 1.15; text-align: center; }
+        .ms-tile.current .ic { outline: 3px solid var(--accent-soft); outline-offset: 2px; }
+        .ms-results { display: flex; flex-direction: column; gap: .15rem; }
+        .ms-results .ms-tile { flex-direction: row; gap: .8rem; padding: .45rem .5rem; }
+        .ms-results .ms-tile .ic { width: 2.5rem; height: 2.5rem; border-radius: .8rem; }
+        .ms-results .ms-tile span { font-size: .95rem; text-align: left; }
+        .ms-results .ms-tile small { display: block; color: var(--muted); font-weight: 500; font-size: .78rem; }
+        .ms-search[hidden], .ms-head[hidden], #ms-groups[hidden], #ms-results[hidden] { display: none; }
+        .ms-empty { text-align: center; color: var(--muted); padding: 2rem 1rem; font-size: .9rem; }
+
+        /* ── Install banner + sheet ──────────────────────────────── */
+        #wd-install-banner { position: fixed; left: .75rem; right: .75rem; bottom: calc(5.4rem + env(safe-area-inset-bottom, 0px)); z-index: 58; display: flex; align-items: center; gap: .75rem; padding: .8rem .9rem; border-radius: 1.25rem; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; box-shadow: 0 16px 36px -14px rgba(79,70,229,.7); animation: wd-banner-in .4s cubic-bezier(.32,.72,0,1) both; }
+        #wd-install-banner img { width: 2.6rem; height: 2.6rem; border-radius: .75rem; flex-shrink: 0; }
+        #wd-install-banner b { display: block; font-size: .9rem; }
+        #wd-install-banner small { display: block; font-size: .75rem; opacity: .85; }
+        #wd-install-banner .go { margin-left: auto; background: #fff; color: #4f46e5; font-weight: 800; font-size: .8rem; padding: .55rem .9rem; border-radius: .8rem; flex-shrink: 0; }
+        #wd-install-banner .x { opacity: .75; padding: .3rem; flex-shrink: 0; }
+        @media (min-width: 768px) { #wd-install-banner { left: auto; right: 1.5rem; bottom: 1.5rem; width: 24rem; } }
+        @keyframes wd-banner-in { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+        .wd-sheet-back { position: fixed; inset: 0; z-index: 90; background: rgba(15,23,42,.5); display: flex; align-items: flex-end; justify-content: center; }
+        .wd-sheet { width: min(30rem, 100%); background: var(--surface); color: var(--text); border-radius: 1.75rem 1.75rem 0 0; padding: 1.4rem 1.3rem calc(1.3rem + env(safe-area-inset-bottom, 0px)); animation: wd-banner-in .35s cubic-bezier(.32,.72,0,1) both; max-height: 92dvh; overflow-y: auto; }
+        @media (min-width: 768px) { .wd-sheet-back { align-items: center; } .wd-sheet { border-radius: 1.75rem; } }
+        .wd-sheet h3 { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-size: 1.4rem; font-weight: 800; letter-spacing: -.01em; }
+        .wd-sheet p { color: var(--muted); font-size: .9rem; margin-top: .3rem; }
+        .wd-steps { list-style: none; margin: 1.1rem 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+        .wd-steps li { display: flex; align-items: center; gap: .8rem; padding: .7rem .8rem; border-radius: 1rem; background: var(--bg); border: 1px solid var(--border); font-size: .9rem; font-weight: 600; }
+        .wd-steps .n { width: 1.7rem; height: 1.7rem; border-radius: 999px; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: .8rem; flex-shrink: 0; }
+        .wd-steps .k { display: inline-flex; align-items: center; gap: .25rem; padding: .1rem .45rem; border-radius: .5rem; background: var(--surface); border: 1px solid var(--border); font-weight: 700; }
+        .wd-steps .k svg { width: 1rem; height: 1rem; color: #0a84ff; }
+        .wd-sheet .wd-btn { width: 100%; height: 3rem; border-radius: 1rem; font-weight: 800; background: var(--accent); color: #fff; }
+        .wd-sheet .wd-perks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin-top: 1rem; }
+        .wd-sheet .wd-perks div { text-align: center; font-size: .75rem; font-weight: 700; color: var(--muted); padding: .6rem .3rem; border-radius: .9rem; background: var(--bg); }
+        .wd-sheet .wd-perks div span { display: block; font-size: 1.3rem; margin-bottom: .2rem; }
+    </style>
 </head>
 <body class="text-slate-800 dark:text-slate-100 h-screen flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
 
@@ -1429,12 +1489,12 @@
                 <i data-lucide="layout-grid" class="text-white w-4 h-4"></i>
             </div>
             <div class="hidden sm:block">
-                <span class="font-black text-base tracking-tight">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.26.0</span>
+                <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.27.0</span>
             </div>
-            <a href="/family-feud" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
-                <i data-lucide="trophy" class="w-4 h-4"></i>
-                <span>Survey Says</span>
+            <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
+                <i data-lucide="party-popper" class="w-4 h-4"></i>
+                <span>Group Games</span>
             </a>
         </div>
 
@@ -1460,7 +1520,7 @@
             <button onclick="app.toggleZenMode()" class="p-2 rounded-xl glass hover:bg-indigo-500 hover:text-white transition-all hidden sm:flex items-center justify-center" title="Zen Mode (Alt+Z)" aria-label="Enter Zen Mode (Alt+Z)">
                 <i data-lucide="maximize-2" class="w-4 h-4" aria-hidden="true"></i>
             </button>
-            <button onclick="app.togglePrivacy()" class="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center" title="Privacy Mode (Alt+P)" aria-label="Activate Privacy Mode (Alt+P)">
+            <button onclick="app.togglePrivacy()" id="header-privacy-btn" class="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center" title="Privacy Mode (Alt+P)" aria-label="Activate Privacy Mode (Alt+P)">
                 <i data-lucide="shield-alert" class="w-4 h-4" aria-hidden="true"></i>
             </button>
             <!-- Account: Sign in button or profile menu (account.js) -->
@@ -1612,6 +1672,18 @@
                 <i data-lucide="scan-text" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Image to Text</span>
             </button>
+
+            <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-2 tracking-widest">Group Games</div>
+
+            <a href="/family-feud" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-link="feud" title="Survey Says — a survey game show for groups">
+                <i data-lucide="trophy" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Survey Says</span>
+            </a>
+
+            <a href="/games/" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-link="games" title="All group games">
+                <i data-lucide="party-popper" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">All Group Games</span>
+            </a>
         </nav>
 
         <!-- Music Player -->
@@ -1752,7 +1824,7 @@
                         </button>
                         <button onclick="app.switchTab('feud')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-yellow-400 to-amber-500"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></span>
-                            <span class="min-w-0"><span class="app-title">Survey Says <span class="new-badge">New</span></span><span class="app-sub">Game show for your team</span></span>
+                            <span class="min-w-0"><span class="app-title">Survey Says <span class="new-badge">New</span></span><span class="app-sub">Group game for calls &amp; TV</span></span>
                         </button>
                     </div>
                 </section>
@@ -2988,21 +3060,9 @@
         </button>
     </nav>
 
-    <!-- MORE DRAWER (bottom sheet with all 18 tools) -->
+    <!-- MORE SHEET — all tools, grouped (rendered by shell.js) -->
     <div id="more-drawer-backdrop" onclick="app.closeMoreDrawer()" aria-hidden="true"></div>
-    <div id="more-drawer" role="dialog" aria-modal="true" aria-label="All tools">
-        <div class="drawer-handle" aria-hidden="true"></div>
-        <div class="px-5 pt-2 pb-3 flex-shrink-0">
-            <h2 class="text-lg font-black text-slate-800 dark:text-slate-100 mb-3">All Tools</h2>
-            <div class="relative">
-                <input id="drawer-search" type="search" placeholder="Search tools…" autocomplete="off"
-                    class="w-full bg-slate-100 dark:bg-slate-800 rounded-2xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
-                    oninput="app.filterDrawer(this.value)">
-                <svg class="absolute right-3 top-3.5 w-4 h-4 text-slate-400 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </div>
-        </div>
-        <div id="drawer-tool-grid" class="overflow-y-auto flex-1 px-3 pb-6 grid grid-cols-4 gap-1 content-start" style="overscroll-behavior: contain;"></div>
-    </div>
+    <div id="more-drawer" role="dialog" aria-modal="true" aria-label="All tools"></div>
 
     <!-- MINI MUSIC PLAYER (mobile, floats above bottom nav) -->
     <div id="mobile-music-bar" role="region" aria-label="Now playing">
@@ -3021,20 +3081,7 @@
         </button>
     </div>
 
-    <!-- PWA INSTALL BANNER -->
-    <div id="pwa-banner" style="display:none" role="complementary" aria-label="Install app">
-        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </div>
-        <div class="flex-1 min-w-0">
-            <div class="text-sm font-bold">Add to Home Screen</div>
-            <div class="text-xs opacity-80">Install for the best experience</div>
-        </div>
-        <button id="pwa-install-btn" class="px-4 py-2 bg-white text-indigo-600 rounded-xl text-xs font-black hover:bg-indigo-50 transition-colors">Install</button>
-        <button onclick="app.dismissPWABanner()" class="p-1 opacity-70 hover:opacity-100" aria-label="Dismiss">
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-    </div>
+    <!-- Install banner + Add-to-Home-Screen sheet are rendered by shell.js -->
 
     <!-- FOCUS LOCK OVERLAY (shown during active timer on mobile, keeps UX focused) -->
     <div id="focus-lock" role="dialog" aria-modal="true" aria-label="Focus session in progress">
@@ -3122,7 +3169,8 @@
                 { id: 'tasks', label: 'Task Manager', icon: 'check-circle-2', keywords: 'todo list jobs' },
                 { id: 'board', label: 'Project Board', icon: 'columns', keywords: 'kanban agile trello' },
                 { id: 'whiteboard', label: 'Whiteboard', icon: 'pencil', keywords: 'draw sketch paint' },
-                { id: 'feud', label: 'Survey Says', icon: 'trophy', link: '/family-feud', keywords: 'survey says party game survey voting team game streaming group game' },
+                { id: 'feud', label: 'Survey Says', icon: 'trophy', link: '/family-feud', keywords: 'survey says party game survey voting team game streaming group game family feud teams zoom tv' },
+                { id: 'games', label: 'Group Games', icon: 'party-popper', link: '/games/', keywords: 'group games party games play with friends game night team building icebreaker' },
                 { id: 'clock', label: 'Desk Clock', icon: 'clock', keywords: 'time alarm watch' },
                 { id: 'timer', label: 'Focus Timer', icon: 'hourglass', keywords: 'pomodoro countdown focus' },
                 { id: 'audio', label: 'Sounds', icon: 'headphones', keywords: 'audio mixer noise ambient music lofi radio rain thunder ocean fire cafe birds sleep timer' },
@@ -3801,6 +3849,7 @@
                 const btn = document.getElementById('alarm-btn');
                 const bellIcon = document.getElementById('header-bell-icon');
                 const alarmHeaderBtn = document.getElementById('header-alarm-btn');
+                if (alarmHeaderBtn) alarmHeaderBtn.classList.toggle('has-alarm', !!this.alarmTime);
 
                 if (this.alarmTime) {
                     const [h, m] = this.alarmTime.split(':');
@@ -6524,66 +6573,14 @@
                 dashboard:'Home', today:'Today', calendar:'Calendar', pages:'Pages',
                 chores:'Chores', bills:'Bills', scratchpad:'Notepad', tasks:'Tasks',
                 board:'Board', whiteboard:'Draw', clock:'Clock', timer:'Timer',
-                stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Mixer',
+                stopwatch:'Stopwatch', focustown:'Focus Town', audio:'Sounds',
                 breathing:'Breathing', calculator:'Calc', converter:'Convert',
                 colorpicker:'Colors', pdf:'PDF', zones:'Zones',
                 onair:'On Air', recorder:'Record', mediaconv:'Media',
                 devtools:'Dev Tools', ocr:'Image → Text'
             },
 
-            // ── More Drawer ──────────────────────────────────────────
-            initMoreDrawer() {
-                const grid = document.getElementById('drawer-tool-grid');
-                if (!grid) return;
-                this._drawerItems = this.tabOrder.map(id => {
-                    const btn = document.createElement('button');
-                    btn.className = 'drawer-tool-btn';
-                    btn.dataset.id = id;
-                    btn.dataset.label = this.tabLabels[id].toLowerCase();
-                    btn.setAttribute('aria-label', this.tabLabels[id]);
-                    btn.innerHTML = `<i data-lucide="${this.tabIcons[id]}" class="w-6 h-6"></i><span>${this.tabLabels[id]}</span>`;
-                    btn.addEventListener('click', () => {
-                        this.switchTab(id);
-                        this.closeMoreDrawer();
-                        this.vibrate([30]);
-                    });
-                    grid.appendChild(btn);
-                    return btn;
-                });
-                this._rebuildIcons();
-
-                // Swipe-to-close the drawer
-                let startY = 0;
-                const drawer = document.getElementById('more-drawer');
-                drawer.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
-                drawer.addEventListener('touchend', e => {
-                    if (e.changedTouches[0].clientY - startY > 80) this.closeMoreDrawer();
-                }, { passive: true });
-            },
-
-            openMoreDrawer() {
-                const backdrop = document.getElementById('more-drawer-backdrop');
-                const drawer = document.getElementById('more-drawer');
-                if (!backdrop || !drawer) return;
-                backdrop.classList.add('open');
-                drawer.classList.add('open');
-                document.getElementById('drawer-search')?.focus();
-                this.vibrate([20]);
-            },
-
-            closeMoreDrawer() {
-                document.getElementById('more-drawer-backdrop')?.classList.remove('open');
-                document.getElementById('more-drawer')?.classList.remove('open');
-            },
-
-            filterDrawer(query) {
-                const q = query.toLowerCase().trim();
-                if (!this._drawerItems) return;
-                this._drawerItems.forEach(btn => {
-                    const matches = !q || btn.dataset.label.includes(q);
-                    btn.style.display = matches ? '' : 'none';
-                });
-            },
+            // More sheet, install flow and service worker live in shell.js
 
             // ── Swipe Navigation ─────────────────────────────────────
             initSwipeNav() {
@@ -6675,40 +6672,6 @@
                 }, 'image/png');
             },
 
-            // ── PWA Install Prompt ───────────────────────────────────
-            _deferredInstallPrompt: null,
-            initPWAInstall() {
-                window.addEventListener('beforeinstallprompt', e => {
-                    e.preventDefault();
-                    this._deferredInstallPrompt = e;
-                    // Only show if user hasn't dismissed before
-                    if (!localStorage.getItem('wd_pwa_dismissed')) {
-                        setTimeout(() => {
-                            const banner = document.getElementById('pwa-banner');
-                            if (banner) banner.style.display = 'flex';
-                        }, 20000); // show after 20s of engagement
-                    }
-                });
-                const installBtn = document.getElementById('pwa-install-btn');
-                if (installBtn) {
-                    installBtn.addEventListener('click', async () => {
-                        if (!this._deferredInstallPrompt) return;
-                        this._deferredInstallPrompt.prompt();
-                        const { outcome } = await this._deferredInstallPrompt.userChoice;
-                        this._deferredInstallPrompt = null;
-                        this.dismissPWABanner();
-                        if (outcome === 'accepted') this.showToast('WebDesks installed!');
-                    });
-                }
-                // Hide once installed
-                window.addEventListener('appinstalled', () => this.dismissPWABanner());
-            },
-            dismissPWABanner() {
-                const banner = document.getElementById('pwa-banner');
-                if (banner) banner.style.display = 'none';
-                localStorage.setItem('wd_pwa_dismissed', '1');
-            },
-
             // ── Focus Lock (mobile full-screen during timer) ─────────
             focusLockActive: false,
             enterFocusLock() {
@@ -6768,14 +6731,15 @@
         window.addEventListener('load', () => app.init());
     </script>
     <!-- Life planner: Today, Calendar, Pages, Chores, Bills -->
-    <script src="life.js"></script>
+    <script src="/life.js"></script>
     <!-- Accounts + Desk sync (Supabase). Inert until supabase-config.js has keys. -->
-    <script src="supabase-config.js"></script>
-    <script src="account.js"></script>
+    <script src="/supabase-config.js"></script>
+    <script src="/account.js"></script>
     <!-- Smart dates, search everything, touch drag & drop, reminders, undo -->
-    <script src="extras.js"></script>
+    <script src="/extras.js"></script>
     <!-- Focus Town: a cozy village that grows while you work -->
-    <script src="town.js"></script>
-    <script src="sound.js"></script>
+    <script src="/town.js"></script>
+    <script src="/sound.js"></script>
+    <script src="/shell.js"></script>
 </body>
 </html>

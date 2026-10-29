@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'webdesks-v26.0';
+const CACHE_VERSION = 'webdesks-v27.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -7,9 +7,20 @@ const STATIC_ASSETS = [
   '/extras.js',
   '/town.js',
   '/sound.js',
+  '/shell.js',
   '/survey-logic.js',
   '/login.html',
+  '/family-feud.html',
+  '/survey.html',
+  '/games/',
+  '/games/survey-says.html',
+  '/games/games.css',
   '/manifest.json',
+  '/icon.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png',
+  '/favicon-32.png',
   '/about.html',
   '/privacy.html',
   '/terms.html',
@@ -24,8 +35,9 @@ const STATIC_ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
+  // Cache what we can; one missing file must not block the install.
   e.waitUntil(
-    caches.open(CACHE_VERSION).then(cache => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_VERSION).then(cache => Promise.all(STATIC_ASSETS.map(u => cache.add(u).catch(() => {}))))
   );
   self.skipWaiting();
 });
@@ -39,51 +51,41 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
+// Network first, cache as the offline fallback — so a deploy is live on the
+// next load and nobody gets stuck on an old cached copy.
+const networkFirst = (e, fallbacks = []) => e.respondWith(
+  fetch(e.request).then(res => {
+    if (res && (res.ok || res.type === 'opaque')) {
+      const clone = res.clone();
+      caches.open(CACHE_VERSION).then(c => c.put(e.request, clone));
+    }
+    return res;
+  }).catch(async () => {
+    for (const key of [e.request, ...fallbacks]) {
+      const hit = await caches.match(key, { ignoreSearch: key !== e.request });
+      if (hit) return hit;
+    }
+    return Response.error();
+  })
+);
+
+const CDN = ['cdn.tailwindcss.com', 'unpkg.com', 'cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
+
 self.addEventListener('fetch', (e) => {
-  const url = e.request.url;
+  const req = e.request;
+  if (req.method !== 'GET' || req.headers.has('range')) return;
+  const url = new URL(req.url);
 
-  // Sign-in and Desk sync must always hit the network, never a cache.
-  if (e.request.method !== 'GET' || url.includes('.supabase.co') || url.includes('.supabase.in')) return;
-
-  // Live radio streams (and their now-playing lookups) go straight to the network.
-  if (url.includes('somafm.com') || e.request.headers.has('range')) return;
-
-  // Public Supabase settings: network first so key changes apply immediately.
-  if (new URL(url).pathname === '/supabase-config.js') {
-    e.respondWith(
-      fetch(e.request).then(res => {
-        const clone = res.clone();
-        caches.open(CACHE_VERSION).then(c => c.put(e.request, clone));
-        return res;
-      }).catch(() => caches.match(e.request))
-    );
-    return;
+  // Sign-in, Desk sync, live radio and everything else third-party (ads,
+  // weather, quotes) always go straight to the network.
+  if (url.origin === self.location.origin) {
+    if (url.pathname === '/sw.js') return;
+    if (req.mode !== 'navigate') return networkFirst(e);
+    // Offline pages: the pretty URL, its .html / index.html file, then the app.
+    const p = url.pathname;
+    return networkFirst(e, [p.endsWith('/') ? p + 'index.html' : p + '.html', '/index.html']);
   }
-
-  // CDN resources: network first, fall back to cache
-  if (
-    url.includes('cdn.tailwindcss.com') ||
-    url.includes('unpkg.com') ||
-    // jsdelivr serves marked, highlight.js and the lazily-loaded
-    // qrcode, tesseract.js, FullCalendar and Editor.js bundles — cache
-    // them so the Dev Toolkit, OCR, Calendar and Pages keep working
-    // offline after the first visit.
-    url.includes('cdn.jsdelivr.net') ||
-    url.includes('fonts.googleapis.com') ||
-    url.includes('fonts.gstatic.com')
-  ) {
-    e.respondWith(
-      fetch(e.request).then(res => {
-        const clone = res.clone();
-        caches.open(CACHE_VERSION).then(c => c.put(e.request, clone));
-        return res;
-      }).catch(() => caches.match(e.request))
-    );
-    return;
-  }
-
-  // Static assets: cache first, fall back to network
-  e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
-  );
+  // CDN libraries (jsdelivr serves the lazily-loaded bundles) are cached so
+  // the tools keep working offline after the first visit.
+  if (CDN.includes(url.hostname)) return networkFirst(e);
 });
