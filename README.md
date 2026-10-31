@@ -142,6 +142,41 @@ Survey Says is described as "Family Feud–style" with a non-affiliation note.
     anything that isn't `BEGIN:VCALENDAR`, and stores nothing. The parsed feed
     is cached on the device only (`wdl_ics_cache`, outside Desk sync).
 
+## v0.30: dashboard tabs, fixes and five improvements
+
+- **Dashboard tabs (`home.js`)** — the home screen was one long scroll. Now:
+  a compact hero, search, and four tabs — **Today** (tasks / get-started,
+  calendar agenda, launchers, alarm), **Focus** (timer, this week's focus,
+  latest note, quote), **Life** (snippets, money, mood, hydration) and
+  **Tools** (Desk presets + toolkit). Each tab is an even two-column grid
+  (an odd widget out stretches across), the tab bar sticks while scrolling,
+  the last tab is remembered (`wd_home_tab`), **Customize** hides widgets
+  (`wd_home_hidden`, synced) and the guest card is a dismissible strip.
+- **Public Desk fix** — saving now *upserts* the profile row (accounts made
+  before the profiles trigger had no row, so the old update silently saved
+  nothing) and checks `get_public_desk()` before saying the link is live;
+  sharing defaults to on when you first pick a username. The page function
+  reads the username from the path, sends only the `apikey` header, tries
+  several config sources, and if it still can't reach the database it serves
+  a page that loads the Desk in the browser (`public-desk-render.js` is shared
+  by both).
+- **iOS Safari header** — the body is pinned (`position: fixed; inset: 0`,
+  Tailwind's `h-screen`/100vh removed) and `shell.js` resets any window pan
+  left by the keyboard or toolbar, so the header can't get stuck off-screen.
+- **Five improvements**
+  1. *Faster first load* — PDF-lib, Marked, highlight.js and FFmpeg.wasm
+     (hundreds of KB) load the first time a tool needs them (`app.LAZY_LIBS`).
+  2. *Quick capture* — press **N** anywhere (or the floating **+** on phones)
+     to add a task (smart dates), a Scratchpad note or a snippet.
+  3. *This week's focus* — a Focus-tab chart of minutes per day for the last
+     7 days (`wd_focus_history`, filled from Focus Town minutes and shutdown
+     logs).
+  4. *Branded 404 page* (`404.html`) — guesses the tool from the broken URL
+     and searches every tool page.
+  5. *Accessibility* — skip-to-content link, visible keyboard focus rings,
+     `aria-current` on the active tool, keyboard-navigable dashboard tabs and
+     a global reduced-motion rule.
+
 ## Clean tool URLs (`tool-routes.js`, v0.29)
 
 Every tool has its own indexable URL — `/tools/whiteboard`,
@@ -350,6 +385,9 @@ clears this browser's copy.
    build step writes them for you.
 
 ## Design & performance
+
+v0.30 reorganised the dashboard into tabs and fixed Public Desks and the
+iOS Safari header (see above).
 
 v0.29 added clean `/tools/<slug>` URLs, live tools in blog posts, Public
 Desks and the Desk Sponsor card (see above).

@@ -338,6 +338,39 @@
     }, { capture: true, passive: true });
     window.addEventListener('resize', headerTitle);
 
+    // ── iOS Safari: keep the header on screen ────────────────────
+    // The app is one fixed-size screen (each tool scrolls inside itself), but
+    // Safari still pans the *window* when the keyboard opens, the toolbar
+    // resizes or a field is focused — and with overflow hidden there was no
+    // way to scroll back, so the header stayed stuck above the screen. The
+    // body is now pinned (CSS: position fixed), and any leftover pan is reset
+    // once nothing is being typed into.
+    const typing = () => {
+        const a = document.activeElement;
+        return a && (a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+    };
+    let unpanTimer = 0;
+    const unpan = (delay = 60) => {
+        clearTimeout(unpanTimer);
+        unpanTimer = setTimeout(() => {
+            if (typing()) return;
+            const se = document.scrollingElement || document.documentElement;
+            if (window.scrollY || window.scrollX || se.scrollTop || document.body.scrollTop) {
+                window.scrollTo(0, 0);
+                se.scrollTop = 0;
+                document.body.scrollTop = 0;
+            }
+        }, delay);
+    };
+    document.addEventListener('focusout', () => unpan(120), true);
+    window.addEventListener('scroll', () => unpan(250), { passive: true });
+    window.addEventListener('orientationchange', () => unpan(400));
+    window.addEventListener('pageshow', () => unpan(0));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) unpan(0); });
+    if (window.visualViewport) {
+        visualViewport.addEventListener('resize', () => unpan(150));
+    }
+
     // ── Status bar / browser chrome follows light & dark mode ────
     const themeMeta = document.querySelector('meta[name="theme-color"]');
     const syncThemeColor = () => {
