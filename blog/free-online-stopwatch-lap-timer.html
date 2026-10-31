@@ -76,10 +76,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#stopwatch" class="hover:text-indigo-600 transition-colors">Stopwatch</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/stopwatch" class="hover:text-indigo-600 transition-colors">Stopwatch</a>
             </div>
-            <a href="/#stopwatch" class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/stopwatch" class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Stopwatch →
             </a>
         </nav>
@@ -119,18 +119,22 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="stopwatch"></div>
+
+
         <p>A stopwatch is one of the oldest productivity tools there is — and also one of the most versatile. From timing a presentation dry-run to benchmarking how long a task actually takes versus how long you thought it would, a stopwatch closes the gap between perceived and actual time.</p>
 
         <p>The <strong>WebDesks Stopwatch</strong> is a free, browser-based stopwatch with lap recording. Start, pause, record a lap, and reset — all without leaving your browser tab. It runs with millisecond precision using the browser's high-resolution timer API.</p>
 
         <div class="callout">
-            <p><strong>Start timing now:</strong> <a href="/#stopwatch" class="underline font-semibold">Open the WebDesks Stopwatch</a> — no setup, no account, press Start and go.</p>
+            <p><strong>Start timing now:</strong> <a href="/tools/stopwatch" class="underline font-semibold">Open the WebDesks Stopwatch</a> — no setup, no account, press Start and go.</p>
         </div>
 
         <h2>How to Use the WebDesks Stopwatch</h2>
 
         <ol>
-            <li><strong>Open the Stopwatch</strong> — click the timer icon in the sidebar or navigate to <a href="/#stopwatch" class="text-green-700 hover:underline">webdesks.app/#stopwatch</a>.</li>
+            <li><strong>Open the Stopwatch</strong> — click the timer icon in the sidebar or navigate to <a href="/tools/stopwatch" class="text-green-700 hover:underline">webdesks.app/#stopwatch</a>.</li>
             <li><strong>Press Start</strong> — the counter begins running in HH:MM:SS.mm format.</li>
             <li><strong>Record a lap</strong> — press the Lap button without stopping the main timer. Each lap is recorded with its split time (time for that lap) and cumulative time.</li>
             <li><strong>Pause</strong> — press Pause to freeze the display without losing the recorded time. Press Start again to resume.</li>
@@ -196,7 +200,7 @@
             </ul>
         </div>
 
-        <p>Use both: the <a href="/#stopwatch" class="text-green-700 hover:underline">Stopwatch</a> for measurement, the <a href="/pomodoro-timer" class="text-green-700 hover:underline">Pomodoro Timer</a> for structured focus sessions. Together, they give you both awareness and accountability.</p>
+        <p>Use both: the <a href="/tools/stopwatch" class="text-green-700 hover:underline">Stopwatch</a> for measurement, the <a href="/pomodoro-timer" class="text-green-700 hover:underline">Pomodoro Timer</a> for structured focus sessions. Together, they give you both awareness and accountability.</p>
 
         <h2>Frequently Asked Questions</h2>
 
@@ -229,13 +233,13 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Start Timing — Right Now</h2>
             <p class="text-slate-500 mb-8">Millisecond-accurate stopwatch with lap recording. Free, instant, no account.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#stopwatch" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">⏲️ Open Stopwatch</a>
+                <a href="/tools/stopwatch" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">⏲️ Open Stopwatch</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-green-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
                 <a href="/pomodoro-timer" class="bg-white border border-slate-200 hover:border-green-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏱️ Pomodoro Timer</a>
-                <a href="/#clock" class="bg-white border border-slate-200 hover:border-green-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🕐 Desk Clock</a>
-                <a href="/#tasks" class="bg-white border border-slate-200 hover:border-green-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
+                <a href="/tools/alarm-clock" class="bg-white border border-slate-200 hover:border-green-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🕐 Desk Clock</a>
+                <a href="/tools/todo-list" class="bg-white border border-slate-200 hover:border-green-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
             </div>
         </div>
     </section>
@@ -247,7 +251,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -263,5 +267,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

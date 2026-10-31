@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.28.0">
+    <meta name="generator" content="WebDesks v0.29.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -59,7 +59,8 @@
 
     <meta name="google-adsense-account" content="ca-pub-8626644983261966">
     <!-- AdSense -->
-    <script src="/ads.js"></script>
+    <script src="/ads.js" data-programmatic="off"></script>
+    <script src="/tool-routes.js"></script>
 
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -879,73 +880,6 @@
         :not(.dark) #hljs-theme { display: none; }
         .dark #hljs-theme-light { display: none; }
 
-        /* ── Ad Panel (right-side collapsible) ───────────────── */
-        #ad-panel {
-            position: fixed;
-            right: 0; top: 50%;
-            transform: translateY(-50%);
-            z-index: 45;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: drop-shadow(-6px 0 18px rgba(79,70,229,0.22));
-        }
-        #ad-panel.collapsed {
-            right: -160px;
-        }
-        #ad-panel-toggle {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            background: rgba(79,70,229,0.92);
-            color: white;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 0.6rem 0.35rem;
-            border-radius: 6px 0 0 6px;
-            cursor: pointer;
-            user-select: none;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.25);
-            border-right: none;
-            transition: background 0.2s;
-            box-shadow: -2px 0 10px rgba(79,70,229,0.25);
-        }
-        #ad-panel-toggle:hover { background: rgba(99,88,249,1); }
-        #ad-panel-inner {
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(79,70,229,0.18);
-            border-right: none;
-            border-radius: 8px 0 0 8px;
-            padding: 0.5rem;
-            width: 160px;
-            min-height: 240px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.4rem;
-            box-shadow: -6px 0 24px rgba(79,70,229,0.14);
-        }
-        .dark #ad-panel-inner {
-            background: rgba(15,23,42,0.97);
-            border-color: rgba(79,70,229,0.25);
-        }
-        #ad-panel-inner .ad-free-nudge { display: block; font-size: .65rem; font-weight: 700; color: #6366f1; text-align: center; margin: -.2rem 0 .5rem; }
-        #ad-panel-inner .ad-free-nudge:hover { text-decoration: underline; }
-        #ad-panel-inner .ad-label {
-            font-size: 0.55rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #94a3b8;
-        }
-        @media (max-width: 767px) {
-            #ad-panel { display: none !important; }
-        }
-
         /* ── Sidebar compliance links ─────────────────────────── */
         .sidebar-legal {
             display: none;
@@ -1248,6 +1182,19 @@
             .tab-content, .tab-content.active { transition: none; transform: none; }
         }
     </style>
+    <style id="wd-routes">
+        .tab-content.has-about.justify-center { justify-content: safe center; }
+        .tool-about { width: 100%; max-width: 52rem; margin: 3rem auto 1rem; padding: 1.25rem 1.4rem; border-radius: 1.25rem;
+            background: var(--surface, #fff); border: 1px solid var(--border, #e5e7eb); color: var(--muted, #64748b); font-size: .9rem; line-height: 1.6; }
+        .tool-about-title { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--text, #0f172a); margin-bottom: .35rem; letter-spacing: -.01em; }
+        .tool-about ul { list-style: disc; padding-left: 1.2rem; margin: .5rem 0 .75rem; }
+        .tool-about-links { display: flex; flex-wrap: wrap; gap: .4rem; }
+        .tool-about-links a { padding: .3rem .7rem; border-radius: 999px; background: var(--bg, #f8fafc); border: 1px solid var(--border, #e5e7eb); font-weight: 700; font-size: .78rem; color: var(--accent, #4f46e5); }
+        .tool-about-links a:hover { border-color: var(--accent, #4f46e5); }
+        a.nav-btn, a.app-tile { text-decoration: none; color: inherit; }
+        /* Baked-in copy for crawlers waits here until the app moves it into the tool's panel. */
+        main > .tool-about { position: absolute; visibility: hidden; pointer-events: none; }
+    </style>
     <!-- HOME v0.25 — hero, toolkit tiles, bento widgets, floating mobile nav -->
     <style id="wd-home">
         .font-display { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; }
@@ -1492,7 +1439,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.28.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.29.0</span>
             </div>
             <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="party-popper" class="w-4 h-4"></i>
@@ -1539,141 +1486,141 @@
         <nav class="flex-1 flex md:flex-col overflow-x-auto md:overflow-y-auto p-2 md:p-3 space-x-1 md:space-x-0 md:space-y-1 no-scrollbar items-center md:items-stretch">
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-2 tracking-widest">Life Planner</div>
 
-            <button onclick="app.switchTab('today')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="today">
+            <a href="/tools/daily-planner" onclick="return app.navLink(event, 'today')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="today">
                 <i data-lucide="sun" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Today</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('calendar')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="calendar">
+            <a href="/tools/calendar" onclick="return app.navLink(event, 'calendar')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="calendar">
                 <i data-lucide="calendar-days" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Calendar</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('pages')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="pages">
+            <a href="/tools/notes" onclick="return app.navLink(event, 'pages')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="pages">
                 <i data-lucide="notebook-pen" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Pages</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('chores')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="chores">
+            <a href="/tools/chore-chart" onclick="return app.navLink(event, 'chores')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="chores">
                 <i data-lucide="sparkles" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Chores</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('bills')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="bills">
+            <a href="/tools/bill-tracker" onclick="return app.navLink(event, 'bills')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="bills">
                 <i data-lucide="receipt" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Bills</span>
-            </button>
+            </a>
 
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Workspace</div>
             
-            <button onclick="app.switchTab('dashboard')" class="nav-btn active flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="dashboard">
+            <a href="/" onclick="return app.navLink(event, 'dashboard')" class="nav-btn active flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="dashboard">
                 <i data-lucide="home" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Dashboard</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('scratchpad')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="scratchpad">
+            <a href="/tools/notepad" onclick="return app.navLink(event, 'scratchpad')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="scratchpad">
                 <i data-lucide="file-text" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Scratchpad</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('tasks')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="tasks">
+            <a href="/tools/todo-list" onclick="return app.navLink(event, 'tasks')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="tasks">
                 <i data-lucide="check-circle-2" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Tasks</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('board')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="board">
+            <a href="/tools/kanban-board" onclick="return app.navLink(event, 'board')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="board">
                 <i data-lucide="columns" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Project Board</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('whiteboard')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="whiteboard">
+            <a href="/tools/whiteboard" onclick="return app.navLink(event, 'whiteboard')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="whiteboard">
                 <i data-lucide="pencil" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Whiteboard</span>
-            </button>
+            </a>
 
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Focus</div>
             
-            <button onclick="app.switchTab('clock')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="clock">
+            <a href="/tools/alarm-clock" onclick="return app.navLink(event, 'clock')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="clock">
                 <i data-lucide="clock" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Desk Clock</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('timer')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="timer">
+            <a href="/tools/pomodoro-timer" onclick="return app.navLink(event, 'timer')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="timer">
                 <i data-lucide="hourglass" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Focus Timer</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('stopwatch')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="stopwatch">
+            <a href="/tools/stopwatch" onclick="return app.navLink(event, 'stopwatch')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="stopwatch">
                 <i data-lucide="timer" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Stopwatch</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('focustown')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="focustown">
+            <a href="/tools/focus-town" onclick="return app.navLink(event, 'focustown')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="focustown">
                 <i data-lucide="building-2" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Focus Town</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('audio')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="audio">
+            <a href="/tools/ambient-sounds" onclick="return app.navLink(event, 'audio')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="audio">
                 <i data-lucide="headphones" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Sounds</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('breathing')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="breathing">
+            <a href="/tools/breathing-exercise" onclick="return app.navLink(event, 'breathing')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="breathing">
                 <i data-lucide="wind" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Breathing</span>
-            </button>
+            </a>
 
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-4 tracking-widest">Tools</div>
             
-            <button onclick="app.switchTab('calculator')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="calculator">
+            <a href="/tools/calculator" onclick="return app.navLink(event, 'calculator')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="calculator">
                 <i data-lucide="calculator" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Calculator</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('converter')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="converter">
+            <a href="/tools/unit-converter" onclick="return app.navLink(event, 'converter')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="converter">
                 <i data-lucide="arrow-left-right" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Converter</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('colorpicker')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="colorpicker">
+            <a href="/tools/color-picker" onclick="return app.navLink(event, 'colorpicker')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="colorpicker">
                 <i data-lucide="palette" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Colors</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('pdf')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="pdf">
+            <a href="/tools/pdf-merger" onclick="return app.navLink(event, 'pdf')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="pdf">
                 <i data-lucide="file-stack" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">PDF Merger</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('zones')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="zones">
+            <a href="/tools/world-clock" onclick="return app.navLink(event, 'zones')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="zones">
                 <i data-lucide="globe-2" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Time Zones</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('onair')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="onair">
+            <a href="/tools/on-air-sign" onclick="return app.navLink(event, 'onair')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="onair">
                 <i data-lucide="radio" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">On Air</span>
-            </button>
+            </a>
             
-            <button onclick="app.switchTab('recorder')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="recorder">
+            <a href="/tools/screen-recorder" onclick="return app.navLink(event, 'recorder')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="recorder">
                 <i data-lucide="video" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Recorder</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('mediaconv')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="mediaconv">
+            <a href="/tools/webm-to-mp4" onclick="return app.navLink(event, 'mediaconv')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="mediaconv">
                 <i data-lucide="file-cog" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Converter</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('devtools')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="devtools">
+            <a href="/tools/dev-toolkit" onclick="return app.navLink(event, 'devtools')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="devtools">
                 <i data-lucide="terminal" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Dev Toolkit</span>
-            </button>
+            </a>
 
-            <button onclick="app.switchTab('ocr')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="ocr">
+            <a href="/tools/image-to-text" onclick="return app.navLink(event, 'ocr')" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-tab="ocr">
                 <i data-lucide="scan-text" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">Image to Text</span>
-            </button>
+            </a>
 
             <div class="hidden lg:block text-[10px] font-bold text-slate-400 uppercase px-3 py-2 mt-2 tracking-widest">Group Games</div>
 
@@ -1717,35 +1664,6 @@
         </div>
 
     </aside>
-
-    <!-- Right-side Collapsible Ad Panel (desktop only) -->
-    <div id="ad-panel" aria-label="Advertisement panel">
-        <button id="ad-panel-toggle" onclick="toggleAdPanel()" title="Toggle ad panel" aria-expanded="true">Hide</button>
-        <div id="ad-panel-inner">
-            <span class="ad-label">Advertisement</span>
-            <a href="/login?mode=signup" class="ad-free-nudge wd-guest-only">Go ad-free: free profile →</a>
-            <ins class="adsbygoogle"
-                style="display:inline-block;width:160px;height:600px"
-                data-ad-client="ca-pub-8626644983261966"
-                data-ad-slot="auto"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            <!-- BEGIN AADS AD UNIT 2430800 -->
-            <div style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-              <iframe data-aa='2430800' data-src='//acceptable.a-ads.com/2430800/?size=Adaptive'
-                        style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
-            </div>
-            <!-- END AADS AD UNIT 2430800 -->
-        </div>
-    </div>
-    <script>
-        function toggleAdPanel() {
-            const panel = document.getElementById('ad-panel');
-            const toggle = document.getElementById('ad-panel-toggle');
-            const isCollapsed = panel.classList.toggle('collapsed');
-            toggle.setAttribute('aria-expanded', String(!isCollapsed));
-            toggle.textContent = isCollapsed ? 'Ads' : 'Hide';
-        }
-    </script>
 
     <!-- MAIN CONTENT -->
     <main id="main-content" role="main" class="flex-1 relative overflow-hidden order-first md:order-last">
@@ -1799,34 +1717,34 @@
                     <!-- Desk presets: one click swaps the sidebar + dashboard to a role (desks.js) -->
                     <div id="desk-presets" class="desk-presets" role="radiogroup" aria-label="Desk preset"></div>
                     <div class="app-grid" id="home-toolkit">
-                        <button onclick="app.switchTab('today')" class="app-tile group">
+                        <a href="/tools/daily-planner" onclick="return app.navLink(event, 'today')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-amber-400 to-orange-500"><i data-lucide="sun" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Today</span><span class="app-sub">Your morning check-in</span></span>
-                        </button>
-                        <button onclick="app.switchTab('calendar')" class="app-tile group">
+                        </a>
+                        <a href="/tools/calendar" onclick="return app.navLink(event, 'calendar')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-sky-500 to-indigo-500"><i data-lucide="calendar-days" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Calendar</span><span class="app-sub">Month, week & day</span></span>
-                        </button>
-                        <button onclick="app.switchTab('tasks')" class="app-tile group">
+                        </a>
+                        <a href="/tools/todo-list" onclick="return app.navLink(event, 'tasks')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-emerald-400 to-teal-500"><i data-lucide="check-circle-2" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Tasks</span><span class="app-sub">Smart dates & reminders</span></span>
-                        </button>
-                        <button onclick="app.switchTab('pages')" class="app-tile group">
+                        </a>
+                        <a href="/tools/notes" onclick="return app.navLink(event, 'pages')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-violet-500 to-fuchsia-500"><i data-lucide="notebook-pen" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Pages</span><span class="app-sub">Notes, journal, mood board</span></span>
-                        </button>
-                        <button onclick="app.switchTab('chores')" class="app-tile group">
+                        </a>
+                        <a href="/tools/chore-chart" onclick="return app.navLink(event, 'chores')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-pink-500 to-rose-500"><i data-lucide="sparkles" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Chores</span><span class="app-sub">ADHD-friendly routines</span></span>
-                        </button>
-                        <button onclick="app.switchTab('bills')" class="app-tile group">
+                        </a>
+                        <a href="/tools/bill-tracker" onclick="return app.navLink(event, 'bills')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-lime-500 to-emerald-600"><i data-lucide="receipt" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Bills</span><span class="app-sub">Never miss a due date</span></span>
-                        </button>
-                        <button onclick="app.switchTab('timer')" class="app-tile group">
+                        </a>
+                        <a href="/tools/pomodoro-timer" onclick="return app.navLink(event, 'timer')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-indigo-500 to-purple-600"><i data-lucide="hourglass" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Focus timer</span><span class="app-sub">Pomodoro & Focus Town</span></span>
-                        </button>
+                        </a>
                         <button onclick="app.switchTab('feud')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-yellow-400 to-amber-500"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Survey Says <span class="new-badge">New</span></span><span class="app-sub">Group game for calls &amp; TV</span></span>
@@ -1946,23 +1864,9 @@
                     </div>
                 </section>
 
-                <!-- Below-the-fold Banner Ad (safe zone: below all tool controls) -->
-                <div class="wd-ad text-center py-2">
-                    <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest mb-1">Advertisement · <a href="/login?mode=signup" class="text-indigo-400 hover:text-indigo-500 normal-case tracking-normal">Free profile = no ads</a></p>
-                    <ins class="adsbygoogle"
-                        style="display:block"
-                        data-ad-client="ca-pub-8626644983261966"
-                        data-ad-slot="auto"
-                        data-ad-format="horizontal"
-                        data-full-width-responsive="true"></ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                    <!-- BEGIN AADS AD UNIT 2430800 -->
-                    <div style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-                      <iframe data-aa='2430800' data-src='//acceptable.a-ads.com/2430800/?size=Adaptive'
-                                style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
-                    </div>
-                    <!-- END AADS AD UNIT 2430800 -->
-                </div>
+                <!-- Desk Sponsor: one curated sponsor / affiliate card (growth.js, sponsors.json).
+                     Replaces the programmatic banners; hidden for signed-in members. -->
+                <section id="desk-sponsor" class="wd-ad" aria-label="Sponsor"></section>
 
                 <!-- App footer: compliance links -->
                 <div class="flex flex-wrap justify-center gap-x-5 gap-y-1 pb-4 text-xs text-slate-400">
@@ -3304,15 +3208,28 @@
                     }
                 });
 
-                // Load saved tab or default
+                // Load the tool for a clean URL (/tools/whiteboard), an old #hash
+                // link (rewritten to the clean URL), or the last tab used.
+                const R = window.WD_ROUTES;
+                const route = R ? R.fromPath(location.pathname) : null;
                 const hashTab = (location.hash || '').replace('#', '');
-                const savedTab = (hashTab && document.getElementById(hashTab))
-                    ? hashTab
-                    : (localStorage.getItem('webdesks_last_tab') || 'dashboard');
-                this.switchTab(savedTab);
+                this._landingTab = route ? route.tab : null;
+                if (route && route.dt) this.dtCurrent = route.dt;
+                const savedTab = route ? route.tab
+                    : (hashTab && document.getElementById(hashTab)) ? hashTab
+                    : location.pathname === '/' || location.pathname === '/index.html' ? (localStorage.getItem('webdesks_last_tab') || 'dashboard')
+                    : 'dashboard';
+                this.switchTab(savedTab, { replace: true });
                 window.addEventListener('hashchange', () => {
                     const id = (location.hash || '').replace('#', '');
-                    if (id && id !== this.currentTab) this.switchTab(id);
+                    if (id && id !== this.currentTab && document.getElementById(id)) this.switchTab(id, { replace: true });
+                });
+                // Back / forward between tools.
+                window.addEventListener('popstate', () => {
+                    const r = R && R.fromPath(location.pathname);
+                    const tab = r ? r.tab : 'dashboard';
+                    if (r && r.dt && this.dtSelect) { this.dtCurrent = r.dt; if (this.currentTab === 'devtools') this.dtSelect(r.dt); }
+                    if (tab !== this.currentTab) this.switchTab(tab, { fromHistory: true });
                 });
 
                 // Initialize components
@@ -3428,7 +3345,7 @@
             },
 
             // Navigation
-            switchTab(tabId) {
+            switchTab(tabId, opts = {}) {
                 // Check if this tool has an external link
                 const tool = this.searchItems.find(t => t.id === tabId);
                 if (tool && tool.link) {
@@ -3463,11 +3380,8 @@
 
                 localStorage.setItem('webdesks_last_tab', tabId);
                 this.currentTab = tabId;
-                // Keep the URL shareable and make the PWA manifest shortcuts land correctly.
-                const desiredHash = tabId === 'dashboard' ? '' : '#' + tabId;
-                if ((location.hash || '') !== desiredHash) {
-                    history.replaceState(null, '', location.pathname + location.search + desiredHash);
-                }
+                // Every tool has its own indexable URL (tool-routes.js): /tools/<slug>.
+                this._syncToolUrl(tabId, opts);
                 this._rebuildIcons();
 
                 // Update mobile nav active state
@@ -3491,7 +3405,11 @@
                     devtools: 'Dev Toolkit — JSON, Base64, Hash, JWT & QR | WebDesks',
                     ocr: 'Image to Text — Free Online OCR | WebDesks'
                 };
-                document.title = tabTitles[tabId] || 'WebDesks';
+                const route = window.WD_ROUTES && this._routeFor(tabId);
+                if (!this._homeTitle) this._homeTitle = window.WD_ROUTES && WD_ROUTES.fromPath(location.pathname) ? 'WebDesks — Free Online Planner, Focus & Developer Tools' : document.title;
+                document.title = route ? `${route.title} | WebDesks` : tabId === 'dashboard' ? this._homeTitle : (tabTitles[tabId] || 'WebDesks');
+                this._syncToolMeta(route);
+                this.renderToolAbout(tabId);
 
                 // Life planner tabs lazy-load their libraries on first open
                 if (this.onLifeTab) this.onLifeTab(tabId);
@@ -3503,6 +3421,97 @@
                 } else {
                     this.ftStopAnimLoop();
                 }
+            },
+
+            // ── Clean tool URLs ──────────────────────────────────────
+            // The route for a tab; the Dev Toolkit's URL follows the picked tool.
+            _routeFor(tabId) {
+                const R = window.WD_ROUTES;
+                if (!R || tabId === 'dashboard') return null;
+                const here = R.fromPath(location.pathname);
+                if (tabId === 'devtools' && this.dtCurrent) {
+                    const sub = R.ROUTES.find(r => r.tab === 'devtools' && r.dt === this.dtCurrent);
+                    // Only keep a sub-tool URL if that's where the visitor is (or arrived).
+                    if (sub && here && here.tab === 'devtools') return sub;
+                }
+                return R.byTab[tabId] || null;
+            },
+
+            _syncToolUrl(tabId, opts = {}) {
+                const R = window.WD_ROUTES;
+                if (!R || opts.fromHistory) return;
+                const route = this._routeFor(tabId);
+                const path = route ? '/tools/' + route.slug : '/';
+                if (location.pathname === path && !location.hash) return;
+                const url = path + location.search;
+                if (opts.replace || !this._urlReady) history.replaceState(null, '', url);
+                else history.pushState(null, '', url);
+                this._urlReady = true;
+            },
+
+            // Title is set by switchTab; keep description + canonical in step too.
+            _syncToolMeta(route) {
+                const desc = route ? route.desc : (this._homeDesc || (this._homeDesc = document.querySelector('meta[name="description"]')?.content || ''));
+                const url = 'https://webdesks.app' + (route ? '/tools/' + route.slug : '/');
+                const set = (sel, attr, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute(attr, val); };
+                set('meta[name="description"]', 'content', desc);
+                set('link[rel="canonical"]', 'href', url);
+                set('meta[property="og:url"]', 'content', url);
+            },
+
+            // "About this tool": what it does, features, guide and related tools.
+            // Sits at the bottom of the tool's panel (also baked into the static
+            // /tools/<slug> pages so crawlers read it without running JS).
+            renderToolAbout(tabId) {
+                document.querySelectorAll('.tool-about[data-dynamic]').forEach(el => el.remove());
+                const panel = document.getElementById(tabId);
+                const route = window.WD_ROUTES && this._routeFor(tabId);
+                if (!panel || !route) return;
+                const stat = document.getElementById('tool-about-static');
+                if (stat) {
+                    // The baked-in copy is for crawlers; move it into place once.
+                    if (stat.dataset.slug === route.slug) {
+                        if (!panel.contains(stat)) { panel.appendChild(stat); panel.classList.add('has-about'); }
+                        return;
+                    }
+                    stat.remove();
+                }
+                const R = window.WD_ROUTES;
+                const esc = s => this.escapeHtml(String(s));
+                const el = document.createElement('section');
+                el.className = 'tool-about';
+                el.dataset.dynamic = '1';
+                const heading = this._landingTab === tabId ? 'h1' : 'h2';
+                el.innerHTML = `
+                    <${heading} class="tool-about-title">${esc(route.name)} — free, in your browser</${heading}>
+                    <p>${esc(route.desc)}</p>
+                    <ul>${route.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+                    <div class="tool-about-links">
+                        ${route.blog ? `<a href="/blog/${route.blog}">Read the guide →</a>` : ''}
+                        ${route.related.map(slug => R.bySlug[slug]).filter(Boolean).map(r => `<a href="/tools/${r.slug}" onclick="return app.toolLink(event, '${r.slug}')">${esc(r.name)}</a>`).join('')}
+                    </div>`;
+                panel.appendChild(el);
+                panel.classList.add('has-about');
+            },
+
+            // In-app links to /tools/<slug>: switch without a reload, but let
+            // ⌘/Ctrl/middle-click open a new tab as normal.
+            toolLink(e, slug) {
+                if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return true;
+                if (e) e.preventDefault();
+                const r = window.WD_ROUTES && window.WD_ROUTES.bySlug[slug];
+                if (!r) return true;
+                if (r.dt) this.dtCurrent = r.dt;
+                if (r.dt && this.currentTab === 'devtools') { this.dtSelect(r.dt); return false; }
+                this.switchTab(r.tab);
+                if (r.dt && this.dtSelect) this.dtSelect(r.dt);
+                return false;
+            },
+            navLink(e, tabId) {
+                if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return true;
+                if (e) e.preventDefault();
+                this.switchTab(tabId);
+                return false;
             },
 
             // Sidebar groups: collapsible on desktop, state remembered per browser.
@@ -6311,6 +6320,16 @@
                 const tool = this.dtTools.find(t => t.id === id);
                 if (!tool) return;
                 this.dtCurrent = id;
+                // Each Dev Toolkit tool has its own URL (/tools/json-formatter …).
+                if (this.currentTab === 'devtools' && window.WD_ROUTES) {
+                    const sub = window.WD_ROUTES.ROUTES.find(r => r.tab === 'devtools' && r.dt === id);
+                    if (sub && location.pathname !== '/tools/' + sub.slug) {
+                        history.replaceState(null, '', '/tools/' + sub.slug + location.search);
+                        document.title = `${sub.title} | WebDesks`;
+                        this._syncToolMeta(sub);
+                        this.renderToolAbout('devtools');
+                    }
+                }
                 this.dtLastOutput = '';
 
                 document.querySelectorAll('.dt-chip').forEach(chip => {
@@ -6766,5 +6785,8 @@
     <script src="/shell.js"></script>
     <!-- Desk presets, onboarding, morning brief / shutdown, launchers, snippets, money, .ics agenda -->
     <script src="/desks.js"></script>
+    <!-- Desk Sponsor, Public Desk sharing, blog "Save to My WebDesk" handoff -->
+    <script src="/desk-badges.js"></script>
+    <script src="/growth.js"></script>
 </body>
 </html>

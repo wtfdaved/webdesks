@@ -17,7 +17,7 @@
   "shortcuts": [
     {
       "name": "Today",
-      "url": "/#today",
+      "url": "/tools/daily-planner",
       "description": "Your morning check-in: mood, top 3, agenda, chores and bills",
       "icons": [
         {
@@ -28,7 +28,7 @@
     },
     {
       "name": "Calendar",
-      "url": "/#calendar",
+      "url": "/tools/calendar",
       "description": "Month, week and day views of events, tasks, chores and bills",
       "icons": [
         {
@@ -39,7 +39,7 @@
     },
     {
       "name": "Chores",
-      "url": "/#chores",
+      "url": "/tools/chore-chart",
       "description": "ADHD-friendly chore organizer",
       "icons": [
         {
@@ -50,7 +50,7 @@
     },
     {
       "name": "Command palette",
-      "url": "/#dashboard",
+      "url": "/",
       "description": "Jump to any tool with Ctrl/Cmd+K",
       "icons": [
         {
@@ -61,7 +61,7 @@
     },
     {
       "name": "Focus Timer",
-      "url": "/#timer",
+      "url": "/tools/pomodoro-timer",
       "description": "Start a Pomodoro session",
       "icons": [
         {

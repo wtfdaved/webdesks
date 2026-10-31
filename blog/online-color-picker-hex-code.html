@@ -81,10 +81,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#colorpicker" class="hover:text-indigo-600 transition-colors">Color Picker</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/color-picker" class="hover:text-indigo-600 transition-colors">Color Picker</a>
             </div>
-            <a href="/#colorpicker" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/color-picker" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Color Picker →
             </a>
         </nav>
@@ -124,12 +124,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="color"></div>
+
+
         <p>Color is one of the most powerful tools in design — and one of the most mismanaged. Choosing the wrong shade, forgetting the exact hex code, or copying a color that looks right on screen but renders differently in print are all common problems. Having a reliable color picker at your fingertips eliminates most of these friction points.</p>
 
         <p>The <strong>WebDesks Color Picker</strong> is a free browser-based tool that lets you select any color visually and instantly generates its HEX, RGB, and HSL codes. No design software to open, no plugins to install — just a color picker in your browser tab.</p>
 
         <div class="callout">
-            <p><strong>Pick a color now:</strong> <a href="/#colorpicker" class="underline font-semibold">Open the WebDesks Color Picker</a> — drag the picker, get the code, done.</p>
+            <p><strong>Pick a color now:</strong> <a href="/tools/color-picker" class="underline font-semibold">Open the WebDesks Color Picker</a> — drag the picker, get the code, done.</p>
         </div>
 
         <h2>Understanding Color Formats: HEX, RGB, and HSL</h2>
@@ -157,7 +161,7 @@
         <h2>How to Use the WebDesks Color Picker</h2>
 
         <ol>
-            <li>Navigate to <a href="/#colorpicker" class="text-fuchsia-700 hover:underline">webdesks.app/#colorpicker</a> or click the palette icon in the sidebar.</li>
+            <li>Navigate to <a href="/tools/color-picker" class="text-fuchsia-700 hover:underline">webdesks.app/#colorpicker</a> or click the palette icon in the sidebar.</li>
             <li>Use the <strong>color spectrum slider</strong> to select a hue.</li>
             <li>Drag the <strong>picker dot</strong> on the saturation/lightness gradient to fine-tune your color.</li>
             <li>The <strong>HEX, RGB, and HSL codes</strong> update instantly as you drag.</li>
@@ -230,7 +234,7 @@
         <p>Yes. Type or paste a hex code (e.g., <code>#4f46e5</code>) into the HEX input field, and the picker will jump to that color and display its equivalent RGB and HSL values.</p>
 
         <h3>Can I save colors for later?</h3>
-        <p>Copy the HEX code to your clipboard and paste it into your <a href="/#scratchpad" class="text-fuchsia-700 hover:underline">Scratchpad</a> for a quick color reference log. For a full color system, save codes in your design tool's color library.</p>
+        <p>Copy the HEX code to your clipboard and paste it into your <a href="/tools/notepad" class="text-fuchsia-700 hover:underline">Scratchpad</a> for a quick color reference log. For a full color system, save codes in your design tool's color library.</p>
 
         <h3>Does it work offline?</h3>
         <p>Yes. WebDesks is a PWA that works offline after your first visit. All color calculations happen locally.</p>
@@ -252,13 +256,13 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Pick a Color — Get the Code Instantly</h2>
             <p class="text-slate-500 mb-8">HEX, RGB, and HSL — all in one free browser tool. No account required.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#colorpicker" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🎨 Open Color Picker</a>
+                <a href="/tools/color-picker" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🎨 Open Color Picker</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <a href="/#whiteboard" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🖌️ Whiteboard</a>
-                <a href="/#scratchpad" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
-                <a href="/#converter" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔄 Unit Converter</a>
+                <a href="/tools/whiteboard" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🖌️ Whiteboard</a>
+                <a href="/tools/notepad" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
+                <a href="/tools/unit-converter" class="bg-white border border-slate-200 hover:border-fuchsia-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔄 Unit Converter</a>
             </div>
         </div>
     </section>
@@ -270,7 +274,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -286,5 +290,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

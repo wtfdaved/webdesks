@@ -82,10 +82,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#board" class="hover:text-indigo-600 transition-colors">Kanban Board</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/kanban-board" class="hover:text-indigo-600 transition-colors">Kanban Board</a>
             </div>
-            <a href="/#board" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/kanban-board" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Try Kanban Board →
             </a>
         </nav>
@@ -126,6 +126,10 @@
 
     <!-- Article Body -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
+
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="todo" data-target="board"></div>
+
 
         <p>
             Kanban boards were invented in the 1940s by Toyota engineer Taiichi Ohno to manage manufacturing workflow and reduce waste. Today they're one of the most widely used visual productivity systems in software development and project management. But kanban isn't just for teams — it may be the most effective personal task management system most individuals have never tried.
@@ -267,7 +271,7 @@
 
         <h2>Try the WebDesks Kanban Board Free</h2>
         <p>
-            The <a href="/#board" class="text-indigo-600 font-semibold hover:underline">WebDesks Kanban Board</a> is a fully-functional, free kanban board that runs entirely in your browser. Features include:
+            The <a href="/tools/kanban-board" class="text-indigo-600 font-semibold hover:underline">WebDesks Kanban Board</a> is a fully-functional, free kanban board that runs entirely in your browser. Features include:
         </p>
         <ul>
             <li>Drag-and-drop cards between columns</li>
@@ -338,5 +342,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

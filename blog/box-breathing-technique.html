@@ -118,7 +118,7 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
                 <a href="/breathing-guide" class="hover:text-indigo-600 transition-colors">Breathing Guide</a>
             </div>
             <a href="/breathing-guide" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
@@ -162,6 +162,10 @@
 
     <!-- Article Body -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
+
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="breathing"></div>
+
 
         <p>
             In 2014, former Navy SEAL commander Mark Divine published a book called <em>The Way of the SEAL</em>, bringing widespread attention to a breathing practice his unit had quietly used for decades: <strong>box breathing</strong>. The technique — inhale for four counts, hold for four, exhale for four, hold for four — has since been adopted by emergency room surgeons, professional athletes, Olympic competitors, and high-stakes executives.
@@ -337,5 +341,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

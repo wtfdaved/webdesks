@@ -44,7 +44,7 @@
                 🖥️ WebDesks
             </a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">Blog</a>
                 <a href="/about" class="hover:text-indigo-600 transition-colors">About</a>
                 <a href="/contact" class="text-indigo-600 font-semibold">Contact</a>
@@ -63,6 +63,25 @@
             </div>
             <h1 class="text-4xl md:text-5xl font-black mb-3">Contact Us</h1>
             <p class="text-white/80 text-lg max-w-xl">We'd love to hear from you — whether it's a bug report, feature request, or just a hello.</p>
+        </div>
+    </section>
+
+    <!-- Desk Sponsor: the dashboard's single curated placement -->
+    <section id="sponsor" class="max-w-5xl mx-auto px-4 pt-12 scroll-mt-20">
+        <div class="rounded-2xl border border-indigo-100 bg-gradient-to-br from-white to-indigo-50 p-6 md:p-8">
+            <div class="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-2">📣 Sponsor the Desk</div>
+            <h2 class="text-2xl font-black text-slate-800 mb-2">One sponsor card on the WebDesks dashboard</h2>
+            <p class="text-slate-600 mb-4">The dashboard has no programmatic ads, just one curated card from a single sponsor or affiliate partner, shown to guests while they plan their day. We pick partners whose products fit the people who use WebDesks:</p>
+            <ul class="grid sm:grid-cols-3 gap-3 text-sm mb-5">
+                <li class="bg-white rounded-xl border border-slate-200 p-3"><b class="block text-slate-800">💻 Developer tools</b>APIs, editors, hosting, dev SaaS</li>
+                <li class="bg-white rounded-xl border border-slate-200 p-3"><b class="block text-slate-800">🪑 Desk gear</b>Ergonomic chairs, standing desks, keyboards, monitors</li>
+                <li class="bg-white rounded-xl border border-slate-200 p-3"><b class="block text-slate-800">⚡ Productivity apps</b>Calendars, note apps, focus tools, courses</li>
+            </ul>
+            <p class="text-slate-600 text-sm mb-5">Placements are booked by the month and can target a Desk preset (Developer, Student or Remote Work). Every card is labelled <i>Sponsor</i> or <i>Affiliate</i>, links are marked <code>rel="sponsored"</code>, and you get daily view and click counts. Signed-in members never see sponsors.</p>
+            <div class="flex flex-wrap gap-3">
+                <a href="mailto:ads@webdesks.app?subject=Desk%20Sponsor%20inquiry" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-3 rounded-xl">Email ads@webdesks.app</a>
+                <a href="#contact-form" onclick="document.getElementById('subject').value='advertising'" class="inline-flex items-center gap-2 border border-slate-300 font-bold px-5 py-3 rounded-xl text-slate-700 hover:border-indigo-400">Or use the form below</a>
+            </div>
         </div>
     </section>
 
@@ -206,7 +225,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/contact" class="text-indigo-400">Contact</a>
@@ -224,6 +243,12 @@
     </footer>
 
     <script>
+        // ?topic=advertising (from the dashboard's sponsor card) preselects the subject.
+        (function () {
+            var topic = new URLSearchParams(location.search).get('topic');
+            var sel = document.getElementById('subject');
+            if (topic && sel && sel.querySelector('option[value="' + topic.replace(/[^a-z]/g, '') + '"]')) sel.value = topic;
+        })();
         function handleFormSubmit(e) {
             e.preventDefault();
             const form = document.getElementById('contact-form');

@@ -1120,7 +1120,7 @@
             } else if (t.dataset.toggle) app.mixerToggle(t.dataset.toggle);
             else if (t.dataset.preset) app.mixerPreset(t.dataset.preset);
             else if (t.dataset.delmix) { e.stopPropagation(); mixes = mixes.filter(m => m.id !== t.dataset.delmix); saveMixes(); }
-            else if (t.dataset.mix) { const m = mixes.find(x => x.id === t.dataset.mix); if (m) applyMix(m.mix); }
+            else if (t.dataset.mix) { const m = mixes.find(x => x.id === t.dataset.mix); if (m) { applyMix(m.mix); bumpMix(m.id); } }
             else {
                 const a = t.dataset.act;
                 if (a === 'play') app.toggleMusic();
@@ -1168,6 +1168,15 @@
         saveMixes();
         toast('Mix saved');
     }
+    // How often each preset / saved mix is started (favourite on a Public Desk).
+    function bumpMix(id) {
+        try {
+            const u = JSON.parse(localStorage.getItem('wd_mix_usage') || '{}') || {};
+            u[id] = (u[id] || 0) + 1;
+            localStorage.setItem('wd_mix_usage', JSON.stringify(u));
+        } catch (e) {}
+    }
+
     function applyMix(mix) {
         Object.keys(live).forEach(id => { if (!(id in mix)) chStop(id); });
         Object.entries(mix).forEach(([id, v]) => {
@@ -1307,14 +1316,14 @@
         },
         mixerPreset(name) {
             const p = PRESETS.find(x => x.id === name) || PRESETS.find(x => x.id === ({ cafe: 'rainycafe', rain: 'storm', nature: 'forest', cozy: 'cabin' })[name]);
-            if (p) { applyMix(p.mix); toast(`${p.emoji} ${p.name}`); }
+            if (p) { applyMix(p.mix); bumpMix(p.id); toast(`${p.emoji} ${p.name}`); }
         },
         // Workspace launchers (desks.js): a built-in preset id or a saved mix id.
         mixerStart(id) {
             const p = PRESETS.find(x => x.id === id);
-            if (p) { applyMix(p.mix); return `${p.emoji} ${p.name}`; }
+            if (p) { applyMix(p.mix); bumpMix(p.id); return `${p.emoji} ${p.name}`; }
             const m = mixes.find(x => x.id === id);
-            if (m) { applyMix(m.mix); return m.name; }
+            if (m) { applyMix(m.mix); bumpMix(m.id); return m.name; }
             return '';
         },
         mixerList() { return PRESETS.map(p => ({ id: p.id, name: `${p.emoji} ${p.name}` })).concat(mixes.map(m => ({ id: m.id, name: `🎚️ ${m.name}` }))); },

@@ -78,10 +78,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#clock" class="hover:text-indigo-600 transition-colors">Desk Clock</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/alarm-clock" class="hover:text-indigo-600 transition-colors">Desk Clock</a>
             </div>
-            <a href="/#clock" class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/alarm-clock" class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Clock →
             </a>
         </nav>
@@ -121,12 +121,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="alarm"></div>
+
+
         <p>Your phone is the obvious alarm clock — but it's also your biggest distraction. Every time you glance at it to check the time, you're one notification away from a 20-minute detour. A browser-based desk clock solves this neatly: time-awareness without the temptation of notifications.</p>
 
         <p>The <strong>WebDesks Desk Clock</strong> displays a beautiful full-screen digital clock with the current date, lets you set browser-based alarms, and sits quietly in a browser tab — visible when you need it, ignorable when you don't. No account, no app install, and it works offline as a PWA.</p>
 
         <div class="callout">
-            <p><strong>Open it now:</strong> <a href="/#clock" class="underline font-semibold">webdesks.app/#clock</a> — your desk clock is one tab away.</p>
+            <p><strong>Open it now:</strong> <a href="/tools/alarm-clock" class="underline font-semibold">webdesks.app/#clock</a> — your desk clock is one tab away.</p>
         </div>
 
         <h2>Features of the WebDesks Desk Clock</h2>
@@ -154,7 +158,7 @@
         <h2>How to Set an Alarm in Your Browser</h2>
 
         <ol>
-            <li>Navigate to <a href="/#clock" class="text-orange-600 hover:underline">webdesks.app/#clock</a> (or click the clock icon in the sidebar).</li>
+            <li>Navigate to <a href="/tools/alarm-clock" class="text-orange-600 hover:underline">webdesks.app/#clock</a> (or click the clock icon in the sidebar).</li>
             <li>You'll see the large digital clock display and a time input field below it.</li>
             <li>Click the time field and enter your desired alarm time using your keyboard or the time picker.</li>
             <li>Click <strong>"Set Alarm"</strong> — the bell icon in the header will update to confirm the alarm is active.</li>
@@ -200,7 +204,7 @@
         <p>Set an alarm 10 minutes before every scheduled video call. When it fires, you have time to wrap up what you're doing, get water, and join the call prepared rather than scrambling at the last second.</p>
 
         <h3>Exam and test timing</h3>
-        <p>Students practicing timed tests can use the Desk Clock as a visible timer reference while working from a full-screen clock display. Combined with the <a href="/#stopwatch" class="text-orange-600 hover:underline">Stopwatch</a>, you can replicate real exam conditions precisely.</p>
+        <p>Students practicing timed tests can use the Desk Clock as a visible timer reference while working from a full-screen clock display. Combined with the <a href="/tools/stopwatch" class="text-orange-600 hover:underline">Stopwatch</a>, you can replicate real exam conditions precisely.</p>
 
         <h2>Frequently Asked Questions</h2>
 
@@ -233,14 +237,14 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Open Your Browser Desk Clock</h2>
             <p class="text-slate-500 mb-8">Large digital display, alarm support, date readout. Free, instant, no account.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#clock" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🕐 Open Desk Clock</a>
+                <a href="/tools/alarm-clock" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🕐 Open Desk Clock</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
                 <a href="/pomodoro-timer" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏱️ Pomodoro Timer</a>
-                <a href="/#stopwatch" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏲️ Stopwatch</a>
-                <a href="/#tasks" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
-                <a href="/#zones" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
+                <a href="/tools/stopwatch" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏲️ Stopwatch</a>
+                <a href="/tools/todo-list" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
+                <a href="/tools/world-clock" class="bg-white border border-slate-200 hover:border-orange-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
             </div>
         </div>
     </section>
@@ -252,7 +256,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -268,5 +272,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

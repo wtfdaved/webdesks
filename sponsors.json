@@ -1,0 +1,19 @@
+{
+  "_readme": "Desk Sponsor slot on the dashboard (growth.js). One curated card replaces the programmatic banners. Add a sponsor booked through ads@webdesks.app / the contact form's Advertising topic, then deploy. Fields: id (a-z, 0-9, dashes; used in stats), name, tagline, url (https), cta, logo (an image path such as /sponsors/acme.png, or an emoji), label ('Sponsor' for paid placements, 'Affiliate' for affiliate links — always disclosed on the card), category, desks (which Desk presets see it: all, dev, student, remote), start / end (YYYY-MM-DD, inclusive), weight (rotation share). With no live sponsor the card invites brands to book the slot. Views and clicks are counted per day in Supabase sponsor_stats.",
+  "contact": "/contact?topic=advertising#sponsor",
+  "sponsors": [],
+  "_example": {
+    "id": "acme-standing-desk",
+    "name": "Acme Standing Desk",
+    "tagline": "Sit-stand desk with memory presets. WebDesks readers get 10% off.",
+    "url": "https://example.com/?ref=webdesks",
+    "cta": "Get 10% off",
+    "logo": "🪑",
+    "label": "Affiliate",
+    "category": "Ergonomic desk gear",
+    "desks": ["all"],
+    "start": "2026-11-01",
+    "end": "2026-11-30",
+    "weight": 1
+  }
+}

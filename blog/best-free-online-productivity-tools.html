@@ -78,7 +78,7 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
             </div>
             <a href="/" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open All Tools →
@@ -122,6 +122,10 @@
     <!-- Article Body -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="todo"></div>
+
+
         <p>
             Remote work has created a paradox: you have access to the entire internet from your desk, but too many productivity tools require expensive subscriptions, invasive account creation, or software installs that don't work across your different machines. The best remote work tools in 2026 are the ones that are always available — in any browser, on any device, with no setup and no cost.
         </p>
@@ -149,7 +153,7 @@
             <span class="tool-icon">⏲️</span>
             <div>
                 <div class="tool-tag">Stopwatch</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#stopwatch" class="text-indigo-600 hover:underline">Stopwatch & Lap Timer</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/stopwatch" class="text-indigo-600 hover:underline">Stopwatch & Lap Timer</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A precise stopwatch with lap tracking for measuring how long tasks actually take — which is consistently different from how long you thought they'd take. Tracking real task duration is a foundational habit for better planning and time estimation.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Time tracking, calibrating task estimates, billing by the hour.</p>
             </div>
@@ -159,7 +163,7 @@
             <span class="tool-icon">🌍</span>
             <div>
                 <div class="tool-tag">Time Zones</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#zones" class="text-indigo-600 hover:underline">World Zones Time Converter</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/world-clock" class="text-indigo-600 hover:underline">World Zones Time Converter</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Add multiple time zones and see the current time in each at a glance. Drag a slider to find the overlap window for a meeting across distributed teams. Essential for anyone coordinating across more than two time zones.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Scheduling async meetings, remote team coordination, international clients.</p>
             </div>
@@ -171,7 +175,7 @@
             <span class="tool-icon">📋</span>
             <div>
                 <div class="tool-tag">Kanban Board</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#board" class="text-indigo-600 hover:underline">Kanban Board</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/kanban-board" class="text-indigo-600 hover:underline">Kanban Board</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A fully-functional personal kanban board with drag-and-drop cards across customisable columns. All data saved locally in your browser — no account, no sync, no subscription. Perfect for visual personal project management without the overhead of tools like Trello or Jira.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Personal sprint planning, side projects, freelance workflow management.</p>
             </div>
@@ -181,7 +185,7 @@
             <span class="tool-icon">✅</span>
             <div>
                 <div class="tool-tag">Task Manager</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#tasks" class="text-indigo-600 hover:underline">Task Manager</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/todo-list" class="text-indigo-600 hover:underline">Task Manager</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A lightweight checklist-style task manager for daily to-do lists. Simpler than a kanban board for quick daily planning. Tasks persist in localStorage and are there when you return the next day.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Daily task lists, quick capture of action items, simple personal project tracking.</p>
             </div>
@@ -191,7 +195,7 @@
             <span class="tool-icon">📝</span>
             <div>
                 <div class="tool-tag">Notes</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#scratchpad" class="text-indigo-600 hover:underline">Markdown Scratchpad</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/notepad" class="text-indigo-600 hover:underline">Markdown Scratchpad</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A markdown-enabled scratchpad with live preview and syntax highlighting. Write notes, code snippets, meeting notes, or draft documents with full Markdown support. Everything persists locally.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Meeting notes, documentation drafts, code documentation, personal knowledge notes.</p>
             </div>
@@ -203,7 +207,7 @@
             <span class="tool-icon">🖊️</span>
             <div>
                 <div class="tool-tag">Whiteboard</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#whiteboard" class="text-indigo-600 hover:underline">Digital Whiteboard</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/whiteboard" class="text-indigo-600 hover:underline">Digital Whiteboard</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A free-form drawing canvas for sketching diagrams, wireframes, flow charts, or brainstorming ideas visually. Supports pressure-sensitive drawing on tablets and stylus devices. No account, no export to a cloud service.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Quick system diagrams, meeting sketches, wireframe concepts, mind maps.</p>
             </div>
@@ -213,7 +217,7 @@
             <span class="tool-icon">🎨</span>
             <div>
                 <div class="tool-tag">Color Tools</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#color" class="text-indigo-600 hover:underline">Color Picker</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/color-picker" class="text-indigo-600 hover:underline">Color Picker</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A full-spectrum color picker with HEX, RGB, and HSL outputs. Useful for designers, developers, and anyone building UI or visual content who needs to quickly pick and copy a colour value.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Web development, UI design, brand asset creation.</p>
             </div>
@@ -245,7 +249,7 @@
             <span class="tool-icon">🎬</span>
             <div>
                 <div class="tool-tag">Media Converter</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#media" class="text-indigo-600 hover:underline">Media Converter (WebM to MP4)</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/webm-to-mp4" class="text-indigo-600 hover:underline">Media Converter (WebM to MP4)</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Convert video files (WebM to MP4) and resize images entirely in your browser using FFmpeg.wasm. Perfect for converting screen recordings from the Screen Recorder into MP4 for sharing on platforms that don't support WebM.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Post-processing screen recordings, converting videos for sharing.</p>
             </div>
@@ -279,7 +283,7 @@
             <span class="tool-icon">🔢</span>
             <div>
                 <div class="tool-tag">Calculator</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#calculator" class="text-indigo-600 hover:underline">Scientific Calculator</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/calculator" class="text-indigo-600 hover:underline">Scientific Calculator</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">A full-featured scientific calculator directly in your browser. Supports standard arithmetic, trigonometric functions, logarithms, exponents, and more. Always available without switching apps or finding your phone.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> Quick calculations, financial estimates, unit conversions combined with the unit converter.</p>
             </div>
@@ -289,7 +293,7 @@
             <span class="tool-icon">📐</span>
             <div>
                 <div class="tool-tag">Converter</div>
-                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/#converter" class="text-indigo-600 hover:underline">Unit Converter</a></h3>
+                <h3 style="margin-top: 0.25rem; margin-bottom: 0.4rem;"><a href="/tools/unit-converter" class="text-indigo-600 hover:underline">Unit Converter</a></h3>
                 <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Convert between metric and imperial units across length, weight, temperature, area, volume, speed, and more. Especially useful when working with international colleagues who use different measurement systems.</p>
                 <p style="margin-bottom: 0; font-size: 0.9rem;"><strong>Best for:</strong> International project specs, US-metric conversions, recipe conversions.</p>
             </div>
@@ -370,5 +374,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>
