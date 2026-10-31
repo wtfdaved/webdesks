@@ -5,10 +5,9 @@
 // signed-in user can reach their own profile and Desk, nothing else).
 // NEVER put the service_role / secret key here.
 //
-// Fill these in directly, or set SUPABASE_URL and SUPABASE_ANON_KEY in
-// Netlify (Site configuration → Environment variables) and the build step in
-// netlify.toml writes them into this file on every deploy.
-// While either is empty, sign-in is hidden and WebDesks runs guest-only.
+// Edit and deploy to change them (Cloudflare Pages serves this file as-is;
+// the Public Desk function reads it too). While either is empty, sign-in is
+// hidden and WebDesks runs guest-only.
 window.WEBDESKS_SUPABASE = {
     url: 'https://aggqjzjmiyrbrnuenhvu.supabase.co',
     anonKey: 'sb_publishable__5MG26x9Lwgvoe9XOfATPA_WO_LPnSF',

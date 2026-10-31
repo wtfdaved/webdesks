@@ -137,35 +137,40 @@ Survey Says is described as "Family Feud–style" with a non-affiliation note.
     link and see the next 7 days, read-only. Parsed in the browser (time zones
     incl. Windows names, RRULE daily/weekly/monthly/yearly with BYDAY,
     BYMONTHDAY, COUNT, UNTIL, EXDATE, RECURRENCE-ID overrides). Calendar servers
-    block browser CORS, so the feed is fetched by
-    `netlify/functions/ics.mjs`, which refuses private-network hosts and
+    block browser CORS, so the feed is fetched by `/api/ics`
+    (`functions/api/ics.js` → `lib/ics-proxy.js`), which refuses private-network hosts and
     anything that isn't `BEGIN:VCALENDAR`, and stores nothing. The parsed feed
     is cached on the device only (`wdl_ics_cache`, outside Desk sync).
 
-## Hosting (v0.31) — works on Cloudflare Pages and Netlify
+## Hosting — Cloudflare Pages
 
-The live site is served like **Cloudflare Pages**: the repository as-is, no
-build step, and `netlify.toml` is ignored. Cloudflare only falls back to
-`index.html` for unknown URLs while there is no `404.html`; adding one in
-v0.30 made every refreshed `/tools/…` URL (and `/u/…`) a 404. Now:
+WebDesks is hosted on **Cloudflare Pages**, straight from this repository:
+no build step, no bundler. Pushing to `main` deploys. (v0.32 removed the
+unused Netlify files.) Cloudflare only falls back to `index.html` for
+unknown URLs while there is no `404.html`, so clean URLs are handled
+explicitly:
 
-| File | Read by | Does |
-| --- | --- | --- |
-| `_redirects` | Cloudflare, Netlify | `/tools/*` → the app, `/u/*` → `u.html` (static fallbacks) |
-| `_headers` | Cloudflare, Netlify | Same security / cache headers as `netlify.toml` |
-| `functions/tools/[[path]].js` | Cloudflare | Renders each tool's SEO page on request (`tool-pages.js`) |
-| `functions/u/[username].js` | Cloudflare | Public Desk page with the member's details for link previews |
-| `functions/api/ics.js` | Cloudflare | Calendar feed proxy (the agenda tries `/api/ics`, then Netlify's) |
-| `netlify/functions/*.mjs`, `netlify.toml` | Netlify | The same handlers; `lib/cf-adapter.js` runs them on Cloudflare |
-| `u.html` | any | Loads a Public Desk in the browser (`public-desk-render.js`) |
-| `404.html` | any | Self-heals: a tool URL goes to `/?r=/tools/…`, a Desk URL to `/u?u=…` |
+| File | Does |
+| --- | --- |
+| `functions/tools/[[path]].js` | `/tools/` and `/tools/<slug>`: renders each tool's SEO page from `index.html` (`tool-pages.js`) |
+| `functions/u/[username].js` | `/u/<username>`: Public Desk with the member's details for link previews (`lib/public-desk-page.js`) |
+| `functions/api/ics.js` | `/api/ics`: calendar feed proxy (`lib/ics-proxy.js`) |
+| `_redirects` | Static fallbacks: `/tools/*` → the app, `/u/*` → `u.html` |
+| `_headers` | Security and cache headers |
+| `u.html` | Loads a Public Desk in the browser (`public-desk-render.js`) |
+| `404.html` | Branded 404 that also self-heals tool and Desk URLs |
 
-Test locally the way Cloudflare serves it:
-`npx wrangler pages dev .` (no build; delete any generated `tools/` first).
+`lib/` holds code imported by the functions (it lives outside `functions/`
+because Cloudflare turns every file there into a route). Optional Pages
+environment variables `SUPABASE_URL` / `SUPABASE_ANON_KEY` override
+`supabase-config.js` for the Public Desk function.
+
+Test locally exactly as Cloudflare serves it: `npx wrangler pages dev .`
 
 ## v0.31: fixes and five more improvements
 
-- **404 on refresh / Public Desk 404** — see Hosting above.
+- **404 on refresh / Public Desk 404** — fixed with the Cloudflare Pages
+  functions and rewrites described under Hosting.
 - **White bar under the phone dock** — v0.30 pinned the body with `inset: 0`,
   which stops at the *small* viewport; behind Safari's translucent toolbar the
   white page showed. The body now spans the large viewport (`100lvh`), the
@@ -230,12 +235,11 @@ one too (`/tools/json-formatter`, `/tools/jwt-decoder`, `/tools/qr-code-generato
   guide, related tools) at the bottom of the panel. Old `#hash` links still
   work and are rewritten. Sidebar items and toolkit tiles are real `<a href>`
   links (⌘/Ctrl-click opens a new tab).
-- **On deploy**, `scripts/build-tool-pages.mjs` writes
-  `tools/<slug>/index.html` for each route: the app with that tool's
-  `<title>`, description, canonical, Open Graph/Twitter tags,
-  `WebApplication` + `BreadcrumbList` JSON-LD and the About card baked in, so
-  crawlers get a distinct page without running JS. The output is git-ignored;
-  run the script locally to preview. All URLs are in `sitemap.xml`.
+- **On the server**, `functions/tools/[[path]].js` serves each
+  `/tools/<slug>` as the app with that tool's `<title>`, description,
+  canonical, Open Graph/Twitter tags, `WebApplication` + `BreadcrumbList`
+  JSON-LD and the About card baked in (`tool-pages.js`), so crawlers get a
+  distinct page without running JS. All URLs are in `sitemap.xml`.
 
 ## Live tools in blog posts (`embed/mini-tools.js`)
 
@@ -260,7 +264,7 @@ hours focused, badges (`desk-badges.js`: streaks, Pomodoros, hours, town
 level, daily gifts, plus the next ones to earn) and the most-played Sounds
 preset (counted in `wd_mix_usage`). `growth.js` publishes that summary to
 `profiles.public_stats` and refreshes it every few hours; nothing else from
-the Desk leaves the account. `netlify/functions/u.mjs` renders the page on the
+the Desk leaves the account. `functions/u/[username].js` renders the page on the
 server (so link previews show the stats) via the `get_public_desk()` RPC,
 which only answers for public Desks. Migration:
 `20261101120000_public_desks_and_sponsors.sql`.
@@ -374,7 +378,6 @@ to any browser.
 | `account.js` | Header account button and menu (profile, sync status, download my data, change password, sign out, delete account) and the sync engine |
 | `supabase-config.js` | Public project URL + anon key. Empty = accounts hidden, site runs guest-only |
 | `supabase/migrations/` | `profiles` + `desks` tables, row-level security, sign-up trigger, `delete_my_account()` |
-| `scripts/write-supabase-config.mjs` + `netlify.toml` | Netlify build step that writes the keys from environment variables |
 
 **How sync works.** `account.js` timestamps every write to a `wd_*` /
 `webdesks_*` key. A sync reads the user's single `desks` row, keeps the newest
@@ -397,7 +400,7 @@ clears this browser's copy.
    query → Run** (it's safe to run twice).
 2. **Auth URLs** (Authentication → URL Configuration): Site URL
    `https://webdesks.app`; Redirect URLs `https://webdesks.app/**` (add
-   `https://*--<your-netlify-site>.netlify.app/**` to test deploy previews).
+   `https://*.<your-project>.pages.dev/**` to test Cloudflare preview deploys).
 3. **Email.** Supabase's built-in mailer only delivers to your own team's
    addresses, so until you add an email provider:
    - In Authentication → Sign In / Providers → Email, turn **Confirm email
@@ -417,14 +420,11 @@ clears this browser's copy.
    `providers` in `supabase-config.js`.
 5. **Keys.** Put the Project URL and the **anon / publishable** key (Project
    Settings → API; never the `service_role` / secret key) into
-   `supabase-config.js` and merge to `main`. Alternatively set
-   `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_AUTH_PROVIDERS` and
-   `SUPABASE_EMAIL_ENABLED` in the Netlify site's environment variables and the
-   build step writes them for you.
+   `supabase-config.js` and merge to `main` (Cloudflare Pages deploys it as-is).
 
 ## Design & performance
 
-v0.31 made routing host-independent (Cloudflare Pages + Netlify), fixed the
+v0.31 fixed clean URLs on Cloudflare Pages, fixed the
 white bar under the phone dock and added five polish features (see above).
 
 v0.30 reorganised the dashboard into tabs and fixed Public Desks and the

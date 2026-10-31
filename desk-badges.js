@@ -1,6 +1,6 @@
 // Badges for a Public Desk, derived from the summary the app publishes.
 // Shared by the in-app preview (growth.js) and the public page
-// (netlify/functions/u.mjs) so both always agree.
+// (functions/u/[username].js) so both always agree.
 (function (root) {
     const TIERS = [
         { key: 'streak', icon: '🔥', label: n => `${n}-day focus streak`, steps: [3, 7, 14, 30, 100], value: s => s.focusStreak || 0 },

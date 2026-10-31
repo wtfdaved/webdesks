@@ -7,7 +7,7 @@
 //  2. Public Desk  — members pick a username and share a read-only page,
 //                    webdesks.app/u/<username>: Focus Town level, streak
 //                    badges and favourite Sounds preset
-//                    (netlify/functions/u.mjs renders it).
+//                    (functions/u/[username].js renders it).
 //  3. Blog handoff — "Save to My WebDesk" on the blog's mini tools lands
 //                    here with ?saved=<tool>; we say thanks and open it.
 // ═══════════════════════════════════════════════════════════════
