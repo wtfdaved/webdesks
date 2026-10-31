@@ -78,7 +78,11 @@ export const handler = async (event) => {
             if (size > MAX_BYTES) { ctrl.abort(); return fail(413, 'That calendar is too large.'); }
             chunks.push(value);
         }
-        const body = Buffer.concat(chunks).toString('utf8').replace(/^﻿/, '');
+        // TextDecoder rather than Buffer, so this also runs on Cloudflare Workers.
+        const all = new Uint8Array(size);
+        let off = 0;
+        chunks.forEach(c => { all.set(c, off); off += c.length; });
+        const body = new TextDecoder('utf-8').decode(all).replace(/^\uFEFF/, '');
         if (!/^\s*BEGIN:VCALENDAR/i.test(body)) return fail(415, 'That link isn\'t an iCalendar (.ics) feed.');
         return { statusCode: 200, headers, body };
     } catch (e) {

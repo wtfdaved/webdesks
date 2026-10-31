@@ -142,6 +142,44 @@ Survey Says is described as "Family Feud–style" with a non-affiliation note.
     anything that isn't `BEGIN:VCALENDAR`, and stores nothing. The parsed feed
     is cached on the device only (`wdl_ics_cache`, outside Desk sync).
 
+## Hosting (v0.31) — works on Cloudflare Pages and Netlify
+
+The live site is served like **Cloudflare Pages**: the repository as-is, no
+build step, and `netlify.toml` is ignored. Cloudflare only falls back to
+`index.html` for unknown URLs while there is no `404.html`; adding one in
+v0.30 made every refreshed `/tools/…` URL (and `/u/…`) a 404. Now:
+
+| File | Read by | Does |
+| --- | --- | --- |
+| `_redirects` | Cloudflare, Netlify | `/tools/*` → the app, `/u/*` → `u.html` (static fallbacks) |
+| `_headers` | Cloudflare, Netlify | Same security / cache headers as `netlify.toml` |
+| `functions/tools/[[path]].js` | Cloudflare | Renders each tool's SEO page on request (`tool-pages.js`) |
+| `functions/u/[username].js` | Cloudflare | Public Desk page with the member's details for link previews |
+| `functions/api/ics.js` | Cloudflare | Calendar feed proxy (the agenda tries `/api/ics`, then Netlify's) |
+| `netlify/functions/*.mjs`, `netlify.toml` | Netlify | The same handlers; `lib/cf-adapter.js` runs them on Cloudflare |
+| `u.html` | any | Loads a Public Desk in the browser (`public-desk-render.js`) |
+| `404.html` | any | Self-heals: a tool URL goes to `/?r=/tools/…`, a Desk URL to `/u?u=…` |
+
+Test locally the way Cloudflare serves it:
+`npx wrangler pages dev .` (no build; delete any generated `tools/` first).
+
+## v0.31: fixes and five more improvements
+
+- **404 on refresh / Public Desk 404** — see Hosting above.
+- **White bar under the phone dock** — v0.30 pinned the body with `inset: 0`,
+  which stops at the *small* viewport; behind Safari's translucent toolbar the
+  white page showed. The body now spans the large viewport (`100lvh`), the
+  page background matches the theme, and tools pad by the toolbar's height.
+- **Five improvements (`polish.js`)**
+  1. *New version bar* — one-tap reload when a deploy lands while you're in.
+  2. *Offline pill* — tells you when you're offline and that work is saved.
+  3. *Daily focus goal* — progress ring, goal line and green "met" days on the
+     weekly chart, a celebration when reached (`wd_focus_goal`).
+  4. *Jump back in* — your last tools as chips on the Today tab
+     (`wd_recent_tools`).
+  5. *Share* — "Copy link" on every tool's About card and a downloadable QR
+     code for your Public Desk.
+
 ## v0.30: dashboard tabs, fixes and five improvements
 
 - **Dashboard tabs (`home.js`)** — the home screen was one long scroll. Now:
@@ -385,6 +423,9 @@ clears this browser's copy.
    build step writes them for you.
 
 ## Design & performance
+
+v0.31 made routing host-independent (Cloudflare Pages + Netlify), fixed the
+white bar under the phone dock and added five polish features (see above).
 
 v0.30 reorganised the dashboard into tabs and fixed Public Desks and the
 iOS Safari header (see above).

@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.30.0">
+    <meta name="generator" content="WebDesks v0.31.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -514,7 +514,20 @@
             .zen-mode #app-body { height: auto; }
         }
         html, body { overscroll-behavior: none; }
-        body { position: fixed; inset: 0; width: 100%; height: auto !important; }
+        /* Pinned to the LARGE viewport (100lvh), not inset:0. inset:0 stops at
+           the small viewport, leaving a white strip behind Safari's
+           translucent toolbar under the dock. The dock itself is fixed to the
+           visible viewport, and tools pad their bottoms for it. */
+        body { position: fixed; top: 0; left: 0; right: 0; bottom: auto; width: 100%; height: 100vh !important; }
+        @supports (height: 100lvh) { body { height: 100lvh !important; } }
+        /* Anything still uncovered shows the page colour, never white. */
+        html { background: #f6f5f1; }
+        html.dark { background: #0f1218; }
+        /* …and each tool's scroll area gains exactly the toolbar's height
+           (100lvh − 100svh) so its last row can't hide behind it. */
+        @supports (height: 100lvh) {
+            @media (max-width: 767px) { #main-content > .tab-content { padding-bottom: calc(1.5rem + (100lvh - 100svh)); } }
+        }
 
         /* 3. Safe area insets for notched iPhones (X, 11, 12, 13, 14, 15).
               Requires viewport-fit=cover in the meta tag. */
@@ -1446,7 +1459,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.30.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.31.0</span>
             </div>
             <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="party-popper" class="w-4 h-4"></i>
@@ -3222,6 +3235,12 @@
                 // Load the tool for a clean URL (/tools/whiteboard), an old #hash
                 // link (rewritten to the clean URL), or the last tab used.
                 const R = window.WD_ROUTES;
+                // ?r=/tools/<slug> comes from 404.html on hosts without rewrites.
+                const rParam = new URLSearchParams(location.search).get('r');
+                if (rParam && R && R.fromPath(rParam)) {
+                    const qs = new URLSearchParams(location.search); qs.delete('r');
+                    history.replaceState(null, '', rParam + (qs.toString() ? '?' + qs : '') + location.hash);
+                }
                 const route = R ? R.fromPath(location.pathname) : null;
                 const hashTab = (location.hash || '').replace('#', '');
                 this._landingTab = route ? route.tab : null;
@@ -6830,5 +6849,7 @@
     <script src="/growth.js"></script>
     <!-- Dashboard tabs (Today / Focus / Life / Tools), weekly focus, quick capture -->
     <script src="/home.js"></script>
+    <!-- Update bar, offline pill, daily focus goal, jump back in, share links -->
+    <script src="/polish.js"></script>
 </body>
 </html>
