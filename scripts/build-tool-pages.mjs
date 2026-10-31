@@ -113,7 +113,7 @@ const indexHtml = `<!DOCTYPE html>
     <div class="top"><a href="/">← WebDesks</a></div>
     <h1>All free tools</h1>
     <p>Every tool opens instantly in your browser — no download, no sign-up, and your files never leave your device.</p>
-    ${groups.map(([name, slugs]) => `<h2>${esc(name)}</h2><div class="grid">${slugs.map(s => bySlug[s]).filter(Boolean).map(r => `<a class="card" href="/tools/${r.slug}"><b>${esc(r.name)}</b><span>${esc(r.desc.split('. ')[0])}.</span></a>`).join('')}</div>`).join('\n    ')}
+    ${groups.map(([name, slugs]) => `<h2>${esc(name)}</h2><div class="grid">${slugs.map(s => bySlug[s]).filter(Boolean).map(r => `<a class="card" href="/tools/${r.slug}"><b>${esc(r.name)}</b><span>${esc(r.desc.split('. ')[0].replace(/\.$/, ''))}.</span></a>`).join('')}</div>`).join('\n    ')}
 </main>
 </body>
 </html>

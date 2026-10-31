@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.29.0">
+    <meta name="generator" content="WebDesks v0.30.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -65,14 +65,9 @@
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-    <!-- Markdown + Syntax Highlighting -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+    <!-- PDF-lib, Marked, highlight.js and FFmpeg.wasm load on first use (app.LAZY_LIBS) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" id="hljs-theme">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" id="hljs-theme-light">
-    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
-    <!-- FFmpeg.wasm (client-side video conversion) -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bricolage+Grotesque:wght@600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -482,7 +477,7 @@
 
         /* Zen mode: hide header too */
         .zen-mode #app-header { display: none !important; }
-        .zen-mode #app-body { height: 100vh; }
+        .zen-mode #app-body { height: auto; }
 
         /* Panic mode: blur header */
         .panic-mode #app-header {
@@ -510,11 +505,16 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
 
-        /* 2. iOS Safari 100vh bug — 100dvh shrinks when browser chrome shows */
+        /* 2. iOS Safari: pin the app to the screen. 100dvh alone let Safari
+              pan the window (keyboard, toolbar resize) and leave the header
+              stuck above the screen; a fixed body can't be panned, and
+              shell.js resets any leftover window scroll. */
         @supports (height: 100dvh) {
             body { height: 100dvh; }
-            .zen-mode #app-body { height: 100dvh; }
+            .zen-mode #app-body { height: auto; }
         }
+        html, body { overscroll-behavior: none; }
+        body { position: fixed; inset: 0; width: 100%; height: auto !important; }
 
         /* 3. Safe area insets for notched iPhones (X, 11, 12, 13, 14, 15).
               Requires viewport-fit=cover in the meta tag. */
@@ -1192,6 +1192,12 @@
         .tool-about-links a { padding: .3rem .7rem; border-radius: 999px; background: var(--bg, #f8fafc); border: 1px solid var(--border, #e5e7eb); font-weight: 700; font-size: .78rem; color: var(--accent, #4f46e5); }
         .tool-about-links a:hover { border-color: var(--accent, #4f46e5); }
         a.nav-btn, a.app-tile { text-decoration: none; color: inherit; }
+        /* Accessibility: a skip link and a clear focus ring for keyboard users only. */
+        .skip-link { position: fixed; left: 1rem; top: -4rem; z-index: 1000; padding: .7rem 1rem; border-radius: .8rem; background: #4f46e5; color: #fff; font-weight: 800; transition: top .15s; }
+        .skip-link:focus { top: calc(.75rem + env(safe-area-inset-top, 0px)); }
+        :where(a, button, input, select, textarea, [tabindex], summary):focus-visible { outline: 3px solid #818cf8; outline-offset: 2px; border-radius: .6rem; }
+        .tab-content:focus { outline: none; }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
         /* Baked-in copy for crawlers waits here until the app moves it into the tool's panel. */
         main > .tool-about { position: absolute; visibility: hidden; pointer-events: none; }
     </style>
@@ -1425,7 +1431,8 @@
         .wd-sheet .wd-perks div span { display: block; font-size: 1.3rem; margin-bottom: .2rem; }
     </style>
 </head>
-<body class="text-slate-800 dark:text-slate-100 h-screen flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
+<body class="text-slate-800 dark:text-slate-100 flex flex-col overflow-hidden selection:bg-indigo-500 selection:text-white">
+    <a href="#main-content" class="skip-link" onclick="setTimeout(() => { const t = document.querySelector('.tab-content.active'); if (t) { t.setAttribute('tabindex', '-1'); t.focus(); } })">Skip to content</a>
 
     <!-- Skip navigation for keyboard users -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[1000] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-xl focus:font-bold">Skip to main content</a>
@@ -1439,7 +1446,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.29.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.30.0</span>
             </div>
             <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="party-popper" class="w-4 h-4"></i>
@@ -2933,6 +2940,10 @@
                     <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">/</kbd>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+                    <span class="text-slate-600 dark:text-slate-300">Quick capture (task, note, snippet)</span>
+                    <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">N</kbd>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
                     <span class="text-slate-600 dark:text-slate-300">Toggle Zen Mode</span>
                     <div class="flex gap-1"><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Alt</kbd><kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-mono text-xs font-bold">Z</kbd></div>
                 </div>
@@ -3359,6 +3370,7 @@
                 document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
                 document.querySelectorAll('.nav-btn').forEach(b => {
                     b.classList.remove('active');
+                    b.removeAttribute('aria-current');
                 });
                 
                 const target = document.getElementById(tabId);
@@ -3373,6 +3385,7 @@
                 const btn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
                 if (btn) {
                     btn.classList.add('active');
+                    btn.setAttribute('aria-current', 'page');
                     // Opening a tool from search/palette expands its sidebar group.
                     const group = btn.closest('.nav-group');
                     if (group && group.classList.contains('collapsed')) this.toggleNavGroup(group.dataset.group, false);
@@ -3992,6 +4005,7 @@
                 const text = document.getElementById('note-area').value;
                 const pane = document.getElementById('note-preview-pane');
                 if (!pane) return;
+                if (typeof marked === 'undefined' || typeof hljs === 'undefined') this._loadNoteLibs();
                 if (typeof marked !== 'undefined') {
                     marked.setOptions({ breaks: true, gfm: true });
                     pane.innerHTML = marked.parse(text || '*Nothing to preview yet. Switch to Write mode and start typing.*');
@@ -4009,6 +4023,7 @@
                 const el = document.getElementById('note-code-inner');
                 const lang = document.getElementById('note-lang-select')?.value || 'plaintext';
                 if (!el) return;
+                if (typeof hljs === 'undefined' && lang !== 'plaintext') this._loadNoteLibs();
                 if (typeof hljs !== 'undefined' && lang !== 'plaintext') {
                     try {
                         const result = hljs.highlight(text, { language: lang });
@@ -4019,6 +4034,18 @@
                 } else {
                     el.textContent = text;
                 }
+            },
+
+            // Marked + highlight.js are only needed for Preview / Code mode.
+            _loadNoteLibs() {
+                if (this._noteLibs) return this._noteLibs;
+                this._noteLibs = Promise.all([this._loadScript(this.LAZY_LIBS.marked), this._loadScript(this.LAZY_LIBS.hljs)])
+                    .then(() => {
+                        if (this.noteMode === 'preview') this._renderMarkdownPreview();
+                        if (this.noteMode === 'code') this.updateCodeHighlight();
+                    })
+                    .catch(() => { this._noteLibs = null; });
+                return this._noteLibs;
             },
 
             updateNotePreview() {
@@ -4979,6 +5006,10 @@
                 };
 
                 try {
+                    if (typeof FFmpeg === 'undefined') {
+                        setStatus('Downloading the converter (first time only)…', 5);
+                        await this._loadScript(this.LAZY_LIBS.ffmpeg).catch(() => {});
+                    }
                     if (typeof FFmpeg === 'undefined' || !FFmpeg.createFFmpeg) {
                         throw new Error('FFmpeg.wasm failed to load. Please check your internet connection.');
                     }
@@ -5218,6 +5249,7 @@
                 this._rebuildIcons();
                 
                 try {
+                    if (typeof PDFLib === 'undefined') await this._loadScript(this.LAZY_LIBS.pdflib);
                     const mergedPdf = await PDFLib.PDFDocument.create();
                     
                     for (const file of this.pdfFiles) {
@@ -5938,6 +5970,14 @@
                 a.click();
                 a.remove();
                 setTimeout(() => URL.revokeObjectURL(url), 1000);
+            },
+
+            // Heavy libraries, fetched the first time a tool needs them.
+            LAZY_LIBS: {
+                pdflib: 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js',
+                marked: 'https://cdn.jsdelivr.net/npm/marked@12/marked.min.js',
+                hljs: 'https://cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js',
+                ffmpeg: 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js'
             },
 
             _loadScript(src) {
@@ -6788,5 +6828,7 @@
     <!-- Desk Sponsor, Public Desk sharing, blog "Save to My WebDesk" handoff -->
     <script src="/desk-badges.js"></script>
     <script src="/growth.js"></script>
+    <!-- Dashboard tabs (Today / Focus / Life / Tools), weekly focus, quick capture -->
+    <script src="/home.js"></script>
 </body>
 </html>

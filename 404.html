@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found | WebDesks</title>
+    <meta name="robots" content="noindex">
+    <meta name="description" content="That page doesn't exist — but every WebDesks tool is one click away.">
+    <link rel="icon" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script src="/tool-routes.js"></script>
+    <style>
+        :root { --accent: #4f46e5; --text: #0f172a; --muted: #64748b; --border: #e5e7eb; --surface: #fff; --bg: #f7f7f5; }
+        @media (prefers-color-scheme: dark) { :root { --text: #e2e8f0; --muted: #94a3b8; --border: #1f2937; --surface: #111827; --bg: #0b1020; } }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif; background: var(--bg); color: var(--text); }
+        main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.1rem 4rem; }
+        a { color: var(--accent); }
+        .top a { font-weight: 800; text-decoration: none; }
+        .hero { margin-top: 1.5rem; border-radius: 1.75rem; padding: 2.25rem 1.6rem; color: #fff; text-align: center;
+            background: radial-gradient(600px 300px at 100% 0%, rgba(244,114,182,.5), transparent 60%), linear-gradient(135deg, #4338ca, #6d28d9 55%, #9333ea); }
+        .code { font-size: 3.4rem; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+        h1 { margin: .5rem 0 .3rem; font-size: 1.6rem; }
+        .hero p { margin: 0 auto; max-width: 28rem; opacity: .9; }
+        .search { margin-top: 1.25rem; display: flex; gap: .5rem; }
+        .search input { flex: 1; min-width: 0; padding: .9rem 1.1rem; border-radius: 1rem; border: 0; font: inherit; font-size: 1rem; }
+        .search input:focus { outline: 3px solid rgba(255,255,255,.6); }
+        h2 { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 2rem 0 .75rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: .6rem; }
+        .card { display: block; padding: .85rem 1rem; border-radius: 1rem; background: var(--surface); border: 1px solid var(--border); text-decoration: none; color: inherit; }
+        .card:hover, .card:focus-visible { border-color: var(--accent); outline: none; }
+        .card b { display: block; } .card span { font-size: .8rem; color: var(--muted); }
+        .empty { color: var(--muted); font-size: .9rem; }
+        .links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; font-weight: 700; font-size: .9rem; }
+    </style>
+</head>
+<body>
+<main>
+    <div class="top"><a href="/">🗂️ WebDesks</a></div>
+    <section class="hero">
+        <div class="code">404</div>
+        <h1>This page wandered off</h1>
+        <p>The link may be old or mistyped — but every WebDesks tool is still one click away.</p>
+        <form class="search" role="search" onsubmit="event.preventDefault(); const f = document.querySelector('#results .card'); if (f) location.href = f.href;">
+            <input id="q" type="search" placeholder="Find a tool — “pdf”, “timer”, “json”…" aria-label="Find a tool" autocomplete="off">
+        </form>
+    </section>
+    <h2 id="results-title">Popular tools</h2>
+    <div class="grid" id="results"></div>
+    <div class="links">
+        <a href="/">Open the dashboard</a>
+        <a href="/tools/">All tools</a>
+        <a href="/blog/">Blog</a>
+        <a href="/contact">Report a broken link</a>
+    </div>
+</main>
+<script>
+    (function () {
+        var R = (window.WD_ROUTES && WD_ROUTES.ROUTES) || [];
+        var popular = ['pomodoro-timer', 'todo-list', 'pdf-merger', 'alarm-clock', 'whiteboard', 'json-formatter', 'world-clock', 'screen-recorder'];
+        var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+        var card = function (r) { return '<a class="card" href="/tools/' + r.slug + '"><b>' + esc(r.name) + '</b><span>' + esc(r.desc.split('. ')[0].replace(/\.$/, '')) + '.</span></a>'; };
+        var box = document.getElementById('results'), title = document.getElementById('results-title'), q = document.getElementById('q');
+        function show(term) {
+            term = (term || '').trim().toLowerCase();
+            var list = term
+                ? R.filter(function (r) { return (r.name + ' ' + r.slug + ' ' + r.title + ' ' + r.desc).toLowerCase().indexOf(term) >= 0; }).slice(0, 12)
+                : popular.map(function (s) { return WD_ROUTES.bySlug[s]; }).filter(Boolean);
+            title.textContent = term ? (list.length ? 'Matching tools' : 'No tools match “' + term + '”') : 'Popular tools';
+            box.innerHTML = list.length ? list.map(card).join('') : '<p class="empty">Try a shorter word, or <a href="/tools/">browse every tool</a>.</p>';
+        }
+        // Guess from the broken URL: /tools/pdf-mergr → "pdf".
+        var guess = decodeURIComponent(location.pathname).split('/').filter(Boolean).pop() || '';
+        guess = guess.replace(/\.html?$/, '').replace(/[-_]+/g, ' ').split(' ')[0];
+        if (guess && guess.length > 2 && R.some(function (r) { return (r.name + ' ' + r.slug).toLowerCase().indexOf(guess.toLowerCase()) >= 0; })) { q.value = guess; show(guess); }
+        else show('');
+        q.addEventListener('input', function () { show(q.value); });
+    })();
+</script>
+</body>
+</html>

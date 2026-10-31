@@ -98,7 +98,7 @@
             try {
                 fetch(cfg.url.replace(/\/$/, '') + '/rest/v1/rpc/log_sponsor_event', {
                     method: 'POST', keepalive: true,
-                    headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey },
+                    headers: { 'Content-Type': 'application/json', apikey: cfg.anonKey },
                     body: JSON.stringify({ p_sponsor: id, p_kind: kind })
                 }).catch(() => {});
             } catch (e) {}
@@ -148,12 +148,25 @@
             return this._public;
         },
 
+        // Upsert, not update: accounts created before the profiles trigger have
+        // no row, and an update would "succeed" while saving nothing.
         async publishPublicDesk(fields = {}) {
             const sb = await this._supabase();
-            const row = { ...fields, public_stats: this.publicStats(), public_updated_at: new Date().toISOString() };
-            const { error } = await sb.from('profiles').update(row).eq('id', this.account.id);
+            const row = { id: this.account.id, ...fields, public_stats: this.publicStats(), public_updated_at: new Date().toISOString() };
+            const { data, error } = await sb.from('profiles').upsert(row, { onConflict: 'id' }).select('username, is_public').maybeSingle();
             if (error) throw error;
-            this._public = { ...(this._public || {}), ...fields, public_updated_at: row.public_updated_at };
+            if (!data) throw Object.assign(new Error('Profile not saved'), { code: 'NOROW' });
+            this._public = { ...(this._public || {}), ...fields, username: data.username, is_public: data.is_public, public_updated_at: row.public_updated_at };
+        },
+
+        // Ask the public endpoint exactly what a visitor would get.
+        async _checkPublicLink(username) {
+            try {
+                const sb = await this._supabase();
+                const { data, error } = await sb.rpc('get_public_desk', { p_username: username });
+                if (error) return { ok: false, reason: error.message || 'rpc' };
+                return { ok: !!(data && data.username) };
+            } catch (e) { return { ok: false, reason: 'offline' }; }
         },
 
         // Keep a shared page fresh without the member thinking about it.
@@ -199,7 +212,7 @@
                 </div>
                 ${this._field('Your link', `<div class="flex items-center gap-1 text-sm"><span class="text-slate-400 shrink-0">webdesks.app/u/</span><input id="pd-user" maxlength="24" value="${esc(username)}" class="${this._inputCls}" autocapitalize="off" spellcheck="false"></div>`)}
                 <div id="pd-msg" class="text-xs mb-3 text-slate-400">3–24 characters: lowercase letters, numbers and _</div>
-                <label class="flex items-center gap-2 text-sm font-semibold mb-4"><input id="pd-on" type="checkbox" class="w-4 h-4 accent-indigo-600" ${p.is_public ? 'checked' : ''}> Make my Desk public</label>
+                <label class="flex items-center gap-2 text-sm font-semibold mb-4"><input id="pd-on" type="checkbox" class="w-4 h-4 accent-indigo-600" ${p.is_public || !p.username ? 'checked' : ''}> Make my Desk public</label>
                 <div class="flex flex-wrap gap-2">
                     <button id="pd-save" class="${this._btnCls}">Save</button>
                     <button id="pd-copy" class="${this._ghostBtnCls}" ${p.is_public && p.username ? '' : 'hidden'}>Copy link</button>
@@ -224,6 +237,16 @@
                     msg.textContent = 'Saving…'; msg.className = 'text-xs mb-3 text-slate-400';
                     try {
                         await this.publishPublicDesk({ username: u, is_public: on.checked });
+                        if (on.checked) {
+                            const check = await this._checkPublicLink(u);
+                            if (!check.ok) {
+                                msg.textContent = 'Saved, but the public page isn\'t answering yet. Try again in a minute — if it persists, contact support.';
+                                msg.className = 'text-xs mb-3 text-amber-600 font-bold';
+                                copy.hidden = openBtn.hidden = false;
+                                openBtn.href = link(u);
+                                return;
+                            }
+                        }
                         msg.textContent = on.checked ? `Live at webdesks.app/u/${u}` : 'Saved. Your Desk is private.';
                         msg.className = 'text-xs mb-3 text-emerald-600 font-bold';
                         copy.hidden = openBtn.hidden = !on.checked;
