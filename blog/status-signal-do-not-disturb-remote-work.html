@@ -83,10 +83,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#onair" class="hover:text-indigo-600 transition-colors">Status Signal</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/on-air-sign" class="hover:text-indigo-600 transition-colors">Status Signal</a>
             </div>
-            <a href="/#onair" class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/on-air-sign" class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Status Signal →
             </a>
         </nav>
@@ -126,12 +126,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="status"></div>
+
+
         <p>Working from home blurs the boundary between "at work" and "at home" — and that line matters more than most people realise. The biggest source of interruption for remote workers isn't notifications or emails: it's household members who don't know you're in a meeting, on a deadline, or just need 25 minutes of uninterrupted focus.</p>
 
         <p>The <strong>WebDesks Status Signal</strong> is a full-screen display that communicates your current work status clearly — to anyone who looks at your screen. Choose from three modes: <strong>On Call</strong> (do not disturb), <strong>Deep Work</strong> (focus mode active), or <strong>Available</strong> (free to talk). Or enter a completely custom message.</p>
 
         <div class="callout">
-            <p><strong>Set your status now:</strong> <a href="/#onair" class="underline font-semibold">Open the WebDesks Status Signal</a> — click a card, go full screen, and communicate without saying a word.</p>
+            <p><strong>Set your status now:</strong> <a href="/tools/on-air-sign" class="underline font-semibold">Open the WebDesks Status Signal</a> — click a card, go full screen, and communicate without saying a word.</p>
         </div>
 
         <h2>The Three Status Modes</h2>
@@ -154,7 +158,7 @@
         <h2>How to Use the Status Signal</h2>
 
         <ol>
-            <li>Navigate to <a href="/#onair" class="text-red-600 hover:underline">webdesks.app/#onair</a> or click the radio icon in the sidebar.</li>
+            <li>Navigate to <a href="/tools/on-air-sign" class="text-red-600 hover:underline">webdesks.app/#onair</a> or click the radio icon in the sidebar.</li>
             <li>You'll see three status cards: On Call, Deep Work, and Available.</li>
             <li><strong>Click the card</strong> matching your current status to display it full screen.</li>
             <li>The full-screen overlay is large, bold, and color-coded — visible from across a room.</li>
@@ -249,13 +253,13 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Set Your Status — Right Now</h2>
             <p class="text-slate-500 mb-8">On Call, Deep Work, or Available. Full-screen, bold, visible. Free and instant.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#onair" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">📡 Open Status Signal</a>
+                <a href="/tools/on-air-sign" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">📡 Open Status Signal</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
                 <a href="/pomodoro-timer" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏱️ Pomodoro Timer</a>
-                <a href="/#tasks" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
-                <a href="/#zones" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
+                <a href="/tools/todo-list" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
+                <a href="/tools/world-clock" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
                 <a href="/breathing-guide" class="bg-white border border-slate-200 hover:border-red-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🫁 Breathing Guide</a>
             </div>
         </div>
@@ -268,7 +272,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -284,5 +288,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

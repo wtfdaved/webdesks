@@ -502,10 +502,11 @@
                     grid.innerHTML = p.tools.map(t => {
                         const tool = this.searchItems.find(i => i.id === t);
                         if (!tool) return '';
-                        return `<button onclick="app.deskOpen('${t}')" class="app-tile group">
+                        const href = window.WD_ROUTES ? WD_ROUTES.pathFor(t) : '/#' + t;
+                        return `<a href="${href}" onclick="if (event.metaKey || event.ctrlKey || event.shiftKey || event.button === 1) return true; event.preventDefault(); app.deskOpen('${t}'); return false;" class="app-tile group">
                             <span class="app-icon desk-icon-${id}"><i data-lucide="${tool.icon}" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">${esc(tool.label.replace(/ —.*$/, '').replace(/ \(.*\)$/, ''))}</span><span class="app-sub">${esc(this._toolSub(t))}</span></span>
-                        </button>`;
+                        </a>`;
                     }).join('');
                 }
             }

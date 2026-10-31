@@ -427,7 +427,7 @@
             if (!this.account) {
                 const lapsed = state.owner && ls.getItem(AUTH_KEY) === null;
                 slot.innerHTML = `
-                    <a href="${loginUrl('next=' + encodeURIComponent('/' + location.hash))}" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors" title="${lapsed ? 'Your session ended — sign in to keep syncing' : 'Sign in to save your Desk to an account'}">
+                    <a href="${loginUrl('next=' + encodeURIComponent(location.pathname + location.hash))}" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors" title="${lapsed ? 'Your session ended — sign in to keep syncing' : 'Sign in to save your Desk to an account'}">
                         <i data-lucide="${lapsed ? 'cloud-off' : 'log-in'}" class="w-4 h-4" aria-hidden="true"></i><span class="hidden sm:inline">${lapsed ? 'Sign in again' : 'Sign in'}</span>
                     </a>`;
                 this._rebuildIcons();
@@ -479,6 +479,15 @@
                         <button id="acct-sync-now" class="${this._ghostBtnCls} text-sm">Sync now</button>
                     </div>
                 </div>
+                <div class="glass rounded-2xl p-4 mb-4">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <div class="font-bold text-sm">🌐 Public Desk</div>
+                            <div class="text-xs text-slate-500">Share your Focus Town, streaks and favourite sounds</div>
+                        </div>
+                        <button id="acct-public" class="${this._ghostBtnCls} text-sm">Share</button>
+                    </div>
+                </div>
                 <div class="grid grid-cols-2 gap-2 mb-4">
                     <button id="acct-export" class="${this._ghostBtnCls} text-sm">Download my data</button>
                     ${this.account.provider === 'email' ? `<a href="${loginUrl('mode=update')}" class="${this._ghostBtnCls} text-sm text-center">Change password</a>` : '<span></span>'}
@@ -503,6 +512,7 @@
                     if (el) el.textContent = this._syncLabel();
                 };
                 wrap.querySelector('#acct-export').onclick = () => this.exportDesk();
+                wrap.querySelector('#acct-public').onclick = () => this.openPublicDesk && this.openPublicDesk();
                 wrap.querySelector('#acct-signout').onclick = () => this.signOut();
                 wrap.querySelector('#acct-delete').onclick = () => this.confirmDeleteAccount();
             });

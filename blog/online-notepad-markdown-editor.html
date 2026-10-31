@@ -111,10 +111,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#scratchpad" class="hover:text-indigo-600 transition-colors">Scratchpad</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/notepad" class="hover:text-indigo-600 transition-colors">Scratchpad</a>
             </div>
-            <a href="/#scratchpad" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/notepad" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Scratchpad →
             </a>
         </nav>
@@ -154,12 +154,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="notepad"></div>
+
+
         <p>Whether you're jotting down a quick idea, drafting a technical document, or formatting meeting notes in Markdown, a good online notepad should get out of your way. No login screen, no subscription prompt — just an empty page and a cursor.</p>
 
         <p>The <strong>WebDesks Scratchpad</strong> is a free browser-based notepad with three modes: plain text writing, live Markdown preview, and syntax-highlighted code view. Your notes save automatically to your browser and stay completely private — nothing is ever sent to a server.</p>
 
         <div class="callout">
-            <p><strong>Try it now:</strong> <a href="/#scratchpad" class="underline font-semibold">Open the WebDesks Scratchpad</a> — no account, no download, works in any modern browser.</p>
+            <p><strong>Try it now:</strong> <a href="/tools/notepad" class="underline font-semibold">Open the WebDesks Scratchpad</a> — no account, no download, works in any modern browser.</p>
         </div>
 
         <h2>What Is a Markdown Scratchpad?</h2>
@@ -226,7 +230,7 @@ const greet = () => console.log("Hello");
         <h2>How to Use the WebDesks Scratchpad</h2>
 
         <ol>
-            <li><strong>Navigate to the Scratchpad</strong> — click the file-text icon in the sidebar or go directly to <a href="/#scratchpad" class="text-indigo-600 hover:underline">webdesks.app/#scratchpad</a>.</li>
+            <li><strong>Navigate to the Scratchpad</strong> — click the file-text icon in the sidebar or go directly to <a href="/tools/notepad" class="text-indigo-600 hover:underline">webdesks.app/#scratchpad</a>.</li>
             <li><strong>Start typing</strong> — your content is auto-saved to localStorage every few seconds.</li>
             <li><strong>Switch to Preview mode</strong> — click the "Preview" button in the toolbar to see your Markdown rendered.</li>
             <li><strong>Use Code mode</strong> — click "Code," select your programming language from the dropdown, and paste or type your snippet.</li>
@@ -339,13 +343,13 @@ const greet = () => console.log("Hello");
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Start Writing — No Sign-Up Needed</h2>
             <p class="text-slate-500 mb-8">The WebDesks Scratchpad opens instantly in your browser. Three modes, live preview, auto-save.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#scratchpad" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg hover:shadow-indigo-500/30">📝 Open Scratchpad</a>
+                <a href="/tools/notepad" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg hover:shadow-indigo-500/30">📝 Open Scratchpad</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all hover:shadow-md">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
                 <a href="/pomodoro-timer" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏱️ Pomodoro Timer</a>
-                <a href="/#tasks" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
-                <a href="/#board" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📋 Kanban Board</a>
+                <a href="/tools/todo-list" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">✅ Task Manager</a>
+                <a href="/tools/kanban-board" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📋 Kanban Board</a>
                 <a href="/screen-recorder" class="bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🎥 Screen Recorder</a>
             </div>
         </div>
@@ -358,7 +362,7 @@ const greet = () => console.log("Hello");
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -374,5 +378,6 @@ const greet = () => console.log("Hello");
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

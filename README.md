@@ -142,6 +142,70 @@ Survey Says is described as "Family Feud–style" with a non-affiliation note.
     anything that isn't `BEGIN:VCALENDAR`, and stores nothing. The parsed feed
     is cached on the device only (`wdl_ics_cache`, outside Desk sync).
 
+## Clean tool URLs (`tool-routes.js`, v0.29)
+
+Every tool has its own indexable URL — `/tools/whiteboard`,
+`/tools/alarm-clock`, `/tools/pdf-merger` — and each Dev Toolkit utility has
+one too (`/tools/json-formatter`, `/tools/jwt-decoder`, `/tools/qr-code-generator`
+…): 38 in all, plus a `/tools/` index.
+
+- `tool-routes.js` is the single table (slug, tab, title, description,
+  features, related tools, matching blog post). Keep slugs stable.
+- **In the app**, `/tools/<slug>` opens that tool; switching tools
+  `pushState`s the clean URL (back/forward work), updates the title, meta
+  description and canonical, and adds an "About this tool" card (features,
+  guide, related tools) at the bottom of the panel. Old `#hash` links still
+  work and are rewritten. Sidebar items and toolkit tiles are real `<a href>`
+  links (⌘/Ctrl-click opens a new tab).
+- **On deploy**, `scripts/build-tool-pages.mjs` writes
+  `tools/<slug>/index.html` for each route: the app with that tool's
+  `<title>`, description, canonical, Open Graph/Twitter tags,
+  `WebApplication` + `BreadcrumbList` JSON-LD and the About card baked in, so
+  crawlers get a distinct page without running JS. The output is git-ignored;
+  run the script locally to preview. All URLs are in `sitemap.xml`.
+
+## Live tools in blog posts (`embed/mini-tools.js`)
+
+`<div class="wd-mini" data-tool="pomodoro"></div>` plus the script puts a
+working mini tool at the top of an article: pomodoro, todo
+(`data-target="board"` for Kanban), notepad, worldclock, status (On Air),
+breathing, noise, color, stopwatch, calculator, converter, alarm. 15 posts
+carry one, and the new **Remote Worker Productivity Guide**
+(`/blog/remote-worker-productivity-guide`) has three. **Save to My WebDesk**
+writes what the reader made into the app's own keys (tasks, board, notes,
+cities, mixes, swatches, alarm, focus minutes), stamps them for Desk sync,
+then offers a free account (`/login?mode=signup&next=/tools/<slug>?saved=…`)
+or opens the tool; the app confirms with a toast. Self-contained: no
+Tailwind or other dependencies.
+
+## Public Desks (`/u/<username>`)
+
+Members can share a read-only page from the account menu (or ⌘K → "Share my
+Desk"): pick a username, switch on *Make my Desk public*, copy or share the
+link. The page shows Focus Town's level and skyline, focus streak, Pomodoros,
+hours focused, badges (`desk-badges.js`: streaks, Pomodoros, hours, town
+level, daily gifts, plus the next ones to earn) and the most-played Sounds
+preset (counted in `wd_mix_usage`). `growth.js` publishes that summary to
+`profiles.public_stats` and refreshes it every few hours; nothing else from
+the Desk leaves the account. `netlify/functions/u.mjs` renders the page on the
+server (so link previews show the stats) via the `get_public_desk()` RPC,
+which only answers for public Desks. Migration:
+`20261101120000_public_desks_and_sponsors.sql`.
+
+## Desk Sponsor (`sponsors.json`)
+
+The app no longer runs AdSense or A-ADS (`ads.js data-programmatic="off"` on
+`index.html` and `/tools/*`); the dashboard shows one curated sponsor or
+affiliate card instead, hidden for signed-in members. Book a sponsor through
+ads@webdesks.app / the contact form's *Advertising* topic (`/contact#sponsor`
+describes the slot), then add an entry to `sponsors.json` (id, name, tagline,
+https url, cta, logo emoji or image, `Sponsor`/`Affiliate` label, category,
+Desk presets to target, start/end dates, weight) and deploy. Links get UTM
+tags and `rel="sponsored"`; daily views/clicks go to `sponsor_stats` through
+`log_sponsor_event()` (no user identifiers). With no live sponsor the card
+invites brands to book the slot. Blog and landing pages keep their existing
+ad units for guests.
+
 ## Ads (`ads.js`)
 
 Every page loads `/ads.js` instead of the AdSense tag. Signed-in members
@@ -254,7 +318,7 @@ clears this browser's copy.
 
 1. **Database.** Run each file in `supabase/migrations/` in order
    (`…_profiles_and_desks.sql`, then `…_survey_says.sql`, then
-   `…_daily_logs.sql`).
+   `…_daily_logs.sql`, then `…_public_desks_and_sponsors.sql`).
    The Supabase GitHub integration applies it on merge to `main` when
    "Deploy to production" is on; otherwise paste it into **SQL Editor → New
    query → Run** (it's safe to run twice).
@@ -286,6 +350,9 @@ clears this browser's copy.
    build step writes them for you.
 
 ## Design & performance
+
+v0.29 added clean `/tools/<slug>` URLs, live tools in blog posts, Public
+Desks and the Desk Sponsor card (see above).
 
 v0.28 added the dashboard upgrades in `desks.js` and ad-free browsing for
 signed-in members (see above).
@@ -332,8 +399,9 @@ Everything lives in `index.html`:
   on first use and memoises the promise, so the initial page load stays light.
 - `sw.js` caches the shell plus the CDN bundles, so the suite keeps working
   offline after the first visit.
-- Tabs are deep-linkable: `https://webdesks.app/#devtools` opens that tool
-  directly, which is also what the PWA manifest shortcuts rely on.
+- Tools are deep-linkable at clean URLs: `https://webdesks.app/tools/dev-toolkit`
+  opens that tool directly (see `tool-routes.js`), which is also what the PWA
+  manifest shortcuts use. Old `/#tab` links are rewritten.
 
 Open `index.html` directly, or serve the folder (`npx http-server`) if you want
 the service worker to register.

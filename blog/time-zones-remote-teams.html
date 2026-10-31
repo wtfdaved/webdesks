@@ -73,10 +73,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#zones" class="hover:text-indigo-600 transition-colors">World Clock</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/world-clock" class="hover:text-indigo-600 transition-colors">World Clock</a>
             </div>
-            <a href="/#zones" class="bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/world-clock" class="bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open World Clock →
             </a>
         </nav>
@@ -118,6 +118,10 @@
     <!-- Article Body -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="worldclock"></div>
+
+
         <p>
             A team with members in New York, London, Bangalore, and Singapore spans 11.5 hours of timezone difference. Getting everyone on a call together requires someone to be awake very early, very late, or both. Do it repeatedly, and you have a recipe for burnout, resentment, and team dysfunction — not because the team lacks goodwill, but because the logistics are genuinely hard.
         </p>
@@ -136,7 +140,7 @@
             Create a shared team timezone document (a simple spreadsheet works) showing each team member's location, their local timezone, their preferred working hours in UTC, and their "hard stops" — times they are genuinely unavailable. Update this when team members move or change schedules.
         </p>
         <div class="tip-card">
-            <p>💡 <strong>Tool tip:</strong> Use the <a href="/#zones" class="text-sky-700 font-semibold hover:underline">WebDesks World Clock</a> to see all your team's local times at a glance, without needing to do timezone math in your head every time you schedule something.</p>
+            <p>💡 <strong>Tool tip:</strong> Use the <a href="/tools/world-clock" class="text-sky-700 font-semibold hover:underline">WebDesks World Clock</a> to see all your team's local times at a glance, without needing to do timezone math in your head every time you schedule something.</p>
         </div>
 
         <h2>2. Find and Protect Your Overlap Windows</h2>
@@ -210,7 +214,7 @@
             Time zone math is surprisingly error-prone, especially around daylight saving time transitions (which don't happen simultaneously in all countries, and don't happen at all in some). A missed DST transition can cause a team-wide scheduling error.
         </p>
         <p>
-            Make a world clock a permanent fixture in your daily routine. The <a href="/#zones" class="text-sky-700 font-semibold hover:underline">WebDesks World Clock</a> shows your configured team time zones at a glance — without ads, without accounts, and without a separate app to install. Keep it in a pinned browser tab alongside your task manager and calendar.
+            Make a world clock a permanent fixture in your daily routine. The <a href="/tools/world-clock" class="text-sky-700 font-semibold hover:underline">WebDesks World Clock</a> shows your configured team time zones at a glance — without ads, without accounts, and without a separate app to install. Keep it in a pinned browser tab alongside your task manager and calendar.
         </p>
 
         <h2>The Upside: Why Time Zone Distribution Can Be a Competitive Advantage</h2>
@@ -268,7 +272,7 @@
                     <a href="/" class="hover:text-white transition-colors">Home</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
-                    <a href="/#zones" class="hover:text-white transition-colors">World Clock</a>
+                    <a href="/tools/world-clock" class="hover:text-white transition-colors">World Clock</a>
                     <a href="/pomodoro-timer" class="hover:text-white transition-colors">Pomodoro Timer</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
                 </div>
@@ -284,5 +288,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

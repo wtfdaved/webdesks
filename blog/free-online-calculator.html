@@ -76,10 +76,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#calculator" class="hover:text-indigo-600 transition-colors">Calculator</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/calculator" class="hover:text-indigo-600 transition-colors">Calculator</a>
             </div>
-            <a href="/#calculator" class="bg-slate-800 hover:bg-slate-900 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/calculator" class="bg-slate-800 hover:bg-slate-900 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Calculator →
             </a>
         </nav>
@@ -119,12 +119,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="calculator"></div>
+
+
         <p>You're deep in a spreadsheet, writing a report, or reviewing a quote — and you need to do a quick calculation. Alt-tabbing to a separate calculator app, finding your phone, or searching "calculator" in your browser are all viable options. But they all break your flow.</p>
 
         <p>The <strong>WebDesks Calculator</strong> is already in your browser, one sidebar click away. No new tab, no app switch — just open it, calculate, and get back to work.</p>
 
         <div class="callout">
-            <p><strong>Calculate now:</strong> <a href="/#calculator" class="underline font-semibold">Open the WebDesks Calculator</a> — instant access, no setup.</p>
+            <p><strong>Calculate now:</strong> <a href="/tools/calculator" class="underline font-semibold">Open the WebDesks Calculator</a> — instant access, no setup.</p>
         </div>
 
         <h2>Features of the WebDesks Calculator</h2>
@@ -187,7 +191,7 @@
         <p>Hours worked × hourly rate = invoice total. Add expenses, apply tax percentage. These are the kind of quick multi-step calculations the memory function handles well — store the subtotal, add the next figure.</p>
 
         <h3>Time zone arithmetic</h3>
-        <p>Pair the calculator with the <a href="/#zones" class="text-slate-700 hover:underline">Time Zones tool</a>. Need to figure out a meeting time 7.5 hours ahead, accounting for a 30-minute break? Quick arithmetic right in the browser.</p>
+        <p>Pair the calculator with the <a href="/tools/world-clock" class="text-slate-700 hover:underline">Time Zones tool</a>. Need to figure out a meeting time 7.5 hours ahead, accounting for a 30-minute break? Quick arithmetic right in the browser.</p>
 
         <h3>Percentage calculations</h3>
         <p>Discounts, margins, growth rates, tax. Common percentage operations: multiply the base by (1 - discount_rate) for after-discount price; multiply by (1 + tax_rate) for tax-inclusive price.</p>
@@ -228,7 +232,7 @@
         <p>Yes. WebDesks is a PWA that works offline after your first visit.</p>
 
         <h3>Does it show calculation history?</h3>
-        <p>The display shows the current operation and result. For multi-step calculations requiring a log, use the <a href="/#scratchpad" class="text-slate-700 hover:underline">Scratchpad</a> alongside the Calculator to record your working.</p>
+        <p>The display shows the current operation and result. For multi-step calculations requiring a log, use the <a href="/tools/notepad" class="text-slate-700 hover:underline">Scratchpad</a> alongside the Calculator to record your working.</p>
 
         <h3>Is the calculator accurate for large numbers?</h3>
         <p>Yes, for standard business and everyday calculations. JavaScript's number type handles values up to approximately ±9 quadrillion (9 × 10¹⁵) with full integer precision. For financial applications requiring arbitrary precision (e.g., cryptocurrency calculations), use a dedicated financial tool.</p>
@@ -247,13 +251,13 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Open the Browser Calculator</h2>
             <p class="text-slate-500 mb-8">One click away. No account, no install, no distractions.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#calculator" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🔢 Open Calculator</a>
+                <a href="/tools/calculator" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🔢 Open Calculator</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <a href="/#converter" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔄 Unit Converter</a>
-                <a href="/#scratchpad" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
-                <a href="/#zones" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
+                <a href="/tools/unit-converter" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔄 Unit Converter</a>
+                <a href="/tools/notepad" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
+                <a href="/tools/world-clock" class="bg-white border border-slate-200 hover:border-slate-400 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
             </div>
         </div>
     </section>
@@ -265,7 +269,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -281,5 +285,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

@@ -2,7 +2,8 @@
 // ADS — signed-in WebDesks members never see ads.
 //
 // Loaded synchronously in <head> on every page in place of the AdSense
-// tag. A saved Supabase session (account.js keeps it under
+// tag (the app pages pass data-programmatic="off": they show the curated
+// Desk Sponsor card from growth.js instead of AdSense / A-ADS). A saved Supabase session (account.js keeps it under
 // "sb-webdesks-auth") marks the visitor as a member, so the page:
 //   • never loads adsbygoogle.js — `adsbygoogle.push()` calls queue up
 //     into a plain array and nothing is requested from Google,
@@ -13,6 +14,11 @@
 // ═══════════════════════════════════════════════════════════════
 (function () {
     var CLIENT = 'ca-pub-8626644983261966';
+    // The app (index.html, /tools/*) uses the curated Desk Sponsor card
+    // instead of programmatic ads: data-programmatic="off" keeps AdSense and
+    // A-ADS from loading there while the member / guest logic still applies.
+    var me = document.currentScript;
+    var programmatic = !(me && me.getAttribute('data-programmatic') === 'off');
     var member = false;
     try { member = !!localStorage.getItem('sb-webdesks-auth'); } catch (e) {}
     var root = document.documentElement;
@@ -42,6 +48,8 @@
         enabled = true;
         root.classList.remove('wd-adfree');
         window.WD_ADFREE = false;
+        if (typeof app !== 'undefined' && app.renderSponsor) app.renderSponsor();
+        if (!programmatic) return;
         var s = document.createElement('script');
         s.async = true;
         s.crossOrigin = 'anonymous';

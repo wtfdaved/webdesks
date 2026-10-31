@@ -1033,6 +1033,17 @@
         },
         // Small seams for tests and future tooling.
         _townState: () => st,
+        // What a Public Desk shows (growth.js): level, size and streaks only.
+        _townSummary() {
+            if (!st) return null;
+            const i = level();
+            return {
+                name: st.name, level: i + 1, levelName: LEVELS[i].name, maxLevel: LEVELS.length,
+                pop: Math.floor(st.pop || 0), buildings: (st.buildings || []).filter(b => b.t !== 'tree').length,
+                focusMin: Math.floor(st.stats?.focusMin || 0), sessions: st.stats?.sessions || 0,
+                giftStreak: st.daily?.streak || 0
+            };
+        },
         _townSaveNow: () => save(),
         _townReload: () => boot(),
         ftStartAnimLoop() { if (!st) return; layout(); start(); },

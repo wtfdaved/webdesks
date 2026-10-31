@@ -76,10 +76,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
                 <a href="/white-noise" class="hover:text-indigo-600 transition-colors">White Noise Generator</a>
             </div>
-            <a href="/#audio" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/ambient-sounds" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Try Pink Noise →
             </a>
         </nav>
@@ -120,6 +120,10 @@
 
     <!-- Article Body -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
+
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="noise"></div>
+
 
         <p>
             Walk into any university library and you'll find students wearing noise-cancelling headphones, each one plugged into a slightly different auditory environment — some listening to music, some to static-like noise, some to rain sounds. This isn't a random preference. Behind each of these choices is an intuition — often unconsciously correct — about what their particular brain needs to focus.
@@ -288,5 +292,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

@@ -108,10 +108,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#tasks" class="hover:text-indigo-600 transition-colors">Task Manager</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/todo-list" class="hover:text-indigo-600 transition-colors">Task Manager</a>
             </div>
-            <a href="/#tasks" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/todo-list" class="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Task Manager →
             </a>
         </nav>
@@ -151,12 +151,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="todo"></div>
+
+
         <p>Most task manager apps want you to create an account, download a mobile app, subscribe to a premium tier, and integrate a calendar before you can add your first task. That's friction in the wrong direction.</p>
 
         <p>The <strong>WebDesks Task Manager</strong> is a free, browser-based to-do list that opens instantly. Add tasks with optional time labels, check them off as you complete them, track your daily progress with a visual bar, and export your list whenever you need it. No login, no install — your tasks stay in your browser.</p>
 
         <div class="callout indigo">
-            <p><strong>Try it now:</strong> <a href="/#tasks" class="underline font-semibold">Open the WebDesks Task Manager</a> — works in any modern browser with zero setup.</p>
+            <p><strong>Try it now:</strong> <a href="/tools/todo-list" class="underline font-semibold">Open the WebDesks Task Manager</a> — works in any modern browser with zero setup.</p>
         </div>
 
         <h2>Key Features of the WebDesks Task Manager</h2>
@@ -191,7 +195,7 @@
         <div class="step-card">
             <div class="step-number">1</div>
             <h3 style="margin-top:0; margin-bottom:0.25rem;">Open the Task Manager</h3>
-            <p style="margin-bottom:0;">Navigate to <a href="/#tasks" class="text-emerald-700 hover:underline">webdesks.app/#tasks</a> or click the checkmark icon in the sidebar.</p>
+            <p style="margin-bottom:0;">Navigate to <a href="/tools/todo-list" class="text-emerald-700 hover:underline">webdesks.app/#tasks</a> or click the checkmark icon in the sidebar.</p>
         </div>
 
         <div class="step-card">
@@ -289,9 +293,9 @@
 
         <ul>
             <li><strong><a href="/pomodoro-timer" class="text-emerald-700 hover:underline">Pomodoro Timer</a></strong> — work in 25-minute focused sessions on one task at a time. Mark it complete when the timer ends.</li>
-            <li><strong><a href="/#board" class="text-emerald-700 hover:underline">Kanban Board</a></strong> — for tasks that span multiple days, move them to the Project Board for visual pipeline management.</li>
-            <li><strong><a href="/#scratchpad" class="text-emerald-700 hover:underline">Scratchpad</a></strong> — use the notepad for raw brainstorming, then move distilled action items to the Task Manager.</li>
-            <li><strong><a href="/#focustown" class="text-emerald-700 hover:underline">Focus Town</a></strong> — completing focus sessions grows your virtual town. Pairing task completion with Focus Town gamification adds a layer of motivational reward.</li>
+            <li><strong><a href="/tools/kanban-board" class="text-emerald-700 hover:underline">Kanban Board</a></strong> — for tasks that span multiple days, move them to the Project Board for visual pipeline management.</li>
+            <li><strong><a href="/tools/notepad" class="text-emerald-700 hover:underline">Scratchpad</a></strong> — use the notepad for raw brainstorming, then move distilled action items to the Task Manager.</li>
+            <li><strong><a href="/tools/focus-town" class="text-emerald-700 hover:underline">Focus Town</a></strong> — completing focus sessions grows your virtual town. Pairing task completion with Focus Town gamification adds a layer of motivational reward.</li>
         </ul>
 
         <h2>Frequently Asked Questions</h2>
@@ -325,14 +329,14 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Start Your Task List — Right Now</h2>
             <p class="text-slate-500 mb-8">No account. No download. Just open the browser and add your first task.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#tasks" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">✅ Open Task Manager</a>
+                <a href="/tools/todo-list" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">✅ Open Task Manager</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
                 <a href="/pomodoro-timer" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">⏱️ Pomodoro Timer</a>
-                <a href="/#board" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📋 Kanban Board</a>
-                <a href="/#scratchpad" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
-                <a href="/#focustown" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🏙️ Focus Town</a>
+                <a href="/tools/kanban-board" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📋 Kanban Board</a>
+                <a href="/tools/notepad" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">📝 Scratchpad</a>
+                <a href="/tools/focus-town" class="bg-white border border-slate-200 hover:border-emerald-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🏙️ Focus Town</a>
             </div>
         </div>
     </section>
@@ -344,7 +348,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -360,5 +364,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

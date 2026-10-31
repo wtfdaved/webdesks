@@ -78,10 +78,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
-                <a href="/#converter" class="hover:text-indigo-600 transition-colors">Unit Converter</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/tools/unit-converter" class="hover:text-indigo-600 transition-colors">Unit Converter</a>
             </div>
-            <a href="/#converter" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/unit-converter" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Open Converter →
             </a>
         </nav>
@@ -121,12 +121,16 @@
     <!-- Article -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
 
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="converter"></div>
+
+
         <p>Unit conversion is one of those tasks that comes up constantly and takes longer than it should. Is that recipe in cups or millilitres? Is that delivery weight in pounds or kilograms? Is the temperature in Celsius or Fahrenheit? Each search for a converter sends you to an ad-stuffed website when you really just want the number.</p>
 
         <p>The <strong>WebDesks Unit Converter</strong> is a free, browser-based conversion tool covering the most common measurement categories. Select a category, enter your value, and get the converted result instantly — no ads between you and the answer.</p>
 
         <div class="callout">
-            <p><strong>Convert now:</strong> <a href="/#converter" class="underline font-semibold">Open the WebDesks Unit Converter</a> — instant conversions, no account needed.</p>
+            <p><strong>Convert now:</strong> <a href="/tools/unit-converter" class="underline font-semibold">Open the WebDesks Unit Converter</a> — instant conversions, no account needed.</p>
         </div>
 
         <h2>What Categories Does the Converter Support?</h2>
@@ -184,7 +188,7 @@
         <h2>How to Use the WebDesks Unit Converter</h2>
 
         <ol>
-            <li>Navigate to <a href="/#converter" class="text-blue-600 hover:underline">webdesks.app/#converter</a> or click the arrows icon in the sidebar.</li>
+            <li>Navigate to <a href="/tools/unit-converter" class="text-blue-600 hover:underline">webdesks.app/#converter</a> or click the arrows icon in the sidebar.</li>
             <li>Select a <strong>category tab</strong> at the top (Length, Weight, Temperature, Volume, Speed, etc.).</li>
             <li>Choose your <strong>input unit</strong> from the "From" dropdown.</li>
             <li>Enter your <strong>value</strong> in the input field.</li>
@@ -251,13 +255,13 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-3">Convert Units Instantly</h2>
             <p class="text-slate-500 mb-8">Length, weight, temperature, volume, speed — instant results, no account.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/#converter" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🔄 Open Unit Converter</a>
+                <a href="/tools/unit-converter" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all hover:shadow-lg">🔄 Open Unit Converter</a>
                 <a href="/blog/" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-6 py-4 rounded-xl transition-all">More Articles →</a>
             </div>
             <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <a href="/#calculator" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔢 Calculator</a>
-                <a href="/#colorpicker" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🎨 Color Picker</a>
-                <a href="/#zones" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
+                <a href="/tools/calculator" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🔢 Calculator</a>
+                <a href="/tools/color-picker" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🎨 Color Picker</a>
+                <a href="/tools/world-clock" class="bg-white border border-slate-200 hover:border-blue-300 text-slate-700 font-semibold px-4 py-2 rounded-xl text-sm transition-all">🌍 Time Zones</a>
             </div>
         </div>
     </section>
@@ -269,7 +273,7 @@
                 <div class="flex items-center gap-2 text-white font-bold text-lg">🖥️ WebDesks</div>
                 <div class="flex flex-wrap justify-center gap-5">
                     <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <a href="/#dashboard" class="hover:text-white transition-colors">All Tools</a>
+                    <a href="/" class="hover:text-white transition-colors">All Tools</a>
                     <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
                     <a href="/about" class="hover:text-white transition-colors">About</a>
                     <a href="/contact" class="hover:text-white transition-colors">Contact</a>
@@ -285,5 +289,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>

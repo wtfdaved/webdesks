@@ -286,7 +286,8 @@
         // Open the Today check-in automatically on the first visit of the day.
         lifeMorningRedirect() {
             const prefs = load('wd_today_prefs', { autoOpen: true });
-            if (!prefs.autoOpen || location.hash) return;
+            // A deep link (/tools/…, #tab) wins over the morning check-in.
+            if (!prefs.autoOpen || location.hash || location.pathname.startsWith('/tools/')) return;
             if (localStorage.getItem('wd_today_opened') === todayStr()) return;
             localStorage.setItem('wd_today_opened', todayStr());
             this.switchTab('today');

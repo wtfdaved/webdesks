@@ -178,7 +178,7 @@
         // Only ever send people back to a page on this site.
         const safeNext = (() => {
             const n = params.get('next') || '';
-            return /^\/(?!\/)[\w\-./#?=&%]*$/.test(n) && !n.startsWith('/login') ? n : '/#today';
+            return /^\/(?!\/)[\w\-./#?=&%]*$/.test(n) && !n.startsWith('/login') ? n : '/tools/daily-planner';
         })();
         const goNext = () => {
             const url = new URL(safeNext, location.origin);
@@ -187,7 +187,7 @@
         };
         const here = extra => {
             const u = new URL('/login', location.origin);
-            if (safeNext !== '/#today') u.searchParams.set('next', safeNext);
+            if (safeNext !== '/tools/daily-planner') u.searchParams.set('next', safeNext);
             Object.entries(extra || {}).forEach(([k, v]) => u.searchParams.set(k, v));
             return u.toString();
         };

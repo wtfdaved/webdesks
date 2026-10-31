@@ -1,13 +1,15 @@
-# WebDesks is a static site; the only build step writes the public Supabase
-# settings from environment variables into supabase-config.js.
+# WebDesks is a static site. The build writes the public Supabase settings
+# into supabase-config.js and a static page per tool (tools/<slug>/index.html,
+# from tool-routes.js) so every tool has its own indexable URL.
 [build]
   publish = "."
-  command = "node scripts/write-supabase-config.mjs"
+  command = "node scripts/write-supabase-config.mjs && node scripts/build-tool-pages.mjs"
 
-# Serverless helpers. ics.mjs fetches a calendar's .ics feed for the
+# Serverless helpers. u.mjs renders Public Desk pages; ics.mjs fetches a calendar's .ics feed for the
 # dashboard agenda (calendar servers don't allow browser CORS).
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 # The sign-in page must never be framed by another site (clickjacking).
 [[headers]]
@@ -36,3 +38,16 @@
   for = "/.netlify/functions/*"
   [headers.values]
     Referrer-Policy = "no-referrer"
+
+# Public Desks: webdesks.app/u/<username>, rendered by netlify/functions/u.mjs.
+[[redirects]]
+  from = "/u/:username"
+  to = "/.netlify/functions/u?username=:username"
+  status = 200
+  force = true
+
+# Safety net: if a tool page wasn't generated, the app still opens the tool.
+[[redirects]]
+  from = "/tools/*"
+  to = "/index.html"
+  status = 200

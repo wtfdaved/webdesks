@@ -73,10 +73,10 @@
             <a href="/" class="flex items-center gap-2 font-bold text-xl text-indigo-600">🖥️ WebDesks</a>
             <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                 <a href="/blog/" class="hover:text-indigo-600 transition-colors">← Blog</a>
-                <a href="/#dashboard" class="hover:text-indigo-600 transition-colors">All Tools</a>
+                <a href="/" class="hover:text-indigo-600 transition-colors">All Tools</a>
                 <a href="/pomodoro-timer" class="hover:text-indigo-600 transition-colors">Pomodoro Timer</a>
             </div>
-            <a href="/#timer" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            <a href="/tools/pomodoro-timer" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
                 Try Pomodoro Timer →
             </a>
         </nav>
@@ -117,6 +117,10 @@
 
     <!-- Article Body -->
     <article class="max-w-3xl mx-auto px-4 py-8 article-body">
+
+        <!-- Live mini tool: try it here, then "Save to My WebDesk" (embed/mini-tools.js) -->
+        <div class="wd-mini" data-tool="pomodoro"></div>
+
 
         <p>
             Francesco Cirillo invented the Pomodoro Technique in the late 1980s as a university student, using a tomato-shaped kitchen timer to break his work into 25-minute focused intervals. Decades later, the technique has been adapted, tested, and refined by researchers, athletes, writers, engineers, and executives — spawning an entire ecosystem of variations, each optimized for a different work style, cognitive load, or creative demand.
@@ -281,5 +285,6 @@
         </div>
     </footer>
 
+    <script src="/embed/mini-tools.js" defer></script>
 </body>
 </html>
