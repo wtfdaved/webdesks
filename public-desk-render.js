@@ -120,7 +120,8 @@
             if (data && data.username) desk = data;
         } catch (e) { /* show the private page */ }
         const out = desk ? render(desk) : notFound();
-        document.title = desk ? out.title : out.title;
+        document.title = out.title;
+        mount.className = '';
         mount.innerHTML = out.body;
     }
 

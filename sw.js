@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'webdesks-v30.0';
+const CACHE_VERSION = 'webdesks-v31.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -13,6 +13,8 @@ const STATIC_ASSETS = [
   '/tool-routes.js',
   '/growth.js',
   '/home.js',
+  '/polish.js',
+  '/u',
   '/public-desk-render.js',
   '/404.html',
   '/desk-badges.js',
@@ -90,7 +92,7 @@ self.addEventListener('fetch', (e) => {
   // weather, quotes) always go straight to the network.
   if (url.origin === self.location.origin) {
     // Functions (the private calendar feed fetcher) are never cached.
-    if (url.pathname === '/sw.js' || url.pathname.startsWith('/.netlify/')) return;
+    if (url.pathname === '/sw.js' || url.pathname.startsWith('/.netlify/') || url.pathname.startsWith('/api/')) return;
     if (req.mode !== 'navigate') return networkFirst(e);
     // Offline pages: the pretty URL, its .html / index.html file, then the app.
     const p = url.pathname;

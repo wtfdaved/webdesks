@@ -1079,12 +1079,16 @@
             this.renderAgenda();
             const https = url.replace(/^webcals?:\/\//i, 'https://');
             let text = '', err = '';
-            try {
-                const r = await fetch('/.netlify/functions/ics?url=' + encodeURIComponent(https));
-                const body = await r.text();
-                if (r.ok && /BEGIN:VCALENDAR/i.test(body)) text = body;
-                else if (r.status !== 404 || /calendar/i.test(body)) err = body.slice(0, 200) || `Error ${r.status}`;
-            } catch (e) { /* no function here (local dev) — try the feed directly */ }
+            // Calendar proxy: Cloudflare Pages (/api/ics) or Netlify functions.
+            for (const ep of ['/api/ics', '/.netlify/functions/ics']) {
+                if (text) break;
+                try {
+                    const r = await fetch(ep + '?url=' + encodeURIComponent(https));
+                    const body = await r.text();
+                    if (r.ok && /BEGIN:VCALENDAR/i.test(body)) { text = body; err = ''; }
+                    else if (r.status !== 404 && !/<html/i.test(body)) err = body.slice(0, 200) || `Error ${r.status}`;
+                } catch (e) { /* not on this host — try the next */ }
+            }
             if (!text) {
                 try {
                     const r = await fetch(https);

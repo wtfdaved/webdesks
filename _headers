@@ -1,0 +1,21 @@
+# Read by Cloudflare Pages and Netlify (same rules as netlify.toml).
+
+# The sign-in page must never be framed by another site (clickjacking).
+/login*
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cache-Control: no-cache
+
+# Always fetch the current config and route table so changes apply at once.
+/supabase-config.js
+  Cache-Control: no-cache
+/tool-routes.js
+  Cache-Control: no-cache
+/sponsors.json
+  Cache-Control: no-cache
+
+# The service worker must always be re-checked so new versions roll out.
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /

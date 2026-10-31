@@ -9,6 +9,19 @@
     <link rel="icon" href="/favicon-32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <script src="/tool-routes.js"></script>
+    <script>
+        // Self-healing for hosts that serve this page instead of the app for a
+        // clean URL (no rewrite rules): hand tool and Public Desk links to the
+        // page that can open them.
+        (function () {
+            var p = location.pathname;
+            var t = p.match(/^\/tools\/([a-z0-9-]+)\/?$/);
+            if (t && window.WD_ROUTES && WD_ROUTES.bySlug[t[1]]) { location.replace('/?r=' + encodeURIComponent('/tools/' + t[1]) + location.hash); return; }
+            if (/^\/tools\/?$/.test(p)) { location.replace('/?r=%2Ftools%2Fdev-toolkit'); return; }
+            var u = p.match(/^\/u\/([A-Za-z0-9_@]{3,25})\/?$/);
+            if (u) { location.replace('/u?u=' + encodeURIComponent(u[1].replace(/^@/, '').toLowerCase())); return; }
+        })();
+    </script>
     <style>
         :root { --accent: #4f46e5; --text: #0f172a; --muted: #64748b; --border: #e5e7eb; --surface: #fff; --bg: #f7f7f5; }
         @media (prefers-color-scheme: dark) { :root { --text: #e2e8f0; --muted: #94a3b8; --border: #1f2937; --surface: #111827; --bg: #0b1020; } }

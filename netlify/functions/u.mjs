@@ -17,12 +17,14 @@ let cfgCache = null;
 
 // Public Supabase URL + anon key: env vars if set (the same ones the build
 // uses), otherwise read from the site's own supabase-config.js.
-async function config(host) {
+// Works on Netlify (process.env) and Cloudflare Pages (env passed in).
+async function config(host, envIn) {
     if (cfgCache) return cfgCache;
-    if (process.env.SUPABASE_URL && /^https:/.test(process.env.SUPABASE_URL) && (process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_PUBLISHABLE_KEY)) {
-        return (cfgCache = { url: process.env.SUPABASE_URL, key: process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_PUBLISHABLE_KEY });
+    const env = envIn || (typeof process !== 'undefined' && process.env) || {};
+    if (env.SUPABASE_URL && /^https:/.test(env.SUPABASE_URL) && (env.SUPABASE_ANON_KEY || env.SUPABASE_PUBLISHABLE_KEY)) {
+        return (cfgCache = { url: env.SUPABASE_URL, key: env.SUPABASE_ANON_KEY || env.SUPABASE_PUBLISHABLE_KEY });
     }
-    const origins = [...new Set([host ? `https://${host}` : null, process.env.URL, process.env.DEPLOY_PRIME_URL, SITE].filter(Boolean))];
+    const origins = [...new Set([host ? `https://${host}` : null, env.URL, env.DEPLOY_PRIME_URL, env.CF_PAGES_URL, SITE].filter(Boolean))];
     for (const origin of origins) {
         try {
             const js = await (await fetch(`${origin}/supabase-config.js`, { signal: AbortSignal.timeout(4000) })).text();
@@ -35,8 +37,8 @@ async function config(host) {
 }
 
 // → desk object, null (no such public Desk), or throws (couldn't ask).
-async function fetchDesk(username, host) {
-    const { url, key } = await config(host);
+async function fetchDesk(username, host, env) {
+    const { url, key } = await config(host, env);
     const res = await fetch(`${url.replace(/\/$/, '')}/rest/v1/rpc/get_public_desk`, {
         method: 'POST',
         // apikey alone selects the anon role; works with legacy anon JWTs and new publishable keys.
@@ -102,14 +104,14 @@ function usernameFrom(event) {
     return '';
 }
 
-export const handler = async (event) => {
+export const handler = async (event, env) => {
     const username = usernameFrom(event);
     const url = `${SITE}/u/${username}`;
     if (!username) { const nf = notFound(); return page({ ...nf, url, status: 404, noindex: true }); }
 
     let desk;
     try {
-        desk = await fetchDesk(username, event.headers && (event.headers['x-forwarded-host'] || event.headers.host));
+        desk = await fetchDesk(username, event.headers && (event.headers['x-forwarded-host'] || event.headers.host), env);
     } catch (e) {
         console.error('[u] server fetch failed, falling back to the browser:', e && e.message);
         // Let the visitor's browser load it instead (same public RPC).

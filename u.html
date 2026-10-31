@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Public Desk | WebDesks</title>
+<meta name="description" content="A Public Desk on WebDesks: Focus Town, streak badges and favourite focus sounds.">
+<meta property="og:site_name" content="WebDesks">
+<meta property="og:title" content="A Public Desk on WebDesks">
+<meta property="og:description" content="Focus Town, streak badges and favourite focus sounds — build your own free Desk.">
+<meta property="og:image" content="https://webdesks.app/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Static fallback for /u/<username>: works on any host. Where a server
+     function is available (functions/u, netlify/functions/u.mjs) it renders
+     the same page with the member's details in the link preview. -->
+<script src="/supabase-config.js"></script>
+<script src="/desk-badges.js"></script>
+<script src="/public-desk-render.js"></script>
+<script>document.write('<style>' + WD_PUBLIC_DESK.STYLES + '</style>');</script>
+</head>
+<body>
+<main>
+  <div class="top"><a href="/">🗂️ WebDesks</a><a href="/login?mode=signup&amp;ref=public-desk">Get yours free</a></div>
+  <div id="pd-root" class="loading">Loading Desk…</div>
+</main>
+<script>
+  (function () {
+    var m = location.pathname.match(/^\/u\/([^/?#]+)/);
+    var name = m ? decodeURIComponent(m[1]).toLowerCase().replace(/^@/, '') : (new URLSearchParams(location.search).get('u') || '').toLowerCase();
+    var root = document.getElementById('pd-root');
+    if (!/^[a-z0-9_]{3,24}$/.test(name)) { var nf = WD_PUBLIC_DESK.notFound(); document.title = nf.title; root.className = ''; root.innerHTML = nf.body; return; }
+    root.className = '';
+    WD_PUBLIC_DESK.loadInBrowser(name, root);
+  })();
+</script>
+</body>
+</html>
