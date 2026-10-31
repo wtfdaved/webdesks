@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.27.0">
+    <meta name="generator" content="WebDesks v0.28.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -59,7 +59,7 @@
 
     <meta name="google-adsense-account" content="ca-pub-8626644983261966">
     <!-- AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8626644983261966" crossorigin="anonymous"></script>
+    <script src="/ads.js"></script>
 
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -933,6 +933,8 @@
             background: rgba(15,23,42,0.97);
             border-color: rgba(79,70,229,0.25);
         }
+        #ad-panel-inner .ad-free-nudge { display: block; font-size: .65rem; font-weight: 700; color: #6366f1; text-align: center; margin: -.2rem 0 .5rem; }
+        #ad-panel-inner .ad-free-nudge:hover { text-decoration: underline; }
         #ad-panel-inner .ad-label {
             font-size: 0.55rem;
             font-weight: 700;
@@ -1490,7 +1492,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.27.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.28.0</span>
             </div>
             <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="party-popper" class="w-4 h-4"></i>
@@ -1721,6 +1723,7 @@
         <button id="ad-panel-toggle" onclick="toggleAdPanel()" title="Toggle ad panel" aria-expanded="true">Hide</button>
         <div id="ad-panel-inner">
             <span class="ad-label">Advertisement</span>
+            <a href="/login?mode=signup" class="ad-free-nudge wd-guest-only">Go ad-free: free profile →</a>
             <ins class="adsbygoogle"
                 style="display:inline-block;width:160px;height:600px"
                 data-ad-client="ca-pub-8626644983261966"
@@ -1728,7 +1731,7 @@
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             <!-- BEGIN AADS AD UNIT 2430800 -->
             <div style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-              <iframe data-aa='2430800' src='//acceptable.a-ads.com/2430800/?size=Adaptive'
+              <iframe data-aa='2430800' data-src='//acceptable.a-ads.com/2430800/?size=Adaptive'
                         style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
             </div>
             <!-- END AADS AD UNIT 2430800 -->
@@ -1790,10 +1793,12 @@
                 <!-- Toolkit -->
                 <section>
                     <div class="home-section-head">
-                        <h2>Your toolkit</h2>
+                        <h2 id="home-toolkit-title">Your toolkit</h2>
                         <button onclick="app.openMoreDrawer ? (window.innerWidth < 768 ? app.openMoreDrawer() : app.openPalette()) : app.openPalette()" class="home-link">All 28 tools <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
                     </div>
-                    <div class="app-grid">
+                    <!-- Desk presets: one click swaps the sidebar + dashboard to a role (desks.js) -->
+                    <div id="desk-presets" class="desk-presets" role="radiogroup" aria-label="Desk preset"></div>
+                    <div class="app-grid" id="home-toolkit">
                         <button onclick="app.switchTab('today')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-amber-400 to-orange-500"><i data-lucide="sun" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Today</span><span class="app-sub">Your morning check-in</span></span>
@@ -1832,10 +1837,12 @@
                 <!-- Widgets -->
                 <section>
                     <div class="home-section-head"><h2>At a glance</h2></div>
-                    <div class="bento">
+                    <div class="bento" id="home-bento">
+                        <!-- Role spotlight for the active Desk preset (desks.js) -->
+                        <div id="w-spotlight" class="widget lg:col-span-4" hidden></div>
                         <!-- Tasks -->
-                        <div class="widget lg:col-span-2">
-                            <div class="widget-head"><span class="widget-label text-emerald-600 dark:text-emerald-400">Today's tasks</span>
+                        <div class="widget lg:col-span-2" id="w-tasks">
+                            <div class="widget-head"><span id="w-tasks-label" class="widget-label text-emerald-600 dark:text-emerald-400">Today's tasks</span>
                                 <button onclick="app.switchTab('tasks')" class="home-link text-xs">View all <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button></div>
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="flex-1 bg-slate-200/70 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden"><div id="task-progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width:0%"></div></div>
@@ -1845,10 +1852,12 @@
                                 <input type="text" id="dash-task-input" placeholder="Quick add — “call mom tomorrow 6pm”" class="widget-input flex-1 min-w-0" onkeypress="if(event.key==='Enter') app.dashAddTask()">
                                 <button onclick="app.dashAddTask()" class="w-12 shrink-0 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white grid place-items-center" aria-label="Add task"><i data-lucide="plus" class="w-5 h-5"></i></button>
                             </div>
+                            <!-- New visitors: three interactive "get started" steps (desks.js) -->
+                            <div id="onboard-steps"></div>
                         </div>
 
                         <!-- Focus timer -->
-                        <div class="widget cursor-pointer select-none" onclick="app.dashTimerTap()">
+                        <div class="widget cursor-pointer select-none" id="w-timer" onclick="app.dashTimerTap()">
                             <div class="widget-head"><span class="widget-label text-indigo-600 dark:text-indigo-400">Focus timer</span><span id="dash-timer-hint" class="text-xs text-slate-400 md:hidden">Tap to start</span></div>
                             <div id="mini-timer" class="text-5xl font-black timer-font text-indigo-600 dark:text-indigo-400 tracking-tight">25:00</div>
                             <div class="grid grid-cols-3 gap-2 mt-4 text-center">
@@ -1859,13 +1868,13 @@
                         </div>
 
                         <!-- Mood -->
-                        <div class="widget">
+                        <div class="widget" id="w-mood">
                             <div class="widget-head"><span class="widget-label text-purple-600 dark:text-purple-400">How are you feeling?</span><div id="mood-week" class="flex gap-1 items-center"></div></div>
                             <div class="flex justify-between gap-1" id="mood-buttons"></div>
                         </div>
 
                         <!-- Water -->
-                        <div class="widget">
+                        <div class="widget" id="w-water">
                             <div class="widget-head"><span class="widget-label text-sky-600 dark:text-sky-400">Hydration</span>
                                 <div class="flex gap-1.5">
                                     <button onclick="app.removeWater()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold" aria-label="Remove one glass of water">−</button>
@@ -1875,31 +1884,45 @@
                         </div>
 
                         <!-- Alarm -->
-                        <div class="widget cursor-pointer" onclick="app.switchTab('clock')">
+                        <div class="widget cursor-pointer" id="w-alarm" onclick="app.switchTab('clock')">
                             <div class="widget-head"><span class="widget-label text-orange-600 dark:text-orange-400">Next alarm</span><i data-lucide="alarm-clock" class="w-4 h-4 text-orange-500"></i></div>
-                            <div id="dash-alarm-status" class="text-3xl font-black timer-font">--:--</div>
-                            <div class="text-xs text-slate-400 mt-1">Tap to set an alarm</div>
+                            <div id="dash-alarm-status" class="text-3xl font-black timer-font">Not set</div>
+                            <div id="dash-alarm-hint" class="text-xs text-slate-400 mt-1">Tap to set an alarm</div>
                         </div>
 
                         <!-- Latest note -->
-                        <div class="widget lg:col-span-2 cursor-pointer" onclick="app.switchTab('scratchpad')">
+                        <div class="widget lg:col-span-2 cursor-pointer" id="w-note" onclick="app.switchTab('scratchpad')">
                             <div class="widget-head"><span class="widget-label text-slate-500">Latest note</span><i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i></div>
                             <div id="dash-note-preview" class="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">Start writing...</div>
                         </div>
 
                         <!-- Quote -->
-                        <div class="widget lg:col-span-2 widget-quote">
+                        <div class="widget lg:col-span-2 widget-quote" id="w-quote">
                             <i data-lucide="quote" class="w-6 h-6 text-indigo-300 dark:text-indigo-500/60 mb-2"></i>
                             <p id="daily-quote" class="text-lg font-semibold leading-snug">"Loading inspiration..."</p>
                             <p id="quote-author" class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">- WebDesks</p>
                         </div>
 
-                        <!-- Quick actions -->
-                        <div class="widget lg:col-span-2">
-                            <div class="widget-head"><span class="widget-label text-slate-500">Quick actions</span>
-                                <button onclick="app.openPinManager()" class="home-link text-xs"><i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Customize</button></div>
+                        <!-- Quick actions: workspace launchers + pinned tools -->
+                        <div class="widget lg:col-span-2" id="w-quick">
+                            <div class="widget-head"><span class="widget-label text-slate-500">Launchers &amp; quick actions</span>
+                                <span class="flex items-center gap-3">
+                                    <button onclick="app.editLauncher()" class="home-link text-xs"><i data-lucide="folder-plus" class="w-3.5 h-3.5"></i> Launcher</button>
+                                    <button onclick="app.openPinManager()" class="home-link text-xs"><i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Pin tool</button>
+                                </span></div>
+                            <div id="launchers-grid" class="launchers"></div>
                             <div id="quick-actions-grid" class="flex flex-wrap gap-2 min-h-[40px]"></div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Daily life: snippet vault, money, calendar agenda (desks.js) -->
+                <section>
+                    <div class="home-section-head"><h2>Daily life</h2></div>
+                    <div class="bento">
+                        <div class="widget lg:col-span-2" id="w-snippets"></div>
+                        <div class="widget lg:col-span-2" id="w-money"></div>
+                        <div class="widget lg:col-span-4" id="w-agenda"></div>
                     </div>
                 </section>
 
@@ -1924,8 +1947,8 @@
                 </section>
 
                 <!-- Below-the-fold Banner Ad (safe zone: below all tool controls) -->
-                <div class="text-center py-2">
-                    <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest mb-1">Advertisement</p>
+                <div class="wd-ad text-center py-2">
+                    <p class="text-[9px] font-bold text-slate-300 uppercase tracking-widest mb-1">Advertisement · <a href="/login?mode=signup" class="text-indigo-400 hover:text-indigo-500 normal-case tracking-normal">Free profile = no ads</a></p>
                     <ins class="adsbygoogle"
                         style="display:block"
                         data-ad-client="ca-pub-8626644983261966"
@@ -1935,7 +1958,7 @@
                     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                     <!-- BEGIN AADS AD UNIT 2430800 -->
                     <div style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-                      <iframe data-aa='2430800' src='//acceptable.a-ads.com/2430800/?size=Adaptive'
+                      <iframe data-aa='2430800' data-src='//acceptable.a-ads.com/2430800/?size=Adaptive'
                                 style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
                     </div>
                     <!-- END AADS AD UNIT 2430800 -->
@@ -6741,5 +6764,7 @@
     <script src="/town.js"></script>
     <script src="/sound.js"></script>
     <script src="/shell.js"></script>
+    <!-- Desk presets, onboarding, morning brief / shutdown, launchers, snippets, money, .ics agenda -->
+    <script src="/desks.js"></script>
 </body>
 </html>

@@ -99,6 +99,57 @@ link back to them. `sitemap.xml` lists all of them and `robots.txt` points
 crawlers at it and keeps personal `/survey` links and `/login` out of search.
 Survey Says is described as "Family Feud–style" with a non-affiliation note.
 
+## Dashboard upgrades (`desks.js`, v0.28)
+
+- **Get started checklist** — brand-new visitors see three interactive steps
+  in the tasks card instead of empty `0 / 0` / `--:--` widgets: *Try pressing
+  ⌘K*, *Start a 25m Pomodoro*, *Save your Desk to your profile*. Each ticks
+  itself off when you actually do it (palette opened, timer started, signed
+  in). The empty alarm card steps aside while the checklist shows, and new
+  visitors land on the Dashboard instead of the Today check-in. Anyone with
+  existing data never sees it (`wd_onboard`).
+- **Desk presets** — chips above the toolkit switch between *All tools*,
+  **Developer** (Dev Toolkit, code Scratchpad, Pomodoro…), **Student** (Focus
+  Town, Sounds mixer, Hydration…) and **Remote Work** (World Clock, On Air,
+  Kanban…). A preset trims the sidebar to Dashboard/Today/Calendar/Tasks plus
+  its tools ("show all" link at the bottom), swaps the toolkit tiles, adds a
+  spotlight card for its three headline tools and re-orders the widgets. Also
+  in ⌘K. Saved as `wd_desk_preset`, so it syncs with your Desk.
+- **Morning brief & daily shutdown** — one hero button. Before noon it opens
+  the brief (yesterday's log, today's tasks and meetings, a standup to copy);
+  after noon it becomes **Shut down day**: unfinished tasks dated today or
+  earlier move to tomorrow (`rolled` counter), today's Focus Town minutes and
+  Pomodoros are logged, and a standup summary is copied to the clipboard. The
+  log is kept locally (`wd_daily_log`, 90 days) and, when signed in, upserted
+  to Supabase `daily_logs`. Tasks now record `doneOn` when checked off.
+- **Workspace launchers** — Quick Actions gained folders ("Morning Routine",
+  "Client Work", "Deep Work") that open a set of URLs, start a Sounds preset or
+  saved mix, open a tool and optionally start a 25-minute focus session, in one
+  click. If the browser blocks the extra tabs you get the links to click.
+  `wd_launchers`; also runnable from ⌘K.
+- **Daily life widgets**
+  - **Snippet vault** — one-click copy for text and links you paste often,
+    sorted by use, searchable, in ⌘K as "Copy: …" (`wd_snippets`).
+  - **Money** — subscriptions (monthly/yearly totals, renewals this week,
+    auto-advancing renewal dates) and quick expenses (today / 7 days / month),
+    currency picker (`wd_subs`, `wd_expenses`, `wd_money_cur`).
+  - **Calendar agenda** — paste a Google/Outlook/iCloud `.ics` (or `webcal://`)
+    link and see the next 7 days, read-only. Parsed in the browser (time zones
+    incl. Windows names, RRULE daily/weekly/monthly/yearly with BYDAY,
+    BYMONTHDAY, COUNT, UNTIL, EXDATE, RECURRENCE-ID overrides). Calendar servers
+    block browser CORS, so the feed is fetched by
+    `netlify/functions/ics.mjs`, which refuses private-network hosts and
+    anything that isn't `BEGIN:VCALENDAR`, and stores nothing. The parsed feed
+    is cached on the device only (`wdl_ics_cache`, outside Desk sync).
+
+## Ads (`ads.js`)
+
+Every page loads `/ads.js` instead of the AdSense tag. Signed-in members
+(a saved `sb-webdesks-auth` session) never load AdSense or A-ADS (their iframe
+`src` lives in `data-src`) and every ad slot is hidden; guests get the same
+ads as before plus a "Free profile = no ads" nudge on the dashboard slots. If
+`account.js` finds the saved session has expired it calls `wdAds.enable()`.
+
 ## App shell (`shell.js`)
 
 - **More sheet** (phones): every tool grouped like the sidebar, with colourful
@@ -202,7 +253,8 @@ clears this browser's copy.
 ### One-time Supabase setup
 
 1. **Database.** Run each file in `supabase/migrations/` in order
-   (`…_profiles_and_desks.sql`, then `…_survey_says.sql`).
+   (`…_profiles_and_desks.sql`, then `…_survey_says.sql`, then
+   `…_daily_logs.sql`).
    The Supabase GitHub integration applies it on merge to `main` when
    "Deploy to production" is on; otherwise paste it into **SQL Editor → New
    query → Run** (it's safe to run twice).
@@ -234,6 +286,9 @@ clears this browser's copy.
    build step writes them for you.
 
 ## Design & performance
+
+v0.28 added the dashboard upgrades in `desks.js` and ad-free browsing for
+signed-in members (see above).
 
 v0.27 fixed the iPhone header, rebuilt the phone More sheet, added Add to Home
 Screen and offline support, and started the Group Games section (see above).
@@ -321,7 +376,7 @@ with a penalty proportional to how scattered the letters are.
 
 ## Privacy
 
-No analytics beyond AdSense and no file ever leaves the device. For guests,
+No analytics beyond AdSense (never loaded for signed-in members) and no file ever leaves the device. For guests,
 planner data (tasks, events, chores, bills, pages, moods) stays in
 `localStorage` too. Signed-in users' Desks are stored in Supabase behind
 row-level security; see `privacy.html` §2.5 for exactly what is stored and the

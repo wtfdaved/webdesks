@@ -152,6 +152,7 @@
                     // Session ended elsewhere (revoked, expired). Keep the local copy.
                     this.account = null;
                     this.renderAccountButton();
+                    window.wdAds && wdAds.enable();
                 }
                 if (session && this.account && event === 'USER_UPDATED') {
                     this.account.email = session.user.email;
@@ -187,7 +188,8 @@
             try {
                 const sb = await this._supabase();
                 const { data } = await sb.auth.getSession();
-                if (!data.session) { this.renderAccountButton(); return; }
+                // The saved session has lapsed: this visitor is a guest after all.
+                if (!data.session) { this.renderAccountButton(); window.wdAds && wdAds.enable(); return; }
                 await this._startSession(data.session.user);
                 if (wantsSignOut) await this.signOut('/login');
             } catch (e) {

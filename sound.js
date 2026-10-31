@@ -1309,6 +1309,15 @@
             const p = PRESETS.find(x => x.id === name) || PRESETS.find(x => x.id === ({ cafe: 'rainycafe', rain: 'storm', nature: 'forest', cozy: 'cabin' })[name]);
             if (p) { applyMix(p.mix); toast(`${p.emoji} ${p.name}`); }
         },
+        // Workspace launchers (desks.js): a built-in preset id or a saved mix id.
+        mixerStart(id) {
+            const p = PRESETS.find(x => x.id === id);
+            if (p) { applyMix(p.mix); return `${p.emoji} ${p.name}`; }
+            const m = mixes.find(x => x.id === id);
+            if (m) { applyMix(m.mix); return m.name; }
+            return '';
+        },
+        mixerList() { return PRESETS.map(p => ({ id: p.id, name: `${p.emoji} ${p.name}` })).concat(mixes.map(m => ({ id: m.id, name: `🎚️ ${m.name}` }))); },
         soundSleep(min) { setSleep(min); },
         toggleNoise(type) { this.mixerToggle(type === 'nature' ? 'birds' : type === 'coffee' ? 'cafe' : type); },
         stopNoise() { this.mixerStopAll(); },
