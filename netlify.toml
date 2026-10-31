@@ -4,6 +4,11 @@
   publish = "."
   command = "node scripts/write-supabase-config.mjs"
 
+# Serverless helpers. ics.mjs fetches a calendar's .ics feed for the
+# dashboard agenda (calendar servers don't allow browser CORS).
+[functions]
+  directory = "netlify/functions"
+
 # The sign-in page must never be framed by another site (clickjacking).
 [[headers]]
   for = "/login*"
@@ -25,3 +30,9 @@
   [headers.values]
     Cache-Control = "no-cache"
     Service-Worker-Allowed = "/"
+
+# Calendar feeds are personal: never let a CDN or browser share them.
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Referrer-Policy = "no-referrer"
