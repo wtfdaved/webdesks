@@ -1,4 +1,27 @@
-# Read by Cloudflare Pages and Netlify (same rules as netlify.toml).
+# Cloudflare Pages response headers.
+
+# Every page: no MIME sniffing, private referrers, HTTPS only, and only the
+# browser powers WebDesks actually uses (camera/mic/screen for the recorder
+# and OCR, location for the weather).
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000
+  Permissions-Policy: camera=(self), microphone=(self), display-capture=(self), geolocation=(self), payment=(), usb=(), serial=(), hid=()
+
+# Images never change in place (new artwork gets a new name): cache them.
+/icon-*
+  Cache-Control: public, max-age=2592000
+/icon.svg
+  Cache-Control: public, max-age=2592000
+/apple-touch-icon.png
+  Cache-Control: public, max-age=2592000
+/favicon-32.png
+  Cache-Control: public, max-age=2592000
+/og-image.png
+  Cache-Control: public, max-age=604800
+/screenshots/*
+  Cache-Control: public, max-age=2592000
 
 # The sign-in page must never be framed by another site (clickjacking).
 /login*

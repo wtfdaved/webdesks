@@ -1,10 +1,8 @@
 // Renders the SEO version of each tool page and the /tools/ index.
 //
-// Pure functions (no file system), shared by:
-//   • scripts/build-tool-pages.mjs — writes static tools/<slug>/index.html
-//     files on hosts with a build step (Netlify);
-//   • functions/tools/[[path]].js — renders them on request on Cloudflare
-//     Pages, which serves the repository as-is.
+// Pure functions, used by functions/tools/[[path]].js: Cloudflare Pages
+// serves the repository as-is (no build step), so tool pages are rendered
+// on request from index.html.
 (function (root) {
     const R = typeof module !== 'undefined' && module.exports ? require('./tool-routes.js') : root.WD_ROUTES;
     const { ROUTES, bySlug } = R;

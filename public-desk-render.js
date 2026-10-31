@@ -1,6 +1,6 @@
 // Renders a Public Desk page (webdesks.app/u/<username>).
 //
-// Shared by the server (netlify/functions/u.mjs renders it for link
+// Shared by the server (lib/public-desk-page.js renders it for link
 // previews) and the browser (the same page loads the Desk itself if the
 // server couldn't reach the database). Needs desk-badges.js.
 (function (root) {

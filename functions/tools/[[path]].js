@@ -1,9 +1,8 @@
 // Cloudflare Pages: /tools/ and /tools/<slug>.
 //
-// Cloudflare serves the repository as-is (no build step), so the SEO tool
-// pages that scripts/build-tool-pages.mjs writes on Netlify don't exist
-// here. This renders them on request from index.html, with each tool's own
-// title, description, canonical URL, structured data and About card.
+// Cloudflare Pages serves the repository as-is (no build step), so each
+// tool's SEO page is rendered on request from index.html: its own title,
+// description, canonical URL, structured data and About card.
 // Anything unexpected falls back to the plain app, which opens the tool
 // from the URL by itself.
 import pages from '../../tool-pages.js';

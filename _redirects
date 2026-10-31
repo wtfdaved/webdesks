@@ -1,9 +1,7 @@
-# Read by Cloudflare Pages and Netlify (netlify.toml is Netlify-only).
-# Without these, refreshing a clean URL returned 404 on hosts with no
-# single-page-app fallback once a 404.html existed.
-#
-# On Cloudflare Pages the functions/ routes (Public Desk, SEO tool pages,
-# calendar proxy) take precedence; these rules are the static fallback.
+# Cloudflare Pages rewrites. Cloudflare only falls back to index.html for
+# unknown URLs while there is no 404.html; with one, clean URLs need these.
+# The functions/ routes (SEO tool pages, Public Desks, calendar proxy) take
+# precedence; these rules are the static fallback if a function is skipped.
 
 # Every tool URL is the app, which opens the tool from the path. Targets are
 # extensionless: Cloudflare redirects /x.html to /x, which would drop the path.

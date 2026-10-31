@@ -1079,8 +1079,8 @@
             this.renderAgenda();
             const https = url.replace(/^webcals?:\/\//i, 'https://');
             let text = '', err = '';
-            // Calendar proxy: Cloudflare Pages (/api/ics) or Netlify functions.
-            for (const ep of ['/api/ics', '/.netlify/functions/ics']) {
+            // Calendar proxy: functions/api/ics.js (Cloudflare Pages).
+            for (const ep of ['/api/ics']) {
                 if (text) break;
                 try {
                     const r = await fetch(ep + '?url=' + encodeURIComponent(https));
