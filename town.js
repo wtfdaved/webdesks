@@ -927,6 +927,7 @@
                             <div class="font-black mb-1">Focus to grow faster</div>
                             <p class="text-xs text-slate-500 mb-3">Your town earns ×${FOCUS_MULT} coins while a focus session runs, and keeps earning while this tab stays open.</p>
                             <div id="town-focus-btns" class="flex gap-2">
+                                <button class="town-btn flex-1" data-focus="5" title="Just do 5 minutes">⚡ 5 min</button>
                                 <button class="town-btn primary flex-1" data-focus="25">▶ Focus 25 min</button>
                                 <button class="town-btn flex-1" data-focus="50">50 min</button>
                             </div>

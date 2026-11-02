@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'webdesks-v32.0';
+const CACHE_VERSION = 'webdesks-v33.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -15,6 +15,7 @@ const STATIC_ASSETS = [
   '/home.js',
   '/polish.js',
   '/essentials.js',
+  '/adhd.js',
   '/u',
   '/public-desk-render.js',
   '/404.html',

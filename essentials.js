@@ -12,7 +12,7 @@
 //  (5. Security & caching headers live in _headers.)
 // ═══════════════════════════════════════════════════════════════
 (() => {
-    const VERSION = '0.32';
+    const VERSION = '0.33';
     const $ = id => document.getElementById(id);
     const esc = s => app.escapeHtml(String(s ?? ''));
     const pad = n => String(n).padStart(2, '0');
@@ -21,6 +21,14 @@
 
     // Newest first. Keep each item short and in plain words.
     const CHANGELOG = [
+        { v: '0.33', title: 'Built for ADHD brains', items: [
+            '🎡 <b>Pick 1 for me</b> — hides the list, picks one thing for your energy and starts a 5-minute starter.',
+            '⏳ <b>What fits?</b> — free minutes before your next meeting, one task that fits and a transition alarm.',
+            '🌱 <b>Fresh start</b> — sweep everything overdue into the Someday Vault. Streaks untouched.',
+            '🛟 <b>Trial rescue</b> — free trials and return-by dates count down on your Dashboard 48 hours ahead.',
+            '⚡ <b>Just 5 minutes</b>, <b>tiny steps</b> on every task and chore, and a one-thing <b>Focus Tunnel</b>.',
+            '🧭 <b>Where was I?</b>, a workday bar across the top, and the <b>doom pile</b>: press B to dump, sort with T C B P ⌫.'
+        ] },
         { v: '0.32', title: 'Smarter home screen', items: [
             '⏰ <b>Next up</b> — your next event or timed task, with a countdown, right in the greeting.',
             '🔴 <b>App badge</b> — the installed app shows how many tasks are due today.',
