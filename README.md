@@ -167,6 +167,56 @@ environment variables `SUPABASE_URL` / `SUPABASE_ANON_KEY` override
 
 Test locally exactly as Cloudflare serves it: `npx wrangler pages dev .`
 
+## v0.33: ADHD mode (`adhd.js`)
+
+Standard planners fail ADHD brains with wall-of-text lists, red "overdue"
+shame and zero help *starting*. v0.33 designs around the five friction points
+(starting, time blindness, overwhelm, shame, working memory):
+
+- **🎡 Pick 1 for me** (Today, Tasks, Chores, ⌘K) — hides the list, asks for
+  your energy (🔋 Low / ⚡ Medium / 🔥 High), spins and lands on *one* task,
+  top-3 priority or chore that fits, then starts a 5-minute starter. Tasks get
+  an optional energy tag (tap the 🔋? chip on a task row).
+- **⏳ What fits before my next event?** (Today, Calendar) — exact free minutes
+  before the next timed event (WebDesks Calendar + your connected `.ics` feed),
+  one task that fits (leaves 5 min to switch), and a **transition alarm** 5/10/15
+  minutes before, with a chime, notification and a "leave a breadcrumb" note.
+  **Connect my calendar** is a plain-English `.ics` guide: what an `.ics` link
+  is (a private, read-only window onto your calendar), step-by-step for
+  Google / Outlook / Apple, and a paste box. Linked from the agenda widget too.
+- **🌱 Fresh start** (Tasks, Chores, Today) — one click sweeps every overdue
+  task and chore into the **Someday Vault** (`wd_someday`). Nothing is deleted,
+  streaks and points are untouched; bring things back to Today / Inbox or
+  "let go". Carried-over dates are amber instead of red.
+- **🛟 Trial rescue** (Bills) — free trials ("charges on") and "return by"
+  dates (`wd_rescues`). From 48 hours before, an urgent countdown pins to the
+  top of the Dashboard with *Cancel page ↗*, *I cancelled ✓* and *Keep it*
+  (turns it into a monthly bill). Notifications at 48h / 24h / 3h if allowed.
+- **⚡ Just 5 minutes** — next to the 25m/45m/60m timers, on the dashboard
+  timer widget and in Focus Town (5 / 25 / 50). When it ends: *"You're rolling!
+  Keep going for 20 more minutes, or bank your win now?"* (`wd_micro_wins`).
+- **⚡ Tiny steps** on every task, chore and priority — splits "Clean
+  apartment" or "File taxes" into 3-minute micro-checkboxes (built-in recipes
+  for cleaning, taxes, email, laundry, writing, calls, groceries, study, bills,
+  packing, job applications, workouts, cooking… plus a generic fallback).
+  Editable; progress shows on the row (⚡ 2/5).
+- **One-thing Focus Tunnel** — *▶ Start* on a priority or task hides the
+  sidebar and everything else: just the task, a big countdown bar, its tiny
+  steps, Scratchpad (or a calculator) side by side and the Sounds player.
+- **Day depleting bar + gentle chime** — a 4px bar across the top fills as
+  your workday (default 9–5, weekdays) drains; hover for "3h 2m left". Optional
+  soft chime every 30 or 60 minutes (`wd_daybar`; click the bar for settings).
+- **🧭 Where was I?** — after 3+ minutes away, the Dashboard pins "Last active
+  42m ago: you were working on *File taxes* with Scratchpad open → 1-click
+  resume", with your last Scratchpad line or transition note (`wdl_where`,
+  device only).
+- **🧠 Doom pile** — dump thoughts all day: the Today brain-dump box (new
+  "Doom pile" option, default), **B** on any page, or Quick capture → Brain
+  dump. **Sort my doom pile** is a 2-minute game: one card at a time, **T** →
+  Tasks (dates parsed), **C** → Chores, **B** → Bills ($ amounts parsed),
+  **P** → a "Sorted from my doom pile" page, **⌫** → delete, **S** → later,
+  **U** → undo. An evening nudge appears on the Dashboard (`wd_doom`).
+
 ## v0.31: fixes and five more improvements
 
 - **404 on refresh / Public Desk 404** — fixed with the Cloudflare Pages

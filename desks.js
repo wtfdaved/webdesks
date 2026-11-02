@@ -1136,6 +1136,7 @@
                             <li><b>Outlook</b>: Settings → Calendar → Shared calendars → Publish a calendar → copy the <i>ICS</i> link.</li>
                             <li><b>Apple iCloud</b>: Calendar app → share icon next to a calendar → Public Calendar → copy link.</li>
                         </ul>
+                        <p class="mt-2"><button type="button" class="font-bold text-sky-600 hover:underline" onclick="app.openIcsGuide && app.openIcsGuide()">New to .ics? Read the plain-English guide →</button></p>
                         <p class="mt-2">WebDesks only reads the feed to show your next 7 days; nothing is written back. The link is saved with your Desk — treat it like a password.</p>
                     </details>`;
                 const form = $('ag-form');

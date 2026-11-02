@@ -246,16 +246,16 @@
         // Quick capture (N anywhere, + on phones)
         // ─────────────────────────────────────────────────────────
         openQuickCapture(kind = 'task') {
-            const kinds = [['task', '✅ Task'], ['note', '📝 Note'], ['snippet', '📋 Snippet']];
+            const kinds = [['task', '✅ Task'], ['dump', '🧠 Brain dump'], ['note', '📝 Note'], ['snippet', '📋 Snippet']];
             this.lifeModal('Quick capture', `
                 <div class="seg-big mb-3" role="radiogroup" aria-label="What to capture">${kinds.map(([k, l]) => `<button role="radio" data-k="${k}" aria-checked="${k === kind}" class="${k === kind ? 'on' : ''}">${l}</button>`).join('')}</div>
                 <textarea id="qc-text" rows="3" maxlength="2000" class="${this._inputCls}" placeholder=""></textarea>
                 <div id="qc-hint" class="text-xs text-slate-400 mt-2 min-h-[1rem]"></div>
                 <div class="flex gap-2 mt-3"><button id="qc-save" class="${this._btnCls} flex-1">Save</button></div>
-                <p class="text-[11px] text-slate-400 mt-3">Tip: press <kbd class="px-1 border rounded">N</kbd> anywhere to open this. <kbd class="px-1 border rounded">⌘/Ctrl</kbd>+<kbd class="px-1 border rounded">Enter</kbd> saves.</p>`, wrap => {
+                <p class="text-[11px] text-slate-400 mt-3">Tip: press <kbd class="px-1 border rounded">N</kbd> anywhere to open this (<kbd class="px-1 border rounded">B</kbd> for a brain dump). <kbd class="px-1 border rounded">⌘/Ctrl</kbd>+<kbd class="px-1 border rounded">Enter</kbd> saves.</p>`, wrap => {
                 let k = kind;
                 const ta = wrap.querySelector('#qc-text'), hint = wrap.querySelector('#qc-hint');
-                const ph = { task: 'Pay rent next friday 5pm', note: 'Jot down anything — it goes to your Scratchpad', snippet: 'Text or a link you paste often' };
+                const ph = { task: 'Pay rent next friday 5pm', dump: 'Anything on your mind, one thought per line — sort it later', note: 'Jot down anything — it goes to your Scratchpad', snippet: 'Text or a link you paste often' };
                 const setKind = nk => {
                     k = nk; ta.placeholder = ph[k]; hint.textContent = '';
                     wrap.querySelectorAll('[data-k]').forEach(b => { const on = b.dataset.k === k; b.classList.toggle('on', on); b.setAttribute('aria-checked', String(on)); });
@@ -282,6 +282,9 @@
                         this.tasks.push({ text: p.title || v, time: p.time || '', date: p.date || '', done: false, id: this._taskId ? this._taskId() : Date.now() });
                         this.renderTasks();
                         this.showToast('✅ Task added');
+                    } else if (k === 'dump') {
+                        const n = this.addToDoomPile ? this.addToDoomPile(v) : 0;
+                        this.showToast(n ? `🧠 ${n} thought${n > 1 ? 's' : ''} on your doom pile — sort them later` : 'Nothing to add');
                     } else if (k === 'note') {
                         const area = $('note-area');
                         const cur = localStorage.getItem('wd_scratch') || '';
