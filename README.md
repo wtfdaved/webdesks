@@ -167,6 +167,28 @@ environment variables `SUPABASE_URL` / `SUPABASE_ANON_KEY` override
 
 Test locally exactly as Cloudflare serves it: `npx wrangler pages dev .`
 
+## v0.35: talk to the 8 Ball, nothing hidden under the dock
+
+- **Voice in, voice out** — a 🎤 button on the 8 Ball page and the dashboard
+  widget (Web Speech API: Chrome, Edge, Safari incl. iPhone; hidden where
+  unsupported). Speak, and the ball asks itself when you stop; questions asked
+  out loud are answered out loud, in a voice per theme (the cat is higher, the
+  dog faster). "🔈 Read answers aloud" does it for typed questions too.
+  Friendly messages for a blocked mic, no speech or no network.
+- **This or that** — "Pizza, tacos or sushi?" / "Should I go to bed or watch
+  another episode?" makes the ball pick one, with lines per theme. "…or not?"
+  stays a yes-or-no question.
+- Keyboard: <kbd>/</kbd> focuses the question box, <kbd>Space</kbd> shakes.
+  New "this or that" question ideas, FAQ and JSON-LD entries for voice and
+  picking. Fixed the Ask button being pushed off-screen on small phones.
+- **Phone dock fix** — every tool's last ~80px (more with the iPhone home bar)
+  sat behind the floating dock: a `#main-content > .tab-content` rule set the
+  bottom padding to 1.5rem and out-ranked the 6.5rem one. Tools now pad by
+  `--dock-clear` (dock + gap + safe area, plus Safari's toolbar when shown).
+- **Squashed tools** — Focus Timer, Stopwatch and Breathing cards were shrunk
+  by flexbox to a sliver above their About card (desktop too); Calendar and
+  On Air spilled over theirs on phones. Tool sections now keep their height.
+
 ## v0.34: Magic 8 Ball (`/games/magic-8-ball`)
 
 A just-for-fun Magic 8 Ball: type any yes-or-no question, then press Ask, tap

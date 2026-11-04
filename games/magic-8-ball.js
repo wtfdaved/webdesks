@@ -4,7 +4,8 @@
 
    window.Magic8 = {
      THEMES, ORDER,                // id → { name, emoji, blurb, answers: { yes, no, maybe }, open }
-     ask(question, themeId, opts)  // → { text, lean, theme, note }
+     ask(question, themeId)        // → { text, lean: yes|no|maybe|open|pick, theme, note }
+     listen(), speak()             // voice in (Web Speech API) and out (speechSynthesis)
      mountMini(el)                 // the small dashboard version
    }
 
@@ -226,6 +227,15 @@
         }
     };
 
+    // "Pizza or tacos?" — the ball picks one. {x} is the winner.
+    const PICKS = {
+        classic: ['{x}. Obviously.', '{x}. I’ve never been more sure of anything.', 'Go with {x}. Trust the triangle.', '{x}. The other one knows what it did.', 'The spirits have spoken: {x}.'],
+        cat: ['{x}. The other option is beneath me.', '{x}. Now leave me alone.', '{x}. I’m a cat, so that’s final.', '{x}. I knocked the other one off the table.', 'Purr-sonally? {x}.'],
+        dog: ['{x}! {x}! Definitely {x}!', '{x}! I fetched it for you!', 'Ooh, {x}! Can I come too?', 'I sniffed every option. {x} smells like a good time.', '{x}! Best choice ever! (I love them all.)'],
+        work: ['{x}. Let’s align on that and move forward.', 'Leadership has chosen {x}.', '{x}. The other one is out of scope.', 'After a 3-hour meeting: {x}.', '{x}. I’ll put it in the deck.'],
+        random: ['{x}, according to a very confident pigeon.', '{x}. The moon insisted.', 'The toaster picked {x}.', '{x}. A raccoon whispered it to me.', 'Eeny, meeny, miny… {x}.']
+    };
+
     const ORDER = ['classic', 'cat', 'dog', 'work', 'random'];
     const recent = [];
     let lastQuestion = '';
@@ -244,6 +254,29 @@
         && !/^(what if|how about)\b/i.test(q.trim());
     const norm = q => q.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
 
+    // "Should I get pizza, tacos or sushi?" → ['pizza', 'tacos', 'sushi'].
+    // "Will it rain or not?" stays a yes-or-no question.
+    function options(q) {
+        if (!/\bor\b/i.test(q)) return null;
+        let body = q.replace(/[?!.]+$/, '').trim();
+        const parts = body.split(/\s*,?\s+or\s+/i);
+        let first = parts.shift();
+        // Drop the lead-in: "What should I eat, pizza" / "Should I watch a movie".
+        let pieces = first.split(/\s*[,:]\s*/);
+        // "What should I eat, pizza…" — a question lead-in before the list.
+        if (pieces.length > 1 && /^(what|which|where|who|how|pick|choose|decide|help)\b/i.test(pieces[0])) pieces.shift();
+        pieces[0] = pieces[0]
+            .replace(/^(should|shall|do|does|can|could|would|will|is|are|am)\s+(i|we|it|you|they|my|our|this|that)\s+/i, '')
+            .replace(/^(pick|choose|decide)\s*/i, '');
+        // "Should I eat pizza or tacos?" → pizza / tacos (but keep "watch a movie or read a book").
+        if (parts.every(p => p.split(/\s+/).length <= 2)) pieces[0] = pieces[0].replace(/^(get|have|eat|order|watch|play|wear|buy|try|drink|cook|pick|choose|go with|go for|listen to)\s+/i, '');
+        const list = [...pieces, ...parts].map(o => o.trim()).filter(Boolean);
+        if (list.length < 2 || list.length > 6) return null;
+        if (list.some(o => /^(not|no|nah|nope|never|what|anything)$/i.test(o) || o.length > 48)) return null;
+        return list;
+    }
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
     function ask(question, themeId) {
         const q = String(question || '').trim();
         let themeKey = THEMES[themeId] ? themeId : 'classic';
@@ -253,6 +286,12 @@
         let note = '';
         if (q && norm(q) === lastQuestion) note = 'Asking twice won’t change fate… but here’s a second opinion.';
         lastQuestion = norm(q);
+        const opts = options(q);
+        if (opts) {
+            const winner = opts[Math.floor(Math.random() * opts.length)];
+            const text = pick(PICKS[themeKey]).replace(/(^|[.?!:…]\s+)\{x\}/g, (m, p) => p + cap(winner)).split('{x}').join(winner);
+            return { text, lean: 'pick', theme: themeKey, note, choice: winner };
+        }
         if (q && isOpenQuestion(q) && Math.random() < 0.7) {
             return { text: pick(theme.open), lean: 'open', theme: themeKey, note };
         }
@@ -261,6 +300,61 @@
         const lean = r < 0.45 ? 'yes' : r < 0.75 ? 'no' : 'maybe';
         return { text: pick(theme.answers[lean]), lean, theme: themeKey, note };
     }
+
+    // ── Voice: speak a question in, hear the answer out ──────────
+    // Web Speech API: Chrome, Edge, Safari (macOS + iOS). Elsewhere the mic
+    // button simply isn't shown and typing works as always.
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const canListen = !!Recognition;
+    let active = null;
+    function listen({ onText, onEnd, onError } = {}) {
+        if (!canListen) return null;
+        if (active) { try { active.abort(); } catch (e) {} active = null; }
+        const rec = new Recognition();
+        rec.lang = navigator.language || 'en-US';
+        rec.interimResults = true;
+        rec.maxAlternatives = 1;
+        rec.continuous = false;
+        let finalText = '';
+        rec.onresult = e => {
+            let interim = '';
+            for (let i = e.resultIndex; i < e.results.length; i++) {
+                const t = e.results[i][0].transcript;
+                if (e.results[i].isFinal) finalText += t; else interim += t;
+            }
+            onText && onText((finalText + interim).trim(), false);
+        };
+        rec.onerror = e => { onError && onError(e.error || 'error'); };
+        rec.onend = () => {
+            active = null;
+            let text = finalText.trim();
+            // Speech has no punctuation; make it read like a question.
+            if (text && !/[?!.]$/.test(text)) text += '?';
+            onEnd && onEnd(cap(text));
+        };
+        try { rec.start(); } catch (e) { onError && onError('busy'); return null; }
+        active = rec;
+        return rec;
+    }
+
+    const canSpeak = 'speechSynthesis' in window;
+    const VOICE = { classic: [1, .95], cat: [1.45, 1], dog: [1.25, 1.15], work: [.85, .95], random: [1.1, 1.05] };
+    function speak(text, themeKey) {
+        if (!canSpeak || !text) return;
+        try {
+            speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text.replace(/[“”]/g, ''));
+            const [pitch, rate] = VOICE[themeKey] || VOICE.classic;
+            u.pitch = pitch; u.rate = rate;
+            u.lang = navigator.language || 'en-US';
+            speechSynthesis.speak(u);
+        } catch (e) {}
+    }
+    const micError = code => code === 'not-allowed' || code === 'service-not-allowed'
+        ? 'Microphone blocked. Allow it in your browser settings, or just type.'
+        : code === 'no-speech' ? 'I didn’t catch that. Tap the mic and try again.'
+        : code === 'network' ? 'Voice needs an internet connection. Typing works offline.'
+        : 'Voice didn’t work this time. Typing always does.';
 
     // ── Dashboard widget ─────────────────────────────────────────
     function mountMini(el) {
@@ -274,31 +368,44 @@
             <div class="widget-head"><span class="widget-label text-fuchsia-600 dark:text-fuchsia-400">Magic 8 Ball</span>
                 <a href="/games/magic-8-ball" class="home-link text-xs">Full ball <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a></div>
             <div class="m8-mini">
-                <button type="button" class="m8-mini-ball" aria-label="Shake the Magic 8 Ball"><span class="m8-mini-win"><span class="m8-mini-tri" aria-live="polite">8</span></span></button>
+                <button type="button" class="m8-mini-ball" aria-label="Shake the Magic 8 Ball"><span class="m8-mini-win"><span class="m8-mini-tri">8</span></span></button>
                 <div class="m8-mini-side">
-                    <div class="m8-mini-themes" role="group" aria-label="Ball theme">${ORDER.map(id => `<button type="button" data-t="${id}" title="${esc(THEMES[id].name)}" aria-pressed="${id === theme}">${THEMES[id].emoji}</button>`).join('')}</div>
-                    <form class="m8-mini-form"><input type="text" maxlength="140" placeholder="Ask a yes-or-no question…" aria-label="Your question" class="widget-input flex-1 min-w-0"><button type="submit" class="m8-mini-go">Ask</button></form>
-                    <p class="m8-mini-answer" aria-live="polite">Type a question, then shake.</p>
+                    <div class="m8-mini-themes" role="group" aria-label="Ball theme">${ORDER.map(id => `<button type="button" data-t="${id}" title="${esc(THEMES[id].name)}" aria-label="${esc(THEMES[id].name)} theme" aria-pressed="${id === theme}">${THEMES[id].emoji}</button>`).join('')}</div>
+                    <form class="m8-mini-form"><input type="text" maxlength="140" placeholder="Ask, or try “pizza or tacos?”" aria-label="Your question" class="widget-input flex-1 min-w-0">${canListen ? '<button type="button" class="m8-mini-mic" aria-label="Ask out loud" title="Ask out loud">🎤</button>' : ''}<button type="submit" class="m8-mini-go">Ask</button></form>
+                    <p class="m8-mini-answer" aria-live="polite">Type or say a question, then shake.</p>
                 </div>
             </div>`;
         const ball = el.querySelector('.m8-mini-ball');
         const tri = el.querySelector('.m8-mini-tri');
         const out = el.querySelector('.m8-mini-answer');
         const input = el.querySelector('input');
+        const mic = el.querySelector('.m8-mini-mic');
+        let viaVoice = false;
         const go = () => {
             const q = input.value.trim();
             if (!q) { out.textContent = 'Ask me something first — I’m psychic, not a mind reader.'; input.focus(); return; }
             ball.classList.remove('shaking'); void ball.offsetWidth; ball.classList.add('shaking');
             tri.textContent = '…';
+            const spoken = viaVoice; viaVoice = false;
             setTimeout(() => {
                 const a = ask(q, theme);
                 tri.textContent = THEMES[a.theme].emoji;
                 out.textContent = a.text;
                 ball.classList.remove('shaking');
+                if (spoken) speak(a.text, a.theme);
             }, 650);
         };
         el.querySelector('form').addEventListener('submit', e => { e.preventDefault(); go(); });
         ball.addEventListener('click', go);
+        if (mic) mic.addEventListener('click', () => {
+            if (mic.classList.contains('listening')) { try { active && active.stop(); } catch (e) {} return; }
+            mic.classList.add('listening'); out.textContent = 'Listening… ask your question.';
+            listen({
+                onText: t => { input.value = t; },
+                onEnd: t => { mic.classList.remove('listening'); if (t) { input.value = t; viaVoice = true; go(); } },
+                onError: c => { mic.classList.remove('listening'); out.textContent = micError(c); }
+            });
+        });
         el.querySelectorAll('[data-t]').forEach(b => b.addEventListener('click', () => {
             theme = b.dataset.t;
             try { localStorage.setItem('webdesks_8ball_theme', theme); } catch (e) {}
@@ -308,7 +415,7 @@
         try { window.lucide && lucide.createIcons(); } catch (e) {}
     }
 
-    window.Magic8 = { THEMES, ORDER, ask, mountMini };
+    window.Magic8 = { THEMES, ORDER, ask, options, listen, speak, canListen, canSpeak, micError, mountMini };
     // On the WebDesks dashboard, fill the widget slot.
     const slot = document.getElementById('w-8ball');
     if (slot) mountMini(slot);

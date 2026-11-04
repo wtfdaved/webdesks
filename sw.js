@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'webdesks-v34.0';
+const CACHE_VERSION = 'webdesks-v35.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

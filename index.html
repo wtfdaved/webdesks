@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.34.0">
+    <meta name="generator" content="WebDesks v0.35.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -525,9 +525,26 @@
         html.dark { background: #0f1218; }
         /* …and each tool's scroll area gains exactly the toolbar's height
            (100lvh − 100svh) so its last row can't hide behind it. */
-        @supports (height: 100lvh) {
-            @media (max-width: 767px) { #main-content > .tab-content { padding-bottom: calc(1.5rem + (100lvh - 100svh)); } }
+        /* v0.35: this used to be 1.5rem + toolbar, and its higher specificity
+           beat the 6.5rem dock padding below, so the last ~80px of every tool
+           sat behind the floating dock. --dock-clear is the dock's full height
+           (4.1rem bar + .6rem gap + home indicator) plus breathing room. */
+        @media (max-width: 767px) {
+            :root { --dock-clear: calc(6.25rem + env(safe-area-inset-bottom, 0px)); }
+            #main-content > .tab-content { padding-bottom: var(--dock-clear); scroll-padding-bottom: var(--dock-clear); }
         }
+        @supports (height: 100lvh) {
+            @media (max-width: 767px) { #main-content > .tab-content { padding-bottom: calc(var(--dock-clear) + (100lvh - 100svh)); } }
+        }
+        /* v0.35: tool cards that clip their overflow (Focus Timer, Stopwatch,
+           Breathing) were squashed by flexbox to a sliver once the About card
+           was added below them. Tool sections keep their natural height and
+           the tab scrolls instead. */
+        #main-content > .tab-content > * { flex-shrink: 0; }
+        /* Calendar and On Air are taller than one screen on phones; their
+           full-height wrapper spilled over the About card. Let them grow. */
+        #calendar > .h-full, #onair > .h-full { height: auto; min-height: 100%; }
+        #cal-root { height: clamp(490px, calc(100svh - 15rem), 820px); }
 
         /* 3. Safe area insets for notched iPhones (X, 11, 12, 13, 14, 15).
               Requires viewport-fit=cover in the meta tag. */
@@ -1290,7 +1307,13 @@
         .m8-mini-themes { display: flex; gap: .3rem; }
         .m8-mini-themes button { width: 2rem; height: 2rem; border-radius: .7rem; font-size: 1rem; background: rgba(148,163,184,.14); border: 1px solid transparent; }
         .m8-mini-themes button[aria-pressed="true"] { border-color: #c026d3; background: rgba(192,38,211,.12); }
-        .m8-mini-form { display: flex; gap: .4rem; }
+        .m8-mini-form { display: flex; gap: .4rem; min-width: 0; }
+        .m8-mini-form input { flex: 1 1 0; min-width: 0; width: auto; }
+        .m8-mini-form button { flex-shrink: 0; }
+        @media (min-width: 1024px) and (max-width: 1279px), (max-width: 420px) { .m8-mini-ball { width: 4.25rem; height: 4.25rem; } .m8-mini { gap: .75rem; } }
+        .m8-mini-mic { width: 2.75rem; flex-shrink: 0; border-radius: 1rem; background: rgba(148,163,184,.16); font-size: 1.05rem; }
+        .m8-mini-mic.listening { background: #ef4444; animation: m8micpulse 1.2s ease-in-out infinite; }
+        @keyframes m8micpulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,.55); } 50% { box-shadow: 0 0 0 .45rem rgba(239,68,68,0); } }
         .m8-mini-go { padding: 0 .9rem; border-radius: 1rem; background: #c026d3; color: #fff; font-weight: 700; font-size: .85rem; }
         .m8-mini-go:hover { background: #a21caf; }
         .m8-mini-answer { font-weight: 700; font-size: .9rem; line-height: 1.35; min-height: 2.4em; }
@@ -1475,7 +1498,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.34.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.35.0</span>
             </div>
             <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="party-popper" class="w-4 h-4"></i>
