@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Magic 8 Ball Online — Ask a Question, Get a Funny Answer (Cat &amp; Dog Themes) | WebDesks</title>
+    <meta name="description" content="Ask the free online Magic 8 Ball any yes-or-no question and get a witty answer. Pick the Classic, Cat (purr-dictions), Dog, Office or Random theme. Shake your phone or tap to ask — no app, no sign-up.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://webdesks.app/games/magic-8-ball">
+    <meta name="theme-color" content="#1b1033">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="WebDesks">
+    <meta property="og:url" content="https://webdesks.app/games/magic-8-ball">
+    <meta property="og:title" content="Ask the Magic 8 Ball — funny answers, cat &amp; dog themes">
+    <meta property="og:description" content="Type any yes-or-no question and shake. Classic sass, cat puns, dog enthusiasm, office jargon or pure chaos. Free, in your browser.">
+    <meta property="og:image" content="https://webdesks.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free online Magic 8 Ball with funny answers | WebDesks">
+    <meta name="twitter:description" content="Ask a question, shake, laugh. Cat, dog, office and random themes.">
+    <meta name="twitter:image" content="https://webdesks.app/og-image.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Bricolage+Grotesque:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/games/games.css">
+    <meta name="google-adsense-account" content="ca-pub-8626644983261966">
+    <script src="/ads.js"></script>
+
+    <style>
+        .hero.m8-hero { background: radial-gradient(900px 520px at 85% -10%, #7c3aed 0%, transparent 60%), radial-gradient(700px 480px at -5% 110%, #db2777 0%, transparent 55%), #1b1033; }
+        .m8-app { display: grid; justify-items: center; gap: 1.1rem; }
+
+        /* Theme picker */
+        .m8-themes { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; padding: 0; margin: 0; list-style: none; }
+        .m8-themes button { font: inherit; font-weight: 700; font-size: .88rem; color: #fff; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: .45rem .85rem; cursor: pointer; display: inline-flex; gap: .35rem; align-items: center; }
+        .m8-themes button[aria-pressed="true"] { background: #fff; color: #1b1033; border-color: #fff; }
+        .m8-themes button:focus-visible, .m8-ask button:focus-visible, .m8-ball:focus-visible, .m8-tools button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+        /* The ball */
+        .m8-stage { position: relative; isolation: isolate; width: min(19rem, 78vw); aspect-ratio: 1; margin-top: 1.4rem; }
+        .m8-ball { all: unset; cursor: pointer; position: absolute; inset: 0; border-radius: 50%; display: grid; place-items: center;
+            background: radial-gradient(circle at 32% 26%, var(--hi, #6b6b7a) 0%, var(--mid, #1d1d24) 30%, var(--lo, #050507) 72%);
+            box-shadow: inset -18px -24px 50px rgba(0,0,0,.7), 0 40px 60px -30px rgba(0,0,0,.9); transition: background .4s; }
+        .m8-ball::after { content: ''; position: absolute; top: 9%; left: 22%; width: 30%; height: 18%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,255,255,.55), transparent 70%); transform: rotate(-25deg); pointer-events: none; }
+        .m8-window { width: 50%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; position: relative;
+            background: radial-gradient(circle at 50% 40%, #1b2a7a, #070b2b 70%); box-shadow: inset 0 0 0 .45rem #0c0c12, inset 0 8px 18px rgba(0,0,0,.8); }
+        .m8-eight { width: 72%; aspect-ratio: 1; border-radius: 50%; background: #fff; color: #111; display: grid; place-items: center; font: 900 clamp(3rem, 14vw, 4.6rem)/1 'Bricolage Grotesque', Inter, sans-serif; transition: opacity .3s, transform .3s; }
+        .m8-tri { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transform: scale(.6) rotate(-12deg); transition: opacity .5s .1s, transform .5s .1s; pointer-events: none; }
+        .m8-tri span { width: 86%; aspect-ratio: 1.12; clip-path: polygon(50% 100%, 0 8%, 100% 8%); background: linear-gradient(180deg, #3155ff, #1b2fb5); color: #fff; display: flex; align-items: flex-start; justify-content: center; text-align: center; padding: 15% 18% 0; font-weight: 800; font-size: clamp(.58rem, 2.4vw, .74rem); line-height: 1.2; text-transform: uppercase; letter-spacing: .02em; box-sizing: border-box; }
+        .m8-stage.revealed .m8-eight { opacity: 0; transform: scale(.7); }
+        .m8-stage.revealed .m8-tri { opacity: 1; transform: none; }
+        .m8-stage.shaking .m8-ball { animation: m8shake .75s cubic-bezier(.36,.07,.19,.97); }
+        @keyframes m8shake { 10%, 90% { transform: translate(-3px, 1px) rotate(-2deg); } 20%, 80% { transform: translate(6px, -3px) rotate(4deg); } 30%, 50%, 70% { transform: translate(-10px, 4px) rotate(-7deg); } 40%, 60% { transform: translate(10px, -4px) rotate(7deg); } }
+
+        /* Ears for the pet themes */
+        .m8-ear { position: absolute; z-index: -1; display: none; }
+        [data-theme="cat"] .m8-ear { display: block; top: -6%; width: 34%; aspect-ratio: 1; background: var(--mid); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+        [data-theme="cat"] .m8-ear.l { left: 6%; transform: rotate(-22deg); }
+        [data-theme="cat"] .m8-ear.r { right: 6%; transform: rotate(22deg); }
+        [data-theme="dog"] .m8-ear { display: block; z-index: 2; top: 14%; width: 22%; height: 52%; background: var(--lo); border-radius: 50% 50% 45% 45% / 30% 30% 70% 70%; box-shadow: inset 0 -10px 20px rgba(0,0,0,.35); }
+        [data-theme="dog"] .m8-ear.l { left: -9%; transform: rotate(14deg); }
+        [data-theme="dog"] .m8-ear.r { right: -9%; transform: rotate(-14deg); }
+        [data-theme="cat"] { --hi: #8a8a99; --mid: #23232c; --lo: #070709; }
+        [data-theme="dog"] { --hi: #e0a868; --mid: #9a5b25; --lo: #4a2a0f; }
+        [data-theme="work"] { --hi: #7c8cc4; --mid: #263166; --lo: #0b112e; }
+        [data-theme="random"] { --hi: #f0abfc; --mid: #7e22ce; --lo: #2e0a4f; }
+
+        /* Ask form */
+        .m8-ask { display: flex; gap: .5rem; width: min(34rem, 100%); }
+        .m8-ask input { flex: 1; min-width: 0; font: inherit; font-size: 1rem; padding: .85rem 1rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.1); color: #fff; }
+        .m8-ask input::placeholder { color: rgba(255,255,255,.65); }
+        .m8-ask input:focus { outline: 3px solid var(--gold); outline-offset: 1px; }
+        .m8-answer { min-height: 3.6rem; text-align: center; max-width: 34rem; }
+        .m8-answer .big { font-family: 'Bricolage Grotesque', Inter, sans-serif; font-weight: 800; font-size: clamp(1.25rem, 3.4vw, 1.7rem); line-height: 1.2; }
+        .m8-answer .meta { font-size: .85rem; color: rgba(255,255,255,.72); margin-top: .35rem; }
+        .m8-lean { display: inline-block; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 999px; margin-right: .3rem; }
+        .m8-lean.yes { background: #bbf7d0; color: #14532d; } .m8-lean.no { background: #fecaca; color: #7f1d1d; } .m8-lean.maybe, .m8-lean.open { background: #fde68a; color: #713f12; }
+        .m8-tools { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
+        .m8-tools button { font: inherit; font-size: .85rem; font-weight: 700; color: #fff; background: transparent; border: 1px solid rgba(255,255,255,.3); border-radius: .8rem; padding: .45rem .8rem; cursor: pointer; }
+        .m8-tools button[hidden] { display: none; }
+        .m8-hint { font-size: .8rem; color: rgba(255,255,255,.6); text-align: center; margin: 0; }
+
+        .m8-history { padding: 0; margin: 0; list-style: none; display: grid; gap: .5rem; }
+        .m8-history li { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: .7rem 1rem; }
+        .m8-history .q { font-weight: 700; } .m8-history .a { color: var(--muted); }
+        .samples { padding-left: 1.2rem; margin: .6rem 0 0; } .samples li { margin: .3rem 0; }
+        .ideas { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; list-style: none; margin: 1rem 0 0; }
+        .ideas button { font: inherit; font-size: .9rem; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: .45rem .9rem; cursor: pointer; }
+        .ideas button:hover { border-color: var(--accent); color: var(--accent); }
+        .classic-list { columns: 2 14rem; column-gap: 1.5rem; padding-left: 1.2rem; margin: .8rem 0 0; } .classic-list li { break-inside: avoid; margin: .3rem 0; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        @media (prefers-reduced-motion: reduce) { .m8-stage.shaking .m8-ball { animation: none; } .m8-tri, .m8-eight { transition: opacity .2s; transform: none !important; } }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://webdesks.app/games/magic-8-ball#app",
+          "name": "Magic 8 Ball Online",
+          "url": "https://webdesks.app/games/magic-8-ball",
+          "description": "A free online Magic 8 Ball. Type any yes-or-no question, shake or tap the ball, and get a witty answer in a Classic, Cat, Dog, Office or Random theme.",
+          "applicationCategory": "GameApplication",
+          "genre": "Fortune telling",
+          "operatingSystem": "Any (web browser)",
+          "browserRequirements": "Requires JavaScript",
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "featureList": ["Funny answers to any yes-or-no question", "Cat pun theme", "Dog theme", "Office jargon theme", "Random chaos theme", "Shake your phone to ask", "Share your answer", "Works offline"],
+          "publisher": { "@id": "https://webdesks.app/#org" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            { "@type": "Question", "name": "How do I use the online Magic 8 Ball?", "acceptedAnswer": { "@type": "Answer", "text": "Type a yes-or-no question in the box, then press Ask, tap the ball or shake your phone. The ball shakes and its answer floats up in the window." } },
+            { "@type": "Question", "name": "What are the Cat and Dog Magic 8 Balls?", "acceptedAnswer": { "@type": "Answer", "text": "They are themes. The Cat 8 Ball answers with cat puns like “Paws-itively yes” and “Not a feline chance.” The Dog 8 Ball is an excitable good boy: “Ruh-roh. No.” or “SQUIRREL! …sorry, what was the question?” There are also Classic, Office and Random themes." } },
+            { "@type": "Question", "name": "Is the Magic 8 Ball real or random?", "acceptedAnswer": { "@type": "Answer", "text": "It’s random, just like the plastic toy. Each answer is picked at random from the theme’s list and leans yes, no or maybe. It’s for fun, so please don’t use it for medical, money or legal decisions." } },
+            { "@type": "Question", "name": "What are the 20 original Magic 8 Ball answers?", "acceptedAnswer": { "@type": "Answer", "text": "The classic toy has 20 answers: 10 yes (It is certain; It is decidedly so; Without a doubt; Yes definitely; You may rely on it; As I see it, yes; Most likely; Outlook good; Yes; Signs point to yes), 5 non-committal (Reply hazy, try again; Ask again later; Better not tell you now; Cannot predict now; Concentrate and ask again) and 5 no (Don’t count on it; My reply is no; My sources say no; Outlook not so good; Very doubtful)." } },
+            { "@type": "Question", "name": "Can I shake my phone to ask?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. On a phone, type your question and give it a shake. On iPhone, Safari asks once for permission to use motion; tapping the ball always works too." } },
+            { "@type": "Question", "name": "Is it free? Do I need an account?", "acceptedAnswer": { "@type": "Answer", "text": "It’s completely free and needs no account or app. Your questions stay in your browser and are never sent to a server." } }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "WebDesks", "item": "https://webdesks.app/" },
+            { "@type": "ListItem", "position": 2, "name": "Group Games", "item": "https://webdesks.app/games/" },
+            { "@type": "ListItem", "position": 3, "name": "Magic 8 Ball", "item": "https://webdesks.app/games/magic-8-ball" }
+          ]
+        },
+        { "@type": "Organization", "@id": "https://webdesks.app/#org", "name": "WebDesks", "url": "https://webdesks.app/", "logo": "https://webdesks.app/icon-512.png" }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap">
+            <a class="brand" href="/"><img src="/icon-192.png" alt="" width="32" height="32">WebDesks</a>
+            <nav class="topnav" aria-label="Site">
+                <a href="/games/">Group Games</a>
+                <a href="/blog/" class="hide-sm">Blog</a>
+                <a href="/" class="hide-sm">All tools</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero m8-hero">
+            <div class="wrap" style="grid-template-columns:1fr">
+                <div style="text-align:center;max-width:46rem;margin-inline:auto">
+                    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">WebDesks</a> › <a href="/games/">Group Games</a> › Magic 8 Ball</nav>
+                    <h1>Ask the Magic 8 Ball</h1>
+                    <p class="lead" style="margin-inline:auto">Type any yes-or-no question, then shake. Get your answer with classic sass, cat puns, dog energy, office jargon — or pure chaos.</p>
+                </div>
+
+                <div class="m8-app" id="m8">
+                    <ul class="m8-themes" role="group" aria-label="Choose a theme" id="m8-themes"></ul>
+
+                    <div class="m8-stage" id="m8-stage" data-theme="classic">
+                        <span class="m8-ear l" aria-hidden="true"></span><span class="m8-ear r" aria-hidden="true"></span>
+                        <button class="m8-ball" id="m8-ball" type="button" aria-label="Shake the Magic 8 Ball">
+                            <span class="m8-window">
+                                <span class="m8-eight" aria-hidden="true">8</span>
+                                <span class="m8-tri" aria-hidden="true"><span id="m8-tri"></span></span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <form class="m8-ask" id="m8-form" autocomplete="off">
+                        <label for="m8-q" class="sr-only">Your yes-or-no question</label>
+                        <input id="m8-q" type="text" maxlength="140" placeholder="Will I finish my to-do list today?" enterkeyhint="go">
+                        <button class="btn btn-gold" type="submit">Ask</button>
+                    </form>
+
+                    <div class="m8-answer" id="m8-answer" aria-live="polite">
+                        <div class="big">Ask me anything.</div>
+                        <div class="meta">Tap the ball, press Enter or shake your phone.</div>
+                    </div>
+
+                    <div class="m8-tools">
+                        <button type="button" id="m8-again" hidden>🔁 Ask again</button>
+                        <button type="button" id="m8-share" hidden>📤 Share answer</button>
+                        <button type="button" id="m8-motion" hidden>📳 Enable shake</button>
+                    </div>
+                    <p class="m8-hint">Just for fun — answers are random. Your questions never leave this device.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="block" id="history-block" hidden>
+            <div class="narrow">
+                <div class="section-head" style="display:flex;justify-content:space-between;align-items:end;gap:1rem;max-width:none">
+                    <div><div class="eyebrow">Your last answers</div><h2>The ball remembers</h2></div>
+                    <button type="button" class="btn btn-accent" id="m8-clear" style="padding:.5rem .9rem;font-size:.85rem">Clear</button>
+                </div>
+                <ul class="m8-history" id="m8-history"></ul>
+            </div>
+        </section>
+
+        <section class="block alt">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">Need a question?</div>
+                    <h2>Things to ask the Magic 8 Ball</h2>
+                    <p class="muted">Tap one to ask it right away.</p>
+                </div>
+                <ul class="ideas" id="m8-ideas">
+                    <li><button type="button">Should I order pizza tonight?</button></li>
+                    <li><button type="button">Will today be a good day?</button></li>
+                    <li><button type="button">Should I text them back?</button></li>
+                    <li><button type="button">Is my cat secretly plotting against me?</button></li>
+                    <li><button type="button">Will my dog ever stop chasing squirrels?</button></li>
+                    <li><button type="button">Should I take a nap?</button></li>
+                    <li><button type="button">Will this meeting end on time?</button></li>
+                    <li><button type="button">Am I going to finish my to-do list?</button></li>
+                    <li><button type="button">Should I start a new hobby?</button></li>
+                    <li><button type="button">Is it Friday yet?</button></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="block">
+            <div class="wrap">
+                <div class="section-head">
+                    <div class="eyebrow">Themes</div>
+                    <h2>Five balls, five personalities</h2>
+                </div>
+                <div class="cards">
+                    <div class="card"><span class="emoji">🎱</span><h3>Classic Magic 8 Ball</h3><p class="muted">The fortune-teller you know, now with a sarcastic streak.</p><ul class="samples muted"><li>“It is certain. Annoyingly so.”</li><li>“Outlook not so good. Outlook also crashed.”</li></ul></div>
+                    <div class="card"><span class="emoji">🐱</span><h3>Cat 8 Ball</h3><p class="muted">Purr-dictions with ears, attitude and absolutely no interest in your feelings.</p><ul class="samples muted"><li>“Paws-itively yes.”</li><li>“I knocked that idea off the table.”</li></ul></div>
+                    <div class="card"><span class="emoji">🐶</span><h3>Dog 8 Ball</h3><p class="muted">Floppy ears, zero chill, and convinced every question is a great question.</p><ul class="samples muted"><li>“YES! Who’s a good question? You are!”</li><li>“SQUIRREL! …sorry, what was the question?”</li></ul></div>
+                    <div class="card"><span class="emoji">💼</span><h3>Office 8 Ball</h3><p class="muted">For the decisions that really should have been an email.</p><ul class="samples muted"><li>“Let’s circle back.”</li><li>“Approved. Ship it.”</li></ul></div>
+                    <div class="card"><span class="emoji">🎲</span><h3>Random 8 Ball</h3><p class="muted">Mixes every theme with chaos answers from a ball that’s been up too long.</p><ul class="samples muted"><li>“The council of pigeons has voted yes.”</li><li>“No, but a goose would.”</li></ul></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="block alt">
+            <div class="narrow">
+                <div class="section-head">
+                    <div class="eyebrow">How it works</div>
+                    <h2>How to use the online Magic 8 Ball</h2>
+                </div>
+                <ol class="steps" style="grid-template-columns:1fr">
+                    <li><h3>Ask a yes-or-no question</h3><p class="muted">“Should I…?”, “Will…?” and “Is…?” work best. Ask “what” or “why” and the ball may tell you it isn’t a search engine.</p></li>
+                    <li><h3>Shake, tap or press Enter</h3><p class="muted">On a phone you can shake the device. The ball wobbles and its answer floats up in the window.</p></li>
+                    <li><h3>Share it (or ask again)</h3><p class="muted">Send the answer to a friend for a second opinion, or switch theme and see if the cat agrees with the dog. It won’t.</p></li>
+                </ol>
+                <h3 style="margin-top:2rem">The 20 classic Magic 8 Ball answers</h3>
+                <p class="muted">The original toy floats a 20-sided die in blue liquid: ten answers say yes, five say no and five dodge the question. Our themes keep that balance — mostly hopeful, sometimes brutal, occasionally “ask again later.”</p>
+                <ul class="classic-list muted">
+                    <li>It is certain</li><li>It is decidedly so</li><li>Without a doubt</li><li>Yes definitely</li><li>You may rely on it</li><li>As I see it, yes</li><li>Most likely</li><li>Outlook good</li><li>Yes</li><li>Signs point to yes</li>
+                    <li>Reply hazy, try again</li><li>Ask again later</li><li>Better not tell you now</li><li>Cannot predict now</li><li>Concentrate and ask again</li>
+                    <li>Don’t count on it</li><li>My reply is no</li><li>My sources say no</li><li>Outlook not so good</li><li>Very doubtful</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="block">
+            <div class="narrow faq">
+                <div class="section-head">
+                    <div class="eyebrow">FAQ</div>
+                    <h2>Magic 8 Ball questions</h2>
+                </div>
+                <details open><summary>How do I use the online Magic 8 Ball?</summary><p>Type a yes-or-no question in the box, then press Ask, tap the ball or shake your phone. The ball shakes and its answer floats up in the window.</p></details>
+                <details><summary>What are the Cat and Dog Magic 8 Balls?</summary><p>They’re themes. The Cat 8 Ball answers with cat puns like “Paws-itively yes” and “Not a feline chance.” The Dog 8 Ball is an excitable good boy: “Ruh-roh. No.” There are also Classic, Office and Random themes.</p></details>
+                <details><summary>Is the Magic 8 Ball real or random?</summary><p>It’s random, just like the plastic toy. Each answer is picked at random and leans yes, no or maybe. It’s for fun — please don’t use it for medical, money or legal decisions.</p></details>
+                <details><summary>Can I shake my phone to ask?</summary><p>Yes. Type your question and give your phone a shake. On iPhone, Safari asks once for permission to use motion (tap “Enable shake”); tapping the ball always works too.</p></details>
+                <details><summary>Is it free? Do I need an account?</summary><p>It’s completely free and needs no account or app. Your questions stay in your browser and are never sent to a server. It even works offline once you’ve visited.</p></details>
+                <details><summary>Can I use it in a meeting or classroom?</summary><p>Absolutely — share your screen and let the group shout questions. For a bigger group game, try <a href="/games/survey-says">Survey Says</a>, our free survey game show for Teams, Zoom and TV.</p></details>
+            </div>
+        </section>
+
+        <section class="cta-band">
+            <div class="narrow">
+                <h2>Couldn’t decide? Get it done anyway.</h2>
+                <p>WebDesks is a free productivity desk in your browser — tasks, focus timer, notes, calendar and more. The Magic 8 Ball lives on the dashboard too.</p>
+                <a class="btn btn-gold" href="/">Open WebDesks — free</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site">
+        <div class="wrap">
+            <a class="brand" href="/"><img src="/icon-192.png" alt="" width="32" height="32">WebDesks</a>
+            <nav aria-label="Footer">
+                <a href="/games/">Group Games</a>
+                <a href="/games/survey-says">Survey Says</a>
+                <a href="/blog/">Blog</a>
+                <a href="/about">About</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="/contact">Contact</a>
+            </nav>
+            <p class="legal">This Magic 8 Ball is an independent, just-for-fun web toy by WebDesks. Magic 8 Ball is a trademark of Mattel; WebDesks isn’t affiliated with or endorsed by Mattel. Answers are random and not advice.</p>
+        </div>
+    </footer>
+
+    <script src="/games/magic-8-ball.js"></script>
+    <script>
+    (() => {
+        const M = window.Magic8;
+        const $ = id => document.getElementById(id);
+        const stage = $('m8-stage'), tri = $('m8-tri'), input = $('m8-q'), out = $('m8-answer');
+        const KEY_T = 'webdesks_8ball_theme', KEY_H = 'webdesks_8ball_history';
+        const store = {
+            get(k, fb) { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch (e) { return fb; } },
+            set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+        };
+        const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Theme: ?theme=cat wins, then the remembered one (shared with the dashboard widget).
+        const urlTheme = new URLSearchParams(location.search).get('theme');
+        let saved = ''; try { saved = localStorage.getItem(KEY_T) || ''; } catch (e) {}
+        let theme = M.THEMES[urlTheme] ? urlTheme : M.THEMES[saved] ? saved : 'classic';
+        let busy = false, last = null, lastQ = '';
+
+        $('m8-themes').innerHTML = M.ORDER.map(id => `<li><button type="button" data-t="${id}" aria-pressed="false">${M.THEMES[id].emoji} ${esc(M.THEMES[id].name)}</button></li>`).join('');
+        function setTheme(id, announce) {
+            theme = id;
+            stage.dataset.theme = id;
+            try { localStorage.setItem(KEY_T, id); } catch (e) {}
+            document.querySelectorAll('#m8-themes [data-t]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.t === id)));
+            if (announce) {
+                stage.classList.remove('revealed');
+                out.innerHTML = `<div class="big">${M.THEMES[id].emoji} ${esc(M.THEMES[id].name)} ball</div><div class="meta">${esc(M.THEMES[id].blurb)}</div>`;
+            }
+        }
+        document.querySelectorAll('#m8-themes [data-t]').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.t, true)));
+        setTheme(theme, !!urlTheme);
+
+        function renderHistory() {
+            const h = store.get(KEY_H, []);
+            $('history-block').hidden = !h.length;
+            $('m8-history').innerHTML = h.map(x => `<li><div class="q">${esc(M.THEMES[x.t] ? M.THEMES[x.t].emoji : '🎱')} ${esc(x.q)}</div><div class="a">${esc(x.a)}</div></li>`).join('');
+        }
+
+        function shake() {
+            if (busy) return;
+            const q = input.value.trim();
+            if (!q) {
+                out.innerHTML = '<div class="big">Ask me something first.</div><div class="meta">I’m psychic, not a mind reader.</div>';
+                input.focus();
+                return;
+            }
+            busy = true; lastQ = q;
+            stage.classList.remove('revealed', 'shaking');
+            void stage.offsetWidth;
+            if (!reduced) stage.classList.add('shaking');
+            if (navigator.vibrate) { try { navigator.vibrate(60); } catch (e) {} }
+            out.innerHTML = '<div class="big">…</div><div class="meta">Consulting the mysterious blue liquid</div>';
+            setTimeout(() => {
+                const a = M.ask(q, theme);
+                last = { q, ...a };
+                tri.textContent = a.text;
+                stage.classList.remove('shaking');
+                stage.classList.add('revealed');
+                const lean = { yes: 'Yes', no: 'No', maybe: 'Maybe', open: 'Try yes/no' }[a.lean];
+                const via = theme === 'random' ? ` · answered by the ${esc(M.THEMES[a.theme].name)} ball ${M.THEMES[a.theme].emoji}` : '';
+                out.innerHTML = `<div class="big">${esc(a.text)}</div><div class="meta"><span class="m8-lean ${a.lean}">${lean}</span>“${esc(q)}”${via}${a.note ? `<br>${esc(a.note)}` : ''}</div>`;
+                $('m8-again').hidden = false; $('m8-share').hidden = false;
+                const h = store.get(KEY_H, []);
+                h.unshift({ q, a: a.text, t: a.theme });
+                store.set(KEY_H, h.slice(0, 8));
+                renderHistory();
+                busy = false;
+            }, reduced ? 250 : 800);
+        }
+
+        $('m8-form').addEventListener('submit', e => { e.preventDefault(); shake(); });
+        $('m8-ball').addEventListener('click', shake);
+        $('m8-again').addEventListener('click', () => { if (!input.value.trim()) input.value = lastQ; shake(); });
+        $('m8-clear').addEventListener('click', () => { store.set(KEY_H, []); renderHistory(); });
+        document.querySelectorAll('#m8-ideas button').forEach(b => b.addEventListener('click', () => {
+            input.value = b.textContent;
+            window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+            setTimeout(shake, reduced ? 0 : 350);
+        }));
+
+        // Share: native share sheet on phones, clipboard elsewhere.
+        $('m8-share').addEventListener('click', async () => {
+            if (!last) return;
+            const url = `https://webdesks.app/games/magic-8-ball?theme=${encodeURIComponent(theme)}`;
+            const text = `I asked the ${M.THEMES[last.theme].name} Magic 8 Ball “${last.q}” and it said: “${last.text}” 🎱`;
+            try {
+                if (navigator.share) { await navigator.share({ title: 'Magic 8 Ball', text, url }); return; }
+                await navigator.clipboard.writeText(`${text} ${url}`);
+                $('m8-share').textContent = '✅ Copied!';
+                setTimeout(() => { $('m8-share').textContent = '📤 Share answer'; }, 1800);
+            } catch (e) {}
+        });
+
+        // Shake to ask. iOS needs a tap to grant motion access first.
+        let lastShake = 0, primed = false;
+        function onMotion(e) {
+            const a = e.accelerationIncludingGravity || e.acceleration;
+            if (!a) return;
+            const force = Math.abs(a.x || 0) + Math.abs(a.y || 0) + Math.abs(a.z || 0);
+            const now = Date.now();
+            if (force > 38 && now - lastShake > 1500) { lastShake = now; if (input.value.trim()) shake(); }
+        }
+        function listenMotion() { if (!primed) { primed = true; window.addEventListener('devicemotion', onMotion); } }
+        const touch = matchMedia('(pointer: coarse)').matches;
+        if (touch && 'DeviceMotionEvent' in window) {
+            if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                $('m8-motion').hidden = false;
+                $('m8-motion').addEventListener('click', async () => {
+                    try { if (await DeviceMotionEvent.requestPermission() === 'granted') { listenMotion(); $('m8-motion').textContent = '📳 Shake on!'; setTimeout(() => { $('m8-motion').hidden = true; }, 1500); } } catch (e) {}
+                });
+            } else listenMotion();
+        }
+
+        renderHistory();
+    })();
+    </script>
+</body>
+</html>

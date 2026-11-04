@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'webdesks-v33.0';
+const CACHE_VERSION = 'webdesks-v34.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -29,6 +29,8 @@ const STATIC_ASSETS = [
   '/games/',
   '/games/survey-says.html',
   '/games/games.css',
+  '/games/magic-8-ball.html',
+  '/games/magic-8-ball.js',
   '/manifest.json',
   '/icon.svg',
   '/icon-192.png',

@@ -28,13 +28,13 @@
     const PANES = [
         { id: 'today', label: 'Today', icon: 'sun', widgets: ['w-spotlight', 'w-tasks', 'w-agenda', 'w-quick', 'w-alarm'] },
         { id: 'focus', label: 'Focus', icon: 'hourglass', widgets: ['w-timer', 'w-week', 'w-note', 'w-quote'] },
-        { id: 'life', label: 'Life', icon: 'heart', widgets: ['w-snippets', 'w-money', 'w-mood', 'w-water'] },
+        { id: 'life', label: 'Life', icon: 'heart', widgets: ['w-8ball', 'w-snippets', 'w-money', 'w-mood', 'w-water'] },
         { id: 'tools', label: 'Tools', icon: 'layout-grid', widgets: [] }
     ];
     const NAMES = {
         'w-tasks': 'Tasks & get started', 'w-agenda': 'Calendar agenda', 'w-quick': 'Launchers & quick actions', 'w-alarm': 'Next alarm',
         'w-timer': 'Focus timer', 'w-week': 'This week\'s focus', 'w-note': 'Latest note', 'w-quote': 'Daily quote',
-        'w-snippets': 'Snippet vault', 'w-money': 'Money', 'w-mood': 'Mood', 'w-water': 'Hydration'
+        'w-snippets': 'Snippet vault', 'w-money': 'Money', 'w-mood': 'Mood', 'w-water': 'Hydration', 'w-8ball': 'Magic 8 Ball'
     };
     // Full-width widgets in the two-column grid.
     const FULL = new Set(['w-spotlight']);
