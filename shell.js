@@ -18,6 +18,7 @@
     };
     const LINKS = {
         feud: { label: 'Survey Says', icon: 'trophy', href: '/family-feud' },
+        eightball: { label: 'Magic 8 Ball', icon: 'circle-help', href: '/games/magic-8-ball' },
         games: { label: 'All games', icon: 'party-popper', href: '/games/' },
     };
     const $ = id => document.getElementById(id);

@@ -16,7 +16,7 @@ file operation done locally.
 | Work | Scratchpad, Task Manager, Project Board, Whiteboard, Time Zones |
 | Files & media | PDF Merger, Screen Recorder, Media Converter (WebM → MP4, image resize) |
 | Utilities | Calculator, Unit Converter, Colour Picker, **Dev Toolkit**, **Image to Text (OCR)** |
-| **Group Games** (`/games/`) | **Survey Says** — a survey game show: collect answers with one link, then play the board live in a call or on the TV |
+| **Group Games** (`/games/`) | **Survey Says** — a survey game show: collect answers with one link, then play the board live in a call or on the TV · **Magic 8 Ball** — funny answers in Classic, Cat, Dog, Office and Random themes |
 
 Press <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> anywhere to open the command
 palette and jump to any tool or action.
@@ -166,6 +166,30 @@ environment variables `SUPABASE_URL` / `SUPABASE_ANON_KEY` override
 `supabase-config.js` for the Public Desk function.
 
 Test locally exactly as Cloudflare serves it: `npx wrangler pages dev .`
+
+## v0.34: Magic 8 Ball (`/games/magic-8-ball`)
+
+A just-for-fun Magic 8 Ball: type any yes-or-no question, then press Ask, tap
+the ball or shake your phone, and a witty answer floats up in the window.
+
+- **Five themes** — Classic (sarcastic), **Cat** (purr-dictions, with ears),
+  **Dog** (floppy ears, zero chill), Office (corporate jargon) and **Random**
+  (any theme plus its own chaos answers; says which ball answered).
+  `?theme=cat` deep-links a theme; the last one is remembered.
+- Answers lean yes / no / maybe (45 / 30 / 25, like the toy's optimism) and
+  never repeat one of the last eight. "What/why/how" questions usually get a
+  "try a yes-or-no question" joke; asking the same thing twice gets a note.
+- Shake to ask (asks once for motion permission on iPhone), share the answer
+  (native share sheet or clipboard), the last 8 answers kept on the device,
+  one-tap question ideas, reduced-motion support. Nothing is sent anywhere.
+- **SEO page**: `games/magic-8-ball.html` (plain HTML + `games/games.css`) with
+  `WebApplication`, `FAQPage` and `BreadcrumbList` JSON-LD, theme sections,
+  how-to, the 20 classic answers, FAQ and a Mattel non-affiliation note. Listed
+  on the Group Games hub, in `sitemap.xml` and the service-worker cache.
+- **In the app**: a sidebar entry under Group Games, ⌘K search, the More sheet,
+  a "New" tile on the dashboard and a mini 8 Ball widget in the dashboard's
+  Life tab (hideable from Customize). Answers and widget live in
+  `games/magic-8-ball.js`, shared by the page and the dashboard.
 
 ## v0.33: ADHD mode (`adhd.js`)
 

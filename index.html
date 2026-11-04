@@ -21,7 +21,7 @@
     <meta name="keywords" content="online daily planner, calendar planner month week day, adhd chore chart, adhd task organizer, bill tracker, notion alternative free, mood tracker, free online ocr, image to text online free, json formatter online, base64 encode decode online, sha256 hash generator, jwt decoder online, uuid generator online, qr code generator free, password generator, regex tester online, unix timestamp converter, text diff online, online alarm clock, pomodoro timer online, free stopwatch online, PDF merger online free, screen recorder no install, convert webm to mp4 free no upload, webm to mp4 browser, bulk image resizer online free, image compressor online, multi channel audio mixer online, lofi music online, ambient noise mixer, markdown editor online, code scratchpad browser, online whiteboard free, kanban board browser, unit converter online, hex color picker, white noise generator online, breathing exercises online, online calculator, world clock time zones, task manager browser, online notepad, focus timer, browser productivity suite, webdesks">
     <meta name="author" content="WebDesks">
     <meta name="application-name" content="WebDesks">
-    <meta name="generator" content="WebDesks v0.33.0">
+    <meta name="generator" content="WebDesks v0.34.0">
     <meta name="theme-color" content="#4f46e5">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://webdesks.app/">
@@ -1278,6 +1278,22 @@
         .app-icon { width: 2.75rem; height: 2.75rem; border-radius: .9rem; display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 8px 16px -10px rgba(0,0,0,.45); }
         .app-title { display: block; font-weight: 800; font-size: .98rem; letter-spacing: -.01em; }
         .app-sub { display: block; font-size: .78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        /* Magic 8 Ball dashboard widget (games/magic-8-ball.js) */
+        .m8-mini { display: flex; gap: 1rem; align-items: center; }
+        .m8-mini-ball { flex-shrink: 0; width: 5.5rem; height: 5.5rem; border-radius: 50%; display: grid; place-items: center; cursor: pointer; border: 0; background: radial-gradient(circle at 32% 26%, #6b6b7a 0%, #1d1d24 32%, #050507 74%); box-shadow: inset -8px -10px 22px rgba(0,0,0,.7), 0 14px 24px -14px rgba(0,0,0,.8); }
+        .m8-mini-win { width: 52%; height: 52%; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #2340d8, #0a1152 75%); box-shadow: inset 0 0 0 3px #0c0c12; }
+        .m8-mini-tri { color: #fff; font-weight: 900; font-size: 1.15rem; line-height: 1; }
+        .m8-mini-ball.shaking { animation: m8mini .65s ease-in-out; }
+        @keyframes m8mini { 20% { transform: rotate(-12deg) translateX(-4px); } 40% { transform: rotate(10deg) translateX(4px); } 60% { transform: rotate(-8deg) translateX(-3px); } 80% { transform: rotate(5deg); } }
+        @media (prefers-reduced-motion: reduce) { .m8-mini-ball.shaking { animation: none; } }
+        .m8-mini-side { flex: 1; min-width: 0; display: grid; gap: .5rem; }
+        .m8-mini-themes { display: flex; gap: .3rem; }
+        .m8-mini-themes button { width: 2rem; height: 2rem; border-radius: .7rem; font-size: 1rem; background: rgba(148,163,184,.14); border: 1px solid transparent; }
+        .m8-mini-themes button[aria-pressed="true"] { border-color: #c026d3; background: rgba(192,38,211,.12); }
+        .m8-mini-form { display: flex; gap: .4rem; }
+        .m8-mini-go { padding: 0 .9rem; border-radius: 1rem; background: #c026d3; color: #fff; font-weight: 700; font-size: .85rem; }
+        .m8-mini-go:hover { background: #a21caf; }
+        .m8-mini-answer { font-weight: 700; font-size: .9rem; line-height: 1.35; min-height: 2.4em; }
         .new-badge { display: inline-block; vertical-align: middle; margin-left: .25rem; padding: .05rem .4rem; border-radius: 999px; background: #fef3c7; color: #b45309; font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
         /* Phones: compact two-column launcher rows (icon + name), like an app drawer. */
         @media (max-width: 639px) {
@@ -1459,7 +1475,7 @@
             </div>
             <div class="hidden sm:block">
                 <span class="font-black text-base tracking-tight" id="brand-name">WebDesks</span>
-                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.33.0</span>
+                <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest ml-2">v0.34.0</span>
             </div>
             <a href="/games/" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium ml-6">
                 <i data-lucide="party-popper" class="w-4 h-4"></i>
@@ -1649,6 +1665,11 @@
                 <span class="hidden lg:block ml-3 font-medium text-sm">Survey Says</span>
             </a>
 
+            <a href="/games/magic-8-ball" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-link="eightball" title="Magic 8 Ball — funny answers to any question">
+                <i data-lucide="circle-help" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="hidden lg:block ml-3 font-medium text-sm">Magic 8 Ball</span>
+            </a>
+
             <a href="/games/" class="nav-btn flex-shrink-0 w-12 md:w-full flex items-center justify-center md:justify-start p-3 rounded-xl transition-all hover:bg-white/40 dark:hover:bg-slate-800/50 group" data-link="games" title="All group games">
                 <i data-lucide="party-popper" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 <span class="hidden lg:block ml-3 font-medium text-sm">All Group Games</span>
@@ -1765,6 +1786,10 @@
                             <span class="app-icon bg-gradient-to-br from-indigo-500 to-purple-600"><i data-lucide="hourglass" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Focus timer</span><span class="app-sub">Pomodoro & Focus Town</span></span>
                         </a>
+                        <a href="/games/magic-8-ball" class="app-tile group">
+                            <span class="app-icon bg-gradient-to-br from-fuchsia-500 to-violet-700"><span class="text-white text-lg leading-none" aria-hidden="true">🎱</span></span>
+                            <span class="min-w-0"><span class="app-title">Magic 8 Ball <span class="new-badge">New</span></span><span class="app-sub">Cat, dog &amp; witty answers</span></span>
+                        </a>
                         <button onclick="app.switchTab('feud')" class="app-tile group">
                             <span class="app-icon bg-gradient-to-br from-yellow-400 to-amber-500"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></span>
                             <span class="min-w-0"><span class="app-title">Survey Says <span class="new-badge">New</span></span><span class="app-sub">Group game for calls &amp; TV</span></span>
@@ -1820,6 +1845,9 @@
                                 </div></div>
                             <div class="flex flex-wrap gap-1.5" id="water-grid"></div>
                         </div>
+
+                        <!-- Magic 8 Ball (games/magic-8-ball.js) -->
+                        <div class="widget lg:col-span-2" id="w-8ball"></div>
 
                         <!-- Alarm -->
                         <div class="widget cursor-pointer" id="w-alarm" onclick="app.switchTab('clock')">
@@ -3122,6 +3150,7 @@
                 { id: 'board', label: 'Project Board', icon: 'columns', keywords: 'kanban agile trello' },
                 { id: 'whiteboard', label: 'Whiteboard', icon: 'pencil', keywords: 'draw sketch paint' },
                 { id: 'feud', label: 'Survey Says', icon: 'trophy', link: '/family-feud', keywords: 'survey says party game survey voting team game streaming group game family feud teams zoom tv' },
+                { id: 'eightball', label: 'Magic 8 Ball', icon: 'circle-help', link: '/games/magic-8-ball', keywords: 'magic 8 ball eight ball fortune ask question yes no decide cat dog funny answer' },
                 { id: 'games', label: 'Group Games', icon: 'party-popper', link: '/games/', keywords: 'group games party games play with friends game night team building icebreaker' },
                 { id: 'clock', label: 'Desk Clock', icon: 'clock', keywords: 'time alarm watch' },
                 { id: 'timer', label: 'Focus Timer', icon: 'hourglass', keywords: 'pomodoro countdown focus' },
@@ -6849,6 +6878,7 @@
     <script src="/desk-badges.js"></script>
     <script src="/growth.js"></script>
     <!-- Dashboard tabs (Today / Focus / Life / Tools), weekly focus, quick capture -->
+    <script src="/games/magic-8-ball.js"></script>
     <script src="/home.js"></script>
     <!-- Update bar, offline pill, daily focus goal, jump back in, share links -->
     <script src="/polish.js"></script>
